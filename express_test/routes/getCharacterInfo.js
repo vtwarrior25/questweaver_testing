@@ -49,32 +49,38 @@ function characterInfoFromDB (infotype) {
           {
             abilityname: "Strength",
             abilityabbrev: "STR",
-            abilitybonus: 3
+            abilityscore: 12,
+            abilitybonus: 3,
           },
           {
             abilityname: "Dexterity",
             abilityabbrev: "DEX",
-            abilitybonus: 2
+            abilityscore: 12,
+            abilitybonus: 2,
           },
           {
             abilityname: "Constitution",
             abilityabbrev: "CON",
-            abilitybonus: 2
+            abilityscore: 12,
+            abilitybonus: 2,
           },
           {
             abilityname: "Intelligence",
             abilityabbrev: "INT",
-            abilitybonus: -1
+            abilityscore: 12,
+            abilitybonus: -1,
           },
           {
             abilityname: "Wisdom",
             abilityabbrev: "WIS",
-            abilitybonus: +1
+            abilityscore: 12,
+            abilitybonus: +1,
           },
           {
             abilityname: "Charisma",
             abilityabbrev: "CHA",
-            abilitybonus: 0
+            abilityscore: 12,
+            abilitybonus: 0,
           },
         ]
       }

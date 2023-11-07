@@ -66,3 +66,9 @@ router.get('/', function(req, res) {
 });
 
 module.exports = router;
+
+
+/*
+Dice Rolll API Testing URL
+http://localhost:9000/rollcheck?name=Strength&rolltype=Ability&die=20&num=1&mod=2
+*/
