@@ -22,7 +22,7 @@ function beans() {
 }
 
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   let queries = req.query;
   testobject.word = "booty"; 
   if (queries.name == "bungus") {

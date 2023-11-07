@@ -58,7 +58,7 @@ function rollCheck(name, rolltype, die, number, mod){
   return check;
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   let q = req.query;
   check = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
   console.log(`rolltotal = ${rolltotal}`);
