@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from './logo.svg';
 import './App.css';
 import DiceRollButton from './DiceRollButton';
+import SkillSection from './SkillSection'
 
 class App extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class App extends Component {
 
 
   render () {
-    console.log(`check = ${this.state.checkResponse}`);
+   //console.log(`check = ${this.state.checkResponse}`);
     return (
       <div className="App">
         <header className="App-header">
@@ -66,9 +67,15 @@ class App extends Component {
         </header>
         <p className="App-intro">{this.state.checkResponse.rollstring}</p>
         <DiceRollButton name="Strength" rolltype="Ability" die="20" num="1" mod="2" />
+        <SkillSection />
       </div>
     );
   }
 }
+
+/*
+Dice Rolll API Testing URL
+http://localhost:9000/rollcheck?name=Strength&rolltype=Ability&die=20&num=1&mod=2
+*/
 
 export default App;

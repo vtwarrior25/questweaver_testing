@@ -6,17 +6,10 @@ class DiceRollButton extends Component {
     super(props);
     this.callCheckAPI = this.callCheckAPI.bind(this);
     this.state = {
-      checkVars: {
-        name: props.name,
-        rolltype: props.rolltype,
-        die: props.die,
-        num: props.num,
-        mod: props.mod,
-      },
       checkResponse: {
         rolls: [],
         rollstring: "",
-        rolltotal: "0",
+        rolltotal: "",
         basestring: "",
         name: "",
         rolltype: "",
@@ -25,14 +18,15 @@ class DiceRollButton extends Component {
   }
 
   callCheckAPI() {
-    fetch(`http://localhost:9000/rollcheck?name=${this.state.checkVars.name}&rolltype=${this.state.checkVars.rolltype}&die=${this.state.checkVars.die}&num=${this.state.checkVars.num}&mod=${this.state.checkVars.mod}`)
-        .then(res => res.text())
+    fetch(`http://localhost:9000/rollcheck?name=${this.props.name}&rolltype=${this.props.rolltype}&die=${this.props.die}&num=${this.props.num}&mod=${this.props.mod}`)
+        .then(res => res.json())
         .then(res => this.setState({ checkResponse: res }));
   }
   
   render (){
+    console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
     return (
-    <button onClick={this.callCheckAPI}>{this.state.checkResponse.rolltotal}</button>
+    <button onClick={this.callCheckAPI}>{this.props.mod}</button>
     );
   }
 };
