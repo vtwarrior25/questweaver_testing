@@ -4,12 +4,101 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var http = require('http');
+var sockio = require('socket.io');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require('./routes/testAPI');
 var diceRollRouter = require('./routes/rollCheck');
 var getCharacterInfoRouter = require('./routes/getCharacterInfo');
+
+const httpServer = http.createServer(app);
+const io = new sockio.Server(httpServer, {
+
+})
+
+
+function rollDice (die, num) { 
+  console.log(`die = ${die}, num = ${num}`);
+  dicerolls = [];
+  for (let i = 0; i < num; i++) {
+    dicerolls.push(Math.ceil(Math.random() * Number(die)));
+  }
+  return dicerolls;
+}
+
+function rollCheck(name, rolltype, die, number, mod){
+  check = {
+    rolls: [],
+    rollstring: "",
+    rolltotal: "",
+    basestring: "",
+    name: "",
+    rolltype: "",
+  }
+
+  check.name = name;
+  check.rolltype = rolltype;
+
+  dicerolls = rollDice(Number(die), Number(number));
+  rolltotal = 0;
+  dicerolls.forEach( num => {
+    rolltotal += num;
+    check.rolls.push(num);
+  })
+  rolltotal = rolltotal + Number(mod);
+  rollstring = '';
+  basestring = '';
+  i = 0;
+  for (roll of dicerolls){
+    if (Number(roll) < 0 || i == 0) {
+      rollstring = `${rollstring} ${roll}` 
+    } else {
+      rollstring = `${rollstring}+${roll}` 
+    }
+    i++;
+  }
+  if (Number(mod) < 0) {
+    rollstring = `${rollstring}${mod}`
+    basestring = `${number}d${die}${mod}`
+  } else if (Number(mod) == 0) {
+    rollstring = `${rollstring}`
+    basestring = `${number}d${die}`
+  } else {
+    rollstring = `${rollstring}+${mod}`
+    basestring = `${number}d${die}+${mod}`
+  }
+
+  check.rollstring = rollstring.trim();
+  check.rolltotal = rolltotal;
+  check.basestring = basestring;
+  return check;
+}
+
+
+
+io.on("connection", (socket) => {
+  
+  socket.emit('rolldiceresult', {
+    rolls: [ 6 ],
+    rollstring: '6+3',
+    rolltotal: 9,
+    basestring: '1d20+3',
+    name: 'Strength',
+    rolltype: 'Ability'
+  })
+
+  socket.on('rolldice', (data) => {
+    let rollresult = rollCheck(data.name, data.rolltype, data.die, data.num, data.mod);
+    console.log(rollresult);
+    socket.emit('rolldiceresult', rollresult);
+  })
+});
+
+httpServer.listen(4000, () => 'Server is running on port 4000');
+
 
 var app = express();
 
@@ -44,5 +133,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

@@ -1,41 +1,40 @@
-import React, { Component, memo } from "react";
-import SingleRollResult from './SingleRollResult'
+import { useEffect, useState } from 'react';
+import SingleRollResult from './SingleRollResult';
+import io from 'socket.io-client';
 
-class RollResultsSection extends Component {
-  constructor(props) {
-    super(props);
-    this.callCheckAPI = this.displayRollResults.bind(this);
-    this.state = {
-      checkResponse: {
-        rolls: []
-        }
-      }
+
+export default function RollResultsSection () {
+  const [rolllist, setRollList] = useState([
+    {
+      rolls: [ 8 ],
+      rollstring: '8+2',
+      rolltotal: 10,
+      basestring: '1d20+2',
+      name: 'Constitution',
+      rolltype: 'Ability'
+    },
+    {
+      rolls: [ 8 ],
+      rollstring: '8+2',
+      rolltotal: 10,
+      basestring: '1d20+2',
+      name: 'Constitution',
+      rolltype: 'Ability'
     }
+  ]);
+  const socket = io.connect('http://localhost:4000');
+  
 
-  displayRollResults (name, rolltype, rollstring, rolltotal, basestring) {
-    //Add new single roll result with
-    console.log(`Name = ${name}, rolltype = ${rolltype}, rollstring = ${rollstring}, rolltotal = ${rolltotal}, basestring = ${basestring}`)
-  }
+  useEffect(() => {
+    socket.on('rolldiceresult', (data) => {
+      setRollList(...rolllist, data);
+      console.log(rolllist);
+  })});
 
-/*
-  getSkills() {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=skill`)
-        .then(res => res.json())
-        .then(res => this.setState({ checkResponse: res }));
-  }
 
-  componentDidMount () {
-    this.getSkills();
-  }
-*/
-  render () {
-    console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
-    return (
+  return (
       <div id="rollContainer">
-        <SingleRollResult />
-      </div>  
-    );
-  }
-};
-
-export default memo(RollResultsSection);
+        {rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
+      </div> 
+  )
+}

@@ -8,11 +8,11 @@ class SingleRollResult extends Component {
 
   render () {
     return (
-      <div class="rollResults" id="rollResult1">
-        <div class="rollDescription" id="rollDescription1"></div>
-        <div class="rollParts" id="rollParts1">{}</div>
-        <div class="rollBase" id="rollBase1"></div>
-        <div class="rollTotal" id="rollTotal1"></div>
+      <div className="rollResults" id="rollResult1">
+        <div className="rollDescription" id="rollDescription1">{this.props.name} - {this.props.rolltype}</div>
+        <div className="rollParts" id="rollParts1">{this.props.rollstring}</div>
+        <div className="rollBase" id="rollBase1">{this.props.basestring}</div>
+        <div className="rollTotal" id="rollTotal1">{this.props.rolltotal}</div>
       </div>
     );
   }

@@ -1,9 +1,17 @@
+// React Imports
 import React, { Component } from "react";
 import logo from './logo.svg';
 import './App.css';
 import DiceRollButton from './DiceRollButton';
 import SkillSection from './SkillSection'
 import AbilitySection from "./AbilitySection";
+import RollResultsSection from "./RollResultsSection";
+
+// React-Bootstrap Imports
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -52,9 +60,17 @@ class App extends Component {
    //console.log(`check = ${this.state.checkResponse}`);
     return (
       <div className="App">
-        <DiceRollButton name="Strength" rolltype="Ability" die="20" num="1" mod="2" />
+        <Tabs defaultActiveKey='jerome' id="testingTabs">
+          <Tab eventKey='monster' title='Monster'>
+            Monster Sheet
+          </Tab>
+          <Tab eventKey='jerome' title='Jerome'>
+            Jerome character sheet
+          </Tab>
+        </Tabs>
         <SkillSection />
         <AbilitySection />
+        <RollResultsSection />
       </div>
     );
   }

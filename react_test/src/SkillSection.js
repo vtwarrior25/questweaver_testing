@@ -23,10 +23,10 @@ class SkillSection extends Component {
   }
   
   render () {
-    console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
+    //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
     return (
         <div className="skillsBox frontElement">
-          <table class="skillsTable">
+          <table className="skillsTable">
             <tr>
               <th>Prof</th>
               <th>Mod</th>

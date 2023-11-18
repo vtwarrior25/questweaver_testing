@@ -10,7 +10,7 @@ class SkillRow extends Component {
   render () {
     return (
     <tr>
-      <td><input type="checkbox" checked={this.props.prof}></input></td>
+      <td><input type="checkbox" readOnly={true} checked={this.props.prof}></input></td>
       <td className="skillMod">{this.props.mod}</td>
       <td className="skillName">{this.props.name}</td>
       <td className="skillBonus">
