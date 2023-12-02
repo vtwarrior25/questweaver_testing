@@ -25,7 +25,7 @@ class AbilitySection extends Component {
   render () {
     return (
         <div className="abilityContainer frontElement">
-          {this.state.checkResponse.abilities.map((ability) => <AbilityBox name={ability.abilityname} abbrev={ability.abilityabbrev} score={ability.abilityscore} bonus={ability.abilitybonus}/>)}
+          {this.state.checkResponse.abilities.map((ability) => <AbilityBox name={ability.abilityname} abbrev={ability.abilityabbrev} score={ability.abilityscore} bonus={ability.abilitybonus} showrollresults={this.props.showrollresults} rollresults={this.props.rollresults}/>)}
         </div>
     );
   }

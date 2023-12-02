@@ -14,7 +14,7 @@ class SkillRow extends Component {
       <td className="skillMod">{this.props.mod}</td>
       <td className="skillName">{this.props.name}</td>
       <td className="skillBonus">
-        <DiceRollButton name={this.props.name} rolltype="Skill" die="20" num="1" mod={this.props.bonus} />
+        <DiceRollButton name={this.props.name} rolltype="Skill" die="20" num="1" mod={this.props.bonus} showrollresults={this.props.showrollresults} rollresults={this.props.rollresults}/>
       </td>
     </tr>
     );

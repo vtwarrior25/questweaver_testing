@@ -3,7 +3,8 @@ import SingleRollResult from './SingleRollResult';
 import io from 'socket.io-client';
 
 
-export default function RollResultsSection () {
+export default function RollResultsSection (showrollresults, rollresults) {
+  /*
   const [rolllist, setRollList] = useState([
     {
       rolls: [ 8 ],
@@ -22,19 +23,25 @@ export default function RollResultsSection () {
       rolltype: 'Ability'
     }
   ]);
-  const socket = io.connect('http://localhost:4000');
   
+  const [beans, setBeans] = useState('Beans brother');
+  const socket = io.connect('http://localhost:4000');
+  */
 
-  useEffect(() => {
+  /*useEffect(() => {
     socket.on('rolldiceresult', (data) => {
+      
       setRollList(...rolllist, data);
-      console.log(rolllist);
+      console.log(`Rolllist:  ${rolllist}`);
+      
+      setBeans('b');
   })});
-
+  */
+//{rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
 
   return (
       <div id="rollContainer">
-        {rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
+        <h1>{rollresults}</h1>
       </div> 
   )
 }

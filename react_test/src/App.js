@@ -5,7 +5,7 @@ import './App.css';
 import DiceRollButton from './DiceRollButton';
 import SkillSection from './SkillSection'
 import AbilitySection from "./AbilitySection";
-import RollResultsSection from "./RollResultsSection";
+import RollResultsSection from "./RollResultsSectionFunc";
 
 // React-Bootstrap Imports
 import Tabs from 'react-bootstrap/Tabs';
@@ -25,7 +25,7 @@ class App extends Component {
         num: 1,
         mod: 2,
       },
-      checkResponse: {
+      data: {
         rolls: [],
         rollstring: "",
         rolltotal: "",
@@ -54,6 +54,9 @@ class App extends Component {
     }
   }
 
+  showrollresults(data) {
+    this.state.data = data;
+  } 
 
 
   render () {
@@ -68,9 +71,8 @@ class App extends Component {
             Jerome character sheet
           </Tab>
         </Tabs>
-        <SkillSection />
-        <AbilitySection />
-        <RollResultsSection />
+        <SkillSection showrollresults={this.showrollresults} rollresults={this.state.data}/>
+        <RollResultsSection showrollresults={this.showrollresults} rollresults={this.state.data}/>
       </div>
     );
   }
