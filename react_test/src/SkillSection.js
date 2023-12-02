@@ -33,7 +33,7 @@ class SkillSection extends Component {
               <th>Skill</th>
               <th>Bonus</th>
             </tr>
-            {this.state.checkResponse.skills.map((skill) => <SkillRow name={skill.skillname} mod={skill.skillmod} prof={skill.skillprof} bonus={skill.skillbonus} showrollresults={this.props.showrollresults} rollresults={this.props.rollresults}/>)}
+            {this.state.checkResponse.skills.map((skill) => <SkillRow name={skill.skillname} mod={skill.skillmod} prof={skill.skillprof} bonus={skill.skillbonus} setRollResults={this.props.setRollResults}/>)}
           </table>
         </div>
     );

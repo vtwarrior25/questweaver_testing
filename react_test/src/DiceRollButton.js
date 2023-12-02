@@ -1,55 +1,42 @@
-import React, { Component} from "react";
+import React, {useState} from "react";
 import Button from 'react-bootstrap/Button';
 
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:4000');
 
 
-class DiceRollButton extends Component {
-  constructor(props) {
-    super(props);
-    this.callCheckAPI = this.callCheckAPI.bind(this);
-    this.rollDice = this.rollDice.bind(this);
-    this.state = {
-      checkResponse: {
-        rolls: [],
-        rollstring: "",
-        rolltotal: "",
-        basestring: "",
-        name: "",
-        rolltype: "",
-      },
-      data: {
-        name: this.props.name, 
-        rolltype: this.props.rolltype,
-        die: this.props.die,
-        num: this.props.num,
-        mod: this.props.mod
-      }
-    }
-  }
+function DiceRollButton ({name, rolltype, die, num, mod, setRollResults}) {
+  const [rolldata, setRollData] = useState({
+      rolls: [],
+      rollstring: "",
+      rolltotal: "",
+      basestring: "",
+      name: "",
+      rolltype: "",
+    })
 
-  rollDice() {
+
+  /*
+  const rollDice = () => {
     socket.emit('rolldice', this.state.data);
   }
-  
-  callCheckAPI() {
-    fetch(`http://localhost:9000/rollcheck?name=${this.props.name}&rolltype=${this.props.rolltype}&die=${this.props.die}&num=${this.props.num}&mod=${this.props.mod}`)
+  */
+
+  const callCheckAPI = () => {
+    fetch(`http://localhost:9000/rollcheck?name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
         .then(res => res.json())
-        .then(res => this.setState({ checkResponse: res }))
-        .then(() => {this.props.showrollresults(this.state.data)});
+        .then(res => setRollData(res))
+        .then(setRollResults(rolldata))
+        .then(console.log(rolldata));
   }
   
-  render (){
     //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
-    return (
-      <>
-        <Button variant='secondary' size='sm' onClick={this.callCheckAPI}>{this.props.mod}</Button>
-        <div>{this.state.checkResponse.rolltotal}</div>
-      </>
-    );
-  }
-};
+  return (
+    <>
+      <Button variant='secondary' size='sm' onClick={callCheckAPI}>{mod}</Button>
+    </>
+  );
+}
 
 
 export default DiceRollButton;

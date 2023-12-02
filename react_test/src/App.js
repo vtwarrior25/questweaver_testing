@@ -1,11 +1,11 @@
 // React Imports
-import React, { Component } from "react";
+import React, { useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 import DiceRollButton from './DiceRollButton';
 import SkillSection from './SkillSection'
 import AbilitySection from "./AbilitySection";
-import RollResultsSection from "./RollResultsSectionFunc";
+import RollResultsSection from "./RollResultsSection";
 
 // React-Bootstrap Imports
 import Tabs from 'react-bootstrap/Tabs';
@@ -13,69 +13,37 @@ import Tab from 'react-bootstrap/Tab'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bum: "Hell yeah brothers",
-      checkVars: {
-        name: "Strength",
-        rolltype: "Ability",
-        die: 20,
-        num: 1,
-        mod: 2,
-      },
-      data: {
-        rolls: [],
-        rollstring: "",
-        rolltotal: "",
-        basestring: "",
-        name: "",
-        rolltype: "",
-      }
-      /*
-      apiResponse: {
-        item: {
-          name: "",
-          value: 0,
-          description: "",
-          weight: 0,
-          rarity: {
-            rarityname: "",
-            raritydescription: "",
-          }
-        },
-        armorclass: 0,
-        strengthreq: 0,
-        stealthdisadvantage: false,
-        word: 'neat mode',
-      }
-      */
-    }
-  }
-
-  showrollresults(data) {
-    this.state.data = data;
-  } 
+function App () {
+  const [rollresults, setRollResults] = useState({
+    rolls: [],
+    rollstring: "",
+    rolltotal: "",
+    basestring: "",
+    name: "",
+    rolltype: "",
+  });
 
 
-  render () {
-   //console.log(`check = ${this.state.checkResponse}`);
-    return (
-      <div className="App">
-        <Tabs defaultActiveKey='jerome' id="testingTabs">
-          <Tab eventKey='monster' title='Monster'>
-            Monster Sheet
-          </Tab>
-          <Tab eventKey='jerome' title='Jerome'>
-            Jerome character sheet
-          </Tab>
-        </Tabs>
-        <SkillSection showrollresults={this.showrollresults} rollresults={this.state.data}/>
-        <RollResultsSection showrollresults={this.showrollresults} rollresults={this.state.data}/>
-      </div>
-    );
-  }
+  /*
+  <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
+  <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
+  */
+  return (
+    <div className="App">
+      <Tabs defaultActiveKey='jerome' id="testingTabs">
+        <Tab eventKey='monster' title='Monster'>
+          Monster Sheet
+        </Tab>
+        <Tab eventKey='jerome' title='Jerome'>
+          Jerome character sheet
+        </Tab>
+      </Tabs>
+      <DiceRollButton name="Beans" rolltype="Skill" die="20" num="1" mod="1" setRollResults={setRollResults}/>
+      <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
+      <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
+      <RollResultsSection rollresults={rollresults}/>
+    </div>
+  );
 }
 
 /*

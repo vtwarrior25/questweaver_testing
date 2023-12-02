@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 import DiceRollButton from "./DiceRollButton";
 
-class SkillRow extends Component {
-  constructor(props) {
-    super(props);
-    }
-
-
-  render () {
-    return (
-      <div className="abilityBox">
-        <div className="abilityLabel">{this.props.abbrev}</div>
-        <DiceRollButton className="abilityModifierBox" name={this.props.name} rolltype="Ability" die="20" num="1" mod={this.props.bonus} showrollresults={this.props.showrollresults} rollresults={this.props.rollresults}/>
-        <div class="oval">
-          <h4>{this.props.score}</h4>
-        </div>
+function AbilityBox ({name, abbrev, bonus, score, setRollResults}) {
+  return (
+    <div className="abilityBox">
+      <div className="abilityLabel">{abbrev}</div>
+      <DiceRollButton className="abilityModifierBox" name={name} rolltype="Ability" die="20" num="1" mod={bonus} setRollResults={setRollResults}/>
+      <div class="oval">
+        <h4>{score}</h4>
       </div>
-    );
-  }
-};
+    </div>
+  );
+}
 
-export default SkillRow;
+export default AbilityBox;
