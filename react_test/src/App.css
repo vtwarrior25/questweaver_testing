@@ -68,3 +68,25 @@
   justify-content: space-around;
 }
 
+.healthSection {
+  display: flex;
+  flex-direction: row;
+} 
+
+.healthSection input {
+  
+}
+
+.rightHealthSection {
+
+}
+
+.staticStatsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.statsContainer {
+  border: 0.1em black solid;
+}

@@ -6,11 +6,13 @@ import DiceRollButton from './DiceRollButton';
 import SkillSection from './SkillSection'
 import AbilitySection from "./AbilitySection";
 import RollResultsSection from "./RollResultsSection";
+import CharacterSheet from "./CharacterSheet";
+import StaticStatsBox from "./StaticStatsBox";
 
 // React-Bootstrap Imports
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab'
+import { Container, Tabs, Tab, Row, Col, Stack }from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AbilityBox from "./AbilityBox";
 
 
 function App () {
@@ -30,18 +32,29 @@ function App () {
   */
   return (
     <div className="App">
-      <Tabs defaultActiveKey='jerome' id="testingTabs">
-        <Tab eventKey='monster' title='Monster'>
-          Monster Sheet
-        </Tab>
-        <Tab eventKey='jerome' title='Jerome'>
-          Jerome character sheet
-        </Tab>
-      </Tabs>
-      <DiceRollButton name="Beans" rolltype="Skill" die="20" num="1" mod="1" setRollResults={setRollResults}/>
-      <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
-      <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
-      <RollResultsSection rollresults={rollresults}/>
+      <Container fluid>
+        <Tabs defaultActiveKey='jerome' id="testingTabs">
+            <Tab eventKey='monster' title='Monster'>
+              Monster Sheet
+            </Tab>
+            <Tab eventKey='jerome' title='Jerome'>
+              <Container className='sheetAndMap'>
+                <Row>
+                  <Col className="characterSheet">
+                    <CharacterSheet setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
+                    <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
+                    <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>
+                    <RollResultsSection rollresults={rollresults}/>
+                  </Col>
+                  <Col className="mapArea">
+
+                  </Col>
+                </Row>
+                
+              </Container>
+            </Tab>
+        </Tabs>
+      </Container>
     </div>
   );
 }

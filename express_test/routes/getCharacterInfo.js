@@ -39,6 +39,84 @@ function characterInfoFromDB (infotype) {
             skillprof: false,
             skillbonus: 0,
           }, 
+          {
+            skillname: "Acrobatics",
+            skillmod: "Dex",
+            skillprof: false,
+            skillbonus: 2,
+          }, 
+          {
+            skillname: "Animal Handling",
+            skillmod: "Wis",
+            skillprof: true,
+            skillbonus: 3,
+          }, 
+          {
+            skillname: "Arcana",
+            skillmod: "Int",
+            skillprof: false,
+            skillbonus: -1,
+          }, 
+          {
+            skillname: "Athletics",
+            skillmod: "Str",
+            skillprof: false,
+            skillbonus: 3,
+          }, 
+          {
+            skillname: "Deception",
+            skillmod: "Cha",
+            skillprof: false,
+            skillbonus: 0,
+          }, 
+          {
+            skillname: "Acrobatics",
+            skillmod: "Dex",
+            skillprof: false,
+            skillbonus: 2,
+          }, 
+          {
+            skillname: "Animal Handling",
+            skillmod: "Wis",
+            skillprof: true,
+            skillbonus: 3,
+          }, 
+          {
+            skillname: "Arcana",
+            skillmod: "Int",
+            skillprof: false,
+            skillbonus: -1,
+          }, 
+          {
+            skillname: "Athletics",
+            skillmod: "Str",
+            skillprof: false,
+            skillbonus: 3,
+          }, 
+          {
+            skillname: "Deception",
+            skillmod: "Cha",
+            skillprof: false,
+            skillbonus: 0,
+          }, 
+          {
+            skillname: "Acrobatics",
+            skillmod: "Dex",
+            skillprof: false,
+            skillbonus: 2,
+          }, 
+          {
+            skillname: "Animal Handling",
+            skillmod: "Wis",
+            skillprof: true,
+            skillbonus: 3,
+          }, 
+          {
+            skillname: "Arcana",
+            skillmod: "Int",
+            skillprof: false,
+            skillbonus: -1,
+          },
         ],
       }
       break;
@@ -83,6 +161,29 @@ function characterInfoFromDB (infotype) {
             abilitybonus: 0,
           },
         ]
+      }
+      break;
+    case 'health':
+      dbquery = "healthquery";
+      dbresult = {
+        currenthealth: 12,
+        maxhealth: 22,
+      }
+      break;
+    case 'staticstats':
+      dbquery = "staticstatsquery"
+      dbresult = {
+        profbonus: 2,
+        speed: 30,
+        initiative: 2,
+        armorclass: 14,
+        perception: 5,
+        investigation: 5,
+        insight: 5,
+        armor: "Light, Medium, Shields",
+        weapons: "Martial, Simple",
+        tools: "Cobbler's, Land Vehicles",
+        languages: "Common, Halfling",
       }
       break;
   }
