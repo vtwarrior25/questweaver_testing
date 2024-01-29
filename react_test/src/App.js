@@ -1,18 +1,16 @@
 // React Imports
-import React, { useState } from "react";
-import logo from './logo.svg';
+import React, { useEffect, useState } from "react";
 import './App.css';
-import DiceRollButton from './DiceRollButton';
-import SkillSection from './SkillSection'
-import AbilitySection from "./AbilitySection";
 import RollResultsSection from "./RollResultsSection";
 import CharacterSheet from "./CharacterSheet";
 import StaticStatsBox from "./StaticStatsBox";
+import MapSection from "./MapSection";
 
 // React-Bootstrap Imports
-import { Container, Tabs, Tab, Row, Col, Stack }from 'react-bootstrap'
+import { Button, Col, Container, FormCheck, Offcanvas, Row, Stack, Tab, Tabs }from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
+import ManualDiceRoller from "./ManualDiceRoller";
 
 
 function App () {
@@ -25,6 +23,25 @@ function App () {
     rolltype: "",
   });
 
+  const [showboxes, setShowBoxes] = useState({
+    showAbilitySection: true,
+    showHealthSection: true,
+    showStaticStatsBox: true,
+    showManualDiceRoller: true,
+    showSavingThrowSection: true,
+    showSkillSection: true,
+    showCharacterInventoryArea: true,
+  })
+
+  useEffect(() => {
+    console.log(showboxes);
+  }, [showboxes])
+
+  const [showToggleMenu, setShowToggleMenu] = useState(false);
+
+  const toggleMenuClose = () => setShowToggleMenu(false);
+  const toggleMenuOpen = () => setShowToggleMenu(true);
+
 
   /*
   <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
@@ -33,28 +50,29 @@ function App () {
   return (
     <div className="App">
       <Container fluid>
-        <Tabs defaultActiveKey='jerome' id="testingTabs">
+        <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
             <Tab eventKey='monster' title='Monster'>
               Monster Sheet
             </Tab>
             <Tab eventKey='jerome' title='Jerome'>
-              <Container className='sheetAndMap'>
-                <Row>
-                  <Col className="characterSheet">
-                    <CharacterSheet setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
-                    <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
-                    <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>
-                    <RollResultsSection rollresults={rollresults}/>
-                  </Col>
-                  <Col className="mapArea">
-
-                  </Col>
-                </Row>
-                
-              </Container>
+              <div className='sheetAndMap'>
+                <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
+                <MapSection></MapSection>
+                <RollResultsSection rollresults={rollresults}/>
+              </div>
             </Tab>
         </Tabs>
+        <Button onClick={toggleMenuOpen}>&</Button>
       </Container>
+      <Offcanvas show={showToggleMenu} onHide={toggleMenuClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <label for="showAbilitySection">Ability</label>
+          <input type='checkbox' name='showAbilitySection' value={showboxes.showAbilitySection} onChange={(e) => {setShowBoxes({...showboxes, showAbilitySection: e.target.value})}}></input>
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 }

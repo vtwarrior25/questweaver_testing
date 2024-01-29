@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function SingleRollResult ({rollresults}) {
+
   return (
     <div className="rollResults" id="rollResult1">
       <div className="rollDescription" id="rollDescription1">{rollresults.rollresults.name} - {rollresults.rollresults.rolltype}</div>

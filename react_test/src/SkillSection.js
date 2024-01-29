@@ -27,13 +27,17 @@ class SkillSection extends Component {
     return (
         <div className="skillsBox frontElement">
           <table className="skillsTable">
-            <tr>
-              <th>Prof</th>
-              <th>Mod</th>
-              <th>Skill</th>
-              <th>Bonus</th>
-            </tr>
-            {this.state.checkResponse.skills.map((skill) => <SkillRow name={skill.skillname} mod={skill.skillmod} prof={skill.skillprof} bonus={skill.skillbonus} setRollResults={this.props.setRollResults}/>)}
+            <thead>
+              <tr>
+                <th>Prof</th>
+                <th>Mod</th>
+                <th>Skill</th>
+                <th>Bonus</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.checkResponse.skills.map((skill) => <SkillRow key={skill.skillmod} name={skill.skillname} mod={skill.skillmod} prof={skill.skillprof} bonus={skill.skillbonus} setRollResults={this.props.setRollResults}/>)}
+            </tbody>
           </table>
         </div>
     );

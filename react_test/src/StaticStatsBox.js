@@ -19,7 +19,7 @@ function StaticStatsBox (setRollResults, rollresults) {
 
   useEffect(() => {  
       getStats();
-    }, [staticstats.profbonus]
+    }, []
   )
 
 
@@ -30,13 +30,13 @@ function StaticStatsBox (setRollResults, rollresults) {
   }
 
   return ( 
-    <div className="staticStatsBox">
+    <div className="staticStatsBox frontElement">
       <Stack className="statsContainer senses" gap={1}>
         <div>Perception - {staticstats.perception}</div>
         <div>Investigation - {staticstats.investigation}</div>
         <div>Insight - {staticstats.insight}</div>
       </Stack>
-      <Stack className="statsContainer generalStats">
+      <Stack className="statsContainer generalStats" gap={1}>
         <div>Proficiency Bonus - {staticstats.profbonus}</div>
         <div>Speed - {staticstats.speed}</div>
         <div>Initiative - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
@@ -49,7 +49,6 @@ function StaticStatsBox (setRollResults, rollresults) {
         <div>Languages - {staticstats.languages}</div>
       </Stack>
     </div>
-     
   );
 }
 

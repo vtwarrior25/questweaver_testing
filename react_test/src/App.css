@@ -1,42 +1,46 @@
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(files/Atkinson-Hyperlegible-Regular-102.ttf);
+}
+
+
+:root {
+--mainBorder: 2px solid #000;
+--thinBorder: 1px solid #000;
+--innerBackgroundColor: lightgrey;
+--nonRollBackground: #D2CDE9;
+--buttonColor: #CBDFE7;
+--buttonHoverColor: #a8b9c0;
+--buttonActive: #acd3e2;
+--sansFont: 'Atkinson Hyperlegible', sans-serif;
+}
+
 .App {
   text-align: center;
+  background:url(./files/beautifulforest.jpg);
+  /*font-size: 0.95em;*/
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.frontElement {
+  background-color: var(--innerBackgroundColor);
+  opacity: 90%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.characterSheetSectionTitle {
+  font-size: 1.2em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.sheetAndMap {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/*
+----------------------------------------
+Ability Section
+----------------------------------------
+*/
 
 .abilityContainer {
   grid-column: 1 / span 4;
@@ -56,10 +60,9 @@
 }
 
 .abilityBox {
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
-  margin-top: 0px;
+  border-radius: 0.5em;
+  padding: 0.6em;
+  margin: 0em 0.6em;
   position: relative;
   text-align: center;
   display: flex;
@@ -68,25 +71,205 @@
   justify-content: space-around;
 }
 
+/*
+----------------------------------------
+Health Box
+----------------------------------------
+*/
+
 .healthSection {
+  border: 1px black solid;
   display: flex;
   flex-direction: row;
+  gap: 1em;
+  padding: 0.5em;
 } 
 
-.healthSection input {
-  
-}
-
-.rightHealthSection {
-
-}
-
-.staticStatsBox {
+.healthBox {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
+/*
+----------------------------------------
+Static Stats
+----------------------------------------
+*/
+
+.staticStatsBox {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
 .statsContainer {
   border: 0.1em black solid;
+}
+
+/*
+----------------------------------------
+Manual Dice Roll
+----------------------------------------
+*/
+
+.manualDiceRollSection {
+  border: 1px black solid;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  padding: 0.5em;
+} 
+
+.manualDiceRollButton {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 10%;
+}
+
+/*
+----------------------------------------
+Saving Throw
+----------------------------------------
+*/
+
+.characterSavingThrowSectionBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.characterSavingThrowSection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0.2em;
+  margin: 0.2em;
+}
+
+.savingThrow {
+  border: var(--thinBorder);
+  border-radius: 0.5em;
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: row;
+  gap: 0em;
+  justify-content: space-evenly;
+  padding: 0.1em;
+}
+
+/*
+----------------------------------------
+Defenses and Conditions
+----------------------------------------
+*/
+
+.defensesConditionsBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.defenseConditionsSubSection {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  margin: 0.2em;
+  padding: 0.2em;
+}
+
+.restButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/*
+----------------------------------------
+Turn Order
+----------------------------------------
+*/
+
+.turnOrderBox {
+  padding: 0.1em;
+  margin: 0.1em;
+}
+
+.turnOrderList {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2em;
+}
+
+.turnOrderItem {
+  border: var(--thinBorder);
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.1em 0.2em;
+  margin: 0.1em;
+}
+
+.turnOrderItemRemove {
+  padding: 0.1em !important;
+}
+
+.turnOrderButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.turnOrderControlButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/*
+----------------------------------------
+Map Section
+----------------------------------------
+*/
+
+.mapSection {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/*
+----------------------------------------
+Chat Section
+----------------------------------------
+*/
+
+.chatInnerBox {
+  display: flex;
+  flex-direction: column;
+} 
+
+.chatMessageArea {
+  display: flex;
+  flex-direction: column;
+} 
+
+.chatMessage {
+  border: var(--thinBorder);
+  border-radius: 0.5em;
+}
+
+.chatMessageCharacter {
+  justify-self: left;
+  color: green;
+}
+
+.gameLogInnerBox {
+  display: flex;
+  flex-direction: column;
+} 
+
+.gameLogMessage {
+  border: var(--thinBorder);
+  border-radius: 0.5em;
 }
