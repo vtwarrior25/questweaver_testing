@@ -39,7 +39,7 @@ function StaticStatsBox (setRollResults, rollresults) {
       <Stack className="statsContainer generalStats" gap={1}>
         <div>Proficiency Bonus - {staticstats.profbonus}</div>
         <div>Speed - {staticstats.speed}</div>
-        <div>Initiative - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
+        <div>Initiative - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
         <div>Armor Class - {staticstats.armorclass}</div>
       </Stack>
       <Stack className="statsContainer proficiencies">

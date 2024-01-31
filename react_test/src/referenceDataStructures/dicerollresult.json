@@ -1,0 +1,10 @@
+{
+  "rolls": [
+    6
+  ],
+  "rollstring": "6+3",
+  "rolltotal": 9,
+  "basestring": "1d12+3",
+  "name": "Mace",
+  "rolltype": "Damage"
+}

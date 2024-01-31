@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 //const socket = io.connect('http://localhost:4000');
 
 
-function DiceRollButton ({name, rolltype, die, num, mod, setRollResults}) {
+function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) {
   const [rolldata, setRollData] = useState({
       rolls: [],
       rollstring: "",
@@ -13,17 +13,16 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults}) {
       basestring: "",
       name: "",
       rolltype: "",
-    })
-
+    });
 
   /*
   const rollDice = () => {
     socket.emit('rolldice', this.state.data);
   }
-  */
+  */ 
 
   const callCheckAPI = () => {
-    fetch(`http://localhost:9000/rollcheck?name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
+    fetch(`http://localhost:9000/rollcheck?check=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
         .then(res => res.json())
         .then(res => setRollData(res))
         .then(setRollResults(rolldata))
@@ -33,7 +32,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults}) {
     //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
   return (
     <>
-      <Button variant='secondary' size='sm' onClick={callCheckAPI}>{mod}</Button>
+      <Button variant='secondary' size='sm' onClick={callCheckAPI}>{text}</Button>
     </>
   );
 }

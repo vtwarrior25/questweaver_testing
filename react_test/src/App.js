@@ -5,12 +5,14 @@ import RollResultsSection from "./RollResultsSection";
 import CharacterSheet from "./CharacterSheet";
 import StaticStatsBox from "./StaticStatsBox";
 import MapSection from "./MapSection";
+import MonsterSheet from "./MonsterSheet";
 
 // React-Bootstrap Imports
-import { Button, Col, Container, FormCheck, Offcanvas, Row, Stack, Tab, Tabs }from 'react-bootstrap'
+import { Button, Container, Offcanvas, Tab, Tabs, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
+import CharacterCreator from "./CharacterCreator";
 
 
 function App () {
@@ -35,7 +37,7 @@ function App () {
 
   useEffect(() => {
     console.log(showboxes);
-  }, [showboxes])
+  }, [showboxes]);
 
   const [showToggleMenu, setShowToggleMenu] = useState(false);
 
@@ -49,19 +51,28 @@ function App () {
   */
   return (
     <div className="App">
-      <Container fluid>
-        <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
-            <Tab eventKey='monster' title='Monster'>
-              Monster Sheet
-            </Tab>
-            <Tab eventKey='jerome' title='Jerome'>
-              <div className='sheetAndMap'>
-                <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
-                <MapSection></MapSection>
-                <RollResultsSection rollresults={rollresults}/>
-              </div>
-            </Tab>
-        </Tabs>
+      <Container fluid className="mainContainer">
+        <Row>
+          <Col>
+            <Tabs className="frontElement" defaultActiveKey='monster' id="testingTabs">
+              <Tab eventKey='monster' title='Monster'>
+                <MonsterSheet></MonsterSheet>
+              </Tab>
+              <Tab eventKey='jerome' title='Jerome'>
+                <div className='sheetAndMap'>
+                  <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
+                </div>
+              </Tab>
+              <Tab eventKey="characterCreator" title="Character Creator">
+                <CharacterCreator></CharacterCreator>
+              </Tab>
+            </Tabs>
+          </Col>
+          <Col>
+            <MapSection></MapSection>
+            <RollResultsSection rollresults={rollresults}/>
+          </Col>
+        </Row>
         <Button onClick={toggleMenuOpen}>&</Button>
       </Container>
       <Offcanvas show={showToggleMenu} onHide={toggleMenuClose}>

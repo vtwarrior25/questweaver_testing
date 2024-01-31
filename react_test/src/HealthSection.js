@@ -12,17 +12,17 @@ function HealthSection () {
   useEffect(() => {  
       getHealth();
     }, []
-  )  
+  ); 
 
   useEffect(() => {
       setHealth();
     }, [healthval.currenthealth]
-  )
+  );
 
   useEffect(() => {
     console.log(`healthmod ${healthmod}`); 
     }, [healthmod]
-  )
+  );
 
   const handleChange = (e) => {
     console.log(`healthmod ${healthmod}`);

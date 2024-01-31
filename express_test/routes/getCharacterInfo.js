@@ -6,7 +6,7 @@ function characterInfoFromDB (infotype) {
   let dbresult = {}; 
   switch (infotype) {
     case 'skill':
-      //dbquery = "skillquery";
+      dbquery = "skillquery";
       dbresult = {
         skills: [
           {
@@ -40,82 +40,82 @@ function characterInfoFromDB (infotype) {
             skillbonus: 0,
           }, 
           {
-            skillname: "Acrobatics",
-            skillmod: "Dex",
-            skillprof: false,
-            skillbonus: 2,
-          }, 
-          {
-            skillname: "Animal Handling",
-            skillmod: "Wis",
-            skillprof: true,
-            skillbonus: 3,
-          }, 
-          {
-            skillname: "Arcana",
+            skillname: "History",
             skillmod: "Int",
             skillprof: false,
             skillbonus: -1,
           }, 
           {
-            skillname: "Athletics",
-            skillmod: "Str",
-            skillprof: false,
-            skillbonus: 3,
+            skillname: "Insight",
+            skillmod: "Wis",
+            skillprof: true,
+            skillbonus: 1,
           }, 
           {
-            skillname: "Deception",
+            skillname: "Intimidation",
             skillmod: "Cha",
             skillprof: false,
             skillbonus: 0,
           }, 
           {
-            skillname: "Acrobatics",
-            skillmod: "Dex",
-            skillprof: false,
-            skillbonus: 2,
-          }, 
-          {
-            skillname: "Animal Handling",
-            skillmod: "Wis",
-            skillprof: true,
-            skillbonus: 3,
-          }, 
-          {
-            skillname: "Arcana",
+            skillname: "Investigation",
             skillmod: "Int",
             skillprof: false,
             skillbonus: -1,
           }, 
           {
-            skillname: "Athletics",
-            skillmod: "Str",
+            skillname: "Medicine",
+            skillmod: "Wis",
             skillprof: false,
-            skillbonus: 3,
+            skillbonus: +1,
           }, 
           {
-            skillname: "Deception",
+            skillname: "Nature",
+            skillmod: "Int",
+            skillprof: false,
+            skillbonus: -1,
+          }, 
+          {
+            skillname: "Perception",
+            skillmod: "Wis",
+            skillprof: true,
+            skillbonus: +3,
+          }, 
+          {
+            skillname: "Performance",
             skillmod: "Cha",
             skillprof: false,
             skillbonus: 0,
           }, 
           {
-            skillname: "Acrobatics",
+            skillname: "Persuasion",
+            skillmod: "Cha",
+            skillprof: false,
+            skillbonus: 0,
+          }, 
+          {
+            skillname: "Religion",
+            skillmod: "Int",
+            skillprof: false,
+            skillbonus: 0,
+          }, 
+          {
+            skillname: "Sleight of Hand",
             skillmod: "Dex",
             skillprof: false,
+            skillbonus: +2
+          }, 
+          {
+            skillname: "Stealth",
+            skillmod: "Dex",
+            skillprof: true,
             skillbonus: 2,
           }, 
           {
-            skillname: "Animal Handling",
+            skillname: "Survival",
             skillmod: "Wis",
-            skillprof: true,
-            skillbonus: 3,
-          }, 
-          {
-            skillname: "Arcana",
-            skillmod: "Int",
             skillprof: false,
-            skillbonus: -1,
+            skillbonus: 3,
           },
         ],
       }
@@ -227,32 +227,32 @@ function characterInfoFromDB (infotype) {
         {
           id: 0,
           name: "Jerome",
-          initiative: 1,
+          initiative: 15,
         },
         {
           id: 1,
           name: "Dylan",
-          initiative: 2,
+          initiative: 12,
         },
         {
           id: 2,
           name: "Greg",
-          initiative: 15,
+          initiative: 11,
         },
         {
           id: 3,
           name: "Rebecca",
-          initiative: 14,
+          initiative: 8,
         },
         {
           id: 4,
           name: "Jauffre",
-          initiative: 12,
+          initiative: 7,
         },
         {
           id: 5,
           name: "Erica",
-          initiative: 11,
+          initiative: 3,
         },
       ];
   }

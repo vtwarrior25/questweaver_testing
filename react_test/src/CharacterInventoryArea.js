@@ -1,11 +1,12 @@
 import { Stack, Button, Tab, Tabs } from 'react-bootstrap';
+import ActionsMenu from './ActionsMenu';
 
-function CharacterInventoryArea() {
+function CharacterInventoryArea({setRollResults}) {
   return ( 
     <div className="characterInventoryArea frontElement">
       <Tabs defaultActiveKey='actions'>
         <Tab eventKey='actions' title="Actions">  
-          Actions
+          <ActionsMenu setRollResults={setRollResults}></ActionsMenu>
         </Tab>
         <Tab eventKey='spells' title="Spells">
           Spells

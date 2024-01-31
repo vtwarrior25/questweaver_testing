@@ -4,7 +4,7 @@ function TurnOrderItem({name, initiative}) {
   return ( 
     <div className="turnOrderItem">
       <div className="turnOrderItemName">
-        {name}
+        {name} - {initiative}
       </div>
       <Button variant="tertiary" size="sm" className="turnOrderItemRemove">X</Button>
     </div>

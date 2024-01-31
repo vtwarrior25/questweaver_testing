@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 
-function TurnOrder (expandedinfo) {
-  const [turnorder, setTurnOrder] = useState();
+function ExpandingTableRow (expandedinfo) {
 
   return (
     <div>
@@ -9,3 +8,5 @@ function TurnOrder (expandedinfo) {
     </div>
   )
 }
+
+export default ExpandingTableRow;

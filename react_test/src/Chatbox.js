@@ -16,7 +16,7 @@ function Chatbox() {
         </Tab>
       </Tabs>
     </div>
-   );
+  );
 }
 
 export default Chatbox;

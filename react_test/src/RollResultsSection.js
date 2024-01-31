@@ -39,6 +39,11 @@ export default function RollResultsSection (rollresults) {
   */
 //{rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
 
+useEffect(() => {
+  console.log("Testing user");
+}, [rollresults]
+)
+
   return (
       <div id="rollContainer">
         <SingleRollResult rollresults={rollresults}></SingleRollResult>

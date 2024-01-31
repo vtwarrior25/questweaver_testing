@@ -21,13 +21,17 @@
   /*font-size: 0.95em;*/
 }
 
+.mainContainer {
+
+}
+
 .frontElement {
   background-color: var(--innerBackgroundColor);
   opacity: 90%;
 }
 
 .characterSheetSectionTitle {
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 
 
@@ -47,12 +51,13 @@ Ability Section
   grid-row: 1 / span 1;
   display: flex;
   flex-direction: row;
+  gap: 0.5rem;
   /*
   width: 30%;
   */
   border: var(--mainBorder);
-  border-radius: 10px;
-  padding: 0.3em;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
@@ -60,9 +65,9 @@ Ability Section
 }
 
 .abilityBox {
-  border-radius: 0.5em;
-  padding: 0.6em;
-  margin: 0em 0.6em;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  margin: 0rem 0.6rem;
   position: relative;
   text-align: center;
   display: flex;
@@ -81,14 +86,14 @@ Health Box
   border: 1px black solid;
   display: flex;
   flex-direction: row;
-  gap: 1em;
-  padding: 0.5em;
+  gap: 1rem;
+  padding: 0.5rem;
 } 
 
 .healthBox {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1rem;
 }
 
 /*
@@ -100,11 +105,11 @@ Static Stats
 .staticStatsBox {
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 1rem;
 }
 
 .statsContainer {
-  border: 0.1em black solid;
+  border: 0.1rem black solid;
 }
 
 /*
@@ -117,8 +122,8 @@ Manual Dice Roll
   border: 1px black solid;
   display: flex;
   flex-direction: row;
-  gap: 1em;
-  padding: 0.5em;
+  gap: 1rem;
+  padding: 0.5rem;
 } 
 
 .manualDiceRollButton {
@@ -143,19 +148,19 @@ Saving Throw
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0.2em;
-  margin: 0.2em;
+  padding: 0.2rem;
+  margin: 0.2rem;
 }
 
 .savingThrow {
   border: var(--thinBorder);
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   flex: 0 0 50%;
   display: flex;
   flex-direction: row;
-  gap: 0em;
+  gap: 0rem;
   justify-content: space-evenly;
-  padding: 0.1em;
+  padding: 0.1rem;
 }
 
 /*
@@ -174,8 +179,8 @@ Defenses and Conditions
   display: flex;
   flex-direction: column;
   flex: 0 0 50%;
-  margin: 0.2em;
-  padding: 0.2em;
+  margin: 0.2rem;
+  padding: 0.2rem;
 }
 
 .restButtons {
@@ -191,24 +196,24 @@ Turn Order
 */
 
 .turnOrderBox {
-  padding: 0.1em;
-  margin: 0.1em;
+  padding: 0.1rem;
+  margin: 0.1rem;
 }
 
 .turnOrderList {
   display: flex;
   flex-direction: column;
-  margin: 0.2em;
+  margin: 0.2rem;
 }
 
 .turnOrderItem {
   border: var(--thinBorder);
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.1em 0.2em;
-  margin: 0.1em;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem;
 }
 
 .turnOrderItemRemove {
@@ -256,7 +261,7 @@ Chat Section
 
 .chatMessage {
   border: var(--thinBorder);
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
 }
 
 .chatMessageCharacter {
@@ -271,5 +276,85 @@ Chat Section
 
 .gameLogMessage {
   border: var(--thinBorder);
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
+}
+
+
+
+/*
+----------------------------------------
+Monster Sheet
+----------------------------------------
+*/
+
+.monsterSheetTopBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.monsterGroupDisplay {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.monsterGroupDisplayBasicInfo {
+  
+}
+
+.monsterSheet input{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.monsterSheet td {
+  padding: 0.1em !important;
+}
+
+.monsterSheet select {
+  max-width: 6rem;
+}
+
+.monsterAttackDamage {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+
+.monsterHealthInput {
+  width: 3rem !important;
+}
+
+.monsterGroupNotesSection {
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+----------------------------------------
+Character Creation
+----------------------------------------
+*/
+
+.characterCreatorRace {
+  display: flex;
+  flex-direction: row;
+}
+
+.characterCreatorTabContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.abilityModDisplay {
+  border: var(--thinBorder);
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  background-color: var(--nonRollBackground);
+}
+
+.abilityBox select {
+  max-width: 8rem;
 }

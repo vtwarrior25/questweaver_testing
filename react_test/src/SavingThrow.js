@@ -5,7 +5,7 @@ function SavingThrow({name, prof, val, setRollResults}) {
     <div className="savingThrow">
       <input type="checkbox" value={prof}></input>
       <span>{name}</span>
-      <DiceRollButton name={name} rolltype="Saving Throw" die="20" num="1" mod={val} setRollResults={setRollResults}/>
+      <DiceRollButton name={name} rolltype="Saving Throw" die="20" num="1" mod={val} text={val} setRollResults={setRollResults}/>
     </div>
   );
 }

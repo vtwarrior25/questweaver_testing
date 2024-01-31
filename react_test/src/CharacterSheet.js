@@ -34,7 +34,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       <Row>
         <Col>
           <DefensesConditionsBox></DefensesConditionsBox>
-          <ManualDiceRoller></ManualDiceRoller>
+          <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>
         </Col> 
         <Col>
           <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>
@@ -45,7 +45,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
           <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
         </Col>
         <Col>
-          <CharacterInventoryArea></CharacterInventoryArea>
+          <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>
         </Col>
       </Row>
     </div>

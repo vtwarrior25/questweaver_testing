@@ -59,7 +59,7 @@ function TurnOrder() {
   const getTurnOrder = () => {
     fetch(`http://localhost:9000/getcharacterinfo?infotype=turnorder`)
     .then(res => res.json())
-    .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return a.initiative - b.initiative})));
+    .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
   }
 
   

@@ -9,7 +9,7 @@ function SkillRow ({name, mod, prof, bonus, setRollResults}) {
     <td className="skillMod">{mod}</td>
     <td className="skillName">{name}</td>
     <td className="skillBonus">
-      <DiceRollButton name={name} rolltype="Skill" die="20" num="1" mod={bonus} setRollResults={setRollResults}/>
+      <DiceRollButton name={name} rolltype="Skill" die="20" num="1" mod={bonus} text={bonus} setRollResults={setRollResults}/>
     </td>
   </tr>
   );
