@@ -22,7 +22,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) 
   */ 
 
   const callCheckAPI = () => {
-    fetch(`http://localhost:9000/rollcheck?check=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
+    fetch(`http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
         .then(res => res.json())
         .then(res => setRollData(res))
         .then(setRollResults(rolldata))
