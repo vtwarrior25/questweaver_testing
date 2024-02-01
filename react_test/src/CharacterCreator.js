@@ -152,86 +152,25 @@ function CharacterCreator() {
         <Tab eventKey="abilities" title="Abilities">
           <div className='characterCreatorSection characterCreatorAbilities frontElement'>
             <div className="abilityContainer abilityContainerDisplay frontElement">
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[0].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[0].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[0].abilitybonus}</h4>
+              {abilities.map((ability) => 
+                <div className="abilityBox">
+                  <div className="abilityLabel">{ability.abilityabbrev}</div>
+                  <div className="abilityModDisplay">{ability.abilityscore}</div>
+                  <div className="oval">
+                    <h4>{ability.abilitybonus}</h4>
+                  </div>
                 </div>
-              </div>
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[1].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[1].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[1].abilitybonus}</h4>
-                </div>
-              </div>
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[2].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[2].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[2].abilitybonus}</h4>
-                </div>
-              </div>
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[3].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[3].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[3].abilitybonus}</h4>
-                </div>
-              </div>
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[4].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[4].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[4].abilitybonus}</h4>
-                </div>
-              </div>
-              <div className="abilityBox">
-                <div className="abilityLabel">{abilities[5].abilityabbrev}</div>
-                <div className="abilityModDisplay">{abilities[5].abilityscore}</div>
-                <div className="oval">
-                  <h4>{abilities[5].abilitybonus}</h4>
-                </div>
-              </div>
+              )}
             </div>
             <div className="abilityContainer abilityContainerRoll frontElement">
-              <div className="abilityBox">
-                <Button>{tempvalues[0]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
-              <div className="abilityBox">
-                <Button>{tempvalues[1]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
-              <div className="abilityBox">
-                <Button>{tempvalues[2]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
-              <div className="abilityBox">
-                <Button>{tempvalues[3]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
-              <div className="abilityBox">
-                <Button>{tempvalues[4]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
-              <div className="abilityBox">
-                <Button>{tempvalues[5]}</Button>
-                <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
-                </select>
-              </div>
+              {tempvalues.map((temp) => 
+                <div className="abilityBox">
+                  <Button>{temp}</Button>
+                  <select onChange={(e) => {updateSelections(e)}}>
+                    {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
+                  </select>
+                </div>
+              )}
               <Button onClick={() => {setAbilityValues()}}>Set</Button>
             </div>
           </div>
