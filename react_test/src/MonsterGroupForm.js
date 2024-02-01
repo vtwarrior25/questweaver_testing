@@ -1,13 +1,29 @@
+import { useState } from 'react';
 import { Table } from 'react-bootstrap';
 
 function MonsterGroupForm() {
   
+  const [duplicatemenudisplay, setDuplicateMenuDisplay] = useState(false);
+
+  const addEncounter = () => {
+    console.log("This should add a new encounter, or something");
+  }
+
+  const toggleDuplicateMenu = () => {
+    if (duplicatemenudisplay === false) {
+      setDuplicateMenuDisplay(true);
+    } else {
+      setDuplicateMenuDisplay(false);
+    }
+    console.log("This should toggle the visibility of the duplicate menu");
+  }
+
   return (
     <div className="monsterGroupForm">
-      <form class="monsterGroupCreationForm" id="monsterGroupCreationForm">
-        <div class="monsterGroupDisplay frontElement">
-          <div class="monsterGroupFormBasicInfo">
-            <Table size='sm' class="monsterGroupTable1 monsterGroupTable">
+      <form className="monsterGroupCreationForm" id="monsterGroupCreationForm">
+        <div className="monsterGroupDisplay frontElement">
+          <div className="monsterGroupFormBasicInfo">
+            <Table size='sm' className="monsterGroupTable1 monsterGroupTable">
               <tbody>
                 <tr>
                   <th>Creature</th>
@@ -16,11 +32,11 @@ function MonsterGroupForm() {
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td colspan="2"><input type="text" name="description" size="15"/></td>
+                  <td colSpan="2"><input type="text" name="description" size="15"/></td>
                 </tr>
                 <tr>
                   <th>HD/CR</th>
-                  <td class="monsterFormHDCR"><input type="number" class="monsterHitDiceInput monsterTextSmall" name="hitdicenum" size="3" placeholder="1"/>d<input class="monsterHitDiceInput monsterTextSmall" type="number" name="hitdicetype" size="3" placeholder="6"/></td>
+                  <td className="monsterFormHDCR"><input type="number" className="monsterHitDiceInput monsterTextSmall" name="hitdicenum" size="3" placeholder="1"/>d<input className="monsterHitDiceInput monsterTextSmall" type="number" name="hitdicetype" size="3" placeholder="6"/></td>
                   <td><input type="number" name="challengerating" placeholder="CR" size="3" /></td>
                 </tr>
                 <tr>
@@ -45,17 +61,17 @@ function MonsterGroupForm() {
                 </tr>
                 <tr>
                   <th>Alignment</th>
-                  <td colspan="2">
+                  <td colSpan="2">
                     <select name="alignment">
-                      <option class="selectGreen" value="lawfulgood">Lawful Good</option>
-                      <option class="selectGreen" value="neutralgood">Neutral Good</option>
-                      <option class="selectGreen" value="chaoticgood">Chaotic Good</option>
+                      <option className="selectGreen" value="lawfulgood">Lawful Good</option>
+                      <option className="selectGreen" value="neutralgood">Neutral Good</option>
+                      <option className="selectGreen" value="chaoticgood">Chaotic Good</option>
                       <option value="lawfulneutral">Lawful Neutral</option>
                       <option value="neutral">Neutral</option>
                       <option value="chaoticneutral">Chaotic Neutral</option>
-                      <option class="selectRed" value="lawfulevil">Lawful Evil</option>
-                      <option class="selectRed" value="neutralevil">Neutral Evil</option>
-                      <option class="selectRed" value="chaoticevil">Chaotic Evil</option>
+                      <option className="selectRed" value="lawfulevil">Lawful Evil</option>
+                      <option className="selectRed" value="neutralevil">Neutral Evil</option>
+                      <option className="selectRed" value="chaoticevil">Chaotic Evil</option>
                     </select>
                   </td>
                 </tr>
@@ -70,53 +86,53 @@ function MonsterGroupForm() {
                   <td><input type="number" name="speed" placeholder="Speed" size="5" /></td>
                 </tr>
                 <tr>
-                  <td colspan="3"><button type="button" id="monsterDuplicateButton" onclick="toggleDisplay('duplicateMonsterGroupMenu', 'flex', true, this);">Duplicate</button><button type="reset" id="monsterFormClear">Reset</button></td>
+                  <td colSpan="3"><button type="button" id="monsterDuplicateButton" onClick={toggleDuplicateMenu}>Duplicate</button><button type="reset" id="monsterFormClear">Reset</button></td>
                 </tr>
               </tbody>
             </Table>
           </div>
           <div className="monsterGroupFormAbilities">
-            <Table class="monsterGroupTable2 monsterGroupTable">
+            <Table className="monsterGroupTable2 monsterGroupTable">
               <tbody>
                 <tr>
                   <th>Init</th>
-                  <td colspan="2">+2</td>
+                  <td colSpan="2">+2</td>
                 </tr>
                 <tr>
                   <th>Str</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilitystr" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitystr" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">-1</div></td>
                 </tr>
                 <tr>
                   <th>Dex</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilitydex" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">+2</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitydex" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">+2</div></td>
                 </tr>
                 <tr>
                   <th>Con</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilitycon" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">0</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycon" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">0</div></td>
                 </tr>
                 <tr>
                   <th>Int</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilityint" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">0</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilityint" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">0</div></td>
                 </tr>
                 <tr>
                   <th>Wis</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilitywis" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitywis" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">-1</div></td>
                 </tr>
                 <tr>
                   <th>Cha</th>
-                  <td><input class="monsterSheetAbilityInput" type="number" name="abilitycha" maxlength="2" size="3"/></td>
-                  <td><div class="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycha" maxLength="2" size="3"/></td>
+                  <td><div className="monsterSheetAbilityMod">-1</div></td>
                 </tr>
               </tbody>
             </Table>
           </div>
           <div className="monsterGroupFormAttacks">
-            <Table size='sm' class="monsterGroupTable3 monsterGroupTable">
+            <Table size='sm' className="monsterGroupTable3 monsterGroupTable">
               <thead>
                 <tr>
                   <th>Attack</th>
@@ -130,7 +146,7 @@ function MonsterGroupForm() {
                 <tr>
                   <td><input type="text" name="attack1name" size="10"/></td>
                   <td><input type="number" name="attack1hit" size="5"/></td>
-                  <td class="monsterAttackDamage"><input type="number" class="monsterTextSmall" name="attack1numdice" size="3"/>d<input type="number" class="monsterTextSmall" name="attack1dice" size="4"/><input type="number" class="monsterTextSmall" name="attack1bonus" size="4"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack1numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack1dice" size="4"/><input type="number" className="monsterTextSmall" name="attack1bonus" size="4"/></td>
                   <td>
                     <select name="damagetype1">
                       <option value="slashing">Slashing</option>
@@ -138,12 +154,12 @@ function MonsterGroupForm() {
                       <option value="bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput1" value="7"/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue=""/></td>
                 </tr>
                 <tr>
                   <td><input type="text" name="attack2name" size="10"/></td>
                   <td><input type="number" name="attack2hit"size="5" /></td>
-                  <td class="monsterAttackDamage"><input type="number" class="monsterTextSmall" name="attack2numdice" size="3"/>d<input type="number" class="monsterTextSmall" name="attack2dice" size="4"/><input type="number" class="monsterTextSmall" name="attack2bonus" size="4"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack2numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack2dice" size="4"/><input type="number" className="monsterTextSmall" name="attack2bonus" size="4"/></td>
                   <td>
                     <select name="damagetype2">
                       <option value="slashing">Slashing</option>
@@ -151,12 +167,12 @@ function MonsterGroupForm() {
                       <option value="bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput2" value="7"/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue=""/></td>
                 </tr>
                 <tr>
                   <td><input type="text" name="attack3name" size="10"/></td>
                   <td><input type="number" name="attack3hit" size="5" /></td>
-                  <td class="monsterAttackDamage"><input type="number" class="monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" class="monsterTextSmall" name="attack3dice" size="4"/><input type="number" class="monsterTextSmall" name="attack3bonus" size="4"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack3dice" size="4"/><input type="number" className="monsterTextSmall" name="attack3bonus" size="4"/></td>
                   <td>
                     <select name="damagetype3">
                       <option value="slashing">Slashing</option>
@@ -164,12 +180,12 @@ function MonsterGroupForm() {
                       <option value="bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput3" value=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue=""/></td>
                 </tr>
                 <tr>
                   <td><input type="text" name="attack4name" size="10"/></td>
                   <td><input type="number" name="attack4hit" size="5" /></td>
-                  <td class="monsterAttackDamage"><input type="number" class="monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" class="monsterTextSmall" name="attack4dice" size="4"/><input type="number" class="monsterTextSmall" name="attack4bonus" size="4"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack4dice" size="4"/><input type="number" className="monsterTextSmall" name="attack4bonus" size="4"/></td>
                   <td>
                     <select name="damagetype4">
                       <option value="slashing">Slashing</option>
@@ -177,35 +193,35 @@ function MonsterGroupForm() {
                       <option value="bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput4" value=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput4" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td rowspan="2"><label for="skills">Skills</label></td>
-                  <td colspan="3" rowspan="2"><textarea name="skills"></textarea></td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput5" value=""/></td>
+                  <td rowSpan="2"><label htmlFor="skills">Skills</label></td>
+                  <td colSpan="3" rowSpan="2"><textarea name="skills"></textarea></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput6" value=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td rowspan="2"><label for="skills">Abilities</label></td>
-                  <td colspan="3" rowspan="2"><textarea name="ability"></textarea></td>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput7" value=""/></td>
+                  <td rowSpan="2"><label htmlFor="skills">Abilities</label></td>
+                  <td colSpan="3" rowSpan="2"><textarea name="ability"></textarea></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td class="monsterHealth"><input class="monsterHealthInput" type="number" name="monsterhealthinput8" value=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput8" defaultValue=""/></td>
                 </tr>
               </tbody>
             </Table>
           </div>
-          <div class="monsterGroupNotesSection">
-            <div class="monsterGroupNotes"></div>
-              <label for="monsterGroupNotesText">Notes</label>
+          <div className="monsterGroupNotesSection">
+            <div className="monsterGroupNotes"></div>
+              <label htmlFor="monsterGroupNotesText">Notes</label>
               <textarea name="monsterGroupNotesText"></textarea>
-            <div class="monsterGroupEncounterSelector">
-              <label for="monsterGroupEncounter">Encounter</label>
+            <div className="monsterGroupEncounterSelector">
+              <label htmlFor="monsterGroupEncounter">Encounter</label>
               <input type="text" name="monsterGroupEncounter"/>
-              <button type="button" value="Add" onclick="addEncounter();">Add</button>
+              <button type="button" value="Add" onClick={addEncounter}>Add</button>
             </div>
           </div>
         </div>

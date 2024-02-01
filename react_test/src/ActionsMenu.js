@@ -5,26 +5,7 @@ import DiceRollButton from "./DiceRollButton";
 
 function ActionsMenu({setRollResults}) {
 
-  useEffect(() => {
-    getActions();
-  }, []
-  );
-
-  // Gets actions from the server
-  const getActions = () => {
-    console.log("Getting actions!");
-  }
-
-  const modPos = (bonus) => {
-    if (bonus > 0) {
-      return `+ ${bonus}`;
-    } else if (bonus < 0) {
-      return `- ${bonus}`;
-    } else {
-      return "";
-    }
-  }
-
+  
   const [actions, setActions] = useState([
     {
       name: "Mace",
@@ -53,11 +34,34 @@ function ActionsMenu({setRollResults}) {
       effectbonus: 4,
       notes: "",
     },
-  ])
+  ]);
+
+
+  useEffect(() => {
+    getActions();
+  }, []
+  );
+
+  // Gets actions from the server
+  const getActions = () => {
+    console.log("Getting actions!");
+  }
+
+  const modPos = (bonus) => {
+    if (bonus > 0) {
+      return `+ ${bonus}`;
+    } else if (bonus < 0) {
+      return `- ${bonus}`;
+    } else {
+      return "";
+    }
+  }
+
 
   return ( 
-    <div class="actionsMenu characterInventoryAreaSection">
+    <div className="actionsMenu characterInventoryAreaSection">
       <div className="actionsSection">
+        <span className="characterSheetSectionTitle">Actions</span>
         <Table size="sm">
           <thead>
             <tr>
@@ -69,19 +73,22 @@ function ActionsMenu({setRollResults}) {
             </tr>
           </thead>
           <tbody>
-            {actions.map((action) => 
-              <tr>
+            {actions.map((action, index) => 
+              <tr key={index}>
                 <td>{action.name}</td>
                 <td>{action.range}</td>
-                <td>{action.hitdc}</td>
                 <td><DiceRollButton name={action.name} rolltype={"Attack"} die={20} num={1} mod={action.hitdc} setRollResults={setRollResults} text={action.hitdc}></DiceRollButton></td>
                 <td><DiceRollButton name={action.name} rolltype={"Damage"} die={action.effectdie} num={action.effectdienum} mod={action.effectbonus} setRollResults={setRollResults} text={`${action.effectdienum}d${action.effectdie} ${modPos(action.effectbonus)} `}></DiceRollButton></td>
+                <td>{action.notes}</td>
               </tr>
             )}
           </tbody>
         </Table>
       </div>
-      <div className="bonusActionsSection"></div>
+      <div className="bonusActionsSection">
+        <span className="characterSheet">Actions</span>
+
+      </div>
     </div>
   );
 }

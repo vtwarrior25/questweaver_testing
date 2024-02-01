@@ -8,17 +8,14 @@ function Chat() {
 
   const [chatmessages, setChatMessages] = useState([
     {
-      id: 0,
       character: "Jerome",
       text: "This is a test message in chat",
     },
     {
-      id: 1,
       character: "Jerome",
       text: "This is a test message in chat",
     },
     {
-      id: 2,
       character: "Jerome",
       text: "This is a test message in chat",
     },
@@ -59,7 +56,7 @@ function Chat() {
   return ( 
     <div className="chatInnerBox">
       <div className="chatMessageArea">
-        {chatmessages.map((message) => <ChatMessage key={message.id} character={message.character} text={message.text}/>)}
+        {chatmessages.map((message, index) => <ChatMessage key={index} character={message.character} text={message.text}/>)}
       </div>
       <div className="chatEntryArea">
         <textarea className='chatTextEntry' onChange={(e) => handleChange(e)}></textarea>

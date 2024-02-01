@@ -199,37 +199,37 @@ function CharacterCreator() {
               <div className="abilityBox">
                 <Button>{tempvalues[0]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                  {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <div className="abilityBox">
                 <Button>{tempvalues[1]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <div className="abilityBox">
                 <Button>{tempvalues[2]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <div className="abilityBox">
                 <Button>{tempvalues[3]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <div className="abilityBox">
                 <Button>{tempvalues[4]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <div className="abilityBox">
                 <Button>{tempvalues[5]}</Button>
                 <select onChange={(e) => {updateSelections(e)}}>
-                  {selectabilities.map((ability) => <option value={ability}>{ability}</option>)}
+                  {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                 </select>
               </div>
               <Button onClick={() => {setAbilityValues()}}>Set</Button>

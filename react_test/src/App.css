@@ -358,3 +358,16 @@ Character Creation
 .abilityBox select {
   max-width: 8rem;
 }
+
+
+/*
+----------------------------------------
+Character Inventory Area Spells Menu
+----------------------------------------
+*/
+
+.spellsLevelSectionHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

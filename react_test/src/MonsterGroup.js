@@ -1,6 +1,11 @@
 import { Button, Table } from 'react-bootstrap';
 
 function MonsterGroup({monstergroup}) {
+
+  const removeMonsterGroup = () => {
+    console.log("This will remove the monster group");
+  }
+
   return ( 
     <div className="monsterGroupDisplay frontElement">
       <div className="monsterGroupDisplayBasicInfo">
@@ -13,7 +18,7 @@ function MonsterGroup({monstergroup}) {
             </tr>
             <tr>
               <th>Description</th>
-              <td colspan="2"><span name="description">Cragmaw</span></td>
+              <td colSpan="2"><span name="description">Cragmaw</span></td>
             </tr>
             <tr>
               <th>HD/CR</th>
@@ -27,7 +32,7 @@ function MonsterGroup({monstergroup}) {
             </tr>
             <tr>
               <th>Alignment</th>
-              <td colspan="2"><span name="alignment">Neutral Evil</span></td>
+              <td colSpan="2"><span name="alignment">Neutral Evil</span></td>
             </tr>
             <tr>
               <th>XP Per/Total</th>
@@ -40,7 +45,7 @@ function MonsterGroup({monstergroup}) {
               <td><span name="speed">50</span></td>
             </tr>
             <tr>
-              <td colspan="3"><button className="monsterRemoveFromEncounterButton" onclick="removeMonsterGroup(this);">Remove From Encounter</button></td>
+              <td colSpan="3"><button className="monsterRemoveFromEncounterButton" onClick={removeMonsterGroup()}>Remove From Encounter</button></td>
             </tr>
           </tbody>
         </Table>
@@ -50,7 +55,7 @@ function MonsterGroup({monstergroup}) {
           <tbody>
             <tr>
               <th>Init</th>
-              <td colspan="2">
+              <td colSpan="2">
                 <button className="monsterSheetInitButton" name="Initiative">+2</button>
               </td>
             </tr>
@@ -104,14 +109,14 @@ function MonsterGroup({monstergroup}) {
               <td><span name="attack1hit">4</span></td>
               <td><span name="attack1numdice">1</span>d<span name="attack1dice">6</span><span name="attack1bonus">+4</span></td>
               <td><span name="damagetype1">Slashing</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput1" className="monsterHealthInput" type="number" value="7"/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput1" className="monsterHealthInput" type="number" defaultValue="0"/></td>
             </tr>
             <tr>
               <td><span name="attack2name">Shortbow</span></td>
               <td><span name="attack2hit">4</span></td>
               <td><span name="attack2numdice">1</span>d<span name="attack2dice">6</span><span name="attack2bonus">+4</span></td>
               <td><span name="damagetype2">Piercing</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput2" className="monsterHealthInput" type="number" value="7"/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput2" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
               <td><span name="attack3name"></span></td>
@@ -128,25 +133,25 @@ function MonsterGroup({monstergroup}) {
               <td className="monsterHealth"><input name="monsterhealthinput4" className="monsterHealthInput" type="number"/></td>
             </tr>
             <tr>
-              <td colspan="4" rowspan="2"><span name="skills">Stealth +6; Darkvision 60'</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" value=""/></td>
+              <td colSpan="4" rowSpan="2"><span name="skills">Stealth +6; Darkvision 60'</span></td>
+              <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
-              <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" value=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
-              <td colspan="4" rowspan="2"><span name="ability">Nimble Escape (Disengage or Hide as Bonus Action)</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" value=""/></td>
+              <td colSpan="4" rowSpan="2"><span name="ability">Nimble Escape (Disengage or Hide as Bonus Action)</span></td>
+              <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
-              <td className="monsterHealth"><input name="monsterhealthinput8" className="monsterHealthInput" type="text" value=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput8" className="monsterHealthInput" type="text" defaultValue=""/></td>
             </tr>
           </tbody>
         </Table>
       </div>
-      <div class="monsterGroupNotesSection">
-        <div class="monsterGroupNotes"></div>
-          <label for="monsterGroupNotesText">Notes</label>
+      <div className="monsterGroupNotesSection">
+        <div className="monsterGroupNotes"></div>
+          <label htmlFor="monsterGroupNotesText">Notes</label>
           <textarea name="monsterGroupNotesText"></textarea>
       </div>
     </div>

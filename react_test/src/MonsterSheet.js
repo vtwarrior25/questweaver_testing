@@ -18,7 +18,7 @@ function MonsterSheet() {
     <div className="monsterSheet">
       <div className="monsterSheetTopBar frontElement">
         <div className="encounterSelectorSection">
-          <label for="encounterSelector">Encounter</label>
+          <label htmlFor="encounterSelector">Encounter</label>
           <select className="encounterSelector" name="encounterSelector">
             <option value="cragmaw">Cragmaw</option>
           </select>
