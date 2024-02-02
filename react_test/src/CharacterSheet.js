@@ -28,14 +28,14 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       </Row>
       <Row>
         <Col>
-          {showboxes.showDefensesConditions && <DefensesConditionsBox></DefensesConditionsBox>}
-          <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>
-          <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
+          {showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}
+          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>}
+          {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
         <Col>
-          <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>
-          <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>
-          <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>
+          {showboxes.showsavingthrowsection && <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>}
+          {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>}
+          {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
         </Col>
       </Row>
       <Row>

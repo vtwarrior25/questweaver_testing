@@ -34,6 +34,7 @@ function App () {
     showskillsection: true,
     showcharacterinventoryarea: true,
     showdefensesconditions: true,
+    showturnorderbox: true,
   })
 
   /*

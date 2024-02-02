@@ -1,8 +1,8 @@
 import { Button } from 'react-bootstrap';
 
-function TurnOrderItem({name, initiative, removeItem}) {
+function TurnOrderItem({name, initiative, currentturn, removeItem}) {
   return ( 
-    <div className="turnOrderItem">
+    <div className={`turnOrderItem ${currentturn?"currentTurn":"Not"}`}>
       <div className="turnOrderItemName">
         {name} - {initiative}
       </div>

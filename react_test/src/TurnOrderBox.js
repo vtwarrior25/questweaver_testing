@@ -40,6 +40,17 @@ function TurnOrder() {
 
   const [currentturn, setCurrentTurn] = useState(0);
 
+  const changeTurn = (mode) => {
+    let turnorderlength = turnorder.length;
+    let newturn = currentturn;
+    if (mode === "next") {
+      newturn = (newturn + 1) % turnorderlength;
+    } else if (mode === "prev") {
+      newturn = (newturn - 1 + turnorderlength) % turnorderlength;
+    }
+    setCurrentTurn(newturn);
+    console.log(newturn);
+  }
 
   useEffect(() => {  
     getTurnOrder();
@@ -61,12 +72,12 @@ function TurnOrder() {
   return ( 
     <div className="turnOrderBox frontElement">
       <div className="turnOrderList">
-        {turnorder && turnorder.map((turn) => <TurnOrderItem key={turn.id} name={turn.name} initiative={turn.initiative} removeItem={removeTurnOrderItem}/>)}
+        {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={index === currentturn?true:false} removeItem={removeTurnOrderItem}/>)}
       </div>
       <div className="turnOrderButtons">
         <div className="turnOrderControlButtons">
-          <Button variant="secondary" size="sm">Prev</Button>
-          <Button variant="secondary" size="sm">Next</Button>
+          <Button variant="secondary" size="sm" onClick={() => changeTurn("prev")}>Prev</Button>
+          <Button variant="secondary" size="sm" onClick={() => changeTurn("next")}>Next</Button>
         </div>
         <Button variant="secondary" size="sm">Clear</Button>
       </div>

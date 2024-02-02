@@ -6,13 +6,15 @@ function InventorySection({classname, name, items, setSectionWeight}) {
 
   const [sectionweight, setInnerSectionWeight] = useState(0);
 
+  const [dropdownhidden, setDropdownHidden] = useState(true);
+
   useEffect(() => {
     calculateWeight();
   }, [items],
   );
 
-  const onReorder = () => {
-    console.log("Things were reordered!!");
+  const toggleDropdown = () => {
+    setDropdownHidden(!dropdownhidden);
   }
 
   const calculateWeight = () => {
@@ -46,7 +48,7 @@ function InventorySection({classname, name, items, setSectionWeight}) {
         <tbody>
           {items.map((item, index) => 
             <React.Fragment key={index}>
-              <tr className='inventorySectionTableRow'>
+              <tr className='inventorySectionTableRow' onClick={toggleDropdown}>
                 <td><input type='checkbox'></input></td> 
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
@@ -58,10 +60,10 @@ function InventorySection({classname, name, items, setSectionWeight}) {
                 <td>{item.notes}</td>
               </tr>
               <tr>
-                <td className='inventorySectionTableExpandingInfo' colSpan="6">
+                {dropdownhidden && <td className='inventorySectionTableExpandingInfo' colSpan="6">
                   Epic beans mode mo bamba
                   <Button variant='secondary' size="sm"></Button>
-                </td>
+                </td>}
               </tr>
             </React.Fragment>
           )}

@@ -8,7 +8,7 @@ function MapSection({showboxes, setShowBoxes}) {
     <div className="mapSection">
       <Row>
         <Col>
-          {showboxes.showturnorder &&< TurnOrder></TurnOrder>}
+          {showboxes.showturnorderbox &&< TurnOrder></TurnOrder>}
         </Col>
         <Col>
           <Map></Map>
