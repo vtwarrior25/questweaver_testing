@@ -34,7 +34,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
         </Col>
         <Col>
           {showboxes.showsavingthrowsection && <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>}
-          {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>}
+          {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
           {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
         </Col>
       </Row>

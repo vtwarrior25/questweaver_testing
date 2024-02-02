@@ -2,6 +2,8 @@ import { Stack, Button, Tab, Tabs } from 'react-bootstrap';
 import ActionsMenu from './ActionsMenu';
 import SpellsMenu from './SpellsMenu';
 import InventoryMenu from './InventoryMenu';
+import NotesMenu from './NotesMenu';
+import FeaturesMenu from './FeaturesMenu';
 
 function CharacterInventoryArea({setRollResults}) {
   return ( 
@@ -17,10 +19,10 @@ function CharacterInventoryArea({setRollResults}) {
           <InventoryMenu></InventoryMenu>
         </Tab>
         <Tab eventKey='features' title="Features">
-          Features
+          <FeaturesMenu></FeaturesMenu>
         </Tab>
         <Tab eventKey='notes' title="Notes">
-          Notes
+          <NotesMenu></NotesMenu>
         </Tab>
       </Tabs>
     </div>

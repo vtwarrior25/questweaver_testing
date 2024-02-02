@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import MonsterGroup from "./MonsterGroup";
 import MonsterGroupForm from "./MonsterGroupForm";
+import ManualDiceRoller from './ManualDiceRoller';
 
 
-function MonsterSheet() {
+function MonsterSheet({setRollResults}) {
 
   const [monstergroups, setMonsterGroups] = useState([
     {
@@ -23,7 +24,7 @@ function MonsterSheet() {
           </select>
         </div>
         <div className="monsterSheetManualRollSection">
-          Manual Dice Roll Buttons
+        <ManualDiceRoller setRollResults={setRollResults} vertical={false} nice={false}></ManualDiceRoller>
         </div>
       </div>
       <div className="monsterGroupDisplaySection">

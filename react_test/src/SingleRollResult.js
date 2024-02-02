@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
-function SingleRollResult ({rollresults}) {
+function SingleRollResult ({rollresults, last}) {
 
   return (
-    <div className="rollResults frontElement" id="rollResult1">
-      <div className="rollDescription" id="rollDescription1">{rollresults.rollresults.name} - {rollresults.rollresults.rolltype}</div>
-      <div className="rollParts" id="rollParts1">{rollresults.rollresults.rollstring}</div>
-      <div className="rollBase" id="rollBase1">{rollresults.rollresults.basestring}</div>
-      <div className="rollTotal" id="rollTotal1">{rollresults.rollresults.rolltotal}</div>
+    <div className={last?"rollResults frontElement lastRollResult":"rollResults frontElement"}>
+      <div className="rollDescription">{rollresults.name} - {rollresults.rolltype}</div>
+      <div className="rollParts">{rollresults.rollstring}</div>
+      <div className="rollBase">{rollresults.basestring}</div>
+      <div className="rollTotal">{rollresults.rolltotal}</div>
     </div>
   );
 }

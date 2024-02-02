@@ -5,16 +5,21 @@ function InventorySection({classname, name, items, setSectionWeight}) {
 
   const [sectionweight, setInnerSectionWeight] = useState(0);
 
-  const [dropdownhidden, setDropdownHidden] = useState(true);
+  const [dropdownshidden, setDropdownsHidden] = useState([]);
 
   useEffect(() => {
     calculateWeight();
+    items.forEach((item, index) => setDropdownsHidden[index] = false);
   }, [items],
   );
 
-  const toggleDropdown = () => {
-    setDropdownHidden(!dropdownhidden);
+
+  const toggleDropdown = (index) => {
+    let newdropdowns = [...dropdownshidden];
+    newdropdowns[index] = !newdropdowns[index];
+    setDropdownsHidden(newdropdowns);
   }
+
 
   const calculateWeight = () => {
     let weight = 0;
@@ -59,7 +64,7 @@ function InventorySection({classname, name, items, setSectionWeight}) {
         <tbody>
           {items.map((item, index) => 
             <React.Fragment key={index}>
-              <tr className='inventorySectionTableRow' onClick={toggleDropdown}>
+              <tr className='inventorySectionTableRow' onClick={() => toggleDropdown(index)}>
                 <td><input type='checkbox'></input></td> 
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
@@ -71,7 +76,7 @@ function InventorySection({classname, name, items, setSectionWeight}) {
                 <td>{item.notes}</td>
               </tr>
               <tr>
-                {dropdownhidden && <td className='inventorySectionTableExpandingInfo' colSpan="6">
+                {dropdownshidden[index] && <td className='inventorySectionTableExpandingInfo' colSpan="6">
                   Epic beans mode mo bamba
                   <Button variant='secondary' size="sm"></Button>
                 </td>}

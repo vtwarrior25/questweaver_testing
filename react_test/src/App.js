@@ -17,12 +17,14 @@ import CharacterCreator from "./CharacterCreator";
 
 function App () {
   const [rollresults, setRollResults] = useState({
+    /*
     rolls: [],
     rollstring: "",
     rolltotal: "",
     basestring: "",
     name: "",
     rolltype: "",
+    */
   });
 
   const [showboxes, setShowBoxes] = useState({
@@ -101,7 +103,7 @@ function App () {
           <Col>
             <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
               <Tab eventKey='monster' title='Monster'>
-                <MonsterSheet></MonsterSheet>
+                <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
               </Tab>
               <Tab eventKey='jerome' title='Jerome'>
                 <div className='sheetAndMap'>

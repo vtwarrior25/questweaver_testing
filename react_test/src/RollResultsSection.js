@@ -4,6 +4,27 @@ import io from 'socket.io-client';
 
 
 export default function RollResultsSection (rollresults) {
+  
+  const [keeprolls] = useState(3);
+
+  const [rollresultslist, setRollResultList] = useState([]);
+
+
+  useEffect(() => {
+    if (rollresults.rollresults) {
+      let newrolllist = [...rollresultslist];
+      if (newrolllist.length >= keeprolls) {
+        newrolllist.shift();
+      }
+      newrolllist.push(rollresults.rollresults);
+      setRollResultList(newrolllist);
+      console.log("rollresults");
+      console.log(rollresults.rollresults);
+      console.log("Roll results list")
+      console.log(rollresultslist);
+    }
+  }, [rollresults]
+  ) 
   /*
   const [rolllist, setRollList] = useState([
     {
@@ -46,7 +67,9 @@ useEffect(() => {
 
   return (
       <div id="rollContainer">
-        <SingleRollResult rollresults={rollresults}></SingleRollResult>
+        {rollresultslist.map((rollresult, index) =>
+          <SingleRollResult key={index} rollresults={rollresult} last={index === (keeprolls - 1)}></SingleRollResult>
+        )}
       </div> 
   )
 }

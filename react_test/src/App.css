@@ -24,9 +24,6 @@ html {
   /*font-size: 0.95em;*/
 }
 
-.mainContainer {
-
-}
 
 .frontElement {
   background-color: var(--innerBackgroundColor);
@@ -144,8 +141,24 @@ Manual Dice Roll
 .manualDiceRollButton {
   display: flex !important;
   flex-direction: row;
+  gap: 1em;
+  justify-content: space-between;
+}
+
+.manualDiceRollButtonGroup {
   justify-content: space-evenly;
-  gap: 10%;
+}
+
+.manualDiceRollButtonInner {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 3.5rem;
+  justify-content: space-evenly;
+}
+
+.manualDiceRollIncrement {
+
 }
 
 /*
@@ -299,6 +312,18 @@ Chat Section
 }
 
 
+/*
+----------------------------------------
+Roll Results
+----------------------------------------
+*/
+
+.lastRollResult {
+  background-color: var(--nonRollBackground);
+}
+
+
+
 
 /*
 ----------------------------------------
@@ -317,10 +342,10 @@ Monster Sheet
   gap: 0.3rem;
 }
 
-.monsterGroupDisplayBasicInfo {
+/*.monsterGroupDisplayBasicInfo {
   
 }
-
+*/
 .monsterSheet input{
   padding: 0 !important;
   margin: 0 !important;
@@ -419,4 +444,38 @@ Character Inventory Area Inventory Menu
 
 .characterInventoryAreaSection {
   margin: 0.3em 0.7em;
+}
+
+
+/*
+----------------------------------------
+Character Inventory Area Notes Menu
+----------------------------------------
+*/
+
+.notesMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.notesSection {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/*
+----------------------------------------
+Character Inventory Area Features Menu
+----------------------------------------
+*/
+
+.featuresMenu {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.featuresSection {
+  border: var(--thinBorder);
 }

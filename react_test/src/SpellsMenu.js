@@ -93,7 +93,7 @@ function SpellsMenu({setRollResults}) {
   );
 
 
-  // Gets actions from the server
+  // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
   }

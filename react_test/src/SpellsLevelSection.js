@@ -1,10 +1,31 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'; 
 
 function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResults}) {
 
   const [spellslots, setSpellSlots] = useState([]);
+
+  const [dropdownshidden, setDropdownsHidden] = useState([]);
+
+  useEffect(() => {
+    setSpellSlots(createSpellSlots());
+    return () => {
+      console.log('This should clear the array');
+    }
+  }, []
+  );
+
+  useEffect(() => {
+    spells.forEach((spell, index) => setDropdownsHidden[index] = false);
+  }, [spells]
+  )
+
+  const toggleDropdown = (index) => {
+    let newdropdowns = [...dropdownshidden];
+    newdropdowns[index] = !newdropdowns[index];
+    setDropdownsHidden(newdropdowns);
+  }
 
   const createSpellSlots = () => {
     let slots = [];
@@ -21,14 +42,6 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
     }
     return slots;
   }
-
-  useEffect(() => {
-    setSpellSlots(createSpellSlots());
-    return () => {
-      console.log('This should clear the array');
-    }
-  }, []
-  );
 
 
   const modPos = (bonus) => {
@@ -105,15 +118,23 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
         </thead>
         <tbody>
           {spells.map((spell, index) => 
-            <tr key={index}>
-              <td><Button size='sm'>Cast</Button></td>
-              <td>{spell.name}</td>
-              <td>{spell.timetocast}</td>
-              <td>{spell.range}</td>
-              <td>{hitDcHandler(spell)}</td>
-              <td>{effectHandler(spell)}</td>
-              <td>{spell.notes}</td>
-            </tr>
+            <React.Fragment key={index}>
+              <tr onClick={() => toggleDropdown(index)}>
+                <td><Button size='sm'>Cast</Button></td>
+                <td>{spell.name}</td>
+                <td>{spell.timetocast}</td>
+                <td>{spell.range}</td>
+                <td>{hitDcHandler(spell)}</td>
+                <td>{effectHandler(spell)}</td>
+                <td>{spell.notes}</td>
+              </tr>
+              <tr>
+                {dropdownshidden[index] && <td className='spellsSectionTableExpandingInfo' colSpan="7">
+                  Epic beans mode mo bamba
+                  <Button variant='secondary' size="sm"></Button>
+                </td>}
+              </tr>
+            </React.Fragment>
           )}
         </tbody>
       </Table>
