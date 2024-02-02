@@ -1,6 +1,7 @@
 import { Button, Table } from 'react-bootstrap';
+import DiceRollButton from './DiceRollButton';
 
-function MonsterGroup({monstergroup}) {
+function MonsterGroup({monsterinfo}) {
 
   const removeMonsterGroup = () => {
     console.log("This will remove the monster group");
@@ -13,7 +14,7 @@ function MonsterGroup({monstergroup}) {
           <tbody>
             <tr>
               <th>Creature</th>
-              <td><span name="creature">Goblin</span></td>
+              <td><span name="creature">{monsterinfo.name}</span></td>
               <td><span name="quantity">2</span></td>
             </tr>
             <tr>

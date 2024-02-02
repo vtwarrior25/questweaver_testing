@@ -10,7 +10,6 @@ function MonsterSheet() {
       id: 0,
       name: "Goblin",
       quantity: 2,
-
     },
   ]);
 

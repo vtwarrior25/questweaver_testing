@@ -20,7 +20,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
     <div>
       <Row>
         <Col>
-          {showboxes.showabilitysection && <AbilitySection show={showboxes.AbilitySection} setRollResults={setRollResults} rollresults={rollresults}/>}
+          {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
         <Col>
           {showboxes.showhealthsection && <HealthSection></HealthSection>}

@@ -1,5 +1,16 @@
 var express = require('express');
 var router = express.Router();
+const pgp = require('pg-promise')();
+
+const connection = {
+  host: 'localhost',
+  port: 5432,
+  database: 'postgres',
+  user: 'postgres',
+  password: 'dockermode',
+}
+
+const db = pgp(connection);
 
 function characterInfoFromDB (infotype) {
   let dbquery = "";
@@ -122,8 +133,7 @@ function characterInfoFromDB (infotype) {
       break;
     case 'ability':
       dbquery = "abilityquery";
-      dbresult = {
-        abilities: [
+      dbresult = [
           {
             abilityname: "Strength",
             abilityabbrev: "STR",
@@ -161,7 +171,6 @@ function characterInfoFromDB (infotype) {
             abilitybonus: 0,
           },
         ]
-      }
       break;
     case 'health':
       dbquery = "healthquery";
@@ -255,6 +264,9 @@ function characterInfoFromDB (infotype) {
           initiative: 3,
         },
       ];
+      break;
+    case 'goofytown':
+      
   }
   //dbresult = db.query(dbquery)
   

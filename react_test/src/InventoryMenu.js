@@ -4,6 +4,8 @@ import InventorySection from "./InventorySection";
 
 function InventoryMenu() {
 
+  const [totalweight, setTotalWeight] = useState(0);
+
   const [sections, setSections] = useState([
     {
       sectionname: "equipment",
@@ -35,7 +37,7 @@ function InventoryMenu() {
   }, [sections]
   )
   
-  const [totalweight, setTotalWeight] = useState(0);
+  
 
   const [items, setItems] = useState([
     {

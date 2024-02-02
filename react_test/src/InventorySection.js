@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
-import Reorder, { reorder } from 'react-reorder'; 
 
 function InventorySection({classname, name, items, setSectionWeight}) {
 
@@ -27,6 +26,18 @@ function InventorySection({classname, name, items, setSectionWeight}) {
     setInnerSectionWeight(weight);
     setSectionWeight(classname, weight);
   }
+/*
+  const datadisplay = (
+    <React.Fragment>
+      <td><input type='checkbox'></input></td> 
+      <td>{data.name}</td>
+      <td>{data.weight}</td>
+      <td>{data.qty}</td>
+      <td>{data.cost}</td>
+      <td>{data.notes}</td>
+    </React.Fragment>  
+  )
+*/
 
   return ( 
     <div className={`${classname} inventorySection`}>
