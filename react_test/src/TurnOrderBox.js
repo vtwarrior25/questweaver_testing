@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
 
@@ -40,15 +40,6 @@ function TurnOrder() {
 
   const [currentturn, setCurrentTurn] = useState(0);
 
-/*
-  const sortTurnOrder = () => {
-    let sortedturnorder = turnorder;
-    sortedturnorder.sort((a,b) => {
-      return a.initiative -  b.initiative;
-    });
-    setTurnOrder(sortedturnorder);
-  }
-*/
 
   useEffect(() => {  
     getTurnOrder();
@@ -62,12 +53,15 @@ function TurnOrder() {
     .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
   }
 
+  const removeTurnOrderItem = (nametoremove, initiative) => {
+    setTurnOrder(turnorder.filter((turn) => turn.name !== nametoremove || turn.initiative !== initiative))
+  }
   
 
   return ( 
     <div className="turnOrderBox frontElement">
       <div className="turnOrderList">
-        {turnorder.map((turn) => <TurnOrderItem key={turn.id} name={turn.name} initiative={turn.initiative}/>)}
+        {turnorder && turnorder.map((turn) => <TurnOrderItem key={turn.id} name={turn.name} initiative={turn.initiative} removeItem={removeTurnOrderItem}/>)}
       </div>
       <div className="turnOrderButtons">
         <div className="turnOrderControlButtons">

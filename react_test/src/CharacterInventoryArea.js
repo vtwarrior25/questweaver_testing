@@ -1,6 +1,7 @@
 import { Stack, Button, Tab, Tabs } from 'react-bootstrap';
 import ActionsMenu from './ActionsMenu';
 import SpellsMenu from './SpellsMenu';
+import InventoryMenu from './InventoryMenu';
 
 function CharacterInventoryArea({setRollResults}) {
   return ( 
@@ -13,7 +14,7 @@ function CharacterInventoryArea({setRollResults}) {
           <SpellsMenu></SpellsMenu>
         </Tab>
         <Tab eventKey='inventory' title="Inventory">
-          Inventory
+          <InventoryMenu></InventoryMenu>
         </Tab>
         <Tab eventKey='features' title="Features">
           Features

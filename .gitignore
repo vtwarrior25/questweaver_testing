@@ -1,6 +1,5 @@
 # React installation files, includes the cache
-react_test/node_modules/
-react_test/node_modules/.cache/.eslintcache
+react_test/node_modules/.cache/*
 *.pack
 react_test/node_modules/.cache/.eslintcache
 react_test/node_modules/.cache/default-development/0.pack

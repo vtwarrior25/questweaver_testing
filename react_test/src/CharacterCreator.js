@@ -152,8 +152,8 @@ function CharacterCreator() {
         <Tab eventKey="abilities" title="Abilities">
           <div className='characterCreatorSection characterCreatorAbilities frontElement'>
             <div className="abilityContainer abilityContainerDisplay frontElement">
-              {abilities.map((ability) => 
-                <div className="abilityBox">
+              {abilities.map((ability, index) => 
+                <div className="abilityBox" key={index}>
                   <div className="abilityLabel">{ability.abilityabbrev}</div>
                   <div className="abilityModDisplay">{ability.abilityscore}</div>
                   <div className="oval">
@@ -163,8 +163,8 @@ function CharacterCreator() {
               )}
             </div>
             <div className="abilityContainer abilityContainerRoll frontElement">
-              {tempvalues.map((temp) => 
-                <div className="abilityBox">
+              {tempvalues.map((temp, index) => 
+                <div className="abilityBox" key={index}>
                   <Button>{temp}</Button>
                   <select onChange={(e) => {updateSelections(e)}}>
                     {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}

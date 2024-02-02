@@ -40,6 +40,18 @@
   flex-direction: row;
 }
 
+.sheetAndMap .col {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.offcanvasVisibilityToggles {
+  display: flex;
+  flex-direction: column;
+  
+}
+
 /*
 ----------------------------------------
 Ability Section
@@ -370,4 +382,34 @@ Character Inventory Area Spells Menu
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+
+
+/*
+----------------------------------------
+Character Inventory Area Inventory Menu
+----------------------------------------
+*/
+
+.inventoryMenuHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inventorySectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.inventorySection {
+  display: flex;
+  flex-direction: column;
+}
+
+.characterInventoryAreaSection {
+  margin: 0.3em 0.7em;
 }

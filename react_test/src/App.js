@@ -26,17 +26,52 @@ function App () {
   });
 
   const [showboxes, setShowBoxes] = useState({
-    showAbilitySection: true,
-    showHealthSection: true,
-    showStaticStatsBox: true,
-    showManualDiceRoller: true,
-    showSavingThrowSection: true,
-    showSkillSection: true,
-    showCharacterInventoryArea: true,
+    showabilitysection: true,
+    showhealthsection: true,
+    showstaticstatsbox: true,
+    showmanualdiceroller: true,
+    showsavingthrowsection: true,
+    showskillsection: true,
+    showcharacterinventoryarea: true,
+    showdefensesconditions: true,
   })
+
+  /*
+    {
+      name: "Ability Section",
+      visible: true,
+    },
+    {
+      name: "Health Section",
+      visible: true,
+    },
+    {
+      name: "Static Stats Box",
+      visible: true,
+    },
+    {
+      name: "Manual Dice Roller",
+      visible: true,
+    },
+    {
+      name: "Saving Throw Section",
+      visible: true,
+    },
+    {
+      name: "Skill Section",
+      visible: true,
+    },
+    {
+      name: "Character Inventory Area",
+      visible: true,
+    },
+    */
+
+
 
   useEffect(() => {
     console.log(showboxes);
+    console.log("Refreshing showboxes");
   }, [showboxes]);
 
   const [showToggleMenu, setShowToggleMenu] = useState(false);
@@ -44,6 +79,15 @@ function App () {
   const toggleMenuClose = () => setShowToggleMenu(false);
   const toggleMenuOpen = () => setShowToggleMenu(true);
 
+
+  const changeShowBoxes = (showbox) => {
+    let newshowboxes = {...showboxes};
+    console.log('epic shit brothers');
+    console.log(showbox);
+    newshowboxes[showbox] = !newshowboxes[showbox];
+    setShowBoxes(newshowboxes);
+    console.log(showboxes);
+  }
 
   /*
   <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
@@ -54,7 +98,7 @@ function App () {
       <Container fluid className="mainContainer">
         <Row>
           <Col>
-            <Tabs className="frontElement" defaultActiveKey='monster' id="testingTabs">
+            <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
               <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet></MonsterSheet>
               </Tab>
@@ -69,7 +113,7 @@ function App () {
             </Tabs>
           </Col>
           <Col>
-            <MapSection></MapSection>
+            <MapSection showboxes={showboxes} setShowBoxes={setShowBoxes}></MapSection>
             <RollResultsSection rollresults={rollresults}/>
           </Col>
         </Row>
@@ -80,8 +124,14 @@ function App () {
           <Offcanvas.Title>Offcanvas</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <label for="showAbilitySection">Ability</label>
-          <input type='checkbox' name='showAbilitySection' value={showboxes.showAbilitySection} onChange={(e) => {setShowBoxes({...showboxes, showAbilitySection: e.target.value})}}></input>
+          <div className="offcanvasVisibilityToggles">
+          {Object.keys(showboxes).map((showbox, index) =>
+            <div key={index}>
+              <label htmlFor={showbox}>{showbox}</label>
+              <input type='checkbox' name={showbox} checked={showboxes[showbox]} onChange={() => changeShowBoxes(showbox)}></input>
+            </div>
+          )}
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </div>
@@ -89,7 +139,7 @@ function App () {
 }
 
 /*
-Dice Rolll API Testing URL
+Dice Roll API Testing URL
 http://localhost:9000/rollcheck?name=Strength&rolltype=Ability&die=20&num=1&mod=2
 */
 

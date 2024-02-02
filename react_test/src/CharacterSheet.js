@@ -20,32 +20,38 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
     <div>
       <Row>
         <Col>
-          {showboxes.showAbilitySection && <AbilitySection show={showboxes.AbilitySection} setRollResults={setRollResults} rollresults={rollresults}/>}
+          {showboxes.showabilitysection && <AbilitySection show={showboxes.AbilitySection} setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
         <Col>
-          <HealthSection></HealthSection>
+          {showboxes.showhealthsection && <HealthSection></HealthSection>}
         </Col>
       </Row>
       <Row>
         <Col>
+          {showboxes.showDefensesConditions && <DefensesConditionsBox></DefensesConditionsBox>}
           <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>
+          <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
         </Col>
-      </Row>
-      <Row>
-        <Col>
-          <DefensesConditionsBox></DefensesConditionsBox>
-          <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>
-        </Col> 
         <Col>
           <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>
+          <ManualDiceRoller setRollResults={setRollResults}></ManualDiceRoller>
+          <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          
+        </Col> 
+        <Col>
+          
         </Col>
       </Row>    
       <Row>
         <Col>
-          <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
+          
         </Col>
         <Col>
-          <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>
+         
         </Col>
       </Row>
     </div>

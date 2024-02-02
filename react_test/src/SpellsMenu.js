@@ -103,14 +103,14 @@ function SpellsMenu({setRollResults}) {
       if (!spelllevels.includes(spell.level)) {
         setSpellLevels([...spelllevels, spell.level]);
       }});
-    setSpellLevels([0, 1]);
+    //setSpellLevels([0, 1]);
   }
 
 
   const handleCast = () => {
 
   }
- 
+
 
   return ( 
     <div className="spellsMenu characterInventoryAreaSection">
