@@ -24,8 +24,6 @@ function MonsterSheet({setRollResults}) {
   });
   */
 
-  const [encounterselected, setEncounterSelected] = useState("Cragmaw");
-
   //const [encounterlist, setEncounterList] = useState([]);
 
   const [encounters, setEncounters] = useState([
@@ -58,16 +56,40 @@ function MonsterSheet({setRollResults}) {
           quantity: 2,
         },
       ]
-    }
+    },
   ]);
 
+  const [encounterselected, setEncounterSelected] = useState("Cragmaw");
+
+  /*
   useEffect(() => {
     console.log(encounters[0].encountername);
     setEncounterSelected(encounters[0].encountername);
   }, []
   );
+  */
 
-  const getMonsterGroups = (encountername = "Cragmaw") => {
+  useEffect(() => {
+    // this will call the function to retrieve encounters from the server
+    //getEncounters();
+  }, []
+  );
+
+
+  useEffect(() => {
+    console.log(encounters[0].encountername);
+    setEncounterSelected(encounters[0].encountername);
+  }, [encounters]
+  );
+
+  const getEncounters = () => {
+    fetch(`http://localhost:9000/encounters`)
+        .then(res => res.json())
+        .then(res => setEncounters(res));
+  }
+
+  const getMonsterGroups = (encountername) => {
+    console.log(encounterselected);
     console.log(encounters[0].encountername);
     console.log(encountername);
     let encountertouse = encounters.filter((encounter) => encounter.encountername === encountername);
