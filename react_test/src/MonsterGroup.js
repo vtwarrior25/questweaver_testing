@@ -1,11 +1,58 @@
 import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
+import { useState } from 'react';
 
 function MonsterGroup({monsterinfo}) {
 
   const removeMonsterGroup = () => {
     console.log("This will remove the monster group");
   }
+
+  const [monstergroups, setMonsterGroups] = useState("") ([{
+    monstergroupbasicinfo: [{
+      creature: monsterinfo.name,
+      quantity: 2,
+      description: "Cragmaw",
+      hitdicenum: 2,
+      challengerating: 0.25,
+      size: "Small",
+      type: "Monster",
+      alignment: "Neutral Evil",
+      xpper: 50,
+      xptotal: 100,
+      ac: 13,
+      speed: 50
+    }],
+    monstergroupabilities: [{
+      abilityinit: 2,
+      abilitystr: 8,
+      abilitydex: 14,
+      abilitycon: 10,
+      abilityint: 10,
+      abilitywis: 8,
+      abilitycha: 8,
+    }],
+    monstergroupattacks: [{
+      attack1: [{
+        name: "Scimitar",
+        hit: 4,
+        numdice: 1,
+        dietype: 6,
+        damagetype: "Slashing",
+        hp: 0
+      }],
+      attack2: [{
+        name: "Shortbow",
+        hit: 4,
+        numdice: 1,
+        dietype: 6,
+        damagetype: "Piercing",
+        hp: 0
+      }],
+      skills: "Stealth +6; Darkvision 60",
+      notes: ""
+    }]
+  }]);
 
   return ( 
     <div className="monsterGroupDisplay frontElement">
