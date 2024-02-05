@@ -57,7 +57,7 @@ function MonsterGroup({monsterinfo}) {
             <tr>
               <th>Init</th>
               <td colSpan="2">
-                <button className="monsterSheetInitButton" name="Initiative">+2</button>
+                <button className="monsterSheetInitButton" name="Initiative"></button>
               </td>
             </tr>
             <tr>

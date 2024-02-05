@@ -24,7 +24,7 @@ function MonsterSheet({setRollResults}) {
   });
   */
 
-  const [encounterselected, setEncounterSelected] = useState("");
+  const [encounterselected, setEncounterSelected] = useState("Cragmaw");
 
   //const [encounterlist, setEncounterList] = useState([]);
 
@@ -34,7 +34,7 @@ function MonsterSheet({setRollResults}) {
       monstergroups: [
         {
           id: 0,
-          name: "Goblin",
+          name: "Jeff",
           quantity: 2,
         },
         {
@@ -62,12 +62,16 @@ function MonsterSheet({setRollResults}) {
   ]);
 
   useEffect(() => {
-    updateCurrentEncounter(encounters[0].encountername);
+    console.log(encounters[0].encountername);
+    setEncounterSelected(encounters[0].encountername);
   }, []
   );
 
-  const getMonsterGroups = (encountername) => {
-    let encountertouse = encounters.filter((encounter) => encounter.encountername = encountername);
+  const getMonsterGroups = (encountername = "Cragmaw") => {
+    console.log(encounters[0].encountername);
+    console.log(encountername);
+    let encountertouse = encounters.filter((encounter) => encounter.encountername === encountername);
+    console.log(encountertouse);
     let monstergroups = encountertouse[0].monstergroups;
     return monstergroups;
   }
