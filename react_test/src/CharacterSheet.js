@@ -38,7 +38,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
           {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
         </Col>
       </Row>
-      <Row>
+      {/*<Row>
         <Col>
           
         </Col> 
@@ -53,7 +53,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
         <Col>
          
         </Col>
-      </Row>
+      </Row>*/}
     </div>
   );
 }

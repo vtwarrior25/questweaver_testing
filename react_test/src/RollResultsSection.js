@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import SingleRollResult from './SingleRollResult';
-import io from 'socket.io-client';
 
 
 export default function RollResultsSection (rollresults) {
@@ -60,6 +59,10 @@ export default function RollResultsSection (rollresults) {
   */
 //{rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
 
+const clearRollResults = (nametoremove, initiative) => {
+  setRollResultList([]);
+}
+
 useEffect(() => {
   console.log("Testing user");
 }, [rollresults]
@@ -68,7 +71,7 @@ useEffect(() => {
   return (
       <div id="rollContainer">
         {rollresultslist.map((rollresult, index) =>
-          <SingleRollResult key={index} rollresults={rollresult} last={index === (keeprolls - 1)}></SingleRollResult>
+          <SingleRollResult key={index} rollresults={rollresult} last={index === (keeprolls - 1)} clearresults={() => clearRollResults}></SingleRollResult>
         )}
       </div> 
   )

@@ -127,13 +127,6 @@ function MonsterGroup({monsterinfo}) {
               <td className="monsterHealth"><input name="monsterhealthinput3" className="monsterHealthInput" type="number"/></td>
             </tr>
             <tr>
-              <td><span name="attack4name"></span></td>
-              <td><span name="attack4hit"></span></td>
-              <td><span name="attack4numdice"></span>d<span name="attack4dice"></span><span name="attack4bonus"></span></td>
-              <td><span name="damagetype4"></span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput4" className="monsterHealthInput" type="number"/></td>
-            </tr>
-            <tr>
               <td colSpan="4" rowSpan="2"><span name="skills">Stealth +6; Darkvision 60'</span></td>
               <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>

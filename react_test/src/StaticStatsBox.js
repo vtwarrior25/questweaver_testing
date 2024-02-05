@@ -31,23 +31,23 @@ function StaticStatsBox (setRollResults, rollresults) {
 
   return ( 
     <div className="staticStatsBox frontElement">
-      <Stack className="statsContainer senses" gap={1}>
+      <div className="statsContainer senses">
         <div>Perception - {staticstats.perception}</div>
         <div>Investigation - {staticstats.investigation}</div>
         <div>Insight - {staticstats.insight}</div>
-      </Stack>
-      <Stack className="statsContainer generalStats" gap={1}>
+      </div>
+      <div className="statsContainer generalStats">
         <div>Proficiency Bonus - {staticstats.profbonus}</div>
         <div>Speed - {staticstats.speed}</div>
         <div>Initiative - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
         <div>Armor Class - {staticstats.armorclass}</div>
-      </Stack>
-      <Stack className="statsContainer proficiencies">
+      </div>
+      <div className="statsContainer proficiencies">
         <div>Armor - {staticstats.armor}</div>
         <div>Weapons - {staticstats.weapons}</div>
         <div>Tools - {staticstats.tools}</div>
         <div>Languages - {staticstats.languages}</div>
-      </Stack>
+      </div>
     </div>
   );
 }

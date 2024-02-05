@@ -6,21 +6,104 @@ import ManualDiceRoller from './ManualDiceRoller';
 
 function MonsterSheet({setRollResults}) {
 
-  const [monstergroups, setMonsterGroups] = useState([
+  /*
+  const [selectedencounter, setSelectedEncounter] = useState({
+    encountername: "Cragmaw",
+    monstergroups: [
+      {
+        id: 0,
+        name: "Goblin",
+        quantity: 2,
+      },
+      {
+        id: 1,
+        name: "Goblin",
+        quantity: 2,
+      },
+    ]
+  });
+  */
+
+  const [encounterselected, setEncounterSelected] = useState("");
+
+  //const [encounterlist, setEncounterList] = useState([]);
+
+  const [encounters, setEncounters] = useState([
     {
-      id: 0,
-      name: "Goblin",
-      quantity: 2,
+      encountername: "Cragmaw",
+      monstergroups: [
+        {
+          id: 0,
+          name: "Goblin",
+          quantity: 2,
+        },
+        {
+          id: 1,
+          name: "Goblin",
+          quantity: 2,
+        },
+      ]
     },
+    {
+      encountername: "My House",
+      monstergroups: [
+        {
+          id: 0,
+          name: "Goblin",
+          quantity: 2,
+        },
+        {
+          id: 1,
+          name: "Goblin",
+          quantity: 2,
+        },
+      ]
+    }
   ]);
+
+  useEffect(() => {
+    updateCurrentEncounter(encounters[0].encountername);
+  }, []
+  );
+
+  const getMonsterGroups = (encountername) => {
+    let encountertouse = encounters.filter((encounter) => encounter.encountername = encountername);
+    let monstergroups = encountertouse[0].monstergroups;
+    return monstergroups;
+  }
+
+  /*
+  const getEncounters = () => {
+    let newencounterlist = [];
+    encounters.forEach((encounter) => newencounterlist.push(encounter.encountername));
+    setEncounterList([...newencounterlist]);
+    console.log(newencounterlist);
+  }
+  */
+
+  const updateCurrentEncounter = (value) => {
+    setEncounterSelected(value);
+    console.log("encounterselector");
+    console.log(value);
+    /*
+    let newcurrentencounter = encounters.filter((encounter) => encounter.encountername === value)[0];
+    console.log(newcurrentencounter);
+    setSelectedEncounter({newcurrentencounter});
+    console.log("monster groups")
+    console.log(selectedencounter.monstergroups);
+    */
+  }
+  
 
   return ( 
     <div className="monsterSheet">
       <div className="monsterSheetTopBar frontElement">
         <div className="encounterSelectorSection">
           <label htmlFor="encounterSelector">Encounter</label>
-          <select className="encounterSelector" name="encounterSelector">
-            <option value="cragmaw">Cragmaw</option>
+          <select className="encounterSelector" name="encounterSelector" value={encounterselected} onChange={((e) => updateCurrentEncounter(e.target.value))}>
+            {encounters.map((encounter, index) => 
+              <option key={index} value={encounter.encounternamename}>{encounter.encountername}</option>
+            )}
           </select>
         </div>
         <div className="monsterSheetManualRollSection">
@@ -28,7 +111,7 @@ function MonsterSheet({setRollResults}) {
         </div>
       </div>
       <div className="monsterGroupDisplaySection">
-        {monstergroups.map((monstergroup) => <MonsterGroup key={monstergroup.id} monsterinfo={monstergroup}/>)}
+        {getMonsterGroups(encounterselected).map((monstergroup) => <MonsterGroup key={monstergroup.id} monsterinfo={monstergroup}/>)}
         <MonsterGroupForm></MonsterGroupForm>
       </div>
     </div>
