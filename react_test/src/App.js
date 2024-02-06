@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
+import { RollResultsContext, SetRollResultsContext, ModPosContext }  from "./Contexts.js";
 
 
 function App () {
@@ -92,16 +93,33 @@ function App () {
     console.log(showboxes);
   }
 
+  const modPos = (modval, space) => {
+    let modifier = modval;
+    if (space === true) {
+      modifier = ` ${modifier}`;
+    }
+    if (modifier > 0) {
+      return `+${modifier}`;
+    } else if (modifier < 0) {
+      return `${modifier}`;
+    } else {
+      return `${modifier}`;
+    }
+  }
+
   /*
   <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <ModPosContext.Provider value={modPos}>
+    <SetRollResultsContext.Provider value={setRollResults}>
+    <RollResultsContext.Provider value={rollresults}>
     <div className="App">
       <Container fluid className="mainContainer">
         <Row>
           <Col>
-            <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
+            <Tabs className="frontElement" defaultActiveKey='monster' id="testingTabs">
               <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
               </Tab>
@@ -138,6 +156,9 @@ function App () {
         </Offcanvas.Body>
       </Offcanvas>
     </div>
+    </RollResultsContext.Provider>
+    </SetRollResultsContext.Provider>
+    </ModPosContext.Provider>
   );
 }
 

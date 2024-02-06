@@ -31,32 +31,57 @@ function MonsterSheet({setRollResults}) {
       encountername: "Cragmaw",
       monstergroups: [
         {
-          id: 0,
-          name: "Jeff",
-          quantity: 2,
-        },
-        {
-          id: 1,
-          name: "Goblin",
-          quantity: 2,
-        },
-      ]
-    },
-    {
-      encountername: "My House",
-      monstergroups: [
-        {
-          id: 0,
-          name: "Goblin",
-          quantity: 2,
-        },
-        {
-          id: 1,
-          name: "Goblin",
-          quantity: 2,
-        },
-      ]
-    },
+          basicinfo: {
+            name: "Jeff",
+            quantity: 2,
+            description: "Cragmaw",
+            hitdicenum: 2,
+            hitdicetype: 6,
+            challengerating: 0.25,
+            size: "Small",
+            type: "Monster",
+            alignment: "Neutral Evil",
+            xpper: 50,
+            xptotal: 100,
+            ac: 13,
+            speed: 50
+          },
+          abilities: {
+            init: 2,
+            str: 8,
+            dex: 14,
+            con: 10,
+            int: 10,
+            wis: 8,
+            cha: 8,
+          },
+          attacks: [
+            {
+              name: "Scimitar",
+              hit: 4,
+              numdice: 1,
+              dietype: 6,
+              damagemod: 4,
+              damagetype: "Slashing",
+              hp: 0
+            },
+            {
+              name: "Shortbow",
+              hit: 4,
+              numdice: 1,
+              dietype: 6,
+              damagemod: 4,
+              damagetype: "Piercing",
+              hp: 0
+            },
+          ],
+          skills: "Stealth +6; Darkvision 60",
+          ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+          notes: "",
+          health: [0,0,0,0,0,0,0,0]
+          },
+        ]
+      }
   ]);
 
   const [encounterselected, setEncounterSelected] = useState("Cragmaw");
@@ -137,7 +162,7 @@ function MonsterSheet({setRollResults}) {
         </div>
       </div>
       <div className="monsterGroupDisplaySection">
-        {getMonsterGroups(encounterselected).map((monstergroup) => <MonsterGroup key={monstergroup.id} monsterinfo={monstergroup}/>)}
+        {getMonsterGroups(encounterselected).map((monstergroup) => <MonsterGroup key={monstergroup.id} monsterinfo={monstergroup} setRollResults={setRollResults}/>)}
         <MonsterGroupForm></MonsterGroupForm>
       </div>
     </div>

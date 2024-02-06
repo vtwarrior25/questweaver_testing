@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AbilityBox from './AbilityBox'
+import { ModPosContext } from "./Contexts";
 
 function AbilitySection ({setRollResults, rollresults}) {
-  
+
   const [abilities, setAbilities] = useState([
     {
       abilityname: "Strength",

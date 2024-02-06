@@ -5,9 +5,24 @@ function MonsterGroupForm() {
   
   const [duplicatemenudisplay, setDuplicateMenuDisplay] = useState(false);
 
+  const [abilitymodifiers, setAbilityModifiers] = useState({
+    init: 0,
+    str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0,
+  });
+
   const addEncounter = () => {
     console.log("This should add a new encounter, or something");
   }
+  
+  const getModifier = (value) => {
+    return Math.floor((value - 10) / 2);
+  }
+
 
   const toggleDuplicateMenu = () => {
     if (duplicatemenudisplay === false) {
@@ -96,37 +111,37 @@ function MonsterGroupForm() {
               <tbody>
                 <tr>
                   <th>Init</th>
-                  <td colSpan="2">+2</td>
+                  <td colSpan="2">+{getModifier(abilitymodifiers.init)}</td>
                 </tr>
                 <tr>
                   <th>Str</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitystr" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitystr" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, str: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.str)}</div></td>
                 </tr>
                 <tr>
                   <th>Dex</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitydex" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">+2</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitydex" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, dex: e.target.value, init: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.dex)}</div></td>
                 </tr>
                 <tr>
                   <th>Con</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycon" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">0</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycon" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, con: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.con)}</div></td>
                 </tr>
                 <tr>
                   <th>Int</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilityint" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">0</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilityint" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, int: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.int)}</div></td>
                 </tr>
                 <tr>
                   <th>Wis</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitywis" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitywis" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, wis: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.wis)}</div></td>
                 </tr>
                 <tr>
                   <th>Cha</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycha" maxLength="2" size="3"/></td>
-                  <td><div className="monsterSheetAbilityMod">-1</div></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="abilitycha" maxLength="2" size="3" onChange={(e) => setAbilityModifiers({...abilitymodifiers, cha: e.target.value})}/></td>
+                  <td><div className="monsterSheetAbilityMod">{getModifier(abilitymodifiers.cha)}</div></td>
                 </tr>
               </tbody>
             </Table>
@@ -144,8 +159,8 @@ function MonsterGroupForm() {
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="text" name="attack1name" size="10"/></td>
-                  <td><input type="number" name="attack1hit" size="5"/></td>
+                  <td><input type="text" name="attack1name" size="8"/></td>
+                  <td><input type="number" name="attack1hit" size="4"/></td>
                   <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack1numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack1dice" size="4"/><input type="number" className="monsterTextSmall" name="attack1bonus" size="4"/></td>
                   <td>
                     <select name="damagetype1">
@@ -157,8 +172,8 @@ function MonsterGroupForm() {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack2name" size="10"/></td>
-                  <td><input type="number" name="attack2hit"size="5" /></td>
+                  <td><input type="text" name="attack2name" size="8"/></td>
+                  <td><input type="number" name="attack2hit"size="4" /></td>
                   <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack2numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack2dice" size="4"/><input type="number" className="monsterTextSmall" name="attack2bonus" size="4"/></td>
                   <td>
                     <select name="damagetype2">
@@ -170,8 +185,8 @@ function MonsterGroupForm() {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack3name" size="10"/></td>
-                  <td><input type="number" name="attack3hit" size="5" /></td>
+                  <td><input type="text" name="attack3name" size="8"/></td>
+                  <td><input type="number" name="attack3hit" size="4" /></td>
                   <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack3dice" size="4"/><input type="number" className="monsterTextSmall" name="attack3bonus" size="4"/></td>
                   <td>
                     <select name="damagetype3">
@@ -183,8 +198,8 @@ function MonsterGroupForm() {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack4name" size="10"/></td>
-                  <td><input type="number" name="attack4hit" size="5" /></td>
+                  <td><input type="text" name="attack4name" size="8"/></td>
+                  <td><input type="number" name="attack4hit" size="4" /></td>
                   <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack4dice" size="4"/><input type="number" className="monsterTextSmall" name="attack4bonus" size="4"/></td>
                   <td>
                     <select name="damagetype4">
