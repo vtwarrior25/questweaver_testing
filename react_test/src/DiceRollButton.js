@@ -5,7 +5,7 @@ import { ModPosContext, SetRollResultsContext } from "./Contexts";
 //import io from 'socket.io-client';
 //const socket = io.connect('http://localhost:4000');
 
-function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) {
+function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage}) {
   
     const setRollResults2 = useContext(SetRollResultsContext);
     const modPos = useContext(ModPosContext);
@@ -34,18 +34,27 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) 
   }
 */
 
-  const callCheckAPI = () => {
-    fetch(`http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
+  const diceRoll = (adv) => {
+    let url = `http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+    if (adv === true) {
+      url = `http://localhost:9000/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`
+    } 
+    fetch(url)
         .then(res => res.json())
         .then(res => setRollResults2({...res}))
   }
   
+  
     //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
-  return (
-    <>
-      <Button variant='secondary' size='sm' onClick={callCheckAPI}>{text}</Button>
-    </>
-  );
+  if (advantage === true) {
+    return (
+      <Button variant='secondary' size='sm' onClick={() => diceRoll(false)} onContextMenu={(e) => {e.preventDefault(); diceRoll(true)}}>{text}</Button>
+    );
+  } else {
+    return (
+        <Button variant='secondary' size='sm' onClick={() => diceRoll(false)}>{text}</Button>
+    );
+  }
 }
 
 

@@ -137,6 +137,18 @@ router.get('/', function(req, res) {
       let rollstodo = q.rollstodo
       fincheck = multiRollCheck(q.name, q.rolltype, Number(q.mod), JSON.parse(rollstodo));
       break;
+    case "advantage":
+      // Roll the same check 2 times, return the roll with greater total
+      let roll1 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
+      let roll2 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
+      if (Number(roll1.rolltotal) > Number(roll2.rolltotal)) {
+        fincheck = {...roll1};
+      } else {
+        fincheck = {...roll2};
+      }
+      fincheck.rolltype = `${fincheck.rolltype} (Advantage)`;
+      console.log(fincheck);
+      break;
   }
   res.send(fincheck);
 });
