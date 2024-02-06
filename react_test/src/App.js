@@ -101,7 +101,7 @@ function App () {
     if (modifier > 0) {
       return `+${modifier}`;
     } else if (modifier < 0) {
-      return `${modifier}`;
+      return `-${Math.abs(modifier)}`;
     } else {
       return `${modifier}`;
     }

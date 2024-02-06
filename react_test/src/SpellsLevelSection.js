@@ -1,12 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'; 
+import { ModPosContext } from './Contexts';
 
 function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResults}) {
 
+  
+  const modPos = useContext(ModPosContext);
   const [spellslots, setSpellSlots] = useState([]);
-
   const [dropdownshidden, setDropdownsHidden] = useState([]);
+
 
   useEffect(() => {
     setSpellSlots(createSpellSlots());
@@ -43,16 +46,17 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
     return slots;
   }
 
-
+/*
   const modPos = (bonus) => {
     if (bonus > 0) {
       return `+ ${bonus}`;
     } else if (bonus < 0) {
-      return `- ${bonus}`;
+      return `- ${Math.abs(bonus)}`;
     } else {
       return "";
     }
   }
+*/
 
   const titleHandler = (level) => {
     switch (level) {
@@ -84,7 +88,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
   }
 
   const effectHandler = (spell) => {
-    let text = `${spell.effectdienum}d${spell.effectdie}${modPos(spell.effectdiemod)}`;
+    let text = `${spell.effectdienum}d${spell.effectdie} ${modPos(spell.effectdiemod, true)}`;
     if (spell.effectdie === 0 || spell.effectdienum === 0) {
       return spell.effect;
     } else {

@@ -122,8 +122,8 @@ TODO
             {monsterinfo.attacks.map((attack, index) =>  
               <tr>
               <td><span name={`attack${index}name`}>{attack.name}</span></td>
-              <td><span name={`attack${index}hit`}>{attack.hit}</span></td>
-              <td><span name={`attack${index}dice`}>{attack.numdice}</span>d<span name="attack1dice">{attack.dietype}</span>+<span name="attack1bonus">{attack.damagemod}</span></td> {/* TODO make modPos within DiceRollButton a global function using useContext or something else, this will allow us to deal with +/- in buttons and strings automatically*/}
+              <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Attack" die={20} num={1} mod={attack.hit} text={modPos(attack.hit)}></DiceRollButton></td>
+              <td><span name={`attack${index}dice`}>{attack.numdice}</span>d<span name="attack1dice">{attack.dietype}</span>+<span name="attack1bonus">{attack.damagemod}</span></td>
               <td><span name={`damagetype${index}`}>Slashing</span></td>
               <td className="monsterHealth"><input name={`monsterhealthinput${index}`} className="monsterHealthInput" type="number" defaultValue="0"/></td>
             </tr>

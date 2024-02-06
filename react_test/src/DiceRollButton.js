@@ -7,15 +7,6 @@ import { ModPosContext, SetRollResultsContext } from "./Contexts";
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) {
   
-  /*const [rolldata, setRollData] = useState({
-      rolls: [],
-      rollstring: "",
-      rolltotal: "",
-      basestring: "",
-      name: "",
-      rolltype: "",
-    });
-*/
     const setRollResults2 = useContext(SetRollResultsContext);
     const modPos = useContext(ModPosContext);
 
@@ -46,9 +37,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text}) 
   const callCheckAPI = () => {
     fetch(`http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`)
         .then(res => res.json())
-        //.then(res => setRollData(res))
         .then(res => setRollResults2({...res}))
-        //.then(console.log(rolldata));
   }
   
     //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)

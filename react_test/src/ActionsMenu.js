@@ -1,11 +1,13 @@
 import { Table } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import DiceRollButton from "./DiceRollButton";
+import { ModPosContext } from "./Contexts";
 
 
 function ActionsMenu({setRollResults}) {
 
-  
+  const modPos = useContext(ModPosContext);
+
   const [actions, setActions] = useState([
     {
       name: "Mace",
@@ -47,16 +49,6 @@ function ActionsMenu({setRollResults}) {
     console.log("Getting actions!");
   }
 
-  const modPos = (bonus) => {
-    if (bonus > 0) {
-      return `+ ${bonus}`;
-    } else if (bonus < 0) {
-      return `- ${bonus}`;
-    } else {
-      return "";
-    }
-  }
-
 
   return ( 
     <div className="actionsMenu characterInventoryAreaSection">
@@ -77,8 +69,8 @@ function ActionsMenu({setRollResults}) {
               <tr key={index}>
                 <td>{action.name}</td>
                 <td>{action.range}</td>
-                <td><DiceRollButton name={action.name} rolltype={"Attack"} die={20} num={1} mod={action.hitdc} setRollResults={setRollResults} text={action.hitdc}></DiceRollButton></td>
-                <td><DiceRollButton name={action.name} rolltype={"Damage"} die={action.effectdie} num={action.effectdienum} mod={action.effectbonus} setRollResults={setRollResults} text={`${action.effectdienum}d${action.effectdie} ${modPos(action.effectbonus)} `}></DiceRollButton></td>
+                <td><DiceRollButton name={action.name} rolltype={"Attack"} die={20} num={1} mod={action.hitdc} setRollResults={setRollResults} text={modPos(action.hitdc)}></DiceRollButton></td>
+                <td><DiceRollButton name={action.name} rolltype={"Damage"} die={action.effectdie} num={action.effectdienum} mod={action.effectbonus} setRollResults={setRollResults} text={`${action.effectdienum}d${action.effectdie} ${modPos(action.effectbonus, true)} `}></DiceRollButton></td>
                 <td>{action.notes}</td>
               </tr>
             )}
