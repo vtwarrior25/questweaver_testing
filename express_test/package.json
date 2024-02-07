@@ -17,7 +17,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "pg-promise": "^11.5.4",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "web-vitals": "^3.5.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
