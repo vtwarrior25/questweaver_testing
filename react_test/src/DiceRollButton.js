@@ -1,20 +1,16 @@
-import React, { useState, useContext } from "react";
-import Button from 'react-bootstrap/Button';
+import React, { useState, useContext, useRef } from "react";
+import { Button, ButtonGroup, Overlay } from 'react-bootstrap';
 import { ModPosContext, SetRollResultsContext } from "./Contexts";
 
-//import io from 'socket.io-client';
-//const socket = io.connect('http://localhost:4000');
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage}) {
   
     const setRollResults2 = useContext(SetRollResultsContext);
     const modPos = useContext(ModPosContext);
 
-  /*
-  const rollDice = () => {
-    socket.emit('rolldice', this.state.data);
-  }
-  */ 
+    const target = useRef(null);
+
+    const [show, setShow] = useState(false);
 
 /*
   const handleText = () => {
@@ -36,9 +32,11 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
 
   const diceRoll = (adv) => {
     let url = `http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
-    if (adv === true) {
-      url = `http://localhost:9000/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`
-    } 
+    if (adv === "advantage") {
+      url = `http://localhost:9000/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+    } else if (adv === "disadvantage") {
+      url = `http://localhost:9000/rollcheck?checkmode=disadvantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+    }
     fetch(url)
         .then(res => res.json())
         .then(res => setRollResults2({...res}))
@@ -48,7 +46,15 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     //console.log(`rollstring = ${this.state.checkResponse.rollstring}`)
   if (advantage === true) {
     return (
-      <Button variant='secondary' size='sm' onClick={() => diceRoll(false)} onContextMenu={(e) => {e.preventDefault(); diceRoll(true)}}>{text}</Button>
+      <>
+      <Button variant='secondary' size='sm' ref={target} onClick={() => diceRoll("normal")} onContextMenu={(e) => {e.preventDefault(); setShow(!show)/*diceRoll("advantage")*/}}>{text}</Button>
+      <Overlay target={target.current} show={show} placement="right">
+        <ButtonGroup className="diceRollContextMenu">
+          <Button size='sm' onClick={() => {diceRoll("advantage"); setShow(!show)}}>Adv</Button>
+          <Button size='sm' onClick={() => {diceRoll("disadvantage"); setShow(!show)}}>Dis</Button>
+        </ButtonGroup>
+      </Overlay>
+      </>
     );
   } else {
     return (

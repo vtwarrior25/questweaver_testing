@@ -51,7 +51,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
           
         </Col>
         <Col>
-         
+        
         </Col>
       </Row>*/}
     </div>

@@ -141,13 +141,27 @@ router.get('/', function(req, res) {
       // Roll the same check 2 times, return the roll with greater total
       let roll1 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
       let roll2 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
+      console.log(roll1);
+      console.log(roll2);
       if (Number(roll1.rolltotal) > Number(roll2.rolltotal)) {
         fincheck = {...roll1};
       } else {
         fincheck = {...roll2};
       }
       fincheck.rolltype = `${fincheck.rolltype} (Advantage)`;
-      console.log(fincheck);
+      break;
+    case "disadvantage":
+      // Roll the same check 2 times, return the roll with lower total
+      let roll3 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
+      let roll4 = rollCheck(q.name, q.rolltype, Number(q.die), Number(q.num), Number(q.mod));
+      console.log(roll3);
+      console.log(roll4);
+      if (Number(roll3.rolltotal) > Number(roll4.rolltotal)) {
+        fincheck = {...roll4};
+      } else {
+        fincheck = {...roll3};
+      }
+      fincheck.rolltype = `${fincheck.rolltype} (Disadvantage)`;
       break;
   }
   res.send(fincheck);

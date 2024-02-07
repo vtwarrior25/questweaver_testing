@@ -119,7 +119,7 @@ function App () {
       <Container fluid className="mainContainer">
         <Row>
           <Col>
-            <Tabs className="frontElement" defaultActiveKey='monster' id="testingTabs">
+            <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
               <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
               </Tab>
