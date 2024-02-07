@@ -1,0 +1,488 @@
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(files/Atkinson-Hyperlegible-Regular-102.ttf);
+}
+
+html {
+  font-family: var(--sansFont);
+}
+
+:root {
+--mainBorder: 2px solid #000;
+--thinBorder: 1px solid #000;
+--innerBackgroundColor: lightgrey;
+--nonRollBackground: #D2CDE9;
+--buttonColor: #CBDFE7;
+--buttonHoverColor: #a8b9c0;
+--buttonActive: #acd3e2;
+--sansFont: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.App {
+  text-align: center;
+  background:url(./files/beautifulforest.jpg);
+  /*font-size: 0.95em;*/
+}
+
+
+.frontElement {
+  background-color: var(--innerBackgroundColor);
+  opacity: 90%;
+}
+
+.characterSheetSectionTitle {
+  font-size: 1.2rem;
+}
+
+
+.sheetAndMap {
+  display: flex;
+  flex-direction: row;
+}
+
+.sheetAndMap .col {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.offcanvasVisibilityToggles {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.diceRollContextMenu {
+  padding: 0.2em;
+}
+
+/*
+----------------------------------------
+Ability Section
+----------------------------------------
+*/
+
+.abilityContainer {
+  grid-column: 1 / span 4;
+  grid-row: 1 / span 1;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  /*
+  width: 30%;
+  */
+  border: var(--mainBorder);
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: space-evenly;
+}
+
+.abilityBox {
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  margin: 0rem 0.6rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/*
+----------------------------------------
+Health Box
+----------------------------------------
+*/
+
+.healthSection {
+  border: 1px black solid;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem;
+} 
+
+.healthBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/*
+----------------------------------------
+Static Stats
+----------------------------------------
+*/
+
+.staticStatsBox {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0.3em;
+}
+
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  border: 0.1rem black solid;
+}
+
+/*
+----------------------------------------
+Manual Dice Roll
+----------------------------------------
+*/
+
+.manualDiceRollSection {
+  border: 1px black solid;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem;
+} 
+
+.manualDiceRollButton {
+  display: flex !important;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: space-between;
+}
+
+.manualDiceRollButtonGroup {
+  justify-content: space-evenly;
+}
+
+.manualDiceRollButtonInner {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 3.5rem;
+  justify-content: space-evenly;
+}
+
+.manualDiceRollIncrement {
+
+}
+
+/*
+----------------------------------------
+Saving Throw
+----------------------------------------
+*/
+
+.characterSavingThrowSectionBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.characterSavingThrowSection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+
+.savingThrow {
+  border: var(--thinBorder);
+  border-radius: 0.5rem;
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: row;
+  gap: 0rem;
+  justify-content: space-evenly;
+  padding: 0.1rem;
+}
+
+/*
+----------------------------------------
+Defenses and Conditions
+----------------------------------------
+*/
+
+.defensesConditionsBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.defenseConditionsSubSection {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  margin: 0.2rem;
+  padding: 0.2rem;
+}
+
+.restButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/*
+----------------------------------------
+Turn Order
+----------------------------------------
+*/
+
+.turnOrderBox {
+  padding: 0.1rem;
+  margin: 0.1rem;
+}
+
+.turnOrderList {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem;
+}
+
+.turnOrderItem {
+  border: var(--thinBorder);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem;
+}
+
+.turnOrderItemRemove {
+  padding: 0.1em !important;
+}
+
+.turnOrderButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.turnOrderControlButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.currentTurn {
+  background-color: #acd3e2;
+}
+
+/*
+----------------------------------------
+Map Section
+----------------------------------------
+*/
+
+.mapSection {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/*
+----------------------------------------
+Chat Section
+----------------------------------------
+*/
+
+.chatInnerBox {
+  display: flex;
+  flex-direction: column;
+} 
+
+.chatMessageArea {
+  display: flex;
+  flex-direction: column;
+} 
+
+.chatMessage {
+  border: var(--thinBorder);
+  border-radius: 0.5rem;
+}
+
+.chatMessageCharacter {
+  justify-self: left;
+  color: green;
+}
+
+.gameLogInnerBox {
+  display: flex;
+  flex-direction: column;
+} 
+
+.gameLogMessage {
+  border: var(--thinBorder);
+  border-radius: 0.5rem;
+}
+
+
+/*
+----------------------------------------
+Roll Results
+----------------------------------------
+*/
+
+.lastRollResult {
+  background-color: var(--nonRollBackground);
+}
+
+
+
+
+/*
+----------------------------------------
+Monster Sheet
+----------------------------------------
+*/
+
+.monsterSheetTopBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.monsterGroupDisplay {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+/*.monsterGroupDisplayBasicInfo {
+  
+}
+*/
+.monsterSheet input{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.monsterSheet td {
+  padding: 0.1em !important;
+}
+
+.monsterSheet select {
+  max-width: 6rem;
+}
+
+.monsterAttackDamage {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+
+.monsterHealthInput {
+  width: 3rem !important;
+}
+
+.monsterGroupNotesSection {
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+----------------------------------------
+Character Creation
+----------------------------------------
+*/
+
+.characterCreatorRace {
+  display: flex;
+  flex-direction: row;
+}
+
+.characterCreatorTabContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.abilityModDisplay {
+  border: var(--thinBorder);
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  background-color: var(--nonRollBackground);
+}
+
+.abilityBox select {
+  max-width: 8rem;
+}
+
+
+/*
+----------------------------------------
+Character Inventory Area Spells Menu
+----------------------------------------
+*/
+
+.spellsLevelSectionHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+/*
+----------------------------------------
+Character Inventory Area Inventory Menu
+----------------------------------------
+*/
+
+.inventoryMenuHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inventorySectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.inventorySection {
+  display: flex;
+  flex-direction: column;
+}
+
+.characterInventoryAreaSection {
+  margin: 0.3em 0.7em;
+}
+
+
+/*
+----------------------------------------
+Character Inventory Area Notes Menu
+----------------------------------------
+*/
+
+.notesMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.notesSection {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/*
+----------------------------------------
+Character Inventory Area Features Menu
+----------------------------------------
+*/
+
+.featuresMenu {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.featuresSection {
+  border: var(--thinBorder);
+}
