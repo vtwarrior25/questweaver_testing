@@ -39,7 +39,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     }
     fetch(url)
         .then(res => res.json())
-        .then(res => setRollResults2({...res}))
+        .then(res => setRollResults2({...res}));
   }
   
   
@@ -58,7 +58,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     );
   } else {
     return (
-        <Button variant='secondary' size='sm' onClick={() => diceRoll(false)}>{text}</Button>
+        <Button variant='secondary' size='sm' onClick={() => diceRoll("normal")}>{text}</Button>
     );
   }
 }
