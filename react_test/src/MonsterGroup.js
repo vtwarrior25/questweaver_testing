@@ -3,7 +3,7 @@ import DiceRollButton from './DiceRollButton';
 import { useState, useContext } from 'react';
 import { ModPosContext } from './Contexts';
 
-function MonsterGroup({monsterinfo, setRollResults}) {
+function MonsterGroup({key, monsterinfo, setRollResults}) {
 
 /*
 TODO
@@ -120,13 +120,13 @@ TODO
           </thead>
           <tbody>
             {monsterinfo.attacks.map((attack, index) =>  
-              <tr>
-              <td><span name={`attack${index}name`}>{attack.name}</span></td>
-              <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Attack" die={20} num={1} mod={attack.hit} text={modPos(attack.hit)} advantage={true}></DiceRollButton></td>
-              <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Damage" die={attack.dietype} num={attack.numdice} mod={attack.damagemod} text={`${attack.numdice}d${attack.dietype} ${modPos(attack.damagemod, true)}`} advantage={true}></DiceRollButton></td>
-              <td><span name={`damagetype${index}`}>Slashing</span></td>
-              <td className="monsterHealth"><input name={`monsterhealthinput${index}`} className="monsterHealthInput" type="number" defaultValue="0"/></td>
-            </tr>
+              <tr key={index}>
+                <td><span name={`attack${index}name`}>{attack.name}</span></td>
+                <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Attack" die={20} num={1} mod={attack.hit} text={modPos(attack.hit)} advantage={true}></DiceRollButton></td>
+                <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Damage" die={attack.dietype} num={attack.numdice} mod={attack.damagemod} text={`${attack.numdice}d${attack.dietype} ${modPos(attack.damagemod, true)}`} advantage={true}></DiceRollButton></td>
+                <td><span name={`damagetype${index}`}>Slashing</span></td>
+                <td className="monsterHealth"><input name={`monsterhealthinput${index}`} className="monsterHealthInput" type="number" defaultValue="0"/></td>
+              </tr>
             )}
             <tr>
               <td colSpan="4" rowSpan="2"><span name="skills">{monsterinfo.skills}</span></td>

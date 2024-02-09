@@ -107,7 +107,7 @@ function ManualDiceRoller ({setRollResults, vertical, nice}) {
   }
 
   return ( 
-    <div className="manualDiceRollSection frontElement">
+    <div className={`manualDiceRollSection ${vertical===true?"verticalManualRollSection":"horizontalManualRollSection"} frontElement`}>
       <ButtonGroup vertical={vertical}>
         {buttonvals.map((buttonval) => <ManualDiceRollButton key={buttonval.die} die={buttonval.die} value={buttonval.val} updateFunction={updateButtons} nice={nice}></ManualDiceRollButton>)}
       </ButtonGroup>

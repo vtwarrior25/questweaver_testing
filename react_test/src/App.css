@@ -145,6 +145,14 @@ Manual Dice Roll
   padding: 0.5rem;
 } 
 
+.verticalManualRollSection {
+  
+}
+
+.horizontalManualRollSection {
+  
+}
+
 .manualDiceRollButton {
   display: flex !important;
   flex-direction: row;
@@ -167,6 +175,7 @@ Manual Dice Roll
 .manualDiceRollIncrement {
 
 }
+
 
 /*
 ----------------------------------------

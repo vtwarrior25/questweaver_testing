@@ -8,8 +8,8 @@ html {
 }
 
 :root {
---mainBorder: 2px solid #000;
---thinBorder: 1px solid #000;
+--mainBorder: 0.15rem solid #000;
+--thinBorder: 0.1rem solid #000;
 --innerBackgroundColor: lightgrey;
 --nonRollBackground: #D2CDE9;
 --buttonColor: #CBDFE7;
@@ -104,6 +104,7 @@ Health Box
   flex-direction: row;
   gap: 1rem;
   padding: 0.5rem;
+  max-width: 18rem;
 } 
 
 .healthBox {
@@ -120,15 +121,39 @@ Static Stats
 
 .staticStatsBox {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 0.5rem;
-  padding: 0.3em;
+  padding: 0.4rem;
+  max-width: 16rem;
 }
 
 .statsContainer {
   display: flex;
   flex-direction: column;
   border: 0.1rem black solid;
+  text-align: left;
+  padding: 0.2rem;
+}
+
+.staticStatsItemName {
+  font-weight: bold;
+}
+
+
+/*
+----------------------------------------
+Skills Section 
+----------------------------------------
+*/
+
+
+.skillsBox {
+  padding: 0.5rem;
+  max-width: 16rem;
+}
+
+.skillsTable tbody tr:nth-child(even) {
+  background-color: var(--nonRollBackground)
 }
 
 /*
@@ -144,6 +169,10 @@ Manual Dice Roll
   gap: 1rem;
   padding: 0.5rem;
 } 
+
+.verticalManualRollSection {
+  max-width: 14rem;
+}
 
 .manualDiceRollButton {
   display: flex !important;
@@ -177,6 +206,7 @@ Saving Throw
 .characterSavingThrowSectionBox {
   display: flex;
   flex-direction: column;
+  max-width: 18rem;
 }
 
 .characterSavingThrowSection {
@@ -208,6 +238,7 @@ Defenses and Conditions
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  max-width: 23rem;
 }
 
 .defenseConditionsSubSection {
@@ -216,6 +247,10 @@ Defenses and Conditions
   flex: 0 0 50%;
   margin: 0.2rem;
   padding: 0.2rem;
+}
+
+.defenseConditionsInfo {
+  border: var(--thinBorder);
 }
 
 .restButtons {
@@ -252,7 +287,7 @@ Turn Order
 }
 
 .turnOrderItemRemove {
-  padding: 0.1em !important;
+  padding: 0.1rem !important;
 }
 
 .turnOrderButtons {

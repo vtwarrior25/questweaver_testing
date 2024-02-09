@@ -1,7 +1,7 @@
 import { Row, Col } from 'react-bootstrap';
-import Map from "./Map.js";
-import TurnOrder from "./TurnOrderBox.js";
-import Chat from "./Chatbox.js";
+import Map from "./Map";
+import TurnOrder from "./TurnOrderBox";
+import Chat from "./Chatbox";
 
 function MapSection({showboxes, setShowBoxes}) {
   return ( 

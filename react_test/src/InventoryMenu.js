@@ -128,7 +128,7 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} classname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight}></InventorySection>)}
+        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight}></InventorySection>)}
       </div>
     </div>
   );

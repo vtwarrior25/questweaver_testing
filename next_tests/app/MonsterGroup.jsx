@@ -21,6 +21,7 @@ TODO
     console.log("This will remove the monster group");
   }
 
+
   return ( 
     <div className="monsterGroupDisplay frontElement">
       <div className="monsterGroupDisplayBasicInfo">
@@ -120,7 +121,7 @@ TODO
           </thead>
           <tbody>
             {monsterinfo.attacks.map((attack, index) =>  
-              <tr>
+              <tr key={index}>
               <td><span name={`attack${index}name`}>{attack.name}</span></td>
               <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Attack" die={20} num={1} mod={attack.hit} text={modPos(attack.hit)} advantage={true}></DiceRollButton></td>
               <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Damage" die={attack.dietype} num={attack.numdice} mod={attack.damagemod} text={`${attack.numdice}d${attack.dietype} ${modPos(attack.damagemod, true)}`} advantage={true}></DiceRollButton></td>
@@ -148,7 +149,7 @@ TODO
       <div className="monsterGroupNotesSection">
         <div className="monsterGroupNotes"></div>
           <label htmlFor="monsterGroupNotesText">Notes</label>
-          <textarea name="monsterGroupNotesText">Nimble Escape (Disengage or Hide as Bonus Action)</textarea>
+          <textarea name="monsterGroupNotesText"></textarea>
       </div>
     </div>
   );

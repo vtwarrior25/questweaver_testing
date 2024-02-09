@@ -162,7 +162,9 @@ function MonsterSheet({setRollResults}) {
         </div>
       </div>
       <div className="monsterGroupDisplaySection">
-        {getMonsterGroups(encounterselected).map((monstergroup) => <MonsterGroup key={monstergroup.id} monsterinfo={monstergroup} setRollResults={setRollResults}/>)}
+        {getMonsterGroups(encounterselected).map((monstergroup, index) => 
+          <MonsterGroup key={index} monsterinfo={monstergroup} setRollResults={setRollResults}/>
+        )}
         <MonsterGroupForm></MonsterGroupForm>
       </div>
     </div>

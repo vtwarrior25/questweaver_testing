@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
-import { RollResultsContext, SetRollResultsContext, ModPosContext }  from "./Contexts.js";
+import { RollResultsContext, SetRollResultsContext, ModPosContext }  from "./Contexts";
 
 
 function App () {

@@ -189,7 +189,7 @@ function characterInfoFromDB (infotype) {
         perception: 5,
         investigation: 5,
         insight: 5,
-        armor: "Light, Medium, Shields",
+        armor: "Light, Medium, Heavy, Shields",
         weapons: "Martial, Simple",
         tools: "Cobbler's, Land Vehicles",
         languages: "Common, Halfling",
