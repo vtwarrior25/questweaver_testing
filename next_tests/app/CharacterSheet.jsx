@@ -17,7 +17,17 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
   }, [showboxes]);
   
   return ( 
-    <div>
+    <div className='characterSheet'>
+      {/*
+      {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
+      {showboxes.showhealthsection && <HealthSection></HealthSection>}
+      {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
+      {showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}
+      {showboxes.showsavingthrowsection && <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>}
+      {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>}
+      {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
+      {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
+  */}
       <Row>
         <Col>
           {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
@@ -29,7 +39,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       <Row>
         <Col>
           {showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}
-          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults}></StaticStatsBox>}
+          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} accordion={false}></StaticStatsBox>}
           {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
         <Col>
@@ -38,22 +48,6 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
           {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
         </Col>
       </Row>
-      {/*<Row>
-        <Col>
-          
-        </Col> 
-        <Col>
-          
-        </Col>
-      </Row>    
-      <Row>
-        <Col>
-          
-        </Col>
-        <Col>
-        
-        </Col>
-      </Row>*/}
     </div>
   );
 }

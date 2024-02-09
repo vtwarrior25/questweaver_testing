@@ -46,6 +46,12 @@ html {
   gap: 0.5em;
 }
 
+.characterSheet {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .offcanvasVisibilityToggles {
   display: flex;
   flex-direction: column;
@@ -382,6 +388,8 @@ Monster Sheet
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
+  padding: 0.5rem;
+  border: var(--thinBorder);
 }
 
 /*.monsterGroupDisplayBasicInfo {
