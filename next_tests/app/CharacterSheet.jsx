@@ -39,7 +39,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       <Row>
         <Col>
           {showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}
-          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} accordion={false}></StaticStatsBox>}
+          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} collapse={true}></StaticStatsBox>}
           {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
         <Col>
