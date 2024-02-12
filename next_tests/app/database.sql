@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS player_character (
 
 CREATE TABLE IF NOT EXISTS player_character_note (
 	character_note_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id						integer REFERENCES character(character_id) NOT NULL,
+	character_id						integer REFERENCES player_character(character_id) NOT NULL,
 	alignment_id						integer REFERENCES alignment(alignment_id) NOT NULL,
 	/*
 	gender									varchar(10),
@@ -236,24 +236,11 @@ CREATE TABLE IF NOT EXISTS class_action_feature (
 	recovery										integer
 );
 
-CREATE TABLE IF NOT EXISTS spell_feature (
-	spell_feature_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	feature_id						integer REFERENCES feature(feature_id) NOT NULL,
-	spell_id							integer REFERENCES spell(spell_id) NOT NULL
-);
-
-
-CREATE TABLE IF NOT EXISTS attack_feature (
-	attack_feature_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	feature_id						integer REFERENCES feature(feature_id) NOT NULL,
-	attack_id							integer REFERENCES attack(attack_id) NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS manual_feature (
 	manual_feature_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	feature_id						integer REFERENCES feature(feature_id) NOT NULL
 );
-
 
 
 CREATE TABLE IF NOT EXISTS defense_feature (
@@ -533,6 +520,12 @@ CREATE TABLE IF NOT EXISTS diceroll_spell (
 	effect_type						integer REFERENCES effect_type(effect_type_id) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS spell_feature (
+	spell_feature_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	feature_id						integer REFERENCES feature(feature_id) NOT NULL,
+	spell_id							integer REFERENCES spell(spell_id) NOT NULL
+);
+
 /*
 CREATE TABLE IF NOT EXISTS manual_spell (
 	manual_spell_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -554,47 +547,6 @@ CREATE TABLE IF NOT EXISTS spell_list (
 
 
 
-/*
-------------------------------------------------------------------------
-Attack Tables
-------------------------------------------------------------------------
-*/
-
-CREATE TABLE IF NOT EXISTS attack (
-	attack_id						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name 								varchar(40) NOT NULL,
-	range								integer,
-	attack_modifier_id	integer REFERENCES ability(ability_id) NOT NULL,
-	damage_modifier_id	integer REFERENCES ability(ability_id) NOT NULL,
-	damage_die					integer REFERENCES dice(dice_id) NOT NULL,
-	num_damage_die			integer,
-	effect_type_id			integer REFERENCES effect_type(effect_type_id) NOT NULL,
-	description 				varchar(300)
-);
-/*
-For this, we will need to join the ability FKs with entries in character_ability associated with the character id
-*/
-
-
-CREATE TABLE IF NOT EXISTS monster_attack (
-	monster_attack_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	monster_group_id			integer REFERENCES monster_group(monster_group_id) NOT NULL,
-	attack_id							integer REFERENCES attack(attack_id) NOT NULL
-);
-
-
-CREATE TABLE IF NOT EXISTS character_attack (
-	character_attack_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id					integer REFERENCES character(character_id) NOT NULL,
-	attack_id							integer REFERENCES attack(attack_id) NOT NULL
-);
-
-
-CREATE TABLE IF NOT EXISTS weapon_attack (
-	weapon_attack_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	weapon_id							integer REFERENCES weapon(weapon_id) NOT NULL,
-	attack_id							integer REFERENCES attack(attack_id) NOT NULL
-);
 
 
 /*
@@ -656,6 +608,55 @@ CREATE TABLE IF NOT EXISTS weapon_property (
 	weapon_property_id 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	weapon_id											integer REFERENCES weapon(weapon_id) NOT NULL,
 	possible_weapon_property_id		integer REFERENCES possible_weapon_property(possible_weapon_property_id) NOT NULL
+);
+
+/*
+------------------------------------------------------------------------
+Attack Tables
+------------------------------------------------------------------------
+*/
+
+CREATE TABLE IF NOT EXISTS attack (
+	attack_id						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name 								varchar(40) NOT NULL,
+	range								integer,
+	attack_modifier_id	integer REFERENCES ability(ability_id) NOT NULL,
+	damage_modifier_id	integer REFERENCES ability(ability_id) NOT NULL,
+	damage_die					integer REFERENCES dice(dice_id) NOT NULL,
+	num_damage_die			integer,
+	effect_type_id			integer REFERENCES effect_type(effect_type_id) NOT NULL,
+	description 				varchar(300)
+);
+/*
+For this, we will need to join the ability FKs with entries in character_ability associated with the character id
+*/
+
+
+CREATE TABLE IF NOT EXISTS monster_attack (
+	monster_attack_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	monster_group_id			integer REFERENCES monster_group(monster_group_id) NOT NULL,
+	attack_id							integer REFERENCES attack(attack_id) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS character_attack (
+	character_attack_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	character_id					integer REFERENCES character(character_id) NOT NULL,
+	attack_id							integer REFERENCES attack(attack_id) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS weapon_attack (
+	weapon_attack_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	weapon_id							integer REFERENCES weapon(weapon_id) NOT NULL,
+	attack_id							integer REFERENCES attack(attack_id) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS attack_feature (
+	attack_feature_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	feature_id						integer REFERENCES feature(feature_id) NOT NULL,
+	attack_id							integer REFERENCES attack(attack_id) NOT NULL
 );
 
 

@@ -494,6 +494,16 @@ Character Creation
   max-width: 8rem;
 }
 
+/*
+----------------------------------------
+Character Inventory Area 
+----------------------------------------
+*/
+
+.characterInventoryArea {
+  max-width: 40em;
+}
+
 
 /*
 ----------------------------------------
@@ -569,4 +579,32 @@ Character Inventory Area Features Menu
 
 .featuresSection {
   border: var(--thinBorder);
+}
+
+
+/*
+----------------------------------------
+Money Menu
+----------------------------------------
+*/
+
+.moneyMenu {
+  opacity: 90% !important;
+  padding: 0.5em;
+  border: var(--thinBorder);
+  background-color: var(--nonRollBackground)
+}
+
+
+/*
+----------------------------------------
+Manage Inventory Menu (temporary)
+----------------------------------------
+*/
+
+.manageInventoryMenu {
+  opacity: 90% !important;
+  padding: 0.5em;
+  border: var(--thinBorder);
+  background-color: var(--nonRollBackground)
 }

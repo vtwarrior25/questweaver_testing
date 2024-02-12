@@ -1,10 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { useState, useEffect, useRef} from 'react';
+import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
+import MoneyMenu from './MoneyMenu';
+import ManageInventory from './ManageInventory';
 
 function InventoryMenu() {
 
   const [totalweight, setTotalWeight] = useState(0);
+  const [showmoneymenu, setShowMoneyMenu] = useState(false);
+  const [showmanageinventory, setShowManageInventory] = useState();
+
+  const moneytarget = useRef(null);
+  const managetarget = useRef(null);
+
+  const [money, setMoney] = useState({
+    copper: 0,
+    silver: 0,
+    electrum: 0,
+    gold: 0,
+    platinum: 0,
+  });
 
   const [sections, setSections] = useState([
     {
@@ -123,8 +138,40 @@ function InventoryMenu() {
       <div className="inventoryMenuHeader">
         <div className="weightSection">{totalweight} lb</div>
         <div className='inventoryHeaderButtonSection'>
-          <Button variant='secondary' size='sm'>Money</Button>
-          <Button variant='secondary' size='sm'>Manage Inventory</Button>
+          <Button variant='secondary' size='sm' ref={moneytarget} onClick={() => setShowMoneyMenu(!showmoneymenu)}>Money</Button>
+          <Overlay target={moneytarget.current} show={showmoneymenu} placement="bottom">
+            <div className='moneyMenu'>
+              <span>Money</span>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Platinum</td>
+                    <td><input type="number" size="5" value={money.platinum} onChange={(e) => setMoney({...money, platinum: Number(e.target.value)})}></input></td>
+                  </tr>
+                  <tr>
+                    <td>Gold</td>
+                    <td><input type="number" size="5" value={money.gold} onChange={(e) => setMoney({...money, gold: Number(e.target.value)})}></input></td>
+                  </tr>
+                  <tr>
+                    <td>Electrum</td>
+                    <td><input type="number" size="5" value={money.electrum} onChange={(e) => setMoney({...money, electrum: Number(e.target.value)})}></input></td>
+                  </tr>
+                  <tr>
+                    <td>Silver</td>
+                    <td><input type="number" size="5" value={money.silver} onChange={(e) => setMoney({...money, silver: Number(e.target.value)})}></input></td>
+                  </tr>
+                  <tr>
+                    <td>Copper</td>
+                    <td><input type="number" size="5" value={money.copper} onChange={(e) => setMoney({...money, copper: Number(e.target.value)})}></input></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Overlay>
+          <Button variant='secondary' size='sm' ref={managetarget} onClick={() => setShowManageInventory(!showmanageinventory)}>Manage Inventory</Button>
+          <Overlay target={managetarget.current} show={showmanageinventory} placement='bottom'>
+            <ManageInventory></ManageInventory>
+          </Overlay>
         </div>
       </div>
       <div className="inventoryTablesSection">
