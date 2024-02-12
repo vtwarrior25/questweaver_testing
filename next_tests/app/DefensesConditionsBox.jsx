@@ -4,7 +4,7 @@ function DefensesConditionsBox() {
   return ( 
     <div className="defensesConditionsBox frontElement">
       <div className="defensesSection defenseConditionsSubSection">
-        <Button variant='secondary' size='sm'>Character Creation</Button>
+        <Button variant='secondary' size='sm'>Short Rest</Button>
         <div className='defenseConditionsInfo'>
           <span className='characterSheetSectionTitle'>Defenses</span>
           <div>
@@ -14,11 +14,13 @@ function DefensesConditionsBox() {
       </div>
       <div className='conditionsSection defenseConditionsSubSection'>
         <div className='restButtons'>
-          <Button variant='secondary' size='sm'>Short Rest</Button>
           <Button variant='secondary' size='sm'>Long Rest</Button>
         </div>
         <div className='defenseConditionsInfo'>
           <span className='characterSheetSectionTitle'>Conditions</span>
+          <div>
+            Dry Heaving
+          </div>
         </div>
       </div>
     </div>

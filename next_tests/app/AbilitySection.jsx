@@ -2,6 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import AbilityBox from './AbilityBox'
 import { ModPosContext } from "./Contexts";
 
+/*
+export async function getServerSideProps () {
+  console.log("We are vibin brothers");
+  const res = await fetch("http://localhost:9000/getcharacterinfo?infotype=ability");
+  const repo = await res.json();
+  return { props: {abilities} };
+}
+*/
+
 function AbilitySection ({setRollResults, rollresults}) {
 
   const [abilities, setAbilities] = useState([
@@ -55,6 +64,7 @@ function AbilitySection ({setRollResults, rollresults}) {
     getAbilities();
   }, []
   );
+  
   
 
   return (
