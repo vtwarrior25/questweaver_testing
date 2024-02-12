@@ -1,12 +1,13 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, ButtonGroup, Overlay } from 'react-bootstrap';
-import { ModPosContext, SetRollResultsContext } from "./Contexts";
+import { ModPosContext, SetRollResultsContext, URLContext } from "./Contexts";
 
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage}) {
   
     const setRollResults2 = useContext(SetRollResultsContext);
     const modPos = useContext(ModPosContext);
+    const url = useContext(URLContext);
 
     const target = useRef(null);
 
@@ -31,13 +32,13 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
 */
 
   const diceRoll = (adv) => {
-    let url = `http://localhost:9000/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+    let rollapi = `${url}/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     if (adv === "advantage") {
-      url = `http://localhost:9000/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+      rollapi = `${url}/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     } else if (adv === "disadvantage") {
-      url = `http://localhost:9000/rollcheck?checkmode=disadvantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+      rollapi = `${url}/rollcheck?checkmode=disadvantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     }
-    fetch(url)
+    fetch(rollapi)
         .then(res => res.json())
         .then(res => setRollResults2({...res}));
   }

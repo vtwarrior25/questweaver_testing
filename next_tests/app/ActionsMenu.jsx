@@ -69,8 +69,8 @@ function ActionsMenu({setRollResults}) {
               <tr key={index}>
                 <td>{action.name}</td>
                 <td>{action.range}</td>
-                <td><DiceRollButton name={action.name} rolltype={"Attack"} die={20} num={1} mod={action.hitdc} setRollResults={setRollResults} text={modPos(action.hitdc)}></DiceRollButton></td>
-                <td><DiceRollButton name={action.name} rolltype={"Damage"} die={action.effectdie} num={action.effectdienum} mod={action.effectbonus} setRollResults={setRollResults} text={`${action.effectdienum}d${action.effectdie} ${modPos(action.effectbonus, true)} `}></DiceRollButton></td>
+                <td><DiceRollButton name={action.name} rolltype={"Attack"} die={20} num={1} mod={action.hitdc} setRollResults={setRollResults} text={modPos(action.hitdc)} advantage={true}></DiceRollButton></td>
+                <td><DiceRollButton name={action.name} rolltype={"Damage"} die={action.effectdie} num={action.effectdienum} mod={action.effectbonus} setRollResults={setRollResults} text={`${action.effectdienum}d${action.effectdie} ${modPos(action.effectbonus, true)} `} advantage={true}></DiceRollButton></td>
                 <td>{action.notes}</td>
               </tr>
             )}

@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
-import { RollResultsContext, SetRollResultsContext, ModPosContext }  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext }  from "./Contexts";
 
 
 function App () {
@@ -116,6 +116,7 @@ function App () {
     <ModPosContext.Provider value={modPos}>
     <SetRollResultsContext.Provider value={setRollResults}>
     <RollResultsContext.Provider value={rollresults}>
+    <URLContext.Provider value={"http://localhost:9000"}>
     <div className="App">
       <Container fluid className="mainContainer">
         <Row>
@@ -157,6 +158,7 @@ function App () {
         </Offcanvas.Body>
       </Offcanvas>
     </div>
+    </URLContext.Provider>
     </RollResultsContext.Provider>
     </SetRollResultsContext.Provider>
     </ModPosContext.Provider>

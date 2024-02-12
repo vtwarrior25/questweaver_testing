@@ -112,8 +112,8 @@ function ManualDiceRoller ({setRollResults, vertical, nice}) {
         {buttonvals.map((buttonval) => <ManualDiceRollButton key={buttonval.die} die={buttonval.die} value={buttonval.val} updateFunction={updateButtons} nice={nice}></ManualDiceRollButton>)}
       </ButtonGroup>
       <ButtonGroup vertical={vertical} size='sm'>
-        <Button variant='secondary' onClick={() => manualRoll()}>Roll</Button>
-        <Button variant='secondary' onClick={() => resetButtons()}>Reset</Button>
+        <Button className="manualDiceRollControl" variant='secondary' onClick={() => manualRoll()}>Roll</Button>
+        <Button className="manualDiceRollControl" variant='secondary' onClick={() => resetButtons()}>Reset</Button>
       </ButtonGroup>
     </div>
       

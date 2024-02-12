@@ -46,11 +46,7 @@ html {
   gap: 0.5em;
 }
 
-.characterSheet {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+
 
 .offcanvasVisibilityToggles {
   display: flex;
@@ -65,6 +61,28 @@ html {
 .accordion-button {
   padding: 0.5em 0.5em !important;
 }
+
+/*
+----------------------------------------
+Character Sheet
+----------------------------------------
+*/
+
+
+.characterSheet {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.characterSheetGrid {
+  display: grid;
+  grid-template-columns: 25% 15% 40% 30%;
+  grid-template-rows: 10% 10% ;
+}
+
+
 /*
 ----------------------------------------
 Ability Section
@@ -76,7 +94,7 @@ Ability Section
   grid-row: 1 / span 1;
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 0.4rem;
   /*
   width: 30%;
   */
@@ -87,12 +105,14 @@ Ability Section
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: space-evenly;
+  max-width: 28rem;
+  max-height: 8rem;
 }
 
 .abilityBox {
   border-radius: 0.5rem;
   padding: 0.3rem;
-  margin: 0rem 0.6rem;
+  margin: 0rem 0.5rem;
   position: relative;
   text-align: center;
   display: flex;
@@ -114,6 +134,7 @@ Health Box
   gap: 1rem;
   padding: 0.5rem;
   max-width: 18rem;
+  max-height: 8rem;
 } 
 
 .healthBox {
@@ -133,7 +154,9 @@ Static Stats
   flex-direction: column;
   gap: 0.5rem;
   padding: 0.4rem;
-  max-width: 16rem;
+  /*max-width: 16rem;*/
+  max-width: 24rem;
+  max-height: 16rem;
 }
 
 .statsContainer {
@@ -159,6 +182,7 @@ Skills Section
 .skillsBox {
   padding: 0.5rem;
   max-width: 16rem;
+  overflow-y: auto;
 }
 
 .skillsTable tbody tr:nth-child(even) {
@@ -181,6 +205,7 @@ Manual Dice Roll
 
 .verticalManualRollSection {
   max-width: 14rem;
+  max-height: 13rem;
 }
 
 .manualDiceRollButton {
@@ -202,8 +227,8 @@ Manual Dice Roll
   justify-content: space-evenly;
 }
 
-.manualDiceRollIncrement {
-
+.manualDiceRollControl {
+  border: var(--mainBorder) !important;
 }
 
 /*
@@ -216,6 +241,7 @@ Saving Throw
   display: flex;
   flex-direction: column;
   max-width: 18rem;
+  max-height: 10rem;
 }
 
 .characterSavingThrowSection {
@@ -248,6 +274,7 @@ Defenses and Conditions
   flex-direction: row;
   justify-content: space-evenly;
   max-width: 23rem;
+  max-height: 7rem;
 }
 
 .defenseConditionsSubSection {
@@ -321,6 +348,17 @@ Map Section
 */
 
 .mapSection {
+  display: flex;
+  flex-direction: row;
+}
+
+.mapToolButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.mapZoomButtons {
   display: flex;
   flex-direction: row;
 }

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Stack, Button, Accordion } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Stack, Button, Accordion, Tab, Tabs } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
+import { URLContext } from './Contexts';
+import { useCol } from 'react-bootstrap/esm/Col';
 
 function StaticStatsBox (setRollResults, rollresults, collapse) { 
+
+  const url = useContext(URLContext);
+
   const [staticstats, setStaticStats] = useState({
       profbonus: 2,
       speed: 30,
@@ -24,72 +29,103 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
 
 
   const getStats = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=staticstats`)
+    fetch(`${url}/getcharacterinfo?infotype=staticstats`)
     .then(res => res.json())
     .then(res => setStaticStats(res));
   }
 
-  if (collapse === false) {
-    console.log("Neato burrito")
-    return ( 
-      <div className="staticStatsBox frontElement">
-        <div className="statsContainer senses">
-          <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
-          <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
-          <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
-        </div>
-        <div className="statsContainer generalStats">
-          <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
-          <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
-          <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
-          <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
-        </div>
-        <div className="statsContainer proficiencies">
-          <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
-          <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
-          <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
-          <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
-        </div>
+{/*
+  return ( 
+    <div className="staticStatsBox frontElement">
+      <div className="statsContainer senses">
+        <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
+        <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
+        <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
       </div>
-    );
-  } else {
-    return ( 
-      <Accordion className="staticStatsBox frontElement" defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Senses</Accordion.Header>
-          <Accordion.Body>
-            <div className="statsContainer senses">
-              <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
-              <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
-              <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>General Stats</Accordion.Header>
-          <Accordion.Body>
-            <div className="statsContainer generalStats">
-              <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
-              <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
-              <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
-              <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="2">
-          <Accordion.Header>Proficiencies</Accordion.Header>
-          <Accordion.Body>
-            <div className="statsContainer proficiencies">
-              <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
-              <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
-              <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
-              <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-    );
-  }
+      <div className="statsContainer generalStats">
+        <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
+        <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
+        <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
+        <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
+      </div>
+      <div className="statsContainer proficiencies">
+        <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
+        <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
+        <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
+        <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
+      </div>
+    </div>
+  );
+  */}
+{/*
+  return ( 
+    <Accordion className="staticStatsBox frontElement" defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Senses</Accordion.Header>
+        <Accordion.Body>
+          <div className="statsContainer senses">
+            <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
+            <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
+            <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
+          </div>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>General Stats</Accordion.Header>
+        <Accordion.Body>
+          <div className="statsContainer generalStats">
+            <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
+            <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
+            <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
+            <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
+          </div>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="2">
+        <Accordion.Header>Proficiencies</Accordion.Header>
+        <Accordion.Body>
+          <div className="statsContainer proficiencies">
+            <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
+            <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
+            <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
+            <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
+          </div>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  );
+  */}
+
+
+  return (
+    <div className="staticStatsBox frontElement">
+      <Tabs defaultActiveKey="0">
+        <Tab eventKey="0" title="Senses">
+          <div className="statsContainer senses">
+            <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
+            <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
+            <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
+          </div>
+        </Tab>
+        <Tab eventKey="1" title="General Stats">
+          <div className="statsContainer generalStats">
+            <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
+            <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
+            <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
+            <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
+          </div>
+        </Tab>
+        <Tab eventKey="2" title="Proficiencies">
+          <div className="statsContainer proficiencies">
+            <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
+            <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
+            <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
+            <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
+          </div>
+        </Tab>
+      </Tabs>
+    </div> 
+  );
   
 }
 
