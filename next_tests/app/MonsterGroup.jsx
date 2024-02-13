@@ -3,7 +3,7 @@ import DiceRollButton from './DiceRollButton';
 import { useState, useContext } from 'react';
 import { ModPosContext } from './Contexts';
 
-function MonsterGroup({monsterinfo, setRollResults}) {
+function MonsterGroup({monsterinfo, encounter, setRollResults, removeMonsterGroup}) {
 
 /*
 TODO
@@ -15,10 +15,6 @@ TODO
 
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
-  }
-
-  const removeMonsterGroup = () => {
-    console.log("This will remove the monster group");
   }
 
 
@@ -61,7 +57,7 @@ TODO
               <td><span name="speed">{monsterinfo.basicinfo.speed}</span></td>
             </tr>
             <tr>
-              <td colSpan="3"><button className="monsterRemoveFromEncounterButton" onClick={() => removeMonsterGroup()}>Remove From Encounter</button></td>
+              <td colSpan="3"><Button variant='secondary' size='sm' className="monsterRemoveFromEncounterButton" onClick={() => removeMonsterGroup(monsterinfo, encounter)}>Remove From Encounter</Button></td>
             </tr>
           </tbody>
         </Table>

@@ -68,7 +68,7 @@ function AbilitySection ({setRollResults, rollresults}) {
   
 
   return (
-      <div className="abilityContainer frontElement">
+      <div className="abilityContainer characterAbilityContainer frontElement">
         {abilities.map((ability, index) => <AbilityBox key={index} name={ability.abilityname} abbrev={ability.abilityabbrev} score={ability.abilityscore} bonus={ability.abilitybonus} setRollResults={setRollResults} rollresults={rollresults}/>)}
       </div>
   );

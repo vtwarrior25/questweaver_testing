@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef} from 'react';
 import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
-import MoneyMenu from './MoneyMenu';
 import ManageInventory from './ManageInventory';
 
 function InventoryMenu() {
@@ -44,6 +43,19 @@ function InventoryMenu() {
     console.log("After setting");
     console.log(sections); // This will show sections in console
   } 
+
+  const addItem = (section, item, quantity) => {
+    let otheritem;
+    if (matcheditems = items.filter((newitem) => newitem.name === item.name && newitem.section === item.section)) {
+      matcheditem = matcheditems[0];
+    } else {
+      otheritem = {...item, section: section, qty: quantity};
+    }
+    
+    // Check if object already exists in section, if so add quantity to add to quantity
+    //setItems([...items, newitem]);
+  } 
+
 
   useEffect(() => {
     let weightcount = 0;
@@ -170,7 +182,9 @@ function InventoryMenu() {
           </Overlay>
           <Button variant='secondary' size='sm' ref={managetarget} onClick={() => setShowManageInventory(!showmanageinventory)}>Manage Inventory</Button>
           <Overlay target={managetarget.current} show={showmanageinventory} placement='bottom'>
-            <ManageInventory></ManageInventory>
+            <div className='manageInventoryOverlay'>
+              <ManageInventory addItem={addItem}></ManageInventory>
+            </div>
           </Overlay>
         </div>
       </div>

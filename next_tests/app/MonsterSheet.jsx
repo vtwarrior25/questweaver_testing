@@ -32,6 +32,7 @@ function MonsterSheet({setRollResults}) {
       monstergroups: [
         {
           basicinfo: {
+            id: 0,
             name: "Jeff",
             quantity: 2,
             description: "Cragmaw",
@@ -144,6 +145,27 @@ function MonsterSheet({setRollResults}) {
     console.log(selectedencounter.monstergroups);
     */
   }
+
+  // TODO test this code more
+  const removeMonsterGroup = (monsterinfo, encountername) => { 
+    console.log("starting to remove monstergroup");
+    // Grab the encounter with the same name, and grab the first array element if there are multiple encounters with the same name
+    let theencounter = encounters.filter((encounter) => encounter.encountername === encountername)[0];
+    // Grab all other encounters
+    let otherencounters = encounters.filter((encounter) => !encounter.encountername === encountername)
+    // Grab all monster groups in the encounter except for the one we want to remove
+    let newmonstergroups = theencounter.monstergroups.filter((monstergroup) => monstergroup === monsterinfo);
+    // Set filtered array of monster groups to monstergroups in copied encounter
+    theencounter.monstergroups = newmonstergroups;
+    // Set encounters to all other encounters and modified encounter
+    setEncounters([otherencounters, theencounter]);
+  } 
+
+  /*
+  const removeTurnOrderItem = (nametoremove, initiative) => {
+    setTurnOrder(turnorder.filter((turn) => turn.name !== nametoremove || turn.initiative !== initiative))
+  }
+  */
   
 
   return ( 
@@ -163,7 +185,7 @@ function MonsterSheet({setRollResults}) {
       </div>
       <div className="monsterGroupDisplaySection">
         {getMonsterGroups(encounterselected).map((monstergroup, index) => 
-          <MonsterGroup key={index} monsterinfo={monstergroup} setRollResults={setRollResults}/>
+          <MonsterGroup key={index} encounter={encounterselected} monsterinfo={monstergroup} removeMonsterGroup={removeMonsterGroup} setRollResults={setRollResults}/>
         )}
         <MonsterGroupForm></MonsterGroupForm>
       </div>

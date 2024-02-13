@@ -105,9 +105,13 @@ Ability Section
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: space-evenly;
+}
+
+.characterAbilityContainer {
   max-width: 28rem;
   max-height: 8rem;
 }
+
 
 .abilityBox {
   border-radius: 0.5rem;
@@ -606,5 +610,22 @@ Manage Inventory Menu (temporary)
   opacity: 90% !important;
   padding: 0.5em;
   border: var(--thinBorder);
-  background-color: var(--nonRollBackground)
+  background-color: var(--nonRollBackground);
+
+  display: flex;
+  flex-direction: column;
+  max-width: 20rem;
+}
+
+.searchEquipmentList {
+  display: flex;
+  flex-direction: column;
+}
+
+.equipmentListItem {
+  border: var(--thinBorder);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
 }
