@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 const pgp = require('pg-promise')();
 
 const connection = {
@@ -273,11 +271,8 @@ function characterInfoFromDB (infotype) {
   return dbresult;
 }
 
-
-router.get('/', function(req, res) {
+export default function handler(req, res) {
   let q = req.query;
   let characterinfo = characterInfoFromDB(q.infotype);
-  res.send(characterinfo);
-});
-
-module.exports = router;
+  res.status(200).json(characterinfo);
+}

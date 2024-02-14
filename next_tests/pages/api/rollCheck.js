@@ -1,6 +1,3 @@
-var express = require('express');
-var router = express.Router();
-
 function rollDice (die, num) { 
   console.log(`die = ${die}, num = ${num}`);
   dicerolls = [];
@@ -164,11 +161,8 @@ export default function handler(req, res) {
       fincheck.rolltype = `${fincheck.rolltype} (Disadvantage)`;
       break;
   }
-  res.send(fincheck);
+  res.status(200).json(fincheck);
 }
-
-module.exports = router;
-
 
 /*
 Dice Rolll API Testing URL
