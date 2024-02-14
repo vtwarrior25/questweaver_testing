@@ -187,7 +187,7 @@ function MonsterSheet({setRollResults}) {
         {getMonsterGroups(encounterselected).map((monstergroup, index) => 
           <MonsterGroup key={index} encounter={encounterselected} monsterinfo={monstergroup} removeMonsterGroup={removeMonsterGroup} setRollResults={setRollResults}/>
         )}
-        <MonsterGroupForm></MonsterGroupForm>
+        <MonsterGroupForm encounters={encounters}></MonsterGroupForm>
       </div>
     </div>
   );

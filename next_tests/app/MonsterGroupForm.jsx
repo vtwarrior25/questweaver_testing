@@ -1,9 +1,15 @@
-import { useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { useState, useRef} from 'react';
+import { Button, ButtonGroup, Table, Overlay } from 'react-bootstrap';
 
-function MonsterGroupForm() {
+function MonsterGroupForm({encounters}) {
   
   const [duplicatemenudisplay, setDuplicateMenuDisplay] = useState(false);
+  const duplicatetarget = useRef(null);
+
+  const [duplicatemenustate, setDuplicateMenuState] = useState({
+    encounter: "",
+    monster: "",
+  })
 
   const [abilitymodifiers, setAbilityModifiers] = useState({
     init: 0,
@@ -21,16 +27,6 @@ function MonsterGroupForm() {
   
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
-  }
-
-
-  const toggleDuplicateMenu = () => {
-    if (duplicatemenudisplay === false) {
-      setDuplicateMenuDisplay(true);
-    } else {
-      setDuplicateMenuDisplay(false);
-    }
-    console.log("This should toggle the visibility of the duplicate menu");
   }
 
   return (
@@ -101,7 +97,28 @@ function MonsterGroupForm() {
                   <td><input type="number" name="speed" placeholder="Speed" size="5" /></td>
                 </tr>
                 <tr>
-                  <td colSpan="3"><button type="button" id="monsterDuplicateButton" onClick={toggleDuplicateMenu}>Duplicate</button><button type="reset" id="monsterFormClear">Reset</button></td>
+                  <td colSpan="3">
+                    <ButtonGroup>
+                      <Button type="button" ref={duplicatetarget} onClick={() => setDuplicateMenuDisplay(!duplicatemenudisplay)}>Duplicate</Button>
+                      <Button type="reset" id="monsterFormClear">Reset</Button>
+                    </ButtonGroup>
+                    <Overlay target={duplicatetarget.current} show={duplicatemenudisplay} placement='top'> 
+                      <div className='monsterGroupDuplicateMenu frontElement'>
+                        <label htmlFor="encounter">Encounter</label>
+                        <select name="encounter" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, encounter: e.target.value})}>
+                          {encounters.map((encounter) => {
+                            <option value={encounter.encountername}>{encounter.encountername}</option>
+                          })}
+                          <option>Beans</option>
+                        </select>
+                        <label htmlFor="monster">Monster</label>
+                        <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: e.target.value})}>
+                          <option>Beans</option>
+                        </select>
+                        <Button variant='secondary' size='sm'>Duplicate Monster Group</Button>
+                      </div>
+                    </Overlay>
+                  </td>
                 </tr>
               </tbody>
             </Table>
@@ -236,7 +253,7 @@ function MonsterGroupForm() {
             <div className="monsterGroupEncounterSelector">
               <label htmlFor="monsterGroupEncounter">Encounter</label>
               <input type="text" name="monsterGroupEncounter"/>
-              <button type="button" value="Add" onClick={addEncounter}>Add</button>
+              <Button type="button" variant="secondary" size="sm" value="Add" onClick={addEncounter}>Add</Button>
             </div>
           </div>
         </div>

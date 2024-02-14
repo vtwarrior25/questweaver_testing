@@ -470,6 +470,12 @@ Monster Sheet
   flex-direction: column;
 }
 
+.monsterGroupDuplicateMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
 /*
 ----------------------------------------
 Character Creation
