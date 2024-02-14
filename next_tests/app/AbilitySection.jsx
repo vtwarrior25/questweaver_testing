@@ -54,7 +54,7 @@ function AbilitySection ({setRollResults, rollresults}) {
 
   
   const getAbilities = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=ability`)
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=ability`)
         .then(res => res.json())
         .then(res => setAbilities(res));
     console.log(abilities);

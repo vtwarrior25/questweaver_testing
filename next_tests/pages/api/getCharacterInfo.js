@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const pgp = require('pg-promise')();
+//const pgp = require('pg-promise')();
 
+/*
 const connection = {
   host: 'localhost',
   port: 5432,
@@ -11,6 +10,7 @@ const connection = {
 }
 
 const db = pgp(connection);
+*/
 
 function characterInfoFromDB (infotype) {
   let dbquery = "";
@@ -265,8 +265,6 @@ function characterInfoFromDB (infotype) {
         },
       ];
       break;
-    case 'goofytown':
-      
   }
   //dbresult = db.query(dbquery)
   
@@ -274,10 +272,8 @@ function characterInfoFromDB (infotype) {
 }
 
 
-router.get('/', function(req, res) {
+export default function handler(req, res){
   let q = req.query;
   let characterinfo = characterInfoFromDB(q.infotype);
-  res.send(characterinfo);
-});
-
-module.exports = router;
+  res.status(200).json(characterinfo);
+};
