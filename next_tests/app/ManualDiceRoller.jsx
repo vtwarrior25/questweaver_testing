@@ -101,7 +101,7 @@ function ManualDiceRoller ({setRollResults, vertical, nice}) {
     console.log("buttonvals");
     let buttonvalssend = JSON.stringify(buttonvals);
     //fetch(`http://localhost:9000/rollcheck?checkmode=multi&name=${name}&rolltype=${rolltype}&mod=0&d20num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 20)].val}&d12num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 12)].val}&d10num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 10)].val}&d8num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 8)].val}&d6num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 6)].val}&d4num=${buttonvals[buttonvals.findIndex((buttonval) => buttonval.die === 4)].val}`)
-      fetch(`http://localhost:9000/rollcheck?checkmode=multi&name=${name}&rolltype=${rolltype}&mod=0&rollstodo=${buttonvalssend}`)
+      fetch(`http://localhost:3000/api/rollcheck?checkmode=multi&name=${name}&rolltype=${rolltype}&mod=0&rollstodo=${buttonvalssend}`)
         .then(res => res.json())
         .then(res => setRollResults(res));
   }

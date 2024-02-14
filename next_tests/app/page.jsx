@@ -116,7 +116,7 @@ function App () {
     <ModPosContext.Provider value={modPos}>
     <SetRollResultsContext.Provider value={setRollResults}>
     <RollResultsContext.Provider value={rollresults}>
-    <URLContext.Provider value={"http://localhost:9000"}>
+    <URLContext.Provider value={"http://localhost:3000/api"}>
     <div className="App">
       <Container fluid className="mainContainer">
         <Row>

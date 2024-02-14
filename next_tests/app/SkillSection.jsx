@@ -6,7 +6,7 @@ function SkillSection (setRollResults){
   const[skills, setSkills] = useState([]);
     
   const getSkills = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=skill`)
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=skill`)
         .then(res => res.json())
         .then(res => setSkills(res.skills));
   }

@@ -54,7 +54,7 @@ function HealthSection () {
   }
 
   const getHealth = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=health`)
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=health`)
     .then(res => res.json())
     .then(res => setHealthVal(res));
   }

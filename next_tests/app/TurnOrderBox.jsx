@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback} from "react";
+import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
+import { URLContext } from "./Contexts";
 
 function TurnOrder() {
   const [turnorder, setTurnOrder] = useState([
@@ -39,6 +40,8 @@ function TurnOrder() {
   ]);
 
   const [currentturn, setCurrentTurn] = useState(0);
+
+  const url = useContext(URLContext);
 
   const changeTurn = (mode) => {
     let turnorderlength = turnorder.length;

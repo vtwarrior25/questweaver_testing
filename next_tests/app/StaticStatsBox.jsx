@@ -29,7 +29,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
 
 
   const getStats = () => {
-    fetch(`${url}/getcharacterinfo?infotype=staticstats`)
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=staticstats`)
     .then(res => res.json())
     .then(res => setStaticStats(res));
   }
