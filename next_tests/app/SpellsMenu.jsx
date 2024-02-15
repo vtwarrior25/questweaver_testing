@@ -122,7 +122,7 @@ function SpellsMenu({setRollResults}) {
         </div>
       </div>
       <div className="spellsSection">
-        {spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} savedc={spellinfo.savedc} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults}></SpellsLevelSection>)}
+        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} savedc={spellinfo.savedc} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults}></SpellsLevelSection>)}
       </div>
     </div>
   );

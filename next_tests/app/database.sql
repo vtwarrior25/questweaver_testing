@@ -6,6 +6,20 @@ USE QuestWeaver;
 
 /*
 ------------------------------------------------------------------------
+User Tables
+------------------------------------------------------------------------
+*/
+
+CREATE TABLE IF NOT EXISTS user (
+	user_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	username			varchar(30) NOT NULL,
+
+);
+
+
+
+/*
+------------------------------------------------------------------------
 Other Tables
 ------------------------------------------------------------------------
 */
@@ -110,7 +124,7 @@ CREATE TABLE IF NOT EXISTS player_character_note (
 	allies									varchar(2000),
 	enemies									varchar(2000),
 	backstory								varchar(2000),
-	other										varchar(2000),
+	other										varchar(2000)
 );
 
 
@@ -126,7 +140,7 @@ CREATE TABLE IF NOT EXISTS ability (
 	ability_id						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	ability_name					varchar(14),
 	ability_abbrev				char(3),
-	ability_description		varchar(2000),
+	ability_description		varchar(2000)
 );
 
 /*
@@ -138,7 +152,7 @@ CREATE TABLE IF NOT EXISTS skill (
 	skill_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	skill_name			varchar(24),
 	ability_id			integer REFERENCES ability(ability_id) NOT NULL,
-	description			varchar(2000),	
+	description			varchar(2000)
 );
 /*
  ~18 rows, one for each skill (Acrobatics, Animal Handling, etc) 
@@ -147,7 +161,7 @@ CREATE TABLE IF NOT EXISTS skill (
 CREATE TABLE IF NOT EXISTS saving_throw (
 	saving_throw_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	saving_throw_name	varchar(20),
-	ability_id				integer REFERENCES ability(ability_id) NOT NULL,
+	ability_id				integer REFERENCES ability(ability_id) NOT NULL
 );
 
 /*
@@ -571,7 +585,7 @@ CREATE TABLE IF NOT EXISTS item (
 	item_value				integer,
 	description				varchar(500),
 	weight						integer,
-	rarity_id					integer REFERENCES rarity(rarity_id) NOT NULL,
+	rarity_id					integer REFERENCES rarity(rarity_id) NOT NULL
 );
 
 
@@ -581,7 +595,7 @@ CREATE TABLE IF NOT EXISTS armor (
 	dex_modifier					boolean,
 	dex_modifier_max			integer,
 	strength_requirement	integer,
-	stealth_disadvantage	boolean,			
+	stealth_disadvantage	boolean		
 ); 
 
 
@@ -590,7 +604,7 @@ CREATE TABLE IF NOT EXISTS weapon (
 	item_id						integer REFERENCES item(item_id) NOT NULL,
 	range_short				integer,
 	range_long				integer,
-	damage_bonus			integer,			
+	damage_bonus			integer			
 );
 
 

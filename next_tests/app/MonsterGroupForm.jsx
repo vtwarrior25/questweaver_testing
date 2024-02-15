@@ -38,17 +38,17 @@ function MonsterGroupForm({encounters}) {
               <tbody>
                 <tr>
                   <th>Creature</th>
-                  <td><input type="text" name="creature" placeholder="Name" size="13"/></td>
-                  <td><input type="number" name="quantity" placeholder="Qty" size="4"/></td>
+                  <td><input className="monsterGroupFormNameInput" type="text" name="creature" placeholder="Name"/></td>
+                  <td><input className="monsterGroupFormQtyInput" type="number" name="quantity" placeholder="Qty"/></td>
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td colSpan="2"><input type="text" name="description" size="15"/></td>
+                  <td colSpan="2"><input className="monsterGroupFormDescriptionInput" type="text" name="description"/></td>
                 </tr>
                 <tr>
                   <th>HD/CR</th>
                   <td className="monsterFormHDCR"><input type="number" className="monsterHitDiceInput monsterTextSmall" name="hitdicenum" size="3" placeholder="1"/>d<input className="monsterHitDiceInput monsterTextSmall" type="number" name="hitdicetype" size="3" placeholder="6"/></td>
-                  <td><input type="number" name="challengerating" placeholder="CR" size="3" /></td>
+                  <td><input className="monsterGroupFormCRInput" type="number" name="challengerating" placeholder="CR" size="3" /></td>
                 </tr>
                 <tr>
                   <th>Size/Type</th>
@@ -88,13 +88,13 @@ function MonsterGroupForm({encounters}) {
                 </tr>
                 <tr>
                   <th>XP Per/Total</th>
-                  <td><input type="number" name="xpper" placeholder="XP Per" size="5"/></td>
-                  <td><input type="number" name="xptotal" placeholder="XP Total" size="5"/></td>
+                  <td><input className='monsterGroupFormSmallNumInput' type="number" name="xpper" placeholder="XP Per" size="5"/></td>
+                  <td><input className='monsterGroupFormSmallNumInput' type="number" name="xptotal" placeholder="XP Total" size="5"/></td>
                 </tr>
                 <tr>
                   <th>AC/Speed</th>
-                  <td><input type="number" name="ac" placeholder="Armor Class" size="5"/></td>
-                  <td><input type="number" name="speed" placeholder="Speed" size="5" /></td>
+                  <td><input className='monsterGroupFormSmallNumInput' type="number" name="ac" placeholder="Armor Class" size="5"/></td>
+                  <td><input className='monsterGroupFormSmallNumInput' type="number" name="speed" placeholder="Speed" size="5" /></td>
                 </tr>
                 <tr>
                   <td colSpan="3">
@@ -176,9 +176,9 @@ function MonsterGroupForm({encounters}) {
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="text" name="attack1name" size="8"/></td>
-                  <td><input type="number" name="attack1hit" size="4"/></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack1numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack1dice" size="4"/><input type="number" className="monsterTextSmall" name="attack1bonus" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack1name"/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack1hit"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack1numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack1dice" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack1bonus" size="4"/></td>
                   <td>
                     <select name="damagetype1">
                       <option value="slashing">Slashing</option>
@@ -189,9 +189,9 @@ function MonsterGroupForm({encounters}) {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack2name" size="8"/></td>
-                  <td><input type="number" name="attack2hit"size="4" /></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack2numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack2dice" size="4"/><input type="number" className="monsterTextSmall" name="attack2bonus" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack2name"/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack2hit"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack2numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack2dice" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack2bonus" size="4"/></td>
                   <td>
                     <select name="damagetype2">
                       <option value="slashing">Slashing</option>
@@ -202,9 +202,9 @@ function MonsterGroupForm({encounters}) {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack3name" size="8"/></td>
-                  <td><input type="number" name="attack3hit" size="4" /></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack3dice" size="4"/><input type="number" className="monsterTextSmall" name="attack3bonus" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack3name"/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack3hit"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack3dice" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack3bonus" size="4"/></td>
                   <td>
                     <select name="damagetype3">
                       <option value="slashing">Slashing</option>
@@ -215,9 +215,9 @@ function MonsterGroupForm({encounters}) {
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue=""/></td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="attack4name" size="8"/></td>
-                  <td><input type="number" name="attack4hit" size="4" /></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" className="monsterTextSmall" name="attack4dice" size="4"/><input type="number" className="monsterTextSmall" name="attack4bonus" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack4name"/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack4hit"/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack4dice" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack4bonus" size="4"/></td>
                   <td>
                     <select name="damagetype4">
                       <option value="slashing">Slashing</option>

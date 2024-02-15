@@ -53,6 +53,15 @@ function CharacterCreator() {
     }, [abilities]
   );
 
+  const [classes, setClasses] = useState([
+    {
+
+    },
+    {
+      
+    },
+  ]);
+
 
   const setAbilities = () => {
     console.log("Setting ability scores on server");
@@ -95,7 +104,7 @@ function CharacterCreator() {
                 </Nav.Item>
               </Nav>
               <Tab.Content>
-                <Tab.Pane className="characterCreatorTabContent" eventKey="dragonborn">
+                <Tab.Pane eventKey="dragonborn">
                   <div className="characterCreatorTabContent">
                     <Table size='sm'>
                       <thead>

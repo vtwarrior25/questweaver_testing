@@ -123,9 +123,9 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
         <tbody>
           {spells.map((spell, index) => 
             <React.Fragment key={index}>
-              <tr onClick={() => toggleDropdown(index)}>
+              <tr>
                 <td><Button size='sm'>Cast</Button></td>
-                <td>{spell.name}</td>
+                <td onClick={() => toggleDropdown(index)}>{spell.name}</td>
                 <td>{spell.timetocast}</td>
                 <td>{spell.range}</td>
                 <td>{hitDcHandler(spell)}</td>
@@ -133,9 +133,15 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
                 <td>{spell.notes}</td>
               </tr>
               <tr>
-                {dropdownshidden[index] && <td className='spellsSectionTableExpandingInfo' colSpan="7">
-                  Epic beans mode mo bamba
-                  <Button variant='secondary' size="sm"></Button>
+                {dropdownshidden[index] && <td colSpan="7">
+                  <div className='spellsSectionTableExpandingInfoDiv'>
+                    <span>Casting Time: {spell.timetocast}</span>
+                    <span>Range/Area: {spell.range}</span>
+                    <span>Components:</span>
+                    <span>Duration:</span>
+                    <span>description</span>
+                    <Button variant='secondary' size="sm">Unlearn</Button>
+                  </div>
                 </td>}
               </tr>
             </React.Fragment>

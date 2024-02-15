@@ -32,11 +32,11 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
 */
 
   const diceRoll = (adv) => {
-    let rollapi = `${url}/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+    let rollapi = `http://localhost:3000/api/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     if (adv === "advantage") {
-      rollapi = `${url}/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+      rollapi = `http://localhost:3000/api/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     } else if (adv === "disadvantage") {
-      rollapi = `${url}/rollcheck?checkmode=disadvantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
+      rollapi = `http://localhost:3000/api/rollcheck?checkmode=disadvantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     }
     fetch(rollapi)
         .then(res => res.json())

@@ -6,8 +6,8 @@ const SVG_PATH = new Path2D(heartSVG);
 
 const SCALE = 0.1;
 const OFFSET = 80;
-const xoffset = 1110;
-const yoffset = 38;
+let xoffset = 1110;
+let yoffset = 38;
 export const canvasWidth = 400;
 export const canvasHeight = 800;
 
@@ -53,6 +53,10 @@ export function useCanvas() {
 
   useEffect(() => {
     const canvasObj = canvasRef.current;
+    let rect = canvasObj.getBoundingClientRect();
+    console.log(`${rect.top}, ${rect.left}`);
+    xoffset = rect.left;
+    yoffset = rect.top;
     const ctx = canvasObj.getContext('2d');
     ctx.clearRect(0,0, canvasWidth, canvasHeight);
     console.log(coords.length);

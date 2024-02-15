@@ -147,6 +147,10 @@ Health Box
   gap: 1rem;
 }
 
+.healthSectionInput {
+  max-width: 4rem;
+}
+
 /*
 ----------------------------------------
 Static Stats
@@ -478,6 +482,61 @@ Monster Sheet
 
 /*
 ----------------------------------------
+Monster Group Form
+----------------------------------------
+*/
+
+
+.monsterSheetAbilityInput {
+  width: 3rem;
+}
+
+.monsterGroupFormNameInput {
+  width: 10rem;
+}
+
+.monsterGroupFormQtyInput {
+  width: 4rem;
+}
+
+.monsterHitDiceInput {
+  width: 3rem;
+}
+
+.monsterGroupFormCRInput {
+  width: 3rem;
+}
+
+.monsterGroupFormSmallNumInput {
+  width: 4rem;
+}
+
+.monsterGroupFormDescriptionInput {
+  width: 13rem;
+}
+
+.monsterGroupFormAttackNameInput {
+  width: 8rem;
+}
+
+.monsterGroupFormAttackHitInput {
+  width: 4rem;
+}
+
+.monsterGroupFormAttackNumDiceInput {
+  width: 3rem;
+}
+
+.monsterGroupFormAttackDiceTypeInput {
+  width: 3rem;
+}
+
+.monsterGroupFormAttackBonusInput {
+  width: 4rem;
+}
+
+/*
+----------------------------------------
 Character Creation
 ----------------------------------------
 */
@@ -491,6 +550,7 @@ Character Creation
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 1.5rem;
 }
 
 .abilityModDisplay {
@@ -527,6 +587,13 @@ Character Inventory Area Spells Menu
   justify-content: space-between;
 }
 
+
+.spellsSectionTableExpandingInfoDiv { 
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 1rem;
+}
 
 
 /*

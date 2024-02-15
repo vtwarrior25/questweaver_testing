@@ -68,7 +68,7 @@ function HealthSection () {
     <div className="healthSection frontElement">
       <Stack className="leftHealthSection" direction="vertical" gap={2}>
         <Button variant='secondary' size='sm' onClick={() => updateHealth('heal')} >Heal</Button>
-        <input type='number' size="4" onChange={(e) => handleChange(e)}></input>
+        <input className="healthSectionInput" type='number' size="4" name="changehealth" onChange={(e) => handleChange(e)}></input>
         <Button variant='secondary' size='sm' onClick={() => updateHealth('damage')} >Damage</Button>
       </Stack>
       <div className="rightHealthSection">
@@ -76,11 +76,11 @@ function HealthSection () {
         <Stack direction="horizontal" gap={1}>
           <div className="healthBox">
             <label htmlFor="currenthealth">Current</label>
-            <input name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => setHealthVal({...healthval, currenthealth: e.target.value})}></input>
+            <input className="healthSectionInput" name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => setHealthVal({...healthval, currenthealth: e.target.value})}></input>
           </div>
           <div className="healthBox">
             <label htmlFor="maxhealth">Max</label>
-            <input name="maxhealth" type="number" size="4" readOnly={true} value={healthval.maxhealth}></input>
+            <input className="healthSectionInput" name="maxhealth" type="number" size="4" readOnly={true} value={healthval.maxhealth}></input>
           </div>
         </Stack>
       </div>
