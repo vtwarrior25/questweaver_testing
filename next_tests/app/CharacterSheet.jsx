@@ -23,7 +23,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       {showboxes.showsavingthrowsection && <SavingThrowSection setRollResults={setRollResults} rollresults={rollresults}></SavingThrowSection>}
       {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} collapse="yes"></StaticStatsBox>}
       {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
-      {showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}
+      {/*{showboxes.showdefensesconditions && <DefensesConditionsBox></DefensesConditionsBox>}*/}
       {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
       {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
   {/*

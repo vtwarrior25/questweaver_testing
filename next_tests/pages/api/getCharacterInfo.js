@@ -193,6 +193,8 @@ function characterInfoFromDB (infotype) {
         weapons: "Martial, Simple",
         tools: "Cobbler's, Land Vehicles",
         languages: "Common, Halfling",
+        defenses: "Fireproof",
+        conditions: "Dry Heaving",
       };
       break;
     case 'savingthrow':

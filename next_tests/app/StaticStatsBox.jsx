@@ -20,6 +20,8 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
       weapons: "Martial, Simple",
       tools: "Cobbler's, Land Vehicles",
       languages: "Common, Halfling",
+      defenses: "Fireproof",
+      conditions: "Dry Heaving",
     });
 
   useEffect(() => {  
@@ -121,6 +123,12 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
             <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
             <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
             <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
+          </div>
+        </Tab>
+        <Tab eventKey="3" title="Defenses">
+          <div className='statsContainer defensesConditions'>
+            <div><span className='staticStatsItemName'>Defenses</span> - {staticstats.defenses}</div>
+            <div><span className='staticStatsItemName'>Conditions</span> - {staticstats.conditions}</div>          
           </div>
         </Tab>
       </Tabs>
