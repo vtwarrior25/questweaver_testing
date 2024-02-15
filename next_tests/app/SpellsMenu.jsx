@@ -1,10 +1,14 @@
-import { Button, Table } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Button, Table, Overlay } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 import DiceRollButton from "./DiceRollButton";
 import SpellsLevelSection from "./SpellsLevelSection";
+import ManageSpells from "./ManageSpells";
 
 
 function SpellsMenu({setRollResults}) {
+
+  const [showmanagespells, setShowManageSpells] = useState(false);
+  const target = useRef(null);
 
   const [spelllevels, setSpellLevels] = useState([]); 
 
@@ -92,7 +96,6 @@ function SpellsMenu({setRollResults}) {
   }, []
   );
 
-
   // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
@@ -108,6 +111,10 @@ function SpellsMenu({setRollResults}) {
     setSpellLevels([0, 1]);
   }
 
+  const addSpells = () => {
+    console.log("This will handle adding spells from the manage spells menu");
+  }
+
 
   const handleCast = () => {
 
@@ -118,7 +125,27 @@ function SpellsMenu({setRollResults}) {
     <div className="spellsMenu characterInventoryAreaSection">
       <div className="spellsMenuHeader">
         <div className="spellsMenuHeaderInfoBox">
-          <div></div>
+          <div>
+            {/* TODO reformat this later */}
+            <span>Modifier</span>
+            <span>{spellinfo.castmodifier}</span>
+          </div>
+          <div>
+            <span>Spell Attack</span>
+            <span>{spellinfo.spellattackmod}</span>
+          </div>
+          <div>
+            <span>Save DC</span>
+            <span>{spellinfo.savedc}</span>
+          </div>
+        </div>
+        <div>
+          <Button variant='secondary' size='sm' ref={target} onClick={() => setShowManageSpells(!showmanagespells)}>Manage Spells</Button>
+          <Overlay target={target.current} show={showmanagespells} placement='bottom'>
+            <div className='manageInventoryOverlay'>
+              <ManageSpells addSpells={addSpells}></ManageSpells>
+            </div>
+          </Overlay>
         </div>
       </div>
       <div className="spellsSection">

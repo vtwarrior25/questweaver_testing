@@ -581,6 +581,17 @@ Character Inventory Area Spells Menu
 ----------------------------------------
 */
 
+.spellsMenuHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.spellsMenuHeaderInfoBox {
+  display: flex;
+  flex-direction: row;
+}
+
 .spellsLevelSectionHeader {
   display: flex;
   flex-direction: row;
@@ -594,6 +605,38 @@ Character Inventory Area Spells Menu
   text-align: left;
   padding-left: 1rem;
 }
+
+
+/*
+----------------------------------------
+Manage Spells Menu (temporary)
+----------------------------------------
+*/
+
+.manageSpellsMenu {
+  opacity: 90% !important;
+  padding: 0.5em;
+  border: var(--thinBorder);
+  background-color: var(--nonRollBackground);
+
+  display: flex;
+  flex-direction: column;
+  max-width: 20rem;
+}
+
+.searchSpellList {
+  display: flex;
+  flex-direction: column;
+}
+
+.spellListItem {
+  border: var(--thinBorder);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
+}
+
 
 
 /*
