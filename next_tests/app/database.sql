@@ -205,61 +205,45 @@ CREATE TABLE IF NOT EXISTS feature (
 );
 
 CREATE TABLE IF NOT EXISTS proficiencyfeature (
-	proficiencyfeatureid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid								integer REFERENCES feature(featureid) NOT NULL,
 	proficiencyid						integer REFERENCES proficiency(proficiencyid) NOT NULL
-);
+) INHERITS (feature);
 
 CREATE TABLE IF NOT EXISTS actionfeature (
-	actionfeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	uses									integer,
 	usesperlevel					integer,
 	recovery							integer
-);
+) INHERITS (feature); 
 
 CREATE TABLE IF NOT EXISTS speedfeature (
-	speedfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid						integer REFERENCES feature(featureid) NOT NULL,
 	speed								integer
-);
+) INHERITS (feature);
 
 CREATE TABLE IF NOT EXISTS abilityscorefeature (
-	abilityfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	abilityid							integer REFERENCES ability(abilityid) NOT NULL,
 	scorebonus						integer
-);
+) INHERITS (feature);
 
 CREATE TABLE IF NOT EXISTS abilityactionfeature (
-	abilityactionfeatureid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	abilityid									integer REFERENCES ability(abilityid) NOT NULL,
 	uses											integer
-);
+) INHERITS (feature);
 
 CREATE TABLE IF NOT EXISTS classactionfeature (
-	classactionfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	level											integer,
 	uses											integer,
 	recovery									integer
-);
+) INHERITS (feature);
 
-
+/*
 CREATE TABLE IF NOT EXISTS manualfeature (
 	manualfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	featureid						integer REFERENCES feature(featureid) NOT NULL
-);
-
+) INHERITS (feature);
+*/
 
 CREATE TABLE IF NOT EXISTS defensefeature (
-	defensefeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	defenseid							integer REFERENCES defense(defenseid) NOT NULL
-);
-
-
+) INHERITS (feature);
 
 
 
