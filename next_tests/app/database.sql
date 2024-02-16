@@ -47,11 +47,13 @@ CREATE TABLE IF NOT EXISTS gamelog (
 );
 
 
+/*
 CREATE TABLE IF NOT EXISTS language (
 	languageid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name		varchar(50),
-	/*description			varchar(100)*/	
+	name					varchar(50),
+	description			varchar(100)
 );
+*/
 
 
 CREATE TABLE IF NOT EXISTS alignment (
@@ -316,11 +318,13 @@ CREATE TABLE IF NOT EXISTS characterdefense (
 	defenseid								integer REFERENCES defense(defenseid) NOT NULL
 );
 
+/*
 CREATE TABLE IF NOT EXISTS characterlanguage (
 	characterlanguageid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid						integer REFERENCES playercharacter(playercharacterid) NOT NULL,
 	languageid 									integer REFERENCES language(languageid) NOT NULL
 );
+*/
 
 CREATE TABLE IF NOT EXISTS characterproficiency (
 	characterproficiencyid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -346,7 +350,7 @@ Class Tables
 CREATE TABLE IF NOT EXISTS class (
 	classid									integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name										varchar(20),
-	hitdice									integer,
+	hitdice									integer REFERENCES dice(dice_id),
 	hitpoints1stlevel				integer,
 	hitpointshigherlevel		integer,
 	description							varchar(2000),
@@ -358,10 +362,11 @@ How would we deal with non-spellcasting classes? We need to fix this somehow
 
 
 CREATE TABLE IF NOT EXISTS subclass (
-	subclassid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	classid 					integer REFERENCES class(classid) NOT NULL,
-	name							varchar(20),
-	description				integer REFERENCES ability(abilityid) NOT NULL
+	subclassid								integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	classid 									integer REFERENCES class(classid) NOT NULL,
+	name											varchar(20),
+	description								varchar(2000),
+	spellcastingabilityid			integer REFERENCES ability(abilityid) NOT NULL
 );
 
 
@@ -369,7 +374,7 @@ CREATE TABLE IF NOT EXISTS classfeature (
 	classfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	classid							integer REFERENCES class(classid) NOT NULL,
 	featureid						integer REFERENCES feature(featureid) NOT NULL,
-	characterlevel			integer							
+	characterlevel			integer						
 );
 
 
@@ -377,7 +382,7 @@ CREATE TABLE IF NOT EXISTS subclassfeature (
 	subclassfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	subclassid						integer REFERENCES subclass(subclassid) NOT NULL,
 	featureid							integer REFERENCES feature(featureid) NOT NULL,
-	characterlevel				integer							
+	characterlevel				integer						
 );
 
 
@@ -404,7 +409,7 @@ CREATE TABLE IF NOT EXISTS encounter (
 CREATE TABLE IF NOT EXISTS monstertype (
 	monstertypeid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(20),
-	description					varchar(2000)
+	/*description					varchar(2000)*/
 );
 
 
@@ -466,6 +471,7 @@ Race Tables
 
 CREATE TABLE IF NOT EXISTS race (
 	raceid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name
 	creaturesizeid			integer REFERENCES creaturesize(creaturesizeid) NOT NULL
 );
 
