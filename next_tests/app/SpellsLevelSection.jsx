@@ -104,7 +104,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
         <div className="spellsHeaderRightSection">
           <Button size="sm" variant='secondary'>Clear</Button>
           <div className="spellHeaderSpellSlots">
-            {spellslots.map((spellslot, index) => <input type="checkbox" key={index} value={spellslot}></input>)}
+            {spellslots && spellslots.length > 0 && spellslots.map((spellslot, index) => <input type="checkbox" key={index} value={spellslot}></input>)}
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
           </tr>
         </thead>
         <tbody>
-          {spells.map((spell, index) => 
+          {spells && spells.length > 0 && spells.map((spell, index) => 
             <React.Fragment key={index}>
               <tr>
                 <td><Button size='sm'>Cast</Button></td>

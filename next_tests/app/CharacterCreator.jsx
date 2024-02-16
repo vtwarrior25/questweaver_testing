@@ -7,8 +7,19 @@ function CharacterCreator() {
   
   const [tempvalues, settempvalues] = useState([0,0,0,0,0,0]); 
 
-  const [selectabilities, setSelectAbilities] = useState(["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"]);
+  const [dropdownvalues, setDropdownValues] = useState(["-", "-", "-", "-", "-", "-"])
 
+  const [selectabilities, setSelectAbilities] = useState(["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"]);
+/*
+  const [selectabilities, setSelectAbilities] = useState([
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+    ["-", "STR", "DEX", "CON", "INT", "WIS", "CHA"],
+  ]);
+*/
   const [abilities, setAbilityScores] = useState([
     {
       abilityname: "Strength",
@@ -58,7 +69,7 @@ function CharacterCreator() {
 
     },
     {
-      
+
     },
   ]);
 
@@ -70,6 +81,7 @@ function CharacterCreator() {
   // This function should hide the option currently selected by each dropdown from the list of options of the other dropdowns, and should show the options again when they aren't selected anywhere
   const updateSelections = (e) => {
     let a = e.target.value;
+    //setDropdownValues([]);
     setSelectAbilities(selectabilities.filter(item => item !== a || item === '-'));
     
     console.log(a);
@@ -175,7 +187,7 @@ function CharacterCreator() {
               {tempvalues.map((temp, index) => 
                 <div className="abilityBox" key={index}>
                   <Button>{temp}</Button>
-                  <select onChange={(e) => {updateSelections(e)}}>
+                  <select onChange={(e) => {updateSelections(e, index)}}>
                     {selectabilities.map((ability, index) => <option key={index} value={ability}>{ability}</option>)}
                   </select>
                 </div>

@@ -1,19 +1,13 @@
 
-
-CREATE DATABASE IF NOT EXISTS QuestWeaver;
-USE QuestWeaver;
-
-
 /*
 ------------------------------------------------------------------------
 User Tables
 ------------------------------------------------------------------------
 */
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS player (
 	user_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	username			varchar(30) NOT NULL,
-
+	username			varchar(30) NOT NULL
 );
 
 
@@ -56,21 +50,21 @@ CREATE TABLE IF NOT EXISTS game_log (
 CREATE TABLE IF NOT EXISTS language (
 	language_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	language_name		varchar(50),
-	description			varchar(100)	
+	/*description			varchar(100)*/	
 );
 
 
 CREATE TABLE IF NOT EXISTS alignment (
 	alignment_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	alignment_name	varchar(50),
-	description			varchar(100),	
+	description			varchar(200),	
 	abbrev 					char(2)
 );
 
 CREATE TABLE IF NOT EXISTS creature_size (
 	size_id					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	size_name				varchar(20),
-	description				varchar(2000)
+	description			varchar(2000)
 );
 
 
@@ -322,17 +316,9 @@ CREATE TABLE IF NOT EXISTS character_defense (
 	defense_id					integer REFERENCES defense(defense_id) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS character_inventory (
-	character_inventory_id	integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id						integer REFERENCES character(character_id) NOT NULL,
-	item_id									integer REFERENCES item(item_id) NOT NULL,
-	quantity								integer
-);
-
-
 CREATE TABLE IF NOT EXISTS character_language (
 	character_language_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id						integer REFERENCES character(character_id) NOT NULL,
+	character_id						integer REFERENCES player_character(character_id) NOT NULL,
 	language_id 						integer REFERENCES language(language_id) NOT NULL
 );
 
@@ -480,7 +466,7 @@ Race Tables
 
 CREATE TABLE IF NOT EXISTS race (
 	race_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	size					integer REFERENCES size(size_id) NOT NULL
+	creature_size					integer REFERENCES creature_size(size_id) NOT NULL
 );
 
 
@@ -590,13 +576,14 @@ CREATE TABLE IF NOT EXISTS item (
 
 
 CREATE TABLE IF NOT EXISTS armor (
-	item_id 							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	armor_id							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	item_id 							integer REFERENCES item(item_id) NOT NULL,
 	armor_class						integer,
 	dex_modifier					boolean,
 	dex_modifier_max			integer,
 	strength_requirement	integer,
 	stealth_disadvantage	boolean		
-); 
+);
 
 
 CREATE TABLE IF NOT EXISTS weapon (
@@ -622,6 +609,13 @@ CREATE TABLE IF NOT EXISTS weapon_property (
 	weapon_property_id 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	weapon_id											integer REFERENCES weapon(weapon_id) NOT NULL,
 	possible_weapon_property_id		integer REFERENCES possible_weapon_property(possible_weapon_property_id) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS character_inventory (
+	character_inventory_id	integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	character_id						integer REFERENCES player_character(character_id) NOT NULL,
+	item_id									integer REFERENCES item(item_id) NOT NULL,
+	quantity								integer
 );
 
 /*
@@ -655,7 +649,7 @@ CREATE TABLE IF NOT EXISTS monster_attack (
 
 CREATE TABLE IF NOT EXISTS character_attack (
 	character_attack_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id					integer REFERENCES character(character_id) NOT NULL,
+	character_id					integer REFERENCES player_character(character_id) NOT NULL,
 	attack_id							integer REFERENCES attack(attack_id) NOT NULL
 );
 

@@ -1,16 +1,4 @@
-//const pgp = require('pg-promise')();
 
-/*
-const connection = {
-  host: 'localhost',
-  port: 5432,
-  database: 'questweaver',
-  user: 'questweaver',
-  password: 'p0pchuck$',
-}
-
-const db = pgp(connection);
-*/
 
 function characterInfoFromDB (infotype) {
   let dbquery = "";
