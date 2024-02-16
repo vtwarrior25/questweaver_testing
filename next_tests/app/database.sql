@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS language (
 
 CREATE TABLE IF NOT EXISTS alignment (
 	alignmentid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	alignmentname		varchar(50),
+	name		varchar(50),
 	description			varchar(200),	
 	abbrev 					char(2)
 );
@@ -78,7 +78,7 @@ Character Tables
 
 CREATE TABLE IF NOT EXISTS playercharacter (
 	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playername 							varchar(40),
+	name 										varchar(40),
 	armorclass							integer,
 	maxhealth								integer,
 	currenthealth 					integer,
@@ -209,10 +209,10 @@ CREATE TABLE IF NOT EXISTS proficiencyfeature (
 );
 
 CREATE TABLE IF NOT EXISTS actionfeature (
-	actionfeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	featureid						integer REFERENCES feature(featureid) NOT NULL,
+	actionfeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	uses									integer,
-	usesperlevel				integer,
+	usesperlevel					integer,
 	recovery							integer
 );
 
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS abilityactionfeature (
 	abilityactionfeatureid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	abilityid									integer REFERENCES ability(abilityid) NOT NULL,
-	uses												integer
+	uses											integer
 );
 
 CREATE TABLE IF NOT EXISTS classactionfeature (
@@ -269,20 +269,20 @@ Character Supporting Tables
 
 
 CREATE TABLE IF NOT EXISTS characterability (
-	characterabilityid	integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	characterabilityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid					integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-  abilityid        		integer REFERENCES ability(abilityid) NOT NULL,
-	score									integer,
-	modifier							integer
+  abilityid        					integer REFERENCES ability(abilityid) NOT NULL,
+	score											integer,
+	modifier									integer
 );
 /*
 Str for Jerome, score of 16, mod 3
 */
 
 CREATE TABLE IF NOT EXISTS characterskill (
-	characterskillid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid						integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	skillid								integer REFERENCES skill(skillid) NOT NULL,
+	characterskillid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid				integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	skillid									integer REFERENCES skill(skillid) NOT NULL,
 	proficient							boolean,
 	bonus										integer
 );
@@ -291,19 +291,19 @@ Animal Handling for Jerome
 */
 
 CREATE TABLE IF NOT EXISTS charactersavingthrow (
-	charactersavingthrowid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid									integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	savingthrowid								integer REFERENCES skill(skillid) NOT NULL,
+	charactersavingthrowid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid							integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	savingthrowid									integer REFERENCES skill(skillid) NOT NULL,
 	proficient										boolean,
 	bonus													integer
 );
 
 CREATE TABLE IF NOT EXISTS characterpassiveability (
-	characterpassiveabilityid	integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid									integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	passiveperception						integer,
-	passiveinvestigation					integer,
-	passiveinsight								integer
+	characterpassiveabilityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid								integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	passiveperception								integer,
+	passiveinvestigation						integer,
+	passiveinsight									integer
 );
 
 /*
@@ -397,7 +397,7 @@ Monster Tables
 
 CREATE TABLE IF NOT EXISTS encounter (
 	encounterid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	encountername		varchar(20)
+	name						varchar(20)
 );
 
 
@@ -415,7 +415,7 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	monstertypeid									integer REFERENCES monstertype(monstertypeid) NOT NULL,
 	alignment											integer REFERENCES alignment(alignmentid) NOT NULL,
 	groupname											varchar(20),
-	description				varchar(2000),
+	description										varchar(2000),
 	hitdie												integer,
 	hitdienum											integer,
 	challengerating								integer,
@@ -478,9 +478,9 @@ CREATE TABLE IF NOT EXISTS subrace (
 
 
 CREATE TABLE IF NOT EXISTS racefeature (
-	racefeatureid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	racefeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	raceid							integer REFERENCES race(raceid) NOT NULL,
-	featureid					integer REFERENCES feature(featureid) NOT NULL				
+	featureid						integer REFERENCES feature(featureid) NOT NULL				
 );
 
 
@@ -557,7 +557,7 @@ Item Tables
 
 CREATE TABLE IF NOT EXISTS rarity (
 	rarityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	rarityname  		varchar(50),
+	name  					varchar(50),
 	description			varchar(100)												
 );
 /*
@@ -567,8 +567,8 @@ Common, Uncommon, Rare, Very Rare
 
 CREATE TABLE IF NOT EXISTS item (
 	itemid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	itemname 					varchar(50),
-	itemvalue					integer,
+	name 							varchar(50),
+	value							integer,
 	description				varchar(500),
 	weight						integer,
 	rarityid					integer REFERENCES rarity(rarityid) NOT NULL
