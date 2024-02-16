@@ -8,7 +8,6 @@ Tables to insert data into initially:
 - Saving Throw
 - Dice
 - Game Log Tag
-- Language
 - Creature Size
 - Defense
 - Proficiency Type
@@ -41,24 +40,24 @@ INSERT INTO ability (name, abbrev, description) VALUES
 
 
 INSERT INTO skill (name, abilityid, description) VALUES 
-('Acrobatics', SELECT abilityid from ability where abbrev = 'Dex', ''),
-('Animal Handling', SELECT abilityid from ability where abbrev = 'Wis', ''),
-('Arcana', SELECT abilityid from ability where abbrev = 'Int', ''),
-('Athletics', SELECT abilityid from ability where abbrev = 'Str', ''),
-('Deception', SELECT abilityid from ability where abbrev = 'Cha', ''),
-('History', SELECT abilityid from ability where abbrev = 'Int', ''),
-('Insight', SELECT abilityid from ability where abbrev = 'Wis', ''),
-('Intimidation', SELECT abilityid from ability where abbrev = 'Cha', ''),
-('Investigation', SELECT abilityid from ability where abbrev = 'Int', ''),
-('Medicine', SELECT abilityid from ability where abbrev = 'Wis', ''),
-('Nature', SELECT abilityid from ability where abbrev = 'Int', ''),
-('Perception', SELECT abilityid from ability where abbrev = 'Wis', ''),
-('Performance', SELECT abilityid from ability where abbrev = 'Cha', ''),
-('Persuasion', SELECT abilityid from ability where abbrev = 'Cha', ''),
-('Religion', SELECT abilityid from ability where abbrev = 'Int', ''),
-('Sleight of Hand', SELECT abilityid from ability where abbrev = 'Dex', ''),
-('Stealth', SELECT abilityid from ability where abbrev = 'Dex', ''),
-('Survival', SELECT abilityid from ability where abbrev = 'Wis', '');
+('Acrobatics', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
+('Animal Handling', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
+('Arcana', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
+('Athletics', SELECT abilityid FROM ability WHERE abbrev = 'Str', ''),
+('Deception', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
+('History', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
+('Insight', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
+('Intimidation', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
+('Investigation', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
+('Medicine', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
+('Nature', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
+('Perception', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
+('Performance', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
+('Persuasion', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
+('Religion', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
+('Sleight of Hand', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
+('Stealth', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
+('Survival', SELECT abilityid FROM ability WHERE abbrev = 'Wis', '');
 
 
 INSERT INTO alignment (name, description, abbrev) VALUES 
@@ -74,12 +73,12 @@ INSERT INTO alignment (name, description, abbrev) VALUES
 
 
 INSERT INTO savingthrow (name, abilityid) VALUES
-('Strength', SELECT abilityid from ability where abbrev = 'Str'),
-('Dexterity', SELECT abilityid from ability where abbrev = 'Dex'),
-('Constitution', SELECT abilityid from ability where abbrev = 'Con'),
-('Intelligence', SELECT abilityid from ability where abbrev = 'Int'),
-('Dexterity', SELECT abilityid from ability where abbrev = 'Dex'),
-('Charisma', SELECT abilityid from ability where abbrev = 'Cha');
+('Strength', SELECT abilityid FROM ability WHERE abbrev = 'Str'),
+('Dexterity', SELECT abilityid FROM ability WHERE abbrev = 'Dex'),
+('Constitution', SELECT abilityid FROM ability WHERE abbrev = 'Con'),
+('Intelligence', SELECT abilityid FROM ability WHERE abbrev = 'Int'),
+('Wisdom', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
+('Charisma', SELECT abilityid FROM ability WHERE abbrev = 'Cha');
 
 
 INSERT INTO creaturesize (name, description) VALUES
@@ -117,4 +116,19 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 
 
 
+INSERT INTO monstertype (name) VALUES 
+('Aberration'),
+('Animal'),
+('Beast'),
+('Construct'),
+('Dragon'),
+('Elemental'),
+('Fey'),
+('Fiend'),
+('Giant'),
+('Humanoid'),
+('Monstrosity'),
+('Ooze'),
+('Plant'),
+('Undead');
 
