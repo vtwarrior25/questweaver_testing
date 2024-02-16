@@ -12,7 +12,7 @@ function SkillSection (setRollResults){
         .then(res => setSkills(res.skills));
     fetch(`http://localhost:3000/api/testdb`)
     .then(res => res.json())
-    .then(res => setAlignments(res.alignments));
+    .then(res => setAlignments(res));
   }
 
   useEffect(() => {

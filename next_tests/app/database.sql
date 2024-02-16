@@ -6,7 +6,7 @@ User Tables
 */
 
 CREATE TABLE IF NOT EXISTS player (
-	user_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	userid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	username			varchar(30) NOT NULL
 );
 
@@ -19,51 +19,51 @@ Other Tables
 */
 
 
-CREATE TABLE IF NOT EXISTS effect_type (
-	effect_type_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	effect_name 			varchar(30),
+CREATE TABLE IF NOT EXISTS effecttype (
+	effecttypeid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	effectname 			varchar(30),
 	description				varchar(100)
 );
 
 
 CREATE TABLE IF NOT EXISTS dice (
-	dice_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	dice_name 	varchar(10),
-	dice_sides  integer
+	diceid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	dicename 	varchar(10),
+	dicesides  integer
 );
 
 
-CREATE TABLE IF NOT EXISTS game_log_tag (
-	game_log_tag_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	tag_name						varchar(50),
-	tag_description			varchar(100)	
+CREATE TABLE IF NOT EXISTS gamelogtag (
+	gamelogtagid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	tagname						varchar(50),
+	tagdescription			varchar(100)	
 );
 
 
-CREATE TABLE IF NOT EXISTS game_log (
-	game_log_id 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	game_log_tag_id	 	integer REFERENCES game_log_tag(game_log_tag_id) NOT NULL,
+CREATE TABLE IF NOT EXISTS gamelog (
+	gamelogid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	gamelogtagid	 	integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
 	content 					varchar(200)
 );
 
 
 CREATE TABLE IF NOT EXISTS language (
-	language_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	language_name		varchar(50),
+	languageid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	languagename		varchar(50),
 	/*description			varchar(100)*/	
 );
 
 
 CREATE TABLE IF NOT EXISTS alignment (
-	alignment_id 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	alignment_name	varchar(50),
+	alignmentid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	alignmentname	varchar(50),
 	description			varchar(200),	
 	abbrev 					char(2)
 );
 
-CREATE TABLE IF NOT EXISTS creature_size (
-	size_id					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	size_name				varchar(20),
+CREATE TABLE IF NOT EXISTS creaturesize (
+	sizeid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	sizename				varchar(20),
 	description			varchar(2000)
 );
 
@@ -76,28 +76,28 @@ Character Tables
 */
 
 
-CREATE TABLE IF NOT EXISTS player_character (
-	character_id						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	player_name 						varchar(40),
-	armor_class							integer,
-	max_health							integer,
-	current_health 					integer,
+CREATE TABLE IF NOT EXISTS playercharacter (
+	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playername 							varchar(40),
+	armorclass							integer,
+	maxhealth								integer,
+	currenthealth 					integer,
 	speed										integer,
 	initiative							integer,
-	proficiency_bonus				integer,
-	character_level					integer,
-	spell_save_dc						integer,
-	spell_attack_modifier		integer,
-	spell_ability_modifier	integer,
-	total_hit_dice					integer,
-	num_hut_dice						integer
+	proficiencybonus				integer,
+	characterlevel					integer,
+	spellsavedc							integer,
+	spellattackmodifier			integer,
+	spellabilitymodifier		integer,
+	totalhitdice						integer,
+	numhitdice							integer
 );
 
 
-CREATE TABLE IF NOT EXISTS player_character_note (
-	character_note_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	character_id						integer REFERENCES player_character(character_id) NOT NULL,
-	alignment_id						integer REFERENCES alignment(alignment_id) NOT NULL,
+CREATE TABLE IF NOT EXISTS playercharacternote (
+	character_noteid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	characterid							integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	alignmentid							integer REFERENCES alignment(alignmentid) NOT NULL,
 	/*
 	gender									varchar(10),
 	eyes										varchar(10),
@@ -131,10 +131,10 @@ Supporting Tables
 
 
 CREATE TABLE IF NOT EXISTS ability (
-	ability_id						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	ability_name					varchar(14),
-	ability_abbrev				char(3),
-	ability_description		varchar(2000)
+	abilityid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	abilityname					varchar(14),
+	abilityabbrev				char(3),
+	abilitydescription		varchar(2000)
 );
 
 /*
@@ -143,37 +143,37 @@ CREATE TABLE IF NOT EXISTS ability (
 
 
 CREATE TABLE IF NOT EXISTS skill (
-	skill_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	skill_name			varchar(24),
-	ability_id			integer REFERENCES ability(ability_id) NOT NULL,
-	description			varchar(2000)
+	skillid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	skillname			varchar(24),
+	abilityid			integer REFERENCES ability(abilityid) NOT NULL,
+	skilldescription			varchar(2000)
 );
 /*
  ~18 rows, one for each skill (Acrobatics, Animal Handling, etc) 
 */
 
 CREATE TABLE IF NOT EXISTS saving_throw (
-	saving_throw_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	saving_throw_name	varchar(20),
-	ability_id				integer REFERENCES ability(ability_id) NOT NULL
+	savingthrowid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	savingthrowname		varchar(20),
+	abilityid					integer REFERENCES ability(abilityid) NOT NULL
 );
 
 /*
- Str, Dex, Con, Int, Wis, Cha (the saving throw versions)
+Str, Dex, Con, Int, Wis, Cha (the saving throw versions)
 */
 
 
 CREATE TABLE IF NOT EXISTS defense (
-	defense_id				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	defense_name			varchar(24),
-	description				varchar(200)
+	defenseid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	defensename						varchar(24),
+	defensedescription		varchar(200)
 );
 
 
 CREATE TABLE IF NOT EXISTS proficiency_type (
-	proficiency_type_id			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	proficiency_type_name		varchar(20),
-	description							varchar(2000)
+	proficiencytypeid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	proficiencytypename						varchar(20),
+	proficiencytypedescription		varchar(2000)
 );
 /*
 Armor, Weapons, Tools, Languages 
@@ -181,10 +181,10 @@ Armor, Weapons, Tools, Languages
 
 
 CREATE TABLE IF NOT EXISTS proficiency (
-	proficiency_id 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	proficiency_name		varchar(30),
-	proficiency_type_id	integer REFERENCES proficiency_type(proficiency_type_id),
-	description					varchar(200)
+	proficiencyid 							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	proficiencyname							varchar(30),
+	proficiencytypeid						integer REFERENCES proficiencytype(proficiencytypeid),
+	proficiencydescription			varchar(200)
 );
 
 
@@ -197,15 +197,15 @@ Feature Tables
 
 
 CREATE TABLE IF NOT EXISTS feature (
-	feature_id					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	feature_name				varchar(20),
-	description					varchar(2000)
+	featureid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	featurename						varchar(20),
+	featuredescription		varchar(2000)
 );
 
 CREATE TABLE IF NOT EXISTS proficiency_feature (
-	proficiency_feature_id		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	feature_id								integer REFERENCES feature(feature_id) NOT NULL,
-	proficiency_id						integer REFERENCES proficiency(proficiency_id) NOT NULL
+	proficiencyfeatureid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	featureid								integer REFERENCES feature(featureid) NOT NULL,
+	proficiencyid						integer REFERENCES proficiency(proficiencyid) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS action_feature (

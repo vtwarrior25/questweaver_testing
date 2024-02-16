@@ -13,6 +13,7 @@ const connection = {
 const db = pgp(connection);
 const getAlignments = new PQ({text: 'SELECT * FROM alignment'});
 
+/*
 function runquery() {
   db.any(getAlignments)
   .then (alignments => {
@@ -24,11 +25,18 @@ function runquery() {
     return "bad";
 });
 }
-
+*/
 
 
 export default function handler(req, res) {
-  let result = runquery();
-  console.log(result);
-  res.status(200).json(result);
+  //let result = runquery();
+  db.any(getAlignments)
+  .then (alignments => {
+    //console.log("got alignments");
+    //console.log(alignments);
+    res.status(200).json(alignments);
+  }).catch (error => {
+    error.log("bad");
+    res.status(500).text("bad");
+});
 }

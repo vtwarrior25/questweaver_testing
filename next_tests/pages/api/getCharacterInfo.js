@@ -1,4 +1,34 @@
+const pgp = require('pg-promise')();
+const {ParameterizedQuery: PQ} = require('pg-promise');
 
+const connection = {
+  host: 'localhost',
+  port: 5432,
+  database: 'questweaver',
+  user: 'questweaver',
+  password: 'p0pchuck$',
+}
+
+const db = pgp(connection);
+
+/*
+Example query
+
+// This is the query text
+const getAlignments = new PQ({text: 'SELECT * FROM alignment'});
+
+// This runs the query and handles success and failure
+db.any(getAlignments)
+  .then (alignments => {
+    //console.log("got alignments");
+    //console.log(alignments);
+    return alignments;
+  }).catch (error => {
+    error.log("bad");
+    return "bad";
+});
+
+*/
 
 function characterInfoFromDB (infotype) {
   let dbquery = "";
