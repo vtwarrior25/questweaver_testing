@@ -1,19 +1,19 @@
 /*
 Tables to insert data into initially:
-- Ability (do first)
-- Alignment
-- Skill (FK to Ability)
-- Class
-- Subclass
-- Saving Throw
-- Dice
+- *Ability (do first)
+- *Alignment
+- *Skill (FK to Ability)
+- *Class
+- *Subclass
+- *Saving Throw
+- *Dice
 - Game Log Tag
-- Creature Size
+- *Creature Size
 - Defense
 - Proficiency Type
 - Proficiency
 - Feature Tables (this will suck, don't do it yet)
-- Monster Type
+- *Monster Type
 - Race
 - Subrace
 - Spell
@@ -111,7 +111,21 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 ('Rogue', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
 ('Sorcerer', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
 ('Warlock', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int'),
+('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int');
+
+INSERT INTO subclass (name, description)
+('Path of the Berserker',''),
+('College of Valor', '' ),
+('Life Domain', '' ),
+('Circle of the Moon', '' ),
+('Champion', '' ),
+('Way of the Open Hand', '' ),
+('Oath of Devotion', '' ),
+('Hunter', '' ),
+('Thief', '' ),
+('Divine Soul', '' ),
+('The Undying', '' ),
+('School of Illusions', ''),
 
 
 
