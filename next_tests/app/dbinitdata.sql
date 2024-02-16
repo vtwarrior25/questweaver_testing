@@ -31,7 +31,7 @@ Tables that need some initial data:
 
 */
 
-INSERT INTO ability (ability_name, ability_abbrev, ability_description) VALUES
+INSERT INTO ability (abilityname, abilityabbrev, abilitydescription) VALUES
 ('Strength', 'Str', ''),
 ('Dexterity', 'Dex', ''),
 ('Constitution', 'Con', ''),
@@ -40,28 +40,28 @@ INSERT INTO ability (ability_name, ability_abbrev, ability_description) VALUES
 ('Charisma', 'Cha', '');
 
 
-INSERT INTO skill (skill_name, ability_id, description) VALUES 
-('Acrobatics', SELECT ability_id from ability where ability_abbrev = 'Dex', ''),
-('Animal Handling', SELECT ability_id from ability where ability_abbrev = 'Wis', ''),
-('Arcana', SELECT ability_id from ability where ability_abbrev = 'Int', ''),
-('Athletics', SELECT ability_id from ability where ability_abbrev = 'Str', ''),
-('Deception', SELECT ability_id from ability where ability_abbrev = 'Cha', ''),
-('History', SELECT ability_id from ability where ability_abbrev = 'Int', ''),
-('Insight', SELECT ability_id from ability where ability_abbrev = 'Wis', ''),
-('Intimidation', SELECT ability_id from ability where ability_abbrev = 'Cha', ''),
-('Investigation', SELECT ability_id from ability where ability_abbrev = 'Int', ''),
-('Medicine', SELECT ability_id from ability where ability_abbrev = 'Wis', ''),
-('Nature', SELECT ability_id from ability where ability_abbrev = 'Int', ''),
-('Perception', SELECT ability_id from ability where ability_abbrev = 'Wis', ''),
-('Performance', SELECT ability_id from ability where ability_abbrev = 'Cha', ''),
-('Persuasion', SELECT ability_id from ability where ability_abbrev = 'Cha', ''),
-('Religion', SELECT ability_id from ability where ability_abbrev = 'Int', ''),
-('Sleight of Hand', SELECT ability_id from ability where ability_abbrev = 'Dex', ''),
-('Stealth', SELECT ability_id from ability where ability_abbrev = 'Dex', ''),
-('Survival', SELECT ability_id from ability where ability_abbrev = 'Wis', '');
+INSERT INTO skill (skillname, abilityid, description) VALUES 
+('Acrobatics', SELECT abilityid from ability where abilityabbrev = 'Dex', ''),
+('Animal Handling', SELECT abilityid from ability where abilityabbrev = 'Wis', ''),
+('Arcana', SELECT abilityid from ability where abilityabbrev = 'Int', ''),
+('Athletics', SELECT abilityid from ability where abilityabbrev = 'Str', ''),
+('Deception', SELECT abilityid from ability where abilityabbrev = 'Cha', ''),
+('History', SELECT abilityid from ability where abilityabbrev = 'Int', ''),
+('Insight', SELECT abilityid from ability where abilityabbrev = 'Wis', ''),
+('Intimidation', SELECT abilityid from ability where abilityabbrev = 'Cha', ''),
+('Investigation', SELECT abilityid from ability where abilityabbrev = 'Int', ''),
+('Medicine', SELECT abilityid from ability where abilityabbrev = 'Wis', ''),
+('Nature', SELECT abilityid from ability where abilityabbrev = 'Int', ''),
+('Perception', SELECT abilityid from ability where abilityabbrev = 'Wis', ''),
+('Performance', SELECT abilityid from ability where abilityabbrev = 'Cha', ''),
+('Persuasion', SELECT abilityid from ability where abilityabbrev = 'Cha', ''),
+('Religion', SELECT abilityid from ability where abilityabbrev = 'Int', ''),
+('Sleight of Hand', SELECT abilityid from ability where abilityabbrev = 'Dex', ''),
+('Stealth', SELECT abilityid from ability where abilityabbrev = 'Dex', ''),
+('Survival', SELECT abilityid from ability where abilityabbrev = 'Wis', '');
 
 
-INSERT INTO alignment (alignment_name, description, abbrev) VALUES 
+INSERT INTO alignment (alignmentname, description, abbrev) VALUES 
 ('Lawful Good', 'Lawful good (LG) creatures can be counted on to do the right thing as expected by society. Gold dragons, paladins, and most dwarves are lawful good.', 'LG'),
 ('Neutral Good', 'Neutral good (NG) folk do the best they can to help others according to their needs. Many celestials, some cloud giants, and most gnomes are neutral good.', 'NG'),
 ('Chaotic Good', 'Chaotic good (CG) creatures act as their conscience directs, with little regard for what others expect. Copper dragons, many elves, and unicorns are chaotic good.', 'CG'),
@@ -73,16 +73,16 @@ INSERT INTO alignment (alignment_name, description, abbrev) VALUES
 ('Chaotic Evil', 'Chaotic evil (CE) creatures act with arbitrary violence, spurred by their greed, hatred, or bloodlust. Demons, red dragons, and orcs are chaotic evil.', 'CG');
 
 
-INSERT INTO saving_throw (saving_throw_name, ability_id) VALUES
-('Strength', SELECT ability_id from ability where ability_abbrev = 'Str'),
-('Dexterity', SELECT ability_id from ability where ability_abbrev = 'Dex'),
-('Constitution', SELECT ability_id from ability where ability_abbrev = 'Con'),
-('Intelligence', SELECT ability_id from ability where ability_abbrev = 'Int'),
-('Dexterity', SELECT ability_id from ability where ability_abbrev = 'Dex'),
-('Charisma', SELECT ability_id from ability where ability_abbrev = 'Cha');
+INSERT INTO savingthrow (savingthrowname, abilityid) VALUES
+('Strength', SELECT abilityid from ability where abilityabbrev = 'Str'),
+('Dexterity', SELECT abilityid from ability where abilityabbrev = 'Dex'),
+('Constitution', SELECT abilityid from ability where abilityabbrev = 'Con'),
+('Intelligence', SELECT abilityid from ability where abilityabbrev = 'Int'),
+('Dexterity', SELECT abilityid from ability where abilityabbrev = 'Dex'),
+('Charisma', SELECT abilityid from ability where abilityabbrev = 'Cha');
 
 
-INSERT INTO creature_size (size_name, description) VALUES
+INSERT INTO creaturesize (sizename, description) VALUES
 ('Tiny', ""),
 ('Small', ""),
 ('Medium', ""),
@@ -91,7 +91,7 @@ INSERT INTO creature_size (size_name, description) VALUES
 ('Gargantuan', "");
 
 
-INSERT INTO dice (dice_name, dice_sides) VALUES
+INSERT INTO dice (dicename, dicesides) VALUES
 ('d20', 20),
 ('d12', 12),
 ('d10', 10),
@@ -101,7 +101,6 @@ INSERT INTO dice (dice_name, dice_sides) VALUES
 
 
 INSERT INTO 
-
 
 
 
