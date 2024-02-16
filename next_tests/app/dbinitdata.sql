@@ -100,7 +100,20 @@ INSERT INTO dice (name, sides) VALUES
 ('d4', 4);
 
 
-INSERT INTO 
+INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid)
+('Barbarian',SELECT diceid FROM dice WHERE sides = 12,'12',SELECT diceid FROM dice WHERE sides = 12,'', NULL),
+('Bard', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
+('Cleric', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
+('Druid', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
+('Fighter', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', NULL),
+('Monk  ', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
+('Paladin', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
+('Ranger', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
+('Rogue', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
+('Sorcerer', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
+('Warlock', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
+('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int'),
+
 
 
 
