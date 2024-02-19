@@ -45,16 +45,17 @@ CREATE TABLE IF NOT EXISTS dice (
 
 
 CREATE TABLE IF NOT EXISTS gamelogtag (
-	gamelogtagid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name						varchar(50),
+	gamelogtagid 				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name								varchar(50),
 	/*description			varchar(100)*/	
 );
 
 
 CREATE TABLE IF NOT EXISTS gamelog (
-	gamelogid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	gamelogtagid	 	integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
-	content 					varchar(200)
+	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	gamelogtagid	 			integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
+	content 						varchar(200),
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
 );
 
 
@@ -466,7 +467,7 @@ Race Tables
 
 CREATE TABLE IF NOT EXISTS race (
 	raceid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name
+	name								
 	creaturesizeid			integer REFERENCES creaturesize(creaturesizeid) NOT NULL
 );
 

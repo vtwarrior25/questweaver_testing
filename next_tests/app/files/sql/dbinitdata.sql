@@ -42,24 +42,24 @@ INSERT INTO ability (name, abbrev, description) VALUES
 
 
 INSERT INTO skill (name, abilityid, description) VALUES 
-('Acrobatics', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
-('Animal Handling', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
-('Arcana', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
-('Athletics', SELECT abilityid FROM ability WHERE abbrev = 'Str', ''),
-('Deception', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
-('History', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
-('Insight', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
-('Intimidation', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
-('Investigation', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
-('Medicine', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
-('Nature', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
-('Perception', SELECT abilityid FROM ability WHERE abbrev = 'Wis', ''),
-('Performance', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
-('Persuasion', SELECT abilityid FROM ability WHERE abbrev = 'Cha', ''),
-('Religion', SELECT abilityid FROM ability WHERE abbrev = 'Int', ''),
-('Sleight of Hand', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
-('Stealth', SELECT abilityid FROM ability WHERE abbrev = 'Dex', ''),
-('Survival', SELECT abilityid FROM ability WHERE abbrev = 'Wis', '');
+('Acrobatics', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
+('Animal Handling', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
+('Arcana', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
+('Athletics', (SELECT abilityid FROM ability WHERE abbrev = 'Str'), ''),
+('Deception', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
+('History', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
+('Insight', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
+('Intimidation', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
+('Investigation', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
+('Medicine', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
+('Nature', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
+('Perception', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
+('Performance', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
+('Persuasion', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
+('Religion', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
+('Sleight of Hand', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
+('Stealth', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
+('Survival', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), '');
 
 
 INSERT INTO alignment (name, description, abbrev) VALUES 
@@ -75,12 +75,12 @@ INSERT INTO alignment (name, description, abbrev) VALUES
 
 
 INSERT INTO savingthrow (name, abilityid) VALUES
-('Strength', SELECT abilityid FROM ability WHERE abbrev = 'Str'),
-('Dexterity', SELECT abilityid FROM ability WHERE abbrev = 'Dex'),
-('Constitution', SELECT abilityid FROM ability WHERE abbrev = 'Con'),
-('Intelligence', SELECT abilityid FROM ability WHERE abbrev = 'Int'),
-('Wisdom', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Charisma', SELECT abilityid FROM ability WHERE abbrev = 'Cha');
+('Strength', (SELECT abilityid FROM ability WHERE abbrev = 'Str')),
+('Dexterity', (SELECT abilityid FROM ability WHERE abbrev = 'Dex')),
+('Constitution', (SELECT abilityid FROM ability WHERE abbrev = 'Con')),
+('Intelligence', (SELECT abilityid FROM ability WHERE abbrev = 'Int')),
+('Wisdom', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
+('Charisma', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'));
 
 
 INSERT INTO creaturesize (name, description) VALUES
@@ -102,18 +102,18 @@ INSERT INTO dice (name, sides) VALUES
 
 
 INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid)
-('Barbarian',SELECT diceid FROM dice WHERE sides = 12,'12',SELECT diceid FROM dice WHERE sides = 12,'', NULL),
-('Bard', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Cleric', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Druid', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Fighter', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', NULL),
-('Monk  ', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
-('Paladin', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Ranger', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Rogue', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
-('Sorcerer', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Warlock', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int');
+('Barbarian', (SELECT diceid FROM dice WHERE sides = 12), '12', (SELECT diceid FROM dice WHERE sides = 12),'', NULL),
+('Bard', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
+('Cleric', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
+('Druid', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
+('Fighter', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', NULL),
+('Monk  ', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
+('Paladin', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
+('Ranger', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
+('Rogue', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
+('Sorcerer', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
+('Warlock', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
+('Wizard', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Int'));
 
 
 INSERT INTO subclass (name, description)

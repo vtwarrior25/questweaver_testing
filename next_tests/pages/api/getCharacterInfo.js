@@ -284,14 +284,14 @@ function characterInfoFromDB (infotype) {
           initiative: 3,
         },
       ]; */
-      dbquery = new PQ({text: 'SELECT * FROM turnorder'});
+      dbquery = new PQ({text: 'SELECT p.name, t.initiative FROM turnorder t JOIN playercharacter p ON t.playercharacterid = p.playercharacterid'});
       db.any(dbresult)
         .then (turnorders => {
         console.log("got turn orders");
         console.log(turnorders);
         dbresult = turnorders;
       }).catch (error => {
-        error.log("not found");
+        //error.log("not found");
         return "not found";
       });
       break;
