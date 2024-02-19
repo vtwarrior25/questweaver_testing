@@ -125,16 +125,16 @@ function SpellsMenu({setRollResults}) {
     <div className="spellsMenu characterInventoryAreaSection">
       <div className="spellsMenuHeader">
         <div className="spellsMenuHeaderInfoBox">
-          <div>
+          <div className="spellsMenuHeaderStat">
             {/* TODO reformat this later */}
             <span>Modifier</span>
             <span>{spellinfo.castmodifier}</span>
           </div>
-          <div>
+          <div className="spellsMenuHeaderStat">
             <span>Spell Attack</span>
             <span>{spellinfo.spellattackmod}</span>
           </div>
-          <div>
+          <div className="spellsMenuHeaderStat">
             <span>Save DC</span>
             <span>{spellinfo.savedc}</span>
           </div>

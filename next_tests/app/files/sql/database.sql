@@ -1,3 +1,14 @@
+/*
+TODO:
+- How will we store race/subrace and class/subclass info about a character?
+	- In the playercharacter table?
+	- In seperate tables for each (race, subrace, class, subclass)?
+	- In a single seperate table with columns for playercharacter id and for each item
+
+
+
+*/
+
 
 /*
 ------------------------------------------------------------------------
@@ -36,7 +47,7 @@ CREATE TABLE IF NOT EXISTS dice (
 CREATE TABLE IF NOT EXISTS gamelogtag (
 	gamelogtagid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name						varchar(50),
-	description			varchar(100)	
+	/*description			varchar(100)*/	
 );
 
 
@@ -548,7 +559,7 @@ Item Tables
 CREATE TABLE IF NOT EXISTS rarity (
 	rarityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name  					varchar(50),
-	description			varchar(100)												
+	/*description			varchar(100)*/												
 );
 /*
 Common, Uncommon, Rare, Very Rare 

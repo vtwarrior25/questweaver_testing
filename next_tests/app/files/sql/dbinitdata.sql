@@ -18,7 +18,7 @@ Tables to insert data into initially:
 - Subrace
 - Spell
 - Spell List
-- Rarity
+- *Rarity
 - Possible Weapon Property
 
 
@@ -27,6 +27,8 @@ Tables that need some initial data:
 - Item
 - Armor
 - Weapon
+
+
 
 */
 
@@ -113,6 +115,7 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 ('Warlock', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
 ('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int');
 
+
 INSERT INTO subclass (name, description)
 ('Path of the Berserker',''),
 ('College of Valor', '' ),
@@ -126,8 +129,6 @@ INSERT INTO subclass (name, description)
 ('Divine Soul', '' ),
 ('The Undying', '' ),
 ('School of Illusions', ''),
-
-
 
 
 INSERT INTO monstertype (name) VALUES 
@@ -146,3 +147,20 @@ INSERT INTO monstertype (name) VALUES
 ('Plant'),
 ('Undead');
 
+
+INSERT INTO rarity (name) VALUES 
+('Common'),
+('Uncommon'),
+('Rare'),
+('Very Rare'),
+('Legendary'),
+('Artifact');
+
+
+INSERT INTO gamelogtag (name) VALUES
+('Diceroll'),
+('Health'),
+('Inventory'),
+(''),
+(''),
+('');

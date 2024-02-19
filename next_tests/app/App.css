@@ -590,6 +590,13 @@ Character Inventory Area Spells Menu
 .spellsMenuHeaderInfoBox {
   display: flex;
   flex-direction: row;
+  gap: 1rem;
+}
+
+.spellsMenuHeaderStat {
+  display: flex;
+  flex-direction: column;
+  border: var(--thinBorder);
 }
 
 .spellsLevelSectionHeader {

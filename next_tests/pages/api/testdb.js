@@ -1,4 +1,4 @@
-
+import { NextResponse } from 'next/server';
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 
@@ -36,7 +36,7 @@ export default function handler(req, res) {
     //console.log(alignments);
     res.status(200).json(alignments);
   }).catch (error => {
-    error.log("bad");
-    res.status(500).text("bad");
+    console.log(error);
+    res.text("bad");
 });
 }
