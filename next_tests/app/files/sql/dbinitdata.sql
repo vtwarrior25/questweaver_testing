@@ -7,19 +7,19 @@ Tables to insert data into initially:
 - *Subclass
 - *Saving Throw
 - *Dice
-- Game Log Tag
+- ??Game Log Tag
 - *Creature Size
-- Defense
+- *Defense
 - Proficiency Type
 - Proficiency
 - Feature Tables (this will suck, don't do it yet)
 - *Monster Type
-- Race
-- Subrace
+- *Race
+- *Subrace
 - Spell
 - Spell List
 - *Rarity
-- Possible Weapon Property
+- *Possible Weapon Property
 
 
 
@@ -101,7 +101,7 @@ INSERT INTO dice (name, sides) VALUES
 ('d4', 4);
 
 
-INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid)
+INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid) VALUES
 ('Barbarian',SELECT diceid FROM dice WHERE sides = 12,'12',SELECT diceid FROM dice WHERE sides = 12,'', NULL),
 ('Bard', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
 ('Cleric', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
@@ -116,7 +116,7 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 ('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int');
 
 
-INSERT INTO subclass (name, description)
+INSERT INTO subclass (name, description) VALUES
 ('Path of the Berserker',''),
 ('College of Valor', '' ),
 ('Life Domain', '' ),
@@ -160,7 +160,114 @@ INSERT INTO rarity (name) VALUES
 INSERT INTO gamelogtag (name) VALUES
 ('Diceroll'),
 ('Health'),
-('Inventory'),
-(''),
+('Turn Order'),
 (''),
 ('');
+
+INSERT INTO conditions (name, description) VALUES
+('Blinded', ''),
+('Charmed', ''),
+('Deafened', ''),
+('Frightened', ''),
+('Grappled', ''),
+('Incapacitated', ''),
+('Invisible', ''),
+('Paralyzed', ''),
+('Petrified', ''),
+('Poisoned', ''),
+('Prone', ''),
+('Restrained', ''),
+('Stunned', ''),
+('Unconscious', ''),
+('Exhaustion', '');
+
+INSERT INTO defense (name, description) VALUES
+('Fire', ''),
+('Acid', ''),
+('Bludgeoning', ''),
+('Damage from Spells', ''),
+('Thunder', ''),
+('Psychic', ''),
+('Radiant', ''),
+('Poison', ''),
+('Piercing', ''),
+('Necrotic', ''),
+('Lightning', ''),
+('Trap Dammage', ''),
+('Cold', ''),
+('Force', ''),
+('Range Attacks', ''),
+('Slashing', '');
+
+INSERT INTO race (name) VALUES
+('Dwarf'),
+('Elf'),
+('Halfling'),
+('Alseid'),
+('Catfolk'),
+('Darakhul'),
+('Derro'),
+('Drow'),
+('Erina'),
+('Gearforged'),
+('Minotaur'),
+('Mushroomfolk'),
+('Satarre'),
+('Shade'),
+('Human'),
+('Dragonborn'),
+('Half-Elf'),
+('Half-Orc'),
+('Tiefling');
+
+
+INSERT INTO subrace (name) VALUES
+('Hill Dwarf'),
+('High Elf'),
+('Stoor Halfling'),
+('Lightfoot'),
+('Malkin'),
+('Pantheran'),
+('Derro Heritage'),
+('Dragonborn Heritage'),
+('Drow Heritage'),
+('Dwarf Heritage'),
+('Elf/Shadow fey Heritage'),
+('Gnome Heritage'),
+('Halfing Heritage'),
+('Human/Half-Elf Heritage'),
+('Kobold Heritage'),
+('Ravenfolk'),
+('Tiefling Heritage'),
+('Trollkin Heritage'),
+('Far-Touched'),
+('Mutated'),
+('Uncorrupted'),
+('Delver'),
+('Fever-Bit'),
+('Purified'),
+('Dwarf Chassis'),
+('Gnome Chassis'),
+('Human Chassis'),
+('Kobold Chassis'),
+('Acid Cap'),
+('Favored'),
+('Morel'),
+('Rock Gnome');
+
+INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
+('Ammunition',''),
+('Finesse',''),
+('Heavy',''),
+('Light',''),
+('Range',''),
+('Reach',''),
+('Special',''),
+('Two-Handed',''),
+('Versatile','');
+
+
+
+
+
+CREATE TYPE defense_type AS ENUM ('Resistance', 'Vulnerability', 'Immunity');
