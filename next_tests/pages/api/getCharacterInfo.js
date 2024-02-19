@@ -35,7 +35,7 @@ function characterInfoFromDB (infotype) {
   let dbresult = {}; 
   switch (infotype) {
     case 'skill':
-      dbquery = "skillquery";
+      /*dbquery = "skillquery";
       dbresult = {
         skills: [
           {
@@ -147,8 +147,8 @@ function characterInfoFromDB (infotype) {
             skillbonus: 3,
           },
         ],
-      }
-      break;
+      }*/
+      // This is the query text
     case 'ability':
       dbquery = "abilityquery";
       dbresult = [
@@ -285,6 +285,10 @@ function characterInfoFromDB (infotype) {
         },
       ];
       break;
+    case 'alignment':
+      const getAlignments = new PQ({text: 'SELECT * FROM alignment'});
+      break;
+      
   }
   //dbresult = db.query(dbquery)
   
@@ -296,3 +300,19 @@ export default function handler(req, res) {
   let characterinfo = characterInfoFromDB(q.infotype);
   res.status(200).json(characterinfo);
 }
+
+
+/*
+export default function handler(req, res) {
+  //let result = runquery();
+  db.any(getAlignments)
+  .then (alignments => {
+    //console.log("got alignments");
+    //console.log(alignments);
+    res.status(200).json(alignments);
+  }).catch (error => {
+    console.log(error);
+    res.text("bad");
+});
+}
+*/

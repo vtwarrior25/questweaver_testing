@@ -65,6 +65,15 @@ function ManageSpells() {
   }, [preparedspells],
   );
 
+  const prepSpell = (spell) => {
+    console.log("prepspell");
+    // This should add a spell to prepared
+  }
+
+  const unprepSpell = (spell) => {
+    console.log("prepspell");
+    // This should remove a spell from prepared
+  }
 
   return ( 
       <div className='manageSpellsMenu frontElement'>

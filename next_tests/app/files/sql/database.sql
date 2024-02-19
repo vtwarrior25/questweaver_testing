@@ -583,7 +583,7 @@ CREATE TABLE IF NOT EXISTS armor (
 	dexmodifier						boolean,
 	dexmodifiermax				integer,
 	strengthrequirement		integer,
-	stealthdisadvantage		boolean		
+	stealthdisadvantage		boolean 
 );
 
 
@@ -670,7 +670,17 @@ CREATE TABLE IF NOT EXISTS attackfeature (
 
 
 
+/*
+------------------------------------------------------------------------
+Turn Order
+------------------------------------------------------------------------
+*/
 
+CREATE TABLE IF NOT EXISTS turnorder (
+	turnorderid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid) UNIQUE,
+	initiative					integer
+);
 
 
 
