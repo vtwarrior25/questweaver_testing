@@ -287,7 +287,7 @@ function characterInfoFromDB (infotype) {
       dbquery = new PQ({text: 'SELECT p.name, t.initiative FROM turnorder t JOIN playercharacter p ON t.playercharacterid = p.playercharacterid'});
       break;
     case 'alignment':
-      const getAlignments = new PQ({text: 'SELECT * FROM alignment'});
+      dbquery = new PQ({text: 'SELECT * FROM alignment'});
       break;
       
   }
