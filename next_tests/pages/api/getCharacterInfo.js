@@ -251,8 +251,8 @@ function characterInfoFromDB (infotype) {
         ];
       break;
     case 'turnorder':
-      dbquery = "turnorderquery";
-      dbresult = [
+//    dbquery = "turnorderquery";
+/**   dbresult = [
         {
           id: 0,
           name: "Jerome",
@@ -283,7 +283,17 @@ function characterInfoFromDB (infotype) {
           name: "Erica",
           initiative: 3,
         },
-      ];
+      ]; */
+      dbquery = new PQ({text: 'SELECT * FROM turnorder'});
+      db.any(dbresult)
+        .then (turnorders => {
+        console.log("got turn orders");
+        console.log(turnorders);
+        dbresult = turnorders;
+      }).catch (error => {
+        error.log("not found");
+        return "not found";
+      });
       break;
   }
   //dbresult = db.query(dbquery)
