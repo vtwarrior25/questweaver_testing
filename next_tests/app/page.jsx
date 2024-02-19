@@ -9,12 +9,14 @@ import MapSection from "./MapSection";
 import MonsterSheet from "./MonsterSheet";
 
 // React-Bootstrap Imports
-import { Button, Container, Offcanvas, Tab, Tabs, Row, Col } from 'react-bootstrap'
+import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
 import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext }  from "./Contexts";
+import ItemCreationForm from "./ItemCreationForm";
+import WeaponCreationForm from "./WeaponCreationForm";
 
 
 function App () {
@@ -155,6 +157,20 @@ function App () {
             </div>
           )}
           </div>
+          <Accordion defaultActiveKey="1">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Custom Item</Accordion.Header>
+              <Accordion.Body>
+                <ItemCreationForm></ItemCreationForm>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Custom Weapon</Accordion.Header>
+              <Accordion.Body>
+                <WeaponCreationForm></WeaponCreationForm>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </Offcanvas.Body>
       </Offcanvas>
     </div>

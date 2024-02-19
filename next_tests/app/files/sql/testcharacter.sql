@@ -10,6 +10,8 @@ INSERT INTO playercharacter (name, armorclass, maxhealth, currenthealth, speed, 
 ("Jerome", 14, 20, 20, 30, )
 
 
+
+
 SELECT * 
 FROM charactersavingthrow c 
   JOIN playercharacter p ON c.playercharacterid = p.playercharacterid 

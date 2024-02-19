@@ -752,3 +752,63 @@ Manage Inventory Menu (temporary)
   justify-content: space-between;
   padding: 0.2rem 0.5rem;
 }
+
+
+/*
+----------------------------------------
+Item Creation Forms
+----------------------------------------
+*/
+
+.customItemCreationForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemNumInput {
+  max-width: 5rem;
+}
+
+.valueWeightFields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.weaponBasicRadio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.weaponTypeRadio {
+  display: flex;
+  flex-direction: column;
+}
+
+.customWeaponProperties {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border: var(--thinBorder);
+}
+
+.customWeaponPropertiesCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.customWeaponAttackFields {
+  display: flex;
+  flex-direction: column;
+}
+
+.weaponFormRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.weaponFormTextInput {
+  max-width: 8rem;
+}
