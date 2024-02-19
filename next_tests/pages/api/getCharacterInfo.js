@@ -35,8 +35,8 @@ function characterInfoFromDB (infotype) {
   let dbresult = {}; 
   switch (infotype) {
     case 'skill':
-      dbquery = "skillquery";
-      dbresult = {
+      dbquery = new PQ({text: 'SELECT * FROM skill'});
+      /**dbresult = {
         skills: [
           {
             skillname: "Acrobatics",
@@ -147,11 +147,11 @@ function characterInfoFromDB (infotype) {
             skillbonus: 3,
           },
         ],
-      }
+      }*/
       break;
     case 'ability':
-      dbquery = "abilityquery";
-      dbresult = [
+      dbquery = new PQ({text: 'SELECT * FROM ability'});
+      /**dbresult = [
           {
             abilityname: "Strength",
             abilityabbrev: "STR",
@@ -188,18 +188,18 @@ function characterInfoFromDB (infotype) {
             abilityscore: 12,
             abilitybonus: 0,
           },
-        ]
+        ]*/
       break;
     case 'health':
-      dbquery = "healthquery";
-      dbresult = {
+      dbquery = new PQ({text: 'SELECT * FROM health'});
+      /**dbresult = {
         currenthealth: 12,
         maxhealth: 22,
-      }
+      }*/
       break;
     case 'staticstats':
-      dbquery = "staticstatsquery";
-      dbresult = {
+      dbquery = new PQ({text: 'SELECT * FROM static_stats'});
+      /**dbresult = {
         profbonus: 2,
         speed: 30,
         initiative: 2,
@@ -213,11 +213,11 @@ function characterInfoFromDB (infotype) {
         languages: "Common, Halfling",
         defenses: "Fireproof",
         conditions: "Dry Heaving",
-      };
+      };*/
       break;
     case 'savingthrow':
-      dbquery = "savingthrowquery";
-      dbresult = [
+      dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
+      /**dbresult = [
         {
           name: 'STR',
           prof: false,
@@ -248,11 +248,11 @@ function characterInfoFromDB (infotype) {
           prof: false,
           val: +5,
         },
-        ];
+        ];*/
       break;
     case 'turnorder':
-      dbquery = "turnorderquery";
-      dbresult = [
+      //dbquery = "turnorderquery";
+      /**dbresult = [
         {
           id: 0,
           name: "Jerome",
@@ -283,16 +283,28 @@ function characterInfoFromDB (infotype) {
           name: "Erica",
           initiative: 3,
         },
-      ];
+      ]; */
+      dbquery = new PQ({text: 'SELECT p.name, t.initiative FROM turnorder t JOIN playercharacter p ON t.playercharacterid = p.playercharacterid'});
       break;
+    case 'alignment':
+      dbquery = new PQ({text: 'SELECT * FROM alignment'});
+      break;
+      
   }
   //dbresult = db.query(dbquery)
-  
-  return dbresult;
+  return dbquery;
 }
 
 export default function handler(req, res) {
   let q = req.query;
-  let characterinfo = characterInfoFromDB(q.infotype);
-  res.status(200).json(characterinfo);
+  //let characterinfo = characterInfoFromDB(q.infotype);
+  let characterquery = characterInfoFromDB(q.infotype, q.characterkey);
+  db.any(dbresult)
+    .then (dbinfo => {
+      console.log("got character info from " + q);
+      console.log(dbinfo);
+      res.status(200).json(dbinfo);
+    }).catch (error => {
+      res.status(404).json("not found");
+    });
 }

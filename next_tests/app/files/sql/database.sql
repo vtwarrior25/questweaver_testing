@@ -45,16 +45,17 @@ CREATE TABLE IF NOT EXISTS dice (
 
 
 CREATE TABLE IF NOT EXISTS gamelogtag (
-	gamelogtagid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name						varchar(50),
+	gamelogtagid 				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name								varchar(50),
 	/*description			varchar(100)*/	
 );
 
 
 CREATE TABLE IF NOT EXISTS gamelog (
-	gamelogid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	gamelogtagid	 	integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
-	content 					varchar(200)
+	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	gamelogtagid	 			integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
+	content 						varchar(200),
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
 );
 
 
@@ -297,7 +298,7 @@ Animal Handling for Jerome
 CREATE TABLE IF NOT EXISTS charactersavingthrow (
 	charactersavingthrowid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid							integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	savingthrowid									integer REFERENCES skill(skillid) NOT NULL,
+	savingthrowid									integer REFERENCES savingthrow(savingthrow) NOT NULL,
 	proficient										boolean,
 	bonus													integer
 );
@@ -590,7 +591,7 @@ CREATE TABLE IF NOT EXISTS armor (
 	dexmodifier						boolean,
 	dexmodifiermax				integer,
 	strengthrequirement		integer,
-	stealthdisadvantage		boolean		
+	stealthdisadvantage		boolean 
 );
 
 
@@ -677,7 +678,17 @@ CREATE TABLE IF NOT EXISTS attackfeature (
 
 
 
+/*
+------------------------------------------------------------------------
+Turn Order
+------------------------------------------------------------------------
+*/
 
+CREATE TABLE IF NOT EXISTS turnorder (
+	turnorderid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid) UNIQUE,
+	initiative					integer
+);
 
 
 
