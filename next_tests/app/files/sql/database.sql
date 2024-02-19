@@ -181,6 +181,13 @@ CREATE TABLE IF NOT EXISTS defense (
 	defenseid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name						varchar(24),
 	description			varchar(200)
+	type          	defense_type
+);
+
+CREATE TABLE IF NOT EXISTS conditions (
+	defenseid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name						varchar(24),
+	description			varchar(200)
 );
 
 
@@ -467,7 +474,7 @@ Race Tables
 
 CREATE TABLE IF NOT EXISTS race (
 	raceid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name								
+	name								varchar(20)
 	creaturesizeid			integer REFERENCES creaturesize(creaturesizeid) NOT NULL
 );
 
