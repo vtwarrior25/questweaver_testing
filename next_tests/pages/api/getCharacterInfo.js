@@ -286,6 +286,10 @@ function characterInfoFromDB (infotype) {
       ]; */
       dbquery = new PQ({text: 'SELECT * FROM turnorder'});
       break;
+    case 'alignment':
+      const getAlignments = new PQ({text: 'SELECT * FROM alignment'});
+      break;
+      
   }
   //dbresult = db.query(dbquery)
   return dbquery;
@@ -304,3 +308,19 @@ export default function handler(req, res) {
       res.status(404).json("not found");
     });
 }
+
+
+/*
+export default function handler(req, res) {
+  //let result = runquery();
+  db.any(getAlignments)
+  .then (alignments => {
+    //console.log("got alignments");
+    //console.log(alignments);
+    res.status(200).json(alignments);
+  }).catch (error => {
+    console.log(error);
+    res.text("bad");
+});
+}
+*/
