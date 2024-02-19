@@ -37,6 +37,5 @@ export default function handler(req, res) {
     res.status(200).json(alignments);
   }).catch (error => {
     console.log(error);
-    res.text("bad");
 });
 }

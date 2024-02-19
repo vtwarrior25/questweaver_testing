@@ -1,14 +1,14 @@
 function rollDice (die, num) { 
   console.log(`die = ${die}, num = ${num}`);
-  dicerolls = [];
+  let dicerolls = [];
   for (let i = 0; i < num; i++) {
     dicerolls.push(Math.ceil(Math.random() * Number(die)));
   }
   return dicerolls;
 }
 
-function rollCheck(name, rolltype, die, number, mod){
-  check = {
+function rollCheck(name, rolltype, die, number, mod) {
+  let check = {
     rolls: [],
     rollstring: "",
     rolltotal: "",
@@ -20,16 +20,16 @@ function rollCheck(name, rolltype, die, number, mod){
   check.name = name;
   check.rolltype = rolltype;
 
-  dicerolls = rollDice(Number(die), Number(number));
-  rolltotal = 0;
+  let dicerolls = rollDice(Number(die), Number(number));
+  let rolltotal = 0;
   dicerolls.forEach( num => {
     rolltotal += num;
     check.rolls.push(num);
   })
   rolltotal = rolltotal + Number(mod);
-  rollstring = '';
-  basestring = '';
-  i = 0;
+  let rollstring = '';
+  let basestring = '';
+  let i = 0;
   for (roll of dicerolls){
     if (Number(roll) < 0 || i == 0) {
       rollstring = `${rollstring} ${roll}` 

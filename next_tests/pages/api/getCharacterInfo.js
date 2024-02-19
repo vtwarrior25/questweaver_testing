@@ -216,7 +216,7 @@ function characterInfoFromDB (infotype) {
       };*/
       break;
     case 'savingthrow':
-      dbquery = new PQ({text: 'SELECT * FROM saving_throw'});
+      dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
       /**dbresult = [
         {
           name: 'STR',
@@ -298,7 +298,7 @@ function characterInfoFromDB (infotype) {
 export default function handler(req, res) {
   let q = req.query;
   //let characterinfo = characterInfoFromDB(q.infotype);
-  let characterquery = characterInfoFromDB(q.infotype);
+  let characterquery = characterInfoFromDB(q.infotype, q.characterkey);
   db.any(dbresult)
     .then (dbinfo => {
       console.log("got character info from " + q);
@@ -308,19 +308,3 @@ export default function handler(req, res) {
       res.status(404).json("not found");
     });
 }
-
-
-/*
-export default function handler(req, res) {
-  //let result = runquery();
-  db.any(getAlignments)
-  .then (alignments => {
-    //console.log("got alignments");
-    //console.log(alignments);
-    res.status(200).json(alignments);
-  }).catch (error => {
-    console.log(error);
-    res.text("bad");
-});
-}
-*/

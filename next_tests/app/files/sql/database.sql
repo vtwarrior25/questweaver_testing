@@ -291,7 +291,7 @@ Animal Handling for Jerome
 CREATE TABLE IF NOT EXISTS charactersavingthrow (
 	charactersavingthrowid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid							integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	savingthrowid									integer REFERENCES skill(skillid) NOT NULL,
+	savingthrowid									integer REFERENCES savingthrow(savingthrow) NOT NULL,
 	proficient										boolean,
 	bonus													integer
 );
