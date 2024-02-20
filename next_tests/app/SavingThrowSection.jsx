@@ -55,7 +55,7 @@ function SavingThrowSection ({setRollResults}) {
 
 
   const getStats = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=savingthrow`)
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=savingthrow`)
     .then(res => res.json())
     .then(res => setSavingThrows(res));
   }

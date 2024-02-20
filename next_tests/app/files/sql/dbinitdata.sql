@@ -273,9 +273,11 @@ INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
 ('Finesse',''),
 ('Heavy',''),
 ('Light',''),
+('Loading',''),
 ('Range',''),
 ('Reach',''),
 ('Special',''),
+('Thrown',''),
 ('Two-Handed',''),
 ('Versatile','');
 

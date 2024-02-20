@@ -32,8 +32,6 @@ export default function handler(req, res) {
   //let result = runquery();
   db.any(getAlignments)
   .then (alignments => {
-    //console.log("got alignments");
-    //console.log(alignments);
     res.status(200).json(alignments);
   }).catch (error => {
     console.log(error);

@@ -1,6 +1,33 @@
+/*
+https://nextjs.org/docs/pages/building-your-application/data-fetching/forms-and-mutations
+*/
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 function ItemCreationForm() {
+
+  const [isloading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function onSubmit(event) {
+    event.preventDefault();
+    try {
+      const formdata = new FormData(event.currentTarget);
+      const response = await fetch('http://localhost:3000/api/additem?type=weapon', {
+        method: 'POST',
+        body: formdata,
+      });
+      if (!response.ok) {
+        throw new Error('Failed to submit data.');
+      }
+    } catch (error) {
+      setError(error.message);
+      console.error(error);
+    } finally {
+    }
+  }
+
+
   return ( 
     <div className="itemCreationForm">
       <form class="customItemCreationForm">
@@ -28,7 +55,7 @@ function ItemCreationForm() {
           <label htmlFor="itemDescription">Description</label>
           <textarea name="itemDescription"></textarea>
         </div>
-        <Button type="button">Create Item</Button>
+        <Button type="submit" disabled={isloading}>{isloading ? 'Loading' : 'Create Item'}</Button>
       </form>
     </div>
   );
