@@ -21,5 +21,10 @@ export async function createItem(userid, formdata) {
       ($1, $2, $3, $5, (SELECT rarityid FROM rarity WHERE name = $4));
     `
   });
-  db.none(itemaddquery, [formdata.get('itemName'), formdata.get('value'), formdata.get('weight'), formdata.get('itemRarity'), formdata.get('itemDescription')]);
+  db.none(itemaddquery, [formdata.get('itemName'), formdata.get('value'), formdata.get('weight'), formdata.get('itemRarity'), formdata.get('itemDescription')])
+  .then (()=> {
+    return "Item added";
+  }).catch(error => {
+    return "Error adding item";
+  });
 }

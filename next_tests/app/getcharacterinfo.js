@@ -305,10 +305,9 @@ function characterInfoFromDB (infotype) {
   return dbresult;
 }
 
-export default function handler(req, res) {
-  let q = req.query;
-  let characterinfo = characterInfoFromDB(q.infotype);
-  res.status(200).json(characterinfo);
+export default function getCharacterInfo(userid, type) {
+  let characterinfo = characterInfoFromDB(type);
+  return characterinfo;
   //let characterinfo = characterInfoFromDB(q.infotype);
   /*
   let characterquery = characterInfoFromDB(q.infotype, q.characterkey);

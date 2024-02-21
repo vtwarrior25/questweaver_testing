@@ -201,29 +201,19 @@ INSERT INTO race (name) VALUES
 ('Dwarf'),
 ('Elf'),
 ('Halfling'),
-('Alseid'),
-('Catfolk'),
-('Darakhul'),
-('Derro'),
-('Drow'),
-('Erina'),
-('Gearforged'),
-('Minotaur'),
-('Mushroomfolk'),
-('Satarre'),
-('Shade'),
 ('Human'),
 ('Dragonborn'),
+('Gnome'),
 ('Half-Elf'),
 ('Half-Orc'),
 ('Tiefling');
 
-/*
+
 INSERT INTO subrace (name, raceid) VALUES
 ('Hill Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
 ('High Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
-('Stoor Halfling' (SELECT raceid FROM race WHERE name = 'Halfling')),
-('Lightfoot'),
+('Stoor Halfling', (SELECT raceid FROM race WHERE name = 'Halfling')),
+('Lightfoot', (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Malkin'),
 ('Pantheran'),
 ('Derro Heritage'),
@@ -252,7 +242,7 @@ INSERT INTO subrace (name, raceid) VALUES
 ('Favored'),
 ('Morel'),
 ('Rock Gnome');
-*/
+
 
 INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
 ('Ammunition',''),
