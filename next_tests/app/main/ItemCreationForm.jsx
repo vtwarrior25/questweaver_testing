@@ -4,11 +4,11 @@ https://nextjs.org/docs/pages/building-your-application/data-fetching/forms-and-
 import React, { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { createItem } from './itemcreation';
-import { UserIDContext } from './Contexts';
+import { PlayerCharacterContext } from './Contexts';
 
 function ItemCreationForm() {
-  const userid = useContext(UserIDContext);
-  const createItemWithUID = createItem.bind(userid, null);
+  const playercharacterid = useContext(PlayerCharacterContext);
+  const createItemWithPlayerID = createItem.bind(playercharacterid, null);
 /*
   async function onSubmit(data) {
     const connection = {
@@ -35,7 +35,7 @@ function ItemCreationForm() {
 
   return ( 
     <div className="itemCreationForm">
-      <form class="customItemCreationForm" action={createItemWithUID}>
+      <form class="customItemCreationForm" action={createItemWithPlayerID}>
         <span>Custom Item Form</span>
         <div>
           <label htmlFor="itemname">Name</label>

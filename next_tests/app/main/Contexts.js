@@ -8,4 +8,6 @@ export const ModPosContext = createContext(null);
 
 export const URLContext = createContext(null);
 
-export const UserIDContext = createContext(null);
+export const UserIDContext = createContext(null);  
+
+export const PlayerCharacterContext = createContext(null);

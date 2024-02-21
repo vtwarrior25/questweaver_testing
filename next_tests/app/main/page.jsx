@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext }  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext }  from "./Contexts";
 import ItemCreationForm from "./ItemCreationForm";
 import WeaponCreationForm from "./WeaponCreationForm";
 
@@ -22,6 +22,7 @@ import WeaponCreationForm from "./WeaponCreationForm";
 function App () {
 
   const [userid, setUserID] = useState(0); 
+  const [playercharacterid, setPlayerCharacterID] = useState(0);
 
   const [rollresults, setRollResults] = useState({
     /*
@@ -87,6 +88,7 @@ function App () {
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <PlayerCharacterContext.Provider value={playercharacterid}>
     <UserIDContext.Provider value={userid}>
     <ModPosContext.Provider value={modPos}>
     <SetRollResultsContext.Provider value={setRollResults}>
@@ -152,6 +154,7 @@ function App () {
     </SetRollResultsContext.Provider>
     </ModPosContext.Provider>
     </UserIDContext.Provider>
+    </PlayerCharacterContext.Provider>
   );
 }
 
