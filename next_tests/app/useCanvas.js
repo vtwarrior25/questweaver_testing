@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 
 const heartSVG = "M0 200 v-200 h200 a100,100 90 0,1 0,200 a100,100 90 0,1 -200,0 z"
-const SVG_PATH = new Path2D(heartSVG);
+//const SVG_PATH = new Path2D(heartSVG);
 
 const SCALE = 0.1;
 const OFFSET = 80;

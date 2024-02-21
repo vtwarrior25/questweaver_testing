@@ -14,12 +14,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext }  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext }  from "./Contexts";
 import ItemCreationForm from "./ItemCreationForm";
 import WeaponCreationForm from "./WeaponCreationForm";
 
 
 function App () {
+
+  const [userid, setUserID] = useState(0); 
+
   const [rollresults, setRollResults] = useState({
     /*
     rolls: [],
@@ -42,37 +45,6 @@ function App () {
     showdefensesconditions: true,
     showturnorderbox: true,
   })
-
-  /*
-    {
-      name: "Ability Section",
-      visible: true,
-    },
-    {
-      name: "Health Section",
-      visible: true,
-    },
-    {
-      name: "Static Stats Box",
-      visible: true,
-    },
-    {
-      name: "Manual Dice Roller",
-      visible: true,
-    },
-    {
-      name: "Saving Throw Section",
-      visible: true,
-    },
-    {
-      name: "Skill Section",
-      visible: true,
-    },
-    {
-      name: "Character Inventory Area",
-      visible: true,
-    },
-    */
 
 
 
@@ -115,6 +87,7 @@ function App () {
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <UserIDContext.Provider value={userid}>
     <ModPosContext.Provider value={modPos}>
     <SetRollResultsContext.Provider value={setRollResults}>
     <RollResultsContext.Provider value={rollresults}>
@@ -157,7 +130,7 @@ function App () {
             </div>
           )}
           </div>
-          <Accordion defaultActiveKey="1">
+          <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header>Custom Item</Accordion.Header>
               <Accordion.Body>
@@ -178,6 +151,7 @@ function App () {
     </RollResultsContext.Provider>
     </SetRollResultsContext.Provider>
     </ModPosContext.Provider>
+    </UserIDContext.Provider>
   );
 }
 

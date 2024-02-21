@@ -84,12 +84,12 @@ INSERT INTO savingthrow (name, abilityid) VALUES
 
 
 INSERT INTO creaturesize (name, description) VALUES
-('Tiny', ""),
-('Small', ""),
-('Medium', ""),
-('Large', ""),
-('Huge', ""),
-('Gargantuan', "");
+('Tiny', ''),
+('Small', ''),
+('Medium', ''),
+('Large', ''),
+('Huge', ''),
+('Gargantuan', '');
 
 
 INSERT INTO dice (name, sides) VALUES
@@ -102,25 +102,12 @@ INSERT INTO dice (name, sides) VALUES
 
 
 INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid) VALUES
-('Barbarian',SELECT diceid FROM dice WHERE sides = 12,'12',SELECT diceid FROM dice WHERE sides = 12,'', NULL),
-('Bard', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Cleric', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Druid', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Fighter', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', NULL),
-('Monk  ', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
-('Paladin', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Ranger', SELECT diceid FROM dice WHERE sides = 10, '10', SELECT diceid FROM dice WHERE sides = 10, '', SELECT abilityid FROM ability WHERE abbrev = 'Wis'),
-('Rogue', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', NULL),
-('Sorcerer', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Warlock', SELECT diceid FROM dice WHERE sides = 8, '8', SELECT diceid FROM dice WHERE sides = 8, '', SELECT abilityid FROM ability WHERE abbrev = 'Cha'),
-('Wizard', SELECT diceid FROM dice WHERE sides = 6, '6', SELECT diceid FROM dice WHERE sides = 6, '', SELECT abilityid FROM ability WHERE abbrev = 'Int');
-INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid)
 ('Barbarian', (SELECT diceid FROM dice WHERE sides = 12), '12', (SELECT diceid FROM dice WHERE sides = 12),'', NULL),
 ('Bard', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
 ('Cleric', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
 ('Druid', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
 ('Fighter', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', NULL),
-('Monk  ', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
+('Monk', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
 ('Paladin', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
 ('Ranger', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
 ('Rogue', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
@@ -129,19 +116,19 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 ('Wizard', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Int'));
 
 
-INSERT INTO subclass (name, description) VALUES
-('Path of the Berserker',''),
-('College of Valor', '' ),
-('Life Domain', '' ),
-('Circle of the Moon', '' ),
-('Champion', '' ),
-('Way of the Open Hand', '' ),
-('Oath of Devotion', '' ),
-('Hunter', '' ),
-('Thief', '' ),
-('Divine Soul', '' ),
-('The Undying', '' ),
-('School of Illusions', ''),
+INSERT INTO subclass (name, description, classid) VALUES
+('Path of the Berserker','', (SELECT classid FROM class WHERE name = 'Barbarian')),
+('College of Valor', '', (SELECT classid FROM class WHERE name = 'Bard')),
+('Life Domain', '', (SELECT classid FROM class WHERE name = 'Cleric')),
+('Circle of the Moon', '', (SELECT classid FROM class WHERE name = 'Druid')),
+('Champion', '', (SELECT classid FROM class WHERE name = 'Fighter')),
+('Way of the Open Hand', '', (SELECT classid FROM class WHERE name = 'Monk')),
+('Oath of Devotion', '', (SELECT classid FROM class WHERE name = 'Paladin')),
+('Hunter', '', (SELECT classid FROM class WHERE name = 'Ranger')),
+('Thief', '', (SELECT classid FROM class WHERE name = 'Rogue')),
+('Divine Soul', '', (SELECT classid FROM class WHERE name = 'Sorcerer')),
+('The Undying', '', (SELECT classid FROM class WHERE name = 'Warlock')),
+('School of Illusions', '', (SELECT classid FROM class WHERE name = 'Wizard'));
 
 
 INSERT INTO monstertype (name) VALUES 
@@ -173,9 +160,7 @@ INSERT INTO rarity (name) VALUES
 INSERT INTO gamelogtag (name) VALUES
 ('Diceroll'),
 ('Health'),
-('Turn Order'),
-(''),
-('');
+('Turn Order');
 
 INSERT INTO conditions (name, description) VALUES
 ('Blinded', ''),
@@ -233,11 +218,11 @@ INSERT INTO race (name) VALUES
 ('Half-Orc'),
 ('Tiefling');
 
-
-INSERT INTO subrace (name) VALUES
-('Hill Dwarf'),
-('High Elf'),
-('Stoor Halfling'),
+/*
+INSERT INTO subrace (name, raceid) VALUES
+('Hill Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
+('High Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
+('Stoor Halfling' (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Lightfoot'),
 ('Malkin'),
 ('Pantheran'),
@@ -267,6 +252,7 @@ INSERT INTO subrace (name) VALUES
 ('Favored'),
 ('Morel'),
 ('Rock Gnome');
+*/
 
 INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
 ('Ammunition',''),
@@ -280,9 +266,5 @@ INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
 ('Thrown',''),
 ('Two-Handed',''),
 ('Versatile','');
-
-
-
-
 
 CREATE TYPE defense_type AS ENUM ('Resistance', 'Vulnerability', 'Immunity');

@@ -30,10 +30,15 @@ function runquery() {
 
 export default function handler(req, res) {
   //let result = runquery();
+  try {
   db.any(getAlignments)
   .then (alignments => {
-    res.status(200).json(alignments);
+    return res.status(200).send(alignments);
   }).catch (error => {
     console.log(error);
+    return res.status(500).send({error: 'Server error'});
 });
+} catch {
+  return res.status(500).send({error: 'Server error'});
+}
 }

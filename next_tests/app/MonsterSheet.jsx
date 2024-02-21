@@ -103,23 +103,25 @@ function MonsterSheet({setRollResults}) {
 
 
   useEffect(() => {
-    console.log(encounters[0].encountername);
+    //console.log(encounters[0].encountername);
     setEncounterSelected(encounters[0].encountername);
   }, [encounters]
   );
 
+  /*
   const getEncounters = () => {
     fetch(`http://localhost:9000/encounters`)
         .then(res => res.json())
         .then(res => setEncounters(res));
   }
+  */
 
   const getMonsterGroups = (encountername) => {
-    console.log(encounterselected);
-    console.log(encounters[0].encountername);
-    console.log(encountername);
+    //console.log(encounterselected);
+    //console.log(encounters[0].encountername);
+    //console.log(encountername);
     let encountertouse = encounters.filter((encounter) => encounter.encountername === encountername);
-    console.log(encountertouse);
+    //console.log(encountertouse);
     let monstergroups = encountertouse[0].monstergroups;
     return monstergroups;
   }
