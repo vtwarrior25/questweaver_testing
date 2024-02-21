@@ -1,4 +1,8 @@
 'use server'
+import React, { useState, useContext } from 'react';
+import { UserIDContext } from './Contexts';
+import { PlayerCharacterContext } from './Contexts';
+
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 /*
@@ -40,7 +44,7 @@ db.any(getAlignments)
 
 */
 
-function characterInfoFromDB (infotype) {
+function characterInfoFromDB (userid, infotype) {
   let dbquery = "";
   let dbresult = {}; 
   switch (infotype) {
@@ -305,9 +309,9 @@ function characterInfoFromDB (infotype) {
   return dbresult;
 }
 
-export async function getcharacterinfo(userid, req) {
-  let q = req.query;
-  let characterinfo = characterInfoFromDB(q.infotype);
+export async function getcharacterinfo(userid, infotype) {
+  //let q = req.query;
+  let characterinfo = characterInfoFromDB(userid, infotype);
   //res.status(200).json(characterinfo);
   return characterinfo;
   
