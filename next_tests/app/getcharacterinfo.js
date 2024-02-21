@@ -305,10 +305,12 @@ function characterInfoFromDB (infotype) {
   return dbresult;
 }
 
-export default function handler(req, res) {
+export async function getcharacterinfo(userid, req) {
   let q = req.query;
   let characterinfo = characterInfoFromDB(q.infotype);
-  res.status(200).json(characterinfo);
+  //res.status(200).json(characterinfo);
+  return characterinfo;
+  
   //let characterinfo = characterInfoFromDB(q.infotype);
   /*
   let characterquery = characterInfoFromDB(q.infotype, q.characterkey);
