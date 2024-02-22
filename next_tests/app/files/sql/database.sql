@@ -511,6 +511,7 @@ CREATE TABLE IF NOT EXISTS spell (
 	duration						integer,
 	components					varchar(100),
 	saveability					integer REFERENCES ability(abilityid),
+	school							VARCHAR(40)
 	range								VARCHAR(20)
 );
 
