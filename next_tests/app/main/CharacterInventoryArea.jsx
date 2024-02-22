@@ -10,7 +10,7 @@ function CharacterInventoryArea({setRollResults}) {
     <div className="characterInventoryArea frontElement">
       <Tabs defaultActiveKey='actions'>
         <Tab eventKey='actions' title="Actions">  
-          <ActionsMenu setRollResults={setRollResults}></ActionsMenu>
+          <ActionsMenu></ActionsMenu>
         </Tab>
         <Tab eventKey='spells' title="Spells">
           <SpellsMenu></SpellsMenu>

@@ -43,10 +43,17 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] diceRoll
 - [ ] addLogEntry
 - [x] getCharacterInfo
-- [ ] 
+- [ ] addItemToInventory (to character inventory)
+- [ ] prepareSpell
 
 ### Database (Lead: Carter)
 - [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable
 - [ ] Finish creating init info for tables (list of tables to make data for in [`dbinit.sql`](./app/files/sql/dbinitdata.sql)`)
+- [ ] Where should we store prepared spells for a character?
+- [ ] How will we store race/subrace and class/subclass info about a character?
+    - In the playercharacter table?
+    - In seperate tables for each (race, subrace, class, subclass)?
+    - In a single seperate table with columns for playercharacter id and for each item
+
 
 ### Administrative

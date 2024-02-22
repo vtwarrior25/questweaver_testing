@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, ButtonGroup, Overlay } from 'react-bootstrap';
-import { ModPosContext, SetRollResultsContext, URLContext } from "./Contexts";
+import { ModPosContext, SetRollResultsContext, URLContext, PlayerCharacterContext } from "./Contexts";
+import { rollCheck } from "./rollcheck";
 
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage}) {
@@ -8,6 +9,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     const setRollResults2 = useContext(SetRollResultsContext);
     const modPos = useContext(ModPosContext);
     const url = useContext(URLContext);
+    const playercharacterid = useContext(PlayerCharacterContext);
 
     const target = useRef(null);
 
@@ -32,6 +34,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
 */
 
   const diceRoll = (adv) => {
+    /*
     let rollapi = `http://localhost:3000/api/rollcheck?checkmode=single&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
     if (adv === "advantage") {
       rollapi = `http://localhost:3000/api/rollcheck?checkmode=advantage&name=${name}&rolltype=${rolltype}&die=${die}&num=${num}&mod=${mod}`;
@@ -41,6 +44,9 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     fetch(rollapi)
         .then(res => res.json())
         .then(res => setRollResults2({...res}));
+    */
+    rollCheck(adv, name, rolltype, die, num, mod)
+    .then(results => setRollResults2({...results}));
   }
   
   
@@ -48,7 +54,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
   if (advantage === true) {
     return (
       <>
-      <Button variant='secondary' size='sm' ref={target} onClick={() => diceRoll("normal")} onContextMenu={(e) => {e.preventDefault(); setShow(!show)/*diceRoll("advantage")*/}}>{text}</Button>
+      <Button variant='secondary' size='sm' ref={target} onClick={() => diceRoll("single")} onContextMenu={(e) => {e.preventDefault(); setShow(!show)/*diceRoll("advantage")*/}}>{text}</Button>
       <Overlay target={target.current} show={show} placement="right">
         <ButtonGroup className="diceRollContextMenu">
           <Button size='sm' onClick={() => {diceRoll("advantage"); setShow(!show)}}>Adv</Button>
@@ -59,7 +65,7 @@ function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, a
     );
   } else {
     return (
-        <Button variant='secondary' size='sm' onClick={() => diceRoll("normal")}>{text}</Button>
+        <Button variant='secondary' size='sm' onClick={() => diceRoll("single")}>{text}</Button>
     );
   }
 }
