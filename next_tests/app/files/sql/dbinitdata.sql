@@ -16,7 +16,7 @@ Tables to insert data into initially:
 - *Monster Type
 - *Race
 - *Subrace
-- *Spell
+- Spell
 - Spell List
 - *Rarity
 - *Possible Weapon Property
@@ -577,4 +577,7 @@ INSERT INTO spell (name, school, casting_time, range, duration, components, desc
 ('Water Breathing', 'Transmutation', '1 Action R', '30 feet', '24 hours', 'V, S, M', 'Add description here'),
 ('Water Walk', 'Transmutation', '1 Action R', '30 feet', '1 hour', 'V, S, M', 'Add description here'),
 ('Wind Wall', 'Evocation', '1 Action', '120 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here');
+
+
+
 
