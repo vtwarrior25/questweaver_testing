@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuestWeaver
+QuestWeaver is a DnD server.
 
-## Getting Started
+## How to Install
+Place all of the files in a folder, then navigate to "./CharacterSheet.html" with your web browser, or double-click on "CharacterSheet.html" to open it.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Style Guidelines
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Text
+- Tab = 2 spaces
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Naming
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### HTML Classes, IDs, and Names
+Camelcase, first letter of first word is lowercase, first letter of subsequent words is uppercase, no spaces (ie. camelCase, not CamelCase or camelcase or camel case). 
+Names of fields are all lower case with no spaces, dashes, or underscores.
 
-## Learn More
+#### Javascript
+Function names are camelcase, variable names are all lowercase.
 
-To learn more about Next.js, take a look at the following resources:
+#### SQL
+Table names and row names are all lowercase, underscores for spaces 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## TODO
 
-## Deploy on Vercel
+### UI (Lead: Nick)
+- [ ]  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Server (Lead: Stirling) 
+- [ ] How do we want to organize server functions? 
+  - [ ] Should we put them all in one file?
+  - [ ] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Specific Functions
+- [ ] setHealth
+- [ ] diceRoll
+- [ ] addLogEntry
+- [x] getCharacterInfo
+- [ ] 
+
+### Database (Lead: Carter)
+- [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable
+- [ ] Finish creating init info for tables (list of tables to make data for in [`dbinit.sql`](./app/files/sql/dbinitdata.sql)`)
+
+### Administrative

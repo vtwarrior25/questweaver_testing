@@ -1,32 +1,36 @@
-import React, { useEffect, useState} from "react";
+import React, { useContext, useEffect, useState} from "react";
 import SkillRow from './SkillRow'
+import { getcharacterinfo } from "./getcharacterinfo";
+import { PlayerCharacterContext } from "./Contexts";
 
 function SkillSection (setRollResults){
+
+  const playercharacterid = useContext(PlayerCharacterContext);
     
   const[skills, setSkills] = useState([
     {
       skillname: "Acrobatics",
       skillmod: "Dex",
       skillprof: false,
-      skillbonus: 2,
+      skillbonus: 0,
     }, 
     {
       skillname: "Animal Handling",
       skillmod: "Wis",
       skillprof: true,
-      skillbonus: 3,
+      skillbonus: 0,
     }, 
     {
       skillname: "Arcana",
       skillmod: "Int",
       skillprof: false,
-      skillbonus: -1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Athletics",
       skillmod: "Str",
       skillprof: false,
-      skillbonus: 3,
+      skillbonus: 0,
     }, 
     {
       skillname: "Deception",
@@ -38,13 +42,13 @@ function SkillSection (setRollResults){
       skillname: "History",
       skillmod: "Int",
       skillprof: false,
-      skillbonus: -1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Insight",
       skillmod: "Wis",
       skillprof: true,
-      skillbonus: 1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Intimidation",
@@ -56,25 +60,25 @@ function SkillSection (setRollResults){
       skillname: "Investigation",
       skillmod: "Int",
       skillprof: false,
-      skillbonus: -1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Medicine",
       skillmod: "Wis",
       skillprof: false,
-      skillbonus: +1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Nature",
       skillmod: "Int",
       skillprof: false,
-      skillbonus: -1,
+      skillbonus: 0,
     }, 
     {
       skillname: "Perception",
       skillmod: "Wis",
       skillprof: true,
-      skillbonus: +3,
+      skillbonus: 0,
     }, 
     {
       skillname: "Performance",
@@ -98,30 +102,34 @@ function SkillSection (setRollResults){
       skillname: "Sleight of Hand",
       skillmod: "Dex",
       skillprof: false,
-      skillbonus: +2
+      skillbonus: 0,
     }, 
     {
       skillname: "Stealth",
       skillmod: "Dex",
       skillprof: true,
-      skillbonus: 2,
+      skillbonus: 0,
     }, 
     {
       skillname: "Survival",
       skillmod: "Wis",
       skillprof: false,
-      skillbonus: 3,
+      skillbonus: 0,
     },
   ]);
   const[alignments, setAlignments] = useState([]);
     
   const getSkills = () => {
+    /*
     fetch(`http://localhost:3000/api/getcharacterinfo?infotype=skill`)
         .then(res => res.json())
-        .then(res => setSkills(res.skills));
+        .then(res => setSkills(res));
     fetch(`http://localhost:3000/api/testdb`)
     .then(res => res.json())
     .then(res => setAlignments(res));
+    */
+    getcharacterinfo(playercharacterid, 'skill')
+    .then(results => setSkills(results));
   }
 
   useEffect(() => {

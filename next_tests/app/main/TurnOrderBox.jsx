@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
-import { URLContext } from "./Contexts";
+import { URLContext, PlayerCharacterContext} from "./Contexts";
+import { getcharacterinfo } from "./getcharacterinfo";
 
 function TurnOrder() {
   const [turnorder, setTurnOrder] = useState([
@@ -42,6 +43,7 @@ function TurnOrder() {
   const [currentturn, setCurrentTurn] = useState(0);
 
   const url = useContext(URLContext);
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   const changeTurn = (mode) => {
     let turnorderlength = turnorder.length;
@@ -62,9 +64,14 @@ function TurnOrder() {
 
 
   const getTurnOrder = () => {
+    /*
     fetch(`http://localhost:3000/api/getcharacterinfo?infotype=turnorder`)
     .then(res => res.json())
     .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
+    */
+    getcharacterinfo(playercharacterid, 'turnorder')
+    .then(result => setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
+    
   }
 
   const removeTurnOrderItem = (nametoremove, initiative) => {

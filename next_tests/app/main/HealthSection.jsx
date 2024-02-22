@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
+import { getcharacterinfo } from './getcharacterinfo';
+import { PlayerCharacterContext } from './Contexts';
 
 function HealthSection () {
+  const playercharacterid = useContext(PlayerCharacterContext);
+
   const [healthval, setHealthVal] = useState({
     currenthealth: 11,
     maxhealth: 22
@@ -54,9 +58,13 @@ function HealthSection () {
   }
 
   const getHealth = () => {
+    /*
     fetch(`http://localhost:3000/api/getcharacterinfo?infotype=health`)
     .then(res => res.json())
     .then(res => setHealthVal(res));
+    */
+    getcharacterinfo(playercharacterid, 'health')
+    .then(results => setHealthVal(results));
   }
 
   const setHealth = () => {

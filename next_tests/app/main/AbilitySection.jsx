@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AbilityBox from './AbilityBox'
-import { ModPosContext } from "./Contexts";
+import { ModPosContext, PlayerCharacterContext} from "./Contexts";
+import { getcharacterinfo } from "./getcharacterinfo";
 
 /*
 export async function getServerSideProps () {
@@ -12,6 +13,7 @@ export async function getServerSideProps () {
 */
 
 function AbilitySection ({setRollResults, rollresults}) {
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   const [abilities, setAbilities] = useState([
     {
@@ -54,10 +56,14 @@ function AbilitySection ({setRollResults, rollresults}) {
 
   
   const getAbilities = () => {
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=ability`)
-        .then(res => res.json())
-        .then(res => setAbilities(res));
-    console.log(abilities);
+  /*
+  fetch(`http://localhost:3000/api/getcharacterinfo?infotype=ability`)
+      .then(res => res.json())
+      .then(res => setAbilities(res));
+  console.log(abilities);
+  */
+  getcharacterinfo(playercharacterid, 'ability')
+  .then(results => setAbilities(results));
   }
   
   useEffect(() => {

@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Stack, Button, Accordion, Tab, Tabs } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
-import { URLContext } from './Contexts';
+import { URLContext, PlayerCharacterContext } from './Contexts';
 import { useCol } from 'react-bootstrap/esm/Col';
+import { getcharacterinfo } from './getcharacterinfo';
 
 function StaticStatsBox (setRollResults, rollresults, collapse) { 
 
   const url = useContext(URLContext);
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   const [staticstats, setStaticStats] = useState({
       profbonus: 2,
@@ -31,9 +33,13 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
 
 
   const getStats = () => {
+    /*
     fetch(`http://localhost:3000/api/getcharacterinfo?infotype=staticstats`)
     .then(res => res.json())
     .then(res => setStaticStats(res));
+    */
+    getcharacterinfo(playercharacterid, 'staticstats')
+    .then(results => setStaticStats(results));
   }
 
 {/*

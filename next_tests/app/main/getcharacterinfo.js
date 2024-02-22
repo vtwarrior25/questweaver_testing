@@ -1,7 +1,4 @@
 'use server'
-import React, { useState, useContext } from 'react';
-import { UserIDContext } from './Contexts';
-import { PlayerCharacterContext } from './Contexts';
 
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
@@ -44,124 +41,122 @@ db.any(getAlignments)
 
 */
 
-function characterInfoFromDB (userid, infotype) {
+function characterInfoFromDB (playercharacterid, infotype) {
   let dbquery = "";
   let dbresult = {}; 
   switch (infotype) {
     case 'skill':
       //dbquery = new PQ({text: 'SELECT * FROM skill'});
-      dbresult = {
-        skills: [
-          {
-            skillname: "Acrobatics",
-            skillmod: "Dex",
-            skillprof: false,
-            skillbonus: 2,
-          }, 
-          {
-            skillname: "Animal Handling",
-            skillmod: "Wis",
-            skillprof: true,
-            skillbonus: 3,
-          }, 
-          {
-            skillname: "Arcana",
-            skillmod: "Int",
-            skillprof: false,
-            skillbonus: -1,
-          }, 
-          {
-            skillname: "Athletics",
-            skillmod: "Str",
-            skillprof: false,
-            skillbonus: 3,
-          }, 
-          {
-            skillname: "Deception",
-            skillmod: "Cha",
-            skillprof: false,
-            skillbonus: 0,
-          }, 
-          {
-            skillname: "History",
-            skillmod: "Int",
-            skillprof: false,
-            skillbonus: -1,
-          }, 
-          {
-            skillname: "Insight",
-            skillmod: "Wis",
-            skillprof: true,
-            skillbonus: 1,
-          }, 
-          {
-            skillname: "Intimidation",
-            skillmod: "Cha",
-            skillprof: false,
-            skillbonus: 0,
-          }, 
-          {
-            skillname: "Investigation",
-            skillmod: "Int",
-            skillprof: false,
-            skillbonus: -1,
-          }, 
-          {
-            skillname: "Medicine",
-            skillmod: "Wis",
-            skillprof: false,
-            skillbonus: +1,
-          }, 
-          {
-            skillname: "Nature",
-            skillmod: "Int",
-            skillprof: false,
-            skillbonus: -1,
-          }, 
-          {
-            skillname: "Perception",
-            skillmod: "Wis",
-            skillprof: true,
-            skillbonus: +3,
-          }, 
-          {
-            skillname: "Performance",
-            skillmod: "Cha",
-            skillprof: false,
-            skillbonus: 0,
-          }, 
-          {
-            skillname: "Persuasion",
-            skillmod: "Cha",
-            skillprof: false,
-            skillbonus: 0,
-          }, 
-          {
-            skillname: "Religion",
-            skillmod: "Int",
-            skillprof: false,
-            skillbonus: 0,
-          }, 
-          {
-            skillname: "Sleight of Hand",
-            skillmod: "Dex",
-            skillprof: false,
-            skillbonus: +2
-          }, 
-          {
-            skillname: "Stealth",
-            skillmod: "Dex",
-            skillprof: true,
-            skillbonus: 2,
-          }, 
-          {
-            skillname: "Survival",
-            skillmod: "Wis",
-            skillprof: false,
-            skillbonus: 3,
-          },
-        ],
-      }
+      dbresult = [
+        {
+          skillname: "Acrobatics",
+          skillmod: "Dex",
+          skillprof: false,
+          skillbonus: 2,
+        }, 
+        {
+          skillname: "Animal Handling",
+          skillmod: "Wis",
+          skillprof: true,
+          skillbonus: 3,
+        }, 
+        {
+          skillname: "Arcana",
+          skillmod: "Int",
+          skillprof: false,
+          skillbonus: -1,
+        }, 
+        {
+          skillname: "Athletics",
+          skillmod: "Str",
+          skillprof: false,
+          skillbonus: 3,
+        }, 
+        {
+          skillname: "Deception",
+          skillmod: "Cha",
+          skillprof: false,
+          skillbonus: 0,
+        }, 
+        {
+          skillname: "History",
+          skillmod: "Int",
+          skillprof: false,
+          skillbonus: -1,
+        }, 
+        {
+          skillname: "Insight",
+          skillmod: "Wis",
+          skillprof: true,
+          skillbonus: 1,
+        }, 
+        {
+          skillname: "Intimidation",
+          skillmod: "Cha",
+          skillprof: false,
+          skillbonus: 0,
+        }, 
+        {
+          skillname: "Investigation",
+          skillmod: "Int",
+          skillprof: false,
+          skillbonus: -1,
+        }, 
+        {
+          skillname: "Medicine",
+          skillmod: "Wis",
+          skillprof: false,
+          skillbonus: +1,
+        }, 
+        {
+          skillname: "Nature",
+          skillmod: "Int",
+          skillprof: false,
+          skillbonus: -1,
+        }, 
+        {
+          skillname: "Perception",
+          skillmod: "Wis",
+          skillprof: true,
+          skillbonus: +3,
+        }, 
+        {
+          skillname: "Performance",
+          skillmod: "Cha",
+          skillprof: false,
+          skillbonus: 0,
+        }, 
+        {
+          skillname: "Persuasion",
+          skillmod: "Cha",
+          skillprof: false,
+          skillbonus: 0,
+        }, 
+        {
+          skillname: "Religion",
+          skillmod: "Int",
+          skillprof: false,
+          skillbonus: 0,
+        }, 
+        {
+          skillname: "Sleight of Hand",
+          skillmod: "Dex",
+          skillprof: false,
+          skillbonus: +2
+        }, 
+        {
+          skillname: "Stealth",
+          skillmod: "Dex",
+          skillprof: true,
+          skillbonus: 2,
+        }, 
+        {
+          skillname: "Survival",
+          skillmod: "Wis",
+          skillprof: false,
+          skillbonus: 3,
+        },
+      ];
       break;
     case 'ability':
       //dbquery = new PQ({text: 'SELECT * FROM ability'});
@@ -169,7 +164,7 @@ function characterInfoFromDB (userid, infotype) {
           {
             abilityname: "Strength",
             abilityabbrev: "STR",
-            abilityscore: 12,
+            abilityscore: 11,
             abilitybonus: 3,
           },
           {
@@ -309,10 +304,9 @@ function characterInfoFromDB (userid, infotype) {
   return dbresult;
 }
 
-export async function getcharacterinfo(userid, infotype) {
-  //let q = req.query;
-  let characterinfo = characterInfoFromDB(userid, infotype);
-  //res.status(200).json(characterinfo);
+export async function getcharacterinfo(playercharacterid, infotype) {
+  let characterinfo = characterInfoFromDB(playercharacterid, infotype);
+  console.log(characterInfoFromDB);
   return characterinfo;
   
   //let characterinfo = characterInfoFromDB(q.infotype);
@@ -328,4 +322,3 @@ export async function getcharacterinfo(userid, infotype) {
     });
   */
   }
-
