@@ -506,7 +506,7 @@ CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(40),
 	description					varchar(500),
-	casttime 						integer,
+	casttime 						varchar(20),
 	ritual							boolean,
 	duration						integer,
 	components					varchar(100),
@@ -515,6 +515,7 @@ CREATE TABLE IF NOT EXISTS spell (
 );
 
 
+/* TODO maybe make this table inherit from spell?? */
 CREATE TABLE IF NOT EXISTS dicerollspell (
 	dicerollspellid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	spellid 							integer REFERENCES spell(spellid) NOT NULL,
@@ -527,15 +528,17 @@ CREATE TABLE IF NOT EXISTS spellfeature (
 	spellid							integer REFERENCES spell(spellid) NOT NULL
 ) INHERITS (feature);
 
+
+/*
+TODO Do we need this table? We could just do a check if a spell is a dice roll spell, and render as manual if not, instead of using this additional table 
+*/
 /*
 CREATE TABLE IF NOT EXISTS manualspell (
 	manualspellid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	spellid 					integer REFERENCES spell(spellid) NOT NULL
 );
 */
-/*
-TODO Do we need this table? We could just do a check if a spell is a dice roll spell, and render as manual if not, instead of using this additional table 
-*/
+
 
 
 CREATE TABLE IF NOT EXISTS spelllist (
@@ -543,7 +546,7 @@ CREATE TABLE IF NOT EXISTS spelllist (
 	spellid 					integer REFERENCES spell(spellid) NOT NULL,
 	classid						integer REFERENCES class(classid) NOT NULL,
 	subclassid				integer REFERENCES subclass(subclassid),
-	characterlevel		integer
+	spelllevel				integer
 );
 
 

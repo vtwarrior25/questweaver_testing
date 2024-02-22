@@ -38,8 +38,8 @@ function ItemCreationForm() {
       <form class="customItemCreationForm" action={createItemWithPlayerID}>
         <span>Custom Item Form</span>
         <div>
-          <label htmlFor="itemname">Name</label>
-          <input name="itemName" placeholder="Name"/>
+          <label htmlFor="name">Name</label>
+          <input name="name" placeholder="Name"/>
         </div>
         <div class="valueWeightFields">
           <label htmlFor="value">Value</label>
@@ -48,8 +48,8 @@ function ItemCreationForm() {
           <input type="number" class="itemNumInput" name="weight"/>
         </div>
         <div class="customItemRarity">
-          <label htmlFor="itemRarity">Rarity</label>
-          <select name="itemRarity" id="itemRarity">
+          <label htmlFor="rarity">Rarity</label>
+          <select name="rarity" id="itemRarity">
             <option value="Common">Common</option>
             <option value="Uncommon">Uncommon</option>
             <option value="Rare">Rare</option>
@@ -59,8 +59,8 @@ function ItemCreationForm() {
           </select>
         </div>
         <div class="customItemDescription">
-          <label htmlFor="itemDescription">Description</label>
-          <textarea name="itemDescription"></textarea>
+          <label htmlFor="description">Description</label>
+          <textarea name="description"></textarea>
         </div>
         <Button type="submit">{'Create Item'}</Button>
       </form>
