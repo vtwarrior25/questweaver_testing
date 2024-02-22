@@ -31,7 +31,12 @@ Look at [Next Instructions](./next.md) for installation help.
 ## TODO
 
 ### UI (Lead: Nick)
-- [ ]  
+- [ ] Should the turn order controls be hidden for all players who aren't the DM?
+- [ ] Map
+  - [ ] Look into different solutions for making an interactive map (currently using HTML5/JS Canvas, which sucks) 
+- [ ] Make the formatting of things look good
+  - [ ] Character sheet layout
+  - [ ] Map section layout
 
 ### Server (Lead: Stirling) 
 - [ ] How do we want to organize server functions? 

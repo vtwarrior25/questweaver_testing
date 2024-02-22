@@ -77,6 +77,10 @@ function TurnOrder() {
   const removeTurnOrderItem = (nametoremove, initiative) => {
     setTurnOrder(turnorder.filter((turn) => turn.name !== nametoremove || turn.initiative !== initiative))
   }
+
+  const clearTurnOrder = () => {
+    turnorder()
+  }
   
 
   return ( 
