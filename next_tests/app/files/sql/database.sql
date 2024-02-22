@@ -511,7 +511,7 @@ CREATE TABLE IF NOT EXISTS spell (
 	duration						integer,
 	components					varchar(100),
 	saveability					integer REFERENCES ability(abilityid),
-	range								integer
+	range								VARCHAR(20)
 );
 
 
@@ -540,10 +540,10 @@ TODO Do we need this table? We could just do a check if a spell is a dice roll s
 
 CREATE TABLE IF NOT EXISTS spelllist (
 	spelllistid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	spellid 					integer REFERENCES spell(spellid) NOT NULL,
-	classid						integer REFERENCES class(classid) NOT NULL,
+	spellid 				integer REFERENCES spell(spellid) NOT NULL,
+	classid					integer REFERENCES class(classid) NOT NULL,
 	subclassid				integer REFERENCES subclass(subclassid),
-	characterlevel		integer
+	spelllevel				integer
 );
 
 
