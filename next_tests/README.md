@@ -2,7 +2,7 @@
 QuestWeaver is a DnD server.
 
 ## How to Install
-Place all of the files in a folder, then navigate to "./CharacterSheet.html" with your web browser, or double-click on "CharacterSheet.html" to open it.
+Look at [Next Instructions](./next.md) for installation help.
 
 
 ## Style Guidelines
@@ -13,14 +13,19 @@ Place all of the files in a folder, then navigate to "./CharacterSheet.html" wit
 ### Naming
 
 #### HTML Classes, IDs, and Names
-Camelcase, first letter of first word is lowercase, first letter of subsequent words is uppercase, no spaces (ie. camelCase, not CamelCase or camelcase or camel case). 
-Names of fields are all lower case with no spaces, dashes, or underscores.
+- Camelcase, first letter of first word is lowercase, first letter of subsequent words is uppercase, no spaces (ie. camelCase, not CamelCase or camelcase or camel case). 
+- Names of fields are all lower case with no spaces, dashes, or underscores.
 
 #### Javascript
-Function names are camelcase, variable names are all lowercase.
+- Function names are camelcase
+- Variable names are all lowercase.
 
 #### SQL
-Table names and row names are all lowercase, underscores for spaces 
+- Table names and col names are all lowercase with no spaces.
+- Primary keys are named `tablenameid`, where `tablename` is the name of the containing table. For example, the primary key of the `race` table is `raceid`.
+- Foreign key columns are named the same as the primary key they are referencing. For example, a FK column would be called `defenseid` if it contains references to the PK `defenseid` of the table `defense` 
+- All other columns are named after what they contain without the table name. For example, the name column of the table defense is called `name`, not `defensename`.
+
 
 
 ## TODO
