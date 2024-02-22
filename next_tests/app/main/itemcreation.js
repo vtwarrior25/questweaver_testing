@@ -12,19 +12,38 @@ const connection = {
 
 const db = pgp(connection);
 
-const itemaddquery = new PQ({
+export const itemaddquery = new PQ({
   text:`
     INSERT INTO item (name, value, weight, description, rarityid) VALUES
     ($1, $2, $3, $5, (SELECT rarityid FROM rarity WHERE name = $4));
   `
 });
 
-const weaponaddquery = newPQ({
+export const weaponaddquery = newPQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
-    INSERT INTO weapon ()
+    INSERT INTO weapon (itemid, range, damagebonus) VALUES
+    ((SELECT itemid FROM item WHERE name = $1), $2, $3);
   `
 })
+
+export const weaponpropertyaddquery = newPQ({
+  // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
+  text:`
+    INSERT INTO weaponproperty (weaponid, possibleweaponpropertyid) VALUES
+    ((SELECT weaponid FROM weapon WHERE itemid = (SELECT itemid FROM item WHERE name = $1)), (SELECT possibleweaponpropertyid from possibleweaponproperty WHERE name = $2));
+  `
+})
+
+export const weaponattackaddquery = newPQ({
+  // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
+  text:`
+    INSERT INTO attack (name, range, attackmodifierid, ) VALUES
+    ((SELECT itemid FROM item WHERE );
+  `
+})
+
+
 
 export async function createItem(userid, formdata) {
   console.log(formdata.get('name'));

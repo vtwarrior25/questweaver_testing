@@ -20,10 +20,13 @@ CREATE TABLE IF NOT EXISTS player (
 );
 
 
-
 CREATE TABLE IF NOT EXISTS playercharacter (
 	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 										varchar(40),
+	race										integer REFERENCES race(raceid) NOT NULL,
+	subrace									integer REFERENCES subrace(subraceid),
+	class										integer REFERENCES class(classid) NOT NULL,
+	subclass								integer REFERENCES subclass(subclassid),
 	armorclass							integer,
 	maxhealth								integer,
 	currenthealth 					integer,
@@ -37,7 +40,6 @@ CREATE TABLE IF NOT EXISTS playercharacter (
 	totalhitdice						integer,
 	numhitdice							integer
 );
-
 
 
 /*
@@ -504,7 +506,7 @@ Spell Tables
 
 CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name								varchar(40),
+	name								varchar(40) UNIQUE,
 	description					varchar(500),
 	casttime 						varchar(20),
 	ritual							boolean,
@@ -543,8 +545,8 @@ CREATE TABLE IF NOT EXISTS manualspell (
 
 CREATE TABLE IF NOT EXISTS spelllist (
 	spelllistid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	spellid 				integer REFERENCES spell(spellid) NOT NULL,
-	classid					integer REFERENCES class(classid) NOT NULL,
+	spellid 					integer REFERENCES spell(spellid) NOT NULL,
+	classid						integer REFERENCES class(classid) NOT NULL,
 	subclassid				integer REFERENCES subclass(subclassid),
 	spelllevel				integer
 );
@@ -570,7 +572,7 @@ Common, Uncommon, Rare, Very Rare
 
 CREATE TABLE IF NOT EXISTS item (
 	itemid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name 							varchar(50),
+	name 							varchar(50) UNIQUE,
 	value							integer,
 	description				varchar(500),
 	weight						integer,
@@ -591,9 +593,8 @@ CREATE TABLE IF NOT EXISTS armor (
 
 CREATE TABLE IF NOT EXISTS weapon (
 	weaponid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	itemid						integer REFERENCES item(itemid) NOT NULL,
-	rangeshort				integer,
-	rangelong					integer,
+	itemid						integer REFERENCES item(itemid) UNIQUE NOT NULL,
+	range							varchar(50),
 	damagebonus				integer			
 );
 
@@ -633,7 +634,7 @@ CREATE TABLE IF NOT EXISTS attack (
 	range								integer,
 	attackmodifierid		integer REFERENCES ability(abilityid) NOT NULL,
 	damagemodifierid		integer REFERENCES ability(abilityid) NOT NULL,
-	damagedie						integer REFERENCES dice(diceid) NOT NULL,
+	diceid							integer REFERENCES dice(diceid) NOT NULL,
 	numdamagedie				integer,
 	effecttypeid				integer REFERENCES effecttype(effecttypeid) NOT NULL,
 	description 				varchar(300)
