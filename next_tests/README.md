@@ -45,10 +45,12 @@ Look at [Next Instructions](./next.md) for installation help.
 
 #### Specific Functions
 - [ ] setHealth
-- [ ] diceRoll
+- [x] diceRoll
 - [ ] addLogEntry
 - [x] getCharacterInfo
 - [ ] addItemToInventory (to character inventory)
+- [x] createItem
+- [ ] createWeapon
 - [ ] prepareSpell
 
 ### Database (Lead: Carter)

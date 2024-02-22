@@ -62,16 +62,19 @@ CREATE TABLE IF NOT EXISTS dice (
 	sides  		integer
 );
 
-
+/*
 CREATE TABLE IF NOT EXISTS gamelogtag (
 	gamelogtagid 				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(50) UNIQUE
 );
+*/
+
+CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order');
 
 
 CREATE TABLE IF NOT EXISTS gamelog (
 	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	gamelogtagid	 			integer REFERENCES gamelogtag(gamelogtagid) NOT NULL,
+	gamelogtag	 				gamelogtag,
 	content 						varchar(200),
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
 );
@@ -180,31 +183,38 @@ Str, Dex, Con, Int, Wis, Cha (the saving throw versions)
 CREATE TABLE IF NOT EXISTS defense (
 	defenseid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name						varchar(24) UNIQUE,
-	description			varchar(200)
+	description			varchar(200),
 );
 
-CREATE TABLE IF NOT EXISTS conditions (
-	defenseid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+CREATE TYPE defensetype AS ENUM ('Resistance', 'Vulnerability', 'Immunity');
+
+
+CREATE TABLE IF NOT EXISTS condition (
+	conditionid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name						varchar(24) UNIQUE,
 	description			varchar(200)
 );
 
 
+/*
 CREATE TABLE IF NOT EXISTS proficiencytype (
 	proficiencytypeid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name											varchar(20) UNIQUE,
 	description								varchar(2000)
 );
+*/
 /*
 Armor, Weapons, Tools, Languages 
 */
+
+CREATE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages');
 
 
 CREATE TABLE IF NOT EXISTS proficiency (
 	proficiencyid 							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name												varchar(30) UNIQUE,
-	proficiencytypeid						integer REFERENCES proficiencytype(proficiencytypeid),
-	description									varchar(200)
+	description									varchar(200),
+	proficiencytypeid						proficiencytype
 );
 
 
@@ -263,6 +273,9 @@ CREATE TABLE IF NOT EXISTS defensefeature (
 	defenseid							integer REFERENCES defense(defenseid) NOT NULL
 ) INHERITS (feature);
 
+CREATE TABLE IF NOT EXISTS conditionfeature (
+	conditionid						integer REFERENCES condition(conditionid) NOT NULL
+) INHERITS (feature);
 
 
 /*
@@ -562,14 +575,17 @@ Item Tables
 ------------------------------------------------------------------------
 */
 
+/*
 CREATE TABLE IF NOT EXISTS rarity (
 	rarityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name  					varchar(50) UNIQUE					
 );
+*/
 /*
 Common, Uncommon, Rare, Very Rare 
 */
 
+CREATE TYPE rarity AS ENUM ('Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary', 'Artifact');
 
 CREATE TABLE IF NOT EXISTS item (
 	itemid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -577,7 +593,7 @@ CREATE TABLE IF NOT EXISTS item (
 	value							integer,
 	description				varchar(500),
 	weight						integer,
-	rarityid					integer REFERENCES rarity(rarityid) NOT NULL
+	rarity						rarity
 );
 
 

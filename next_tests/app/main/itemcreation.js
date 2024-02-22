@@ -15,7 +15,7 @@ const db = pgp(connection);
 export const itemaddquery = new PQ({
   text:`
     INSERT INTO item (name, value, weight, description, rarityid) VALUES
-    ($1, $2, $3, $5, (SELECT rarityid FROM rarity WHERE name = $4));
+    ($1, $2, $3, $5, $4);
   `
 });
 

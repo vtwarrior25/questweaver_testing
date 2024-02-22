@@ -157,11 +157,6 @@ INSERT INTO rarity (name) VALUES
 ('Artifact');
 
 
-INSERT INTO gamelogtag (name) VALUES
-('Diceroll'),
-('Health'),
-('Turn Order');
-
 INSERT INTO conditions (name, description) VALUES
 ('Blinded', ''),
 ('Charmed', ''),
@@ -258,7 +253,7 @@ INSERT INTO possibleweaponproperty (possibleweaponproperty, description) VALUES
 ('Versatile','');
 
 
-			
+
 INSERT INTO spell (name, school, casting_time, range, duration, components, description) VALUES
 ('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here'),
 ('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'Add description here'),
@@ -583,8 +578,6 @@ INSERT INTO spell (name, school, casting_time, range, duration, components, desc
 ('Water Walk', 'Transmutation', '1 Action R', '30 feet', '1 hour', 'V, S, M', 'Add description here'),
 ('Wind Wall', 'Evocation', '1 Action', '120 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here');
 
-				
-									
 
 
-CREATE TYPE defense_type AS ENUM ('Resistance', 'Vulnerability', 'Immunity');
+
