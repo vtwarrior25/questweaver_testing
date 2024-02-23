@@ -14,6 +14,13 @@
 --
 
 
+CREATE TABLE user (
+	userid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	username		varchar(30) NOT NULL UNIQUE,
+	password		varchar(30) NOT NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS player (
 	userid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	username			varchar(30) NOT NULL
@@ -22,6 +29,7 @@ CREATE TABLE IF NOT EXISTS player (
 
 CREATE TABLE IF NOT EXISTS playercharacter (
 	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	userid 									integer REFERENCES user(userid) NOT NULL,
 	name 										varchar(40),
 	race										integer REFERENCES race(raceid) NOT NULL,
 	subrace									integer REFERENCES subrace(subraceid),

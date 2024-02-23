@@ -46,21 +46,32 @@ Look at [Next Instructions](./next.md) for installation help.
 #### Specific Functions
 - [ ] setHealth
 - [x] diceRoll
-- [ ] addLogEntry
+- [ ] addLogEntry/getLogEntries
 - [x] getCharacterInfo
 - [ ] addItemToInventory (to character inventory)
 - [x] createItem
 - [ ] createWeapon
 - [ ] prepareSpell
+- [ ] getChat/setChat
+- [ ] 
 
 ### Database (Lead: Carter)
 - [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable
 - [ ] Finish creating init info for tables (list of tables to make data for in [`dbinit.sql`](./app/files/sql/dbinitdata.sql)`)
 - [ ] Where should we store prepared spells for a character?
-- [ ] How will we store race/subrace and class/subclass info about a character?
-    - In the playercharacter table?
+- [x] How will we store race/subrace and class/subclass info about a character?
+    - **In the playercharacter table?**
     - In seperate tables for each (race, subrace, class, subclass)?
     - In a single seperate table with columns for playercharacter id and for each item
-
+- [ ] Ask Chapin if this is installed [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html)
 
 ### Administrative
+
+#### Login Process
+- They enter username and password
+  - If they enter a valid set of credentials, they are brought to character selection screen
+  - User ID is passed on
+- Character Selection Screen
+  - They can select from the list of existing characters that they have created, or create a new character
+  - User ID and Character ID are passed on 
+- Main Window

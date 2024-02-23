@@ -4,7 +4,6 @@ import { tempAuth } from '@/app/lib/tempauth';
 import { redirect } from 'next/navigation';
 
 export async function authenticate(formdata) {
-  'use server'
   try {
     console.log(formdata.get('username'));
     await tempAuth(formdata)
@@ -17,10 +16,12 @@ export async function authenticate(formdata) {
         console.log("This shouldn't redirect");
         redirect('/login');
       }
-    }).catch(() => {
+      
+    });/*.catch(() => {
       console.log("This shouldn't redirect 2");
       redirect('/login');
     });
+    */
   } catch (error) {
     if (error) {
       switch (error.type) {
@@ -33,4 +34,15 @@ export async function authenticate(formdata) {
     throw error
   }
   
+}
+
+export async function signUp(formdata) {
+  await createUser(formdata)
+  .then((result) => {
+    if (results === true) {
+      // Redirect to character picker
+      redirect('/main');
+    } else {
+      redirect('/signUp');
+    }});
 }
