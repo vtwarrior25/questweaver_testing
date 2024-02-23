@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
-import { URLContext, PlayerCharacterContext} from "./Contexts";
+import { URLContext, PlayerCharacterContext, DMContext} from "./Contexts";
 import { getcharacterinfo } from "./getcharacterinfo";
 
 function TurnOrder() {
+  const isDM = useContext(DMContext);
+
   const [turnorder, setTurnOrder] = useState([
     /*
     {
@@ -82,21 +84,30 @@ function TurnOrder() {
     turnorder()
   }
   
-
-  return ( 
-    <div className="turnOrderBox frontElement">
-      <div className="turnOrderList">
-        {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={index === currentturn?true:false} removeItem={removeTurnOrderItem}/>)}
-      </div>
-      <div className="turnOrderButtons">
-        <div className="turnOrderControlButtons">
-          <Button variant="secondary" size="sm" onClick={() => changeTurn("prev")}>Prev</Button>
-          <Button variant="secondary" size="sm" onClick={() => changeTurn("next")}>Next</Button>
+  if (isDM) {
+    return ( 
+      <div className="turnOrderBox frontElement">
+        <div className="turnOrderList">
+          {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={index === currentturn?true:false} removeItem={removeTurnOrderItem}/>)}
         </div>
-        <Button variant="secondary" size="sm">Clear</Button>
+        <div className="turnOrderButtons">
+          <div className="turnOrderControlButtons">
+            <Button variant="secondary" size="sm" onClick={() => changeTurn("prev")}>Prev</Button>
+            <Button variant="secondary" size="sm" onClick={() => changeTurn("next")}>Next</Button>
+          </div>
+          <Button variant="secondary" size="sm">Clear</Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return ( 
+      <div className="turnOrderBox frontElement">
+        <div className="turnOrderList">
+          {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={index === currentturn?true:false} removeItem={removeTurnOrderItem}/>)}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default TurnOrder;

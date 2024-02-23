@@ -59,14 +59,14 @@ export default function RollResultsSection (rollresults) {
   */
 //{rolllist.map((roll) => <SingleRollResult name={roll.name} rolltype={roll.rolltype} rollstring={roll.rollstring} basestring={roll.basestring} rolltotal={roll.rolltotal}/>)}
 
-const clearRollResults = (nametoremove, initiative) => {
-  setRollResultList([]);
-}
+  const clearRollResults = (nametoremove, initiative) => {
+    setRollResultList([]);
+  }
 
-useEffect(() => {
-  console.log("Testing user");
-}, [rollresults]
-)
+  useEffect(() => {
+    console.log("Testing user");
+  }, [rollresults]
+  )
 
   return (
       <div className="rollContainer">

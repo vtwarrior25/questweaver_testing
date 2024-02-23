@@ -40,10 +40,10 @@ function FeaturesMenu() {
     <div className="featuresMenu characterInventoryAreaSection">
       {featuressections.map((section, index) => 
         <div key={index} className="featuresSection">
-          <span>{section.sectionname}</span>
+          <span className='characterSheetSectionTitle'>{section.sectionname}</span>
           {section.sectionfeatures.map((sectionfeature, index) => 
             <div key={index} className="featuresSectionFeature">
-              <span>{sectionfeature.featuretitle}</span>
+              <b>{sectionfeature.featuretitle}</b>
               <p>{sectionfeature.featuretext}</p>
             </div>
           )}

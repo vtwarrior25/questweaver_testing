@@ -23,7 +23,7 @@ function App () {
 
   const [userid, setUserID] = useState(0); 
   const [playercharacterid, setPlayerCharacterID] = useState(0);
-  const [isDM, setIsDM] = useState(false);
+  const [isDM, setIsDM] = useState(true);
 
   const [rollresults, setRollResults] = useState({
     /*
@@ -101,9 +101,9 @@ function App () {
         <Row>
           <Col>
             <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
-              <Tab eventKey='monster' title='Monster'>
+              {isDM && <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
-              </Tab>
+              </Tab>}
               <Tab eventKey='jerome' title='Jerome'>
                 <div className='sheetAndMap'>
                   <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>

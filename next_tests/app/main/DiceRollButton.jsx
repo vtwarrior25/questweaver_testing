@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, ButtonGroup, Overlay } from 'react-bootstrap';
 import { ModPosContext, SetRollResultsContext, URLContext, PlayerCharacterContext } from "./Contexts";
-import { rollCheck } from "./rollcheck";
+import { rollCheck } from "../lib/rollcheck";
 
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage}) {

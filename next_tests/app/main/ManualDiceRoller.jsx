@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button, ButtonGroup} from 'react-bootstrap';
 import ManualDiceRollButton from './ManualDiceRollButton';
 import { PlayerCharacterContext, SetRollResultsContext } from './Contexts';
-import { multiRollCheck } from './rollcheck';
+import { multiRollCheck } from '../lib/rollcheck';
 
 function ManualDiceRoller ({setRollResults, vertical, nice}) {
   const playercharacterid = useContext(PlayerCharacterContext);
