@@ -1,6 +1,7 @@
 'use server'
 
 import { tempAuth } from '@/app/lib/tempauth';
+import { createuser } from '@/app/lib/createuser';
 import { redirect } from 'next/navigation';
 
 export async function authenticate(formdata) {
@@ -35,13 +36,13 @@ export async function authenticate(formdata) {
   redirect(redirecturl);
 }
 
-export async function signUp(formdata) {
-  await createUser(formdata)
+export async function signup(formdata) {
+  await createuser(formdata)
   .then((result) => {
-    if (results === true) {
+    if (result === true) {
       // Redirect to character picker
-      redirect('/main');
+      redirect('../login');
     } else {
-      redirect('/signUp');
+      redirect('../signUp');
     }});
 }

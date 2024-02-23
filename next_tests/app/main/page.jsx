@@ -1,7 +1,7 @@
 "use client"
 // React Imports
 import React, { useEffect, useState } from "react";
-import './App.css';
+import '@/app/App.css';
 import RollResultsSection from "./RollResultsSection";
 import CharacterSheet from "./CharacterSheet";
 import StaticStatsBox from "./StaticStatsBox";
@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext }  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, DMContext }  from "./Contexts";
 import ItemCreationForm from "./ItemCreationForm";
 import WeaponCreationForm from "./WeaponCreationForm";
 
@@ -23,6 +23,7 @@ function App () {
 
   const [userid, setUserID] = useState(0); 
   const [playercharacterid, setPlayerCharacterID] = useState(0);
+  const [isDM, setIsDM] = useState(false);
 
   const [rollresults, setRollResults] = useState({
     /*
@@ -88,6 +89,7 @@ function App () {
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <DMContext.Provider value={isDM}>
     <PlayerCharacterContext.Provider value={playercharacterid}>
     <UserIDContext.Provider value={userid}>
     <ModPosContext.Provider value={modPos}>
@@ -155,6 +157,7 @@ function App () {
     </ModPosContext.Provider>
     </UserIDContext.Provider>
     </PlayerCharacterContext.Provider>
+    </DMContext.Provider>
   );
 }
 

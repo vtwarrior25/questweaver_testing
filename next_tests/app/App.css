@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Atkinson Hyperlegible";
-  src: url(../files/Atkinson-Hyperlegible-Regular-102.ttf);
+  src: url(./files/Atkinson-Hyperlegible-Regular-102.ttf);
 }
 
 html {
@@ -20,7 +20,7 @@ html {
 
 .App {
   text-align: center;
-  background:url(../files/beautifulforest.jpg);
+  background:url(./files/beautifulforest.jpg);
   /*font-size: 0.95em;*/
 }
 
@@ -60,6 +60,19 @@ html {
 
 .accordion-button {
   padding: 0.5em 0.5em !important;
+}
+
+/*
+----------------------------------------
+User Auth Form
+----------------------------------------
+*/
+
+.userAuthForm {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  margin: auto;
 }
 
 /*
@@ -415,10 +428,19 @@ Roll Results
 ----------------------------------------
 */
 
+.rollContainer {
+  max-width: 15rem;
+}
+
+.rollResults {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
 .lastRollResult {
   background-color: var(--nonRollBackground);
 }
-
 
 
 

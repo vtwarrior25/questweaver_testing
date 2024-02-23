@@ -69,7 +69,7 @@ useEffect(() => {
 )
 
   return (
-      <div id="rollContainer">
+      <div className="rollContainer">
         {rollresultslist.map((rollresult, index) =>
           <SingleRollResult key={index} rollresults={rollresult} last={index === (keeprolls - 1)} clearresults={() => clearRollResults}></SingleRollResult>
         )}

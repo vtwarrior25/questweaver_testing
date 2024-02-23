@@ -38,6 +38,8 @@ Look at [Next Instructions](./next.md) for installation help.
   - [ ] Character sheet layout
   - [ ] Map section layout
 - [ ] How will we make the page load differently for the DM vs normal players
+- [ ] Fix roll results 
+
 
 ### Server (Lead: Stirling) 
 - [ ] How do we want to organize server functions? 

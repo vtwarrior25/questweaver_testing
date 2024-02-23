@@ -11,3 +11,5 @@ export const URLContext = createContext(null);
 export const UserIDContext = createContext(null);  
 
 export const PlayerCharacterContext = createContext(null);
+
+export const DMContext = createContext(false);
