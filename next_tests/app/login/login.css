@@ -1,0 +1,13 @@
+.loginsection {
+    display: flex;
+    flex-direction: column;
+    max-width: 18rem;
+    margin: auto;
+    align-self: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
