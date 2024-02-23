@@ -19,7 +19,6 @@ const connection = {
   password: process.env.DBPWD,
 }
 
-
 const db = pgp(connection);
 
 /*
@@ -38,7 +37,6 @@ db.any(getAlignments)
     error.log("bad");
     return "bad";
 });
-
 */
 
 function characterInfoFromDB (playercharacterid, infotype) {
@@ -225,7 +223,18 @@ function characterInfoFromDB (playercharacterid, infotype) {
       };
       break;
     case 'savingthrow':
-      //dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
+      /**
+      dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
+      db.any(dbquery)
+        .then (savingthrows => {
+          //console.log("got alignments");
+          //console.log(alignments);
+          return savingthrows;
+        }).catch (error => {
+          error.log("bad");
+          return "bad";
+      });
+      */
       dbresult = [
         {
           name: 'STR',
