@@ -7,42 +7,6 @@
 --
 
 
---
-------------------------------------------------------------------------
--- User Tables
-------------------------------------------------------------------------
---
-
-
-CREATE TABLE IF NOT EXISTS user (
-	userid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	username		varchar(30) NOT NULL UNIQUE,
-	password		varchar(30) NOT NULL
-
-);
-
-
-CREATE TABLE IF NOT EXISTS playercharacter (
-	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	userid 									integer REFERENCES user(userid) NOT NULL,
-	name 										varchar(40),
-	race										integer REFERENCES race(raceid) NOT NULL,
-	subrace									integer REFERENCES subrace(subraceid),
-	class										integer REFERENCES class(classid) NOT NULL,
-	subclass								integer REFERENCES subclass(subclassid),
-	armorclass							integer,
-	maxhealth								integer,
-	currenthealth 					integer,
-	speed										integer,
-	initiative							integer,
-	proficiencybonus				integer,
-	characterlevel					integer,
-	spellsavedc							integer,
-	spellattackmodifier			integer,
-	spellabilitymodifier		integer,
-	totalhitdice						integer,
-	numhitdice							integer
-);
 
 
 /*
@@ -75,14 +39,6 @@ CREATE TABLE IF NOT EXISTS gamelogtag (
 CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order');
 
 
-CREATE TABLE IF NOT EXISTS gamelog (
-	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	gamelogtag	 				gamelogtag,
-	content 						varchar(200),
-	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
-);
-
-
 /*
 CREATE TABLE IF NOT EXISTS language (
 	languageid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -99,48 +55,15 @@ CREATE TABLE IF NOT EXISTS alignment (
 	abbrev 					char(2)
 );
 
+/*
 CREATE TABLE IF NOT EXISTS creaturesize (
 	creaturesizeid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name									varchar(20) UNIQUE,
 	description						varchar(2000)
 );
-
-
-
-/*
-------------------------------------------------------------------------
-Character Tables
-------------------------------------------------------------------------
 */
 
-CREATE TABLE IF NOT EXISTS playercharacternote (
-	characternoteid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid				integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	alignmentid							integer REFERENCES alignment(alignmentid) NOT NULL,
-	organizations						varchar(2000),
-	allies									varchar(2000),
-	enemies									varchar(2000),
-	backstory								varchar(2000),
-	other										varchar(2000)
-);
-
-
-	/*
-	gender									varchar(10),
-	eyes										varchar(10),
-	creaturesizeid									integer REFERENCES creaturesize(creaturesizeid) NOT NULL,
-	height									integer,
-	faith										varchar(20),
-	hair										varchar(10),
-	skin										varchar(10),
-	age											integer,
-	weight									integer,
-	personalitytraits			varchar(200),
-	ideals									varchar(200),
-	bonds										varchar(200),
-	flaws										varchar(200),
-	appearance							varchar(400),
-	*/
+CREATE TYPE creaturesize AS ENUM ('Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan');
 
 
 /*
@@ -186,7 +109,7 @@ Str, Dex, Con, Int, Wis, Cha (the saving throw versions)
 CREATE TABLE IF NOT EXISTS defense (
 	defenseid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name						varchar(24) UNIQUE,
-	description			varchar(200),
+	description			varchar(200)
 );
 
 CREATE TYPE defensetype AS ENUM ('Resistance', 'Vulnerability', 'Immunity');
@@ -210,7 +133,7 @@ CREATE TABLE IF NOT EXISTS proficiencytype (
 Armor, Weapons, Tools, Languages 
 */
 
-CREATE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages');
+CREATE TYPE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages');
 
 
 CREATE TABLE IF NOT EXISTS proficiency (
@@ -221,6 +144,114 @@ CREATE TABLE IF NOT EXISTS proficiency (
 );
 
 
+
+/*
+------------------------------------------------------------------------
+Character Tables
+------------------------------------------------------------------------
+*/
+
+CREATE TABLE IF NOT EXISTS player (
+	playerid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	username		varchar(30) NOT NULL UNIQUE,
+	password		varchar(30) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS race (
+	raceid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name								varchar(20) UNIQUE,
+	creaturesize				creaturesize NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS subrace (
+	subraceid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	raceid				integer REFERENCES race(raceid) NOT NULL,
+	name		 			varchar(30) UNIQUE
+);
+
+
+CREATE TABLE IF NOT EXISTS class (
+	classid									integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name										varchar(20) UNIQUE,
+	hitdice									integer REFERENCES dice(diceid),
+	hitpoints1stlevel				integer,
+	hitpointshigherlevel		integer,
+	description							varchar(2000),
+	spellcastingabilityid		integer REFERENCES ability(abilityid)
+);
+
+
+CREATE TABLE IF NOT EXISTS subclass (
+	subclassid								integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	classid 									integer REFERENCES class(classid) NOT NULL,
+	name											varchar(40) UNIQUE,
+	description								varchar(2000),
+	spellcastingabilityid			integer REFERENCES ability(abilityid)
+);
+
+
+CREATE TABLE IF NOT EXISTS playercharacter (
+	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playerid								integer REFERENCES player(playerid) NOT NULL,
+	name 										varchar(40),
+	race										integer REFERENCES race(raceid) NOT NULL,
+	subrace									integer REFERENCES subrace(subraceid),
+	class										integer REFERENCES class(classid) NOT NULL,
+	subclass								integer REFERENCES subclass(subclassid),
+	armorclass							integer,
+	maxhealth								integer,
+	currenthealth 					integer,
+	speed										integer,
+	initiative							integer,
+	proficiencybonus				integer,
+	characterlevel					integer,
+	spellsavedc							integer,
+	spellattackmodifier			integer,
+	spellabilitymodifier		integer,
+	totalhitdice						integer,
+	numhitdice							integer
+);
+
+
+
+CREATE TABLE IF NOT EXISTS playercharacternote (
+	characternoteid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid				integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	alignmentid							integer REFERENCES alignment(alignmentid) NOT NULL,
+	organizations						varchar(2000),
+	allies									varchar(2000),
+	enemies									varchar(2000),
+	backstory								varchar(2000),
+	other										varchar(2000)
+);
+
+
+	/*
+	gender									varchar(10),
+	eyes										varchar(10),
+	creaturesizeid									integer REFERENCES creaturesize(creaturesizeid) NOT NULL,
+	height									integer,
+	faith										varchar(20),
+	hair										varchar(10),
+	skin										varchar(10),
+	age											integer,
+	weight									integer,
+	personalitytraits			varchar(200),
+	ideals									varchar(200),
+	bonds										varchar(200),
+	flaws										varchar(200),
+	appearance							varchar(400),
+	*/
+
+
+CREATE TABLE IF NOT EXISTS gamelog (
+	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	gamelogtag	 				gamelogtag,
+	content 						varchar(200),
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
+);
 
 /*
 ------------------------------------------------------------------------
@@ -365,27 +396,10 @@ Class Tables
 */
 
 
-CREATE TABLE IF NOT EXISTS class (
-	classid									integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name										varchar(20) UNIQUE,
-	hitdice									integer REFERENCES dice(diceid),
-	hitpoints1stlevel				integer,
-	hitpointshigherlevel		integer,
-	description							varchar(2000),
-	spellcastingabilityid		integer REFERENCES ability(abilityid)
-);
+
 /*
 How would we deal with non-spellcasting classes? We need to fix this somehow
 */
-
-
-CREATE TABLE IF NOT EXISTS subclass (
-	subclassid								integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	classid 									integer REFERENCES class(classid) NOT NULL,
-	name											varchar(40) UNIQUE,
-	description								varchar(2000),
-	spellcastingabilityid			integer REFERENCES ability(abilityid)
-);
 
 
 CREATE TABLE IF NOT EXISTS classfeature (
@@ -433,7 +447,7 @@ CREATE TABLE IF NOT EXISTS monstertype (
 CREATE TABLE IF NOT EXISTS monstergroup (
 	monstergroupid								integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	encounterid										integer REFERENCES encounter(encounterid) NOT NULL,
-	creaturesizeid								integer REFERENCES creaturesize(creaturesizeid) NOT NULL,
+	creaturesize								 	creaturesize NOT NULL,
 	monstertypeid									integer REFERENCES monstertype(monstertypeid) NOT NULL,
 	alignment											integer REFERENCES alignment(alignmentid) NOT NULL,
 	groupname											varchar(20),
@@ -485,18 +499,10 @@ Race Tables
 ------------------------------------------------------------------------
 */
 
-CREATE TABLE IF NOT EXISTS race (
-	raceid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name								varchar(20) UNIQUE,
-	creaturesizeid			integer REFERENCES creaturesize(creaturesizeid) NOT NULL
-);
 
 
-CREATE TABLE IF NOT EXISTS subrace (
-	subraceid			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	raceid				integer REFERENCES race(raceid) NOT NULL,
-	name		 			varchar(30) UNIQUE
-);
+
+
 
 
 CREATE TABLE IF NOT EXISTS racefeature (
@@ -524,13 +530,13 @@ CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(40) UNIQUE,
 	description					varchar(500),
-	casttime 						varchar(20),
+	school							VARCHAR(40),
+	casttime 						varchar(40),
+	spellrange					VARCHAR(40),
 	ritual							boolean,
-	duration						integer,
+	duration						varchar(40),
 	components					varchar(100),
-	saveability					integer REFERENCES ability(abilityid),
-	school							VARCHAR(40)
-	range								VARCHAR(20)
+	saveability					integer REFERENCES ability(abilityid)
 );
 
 
@@ -610,29 +616,36 @@ CREATE TABLE IF NOT EXISTS armor (
 	stealthdisadvantage		boolean 
 );
 
+CREATE TYPE weapontype AS ENUM ('Martial', 'Simple');
+
+CREATE TYPE weaponrange AS ENUM ('Melee', 'Ranged');
 
 CREATE TABLE IF NOT EXISTS weapon (
 	weaponid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	itemid						integer REFERENCES item(itemid) UNIQUE NOT NULL,
-	range							varchar(50),
-	damagebonus				integer			
+	weapontype				weapontype NOT NULL,
+	weaponrange				weaponrange NOT NULL
+	--damagebonus				integer			
 );
 
-
+/*
 CREATE TABLE IF NOT EXISTS possibleweaponproperty (
 	possibleweaponpropertyid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name  													varchar(50) UNIQUE,
 	description											varchar(100)												
 );
+*/
 /*
 Finesse, Thrown, Light 
 */
+
+CREATE TYPE possibleweaponproperty AS ENUM ('Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading', 'Range', 'Reach', 'Special', 'Thrown', 'Two-Handed', 'Versatile');
 
 
 CREATE TABLE IF NOT EXISTS weaponproperty (
 	weaponpropertyid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	weaponid										integer REFERENCES weapon(weaponid) NOT NULL,
-	possibleweaponpropertyid		integer REFERENCES possibleweaponproperty(possibleweaponpropertyid) NOT NULL
+	possibleweaponproperty			possibleweaponproperty NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS characterinventory (
@@ -651,7 +664,7 @@ Attack Tables
 CREATE TABLE IF NOT EXISTS attack (
 	attackid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 								varchar(40) UNIQUE NOT NULL,
-	range								integer,
+	range								integer, -- Maybe make this a varchar??
 	attackmodifierid		integer REFERENCES ability(abilityid) NOT NULL,
 	damagemodifierid		integer REFERENCES ability(abilityid) NOT NULL,
 	diceid							integer REFERENCES dice(diceid) NOT NULL,

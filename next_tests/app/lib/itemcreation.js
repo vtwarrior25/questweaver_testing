@@ -12,44 +12,53 @@ const connection = {
 
 const db = pgp(connection);
 
-export const itemaddquery = new PQ({
+const itemaddquery = new PQ({
   text:`
-    INSERT INTO item (name, value, weight, description, rarityid) VALUES
-    ($1, $2, $3, $5, $4);
+    INSERT INTO item (itemid, name, value, weight, description, rarity) VALUES
+    (DEFAULT, $1, $2, $3, $5, $4)
+    RETURNING itemid;
   `
 });
 
-export const weaponaddquery = newPQ({
+const weaponaddquery = new PQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
-    INSERT INTO weapon (itemid, range, damagebonus) VALUES
-    ((SELECT itemid FROM item WHERE name = $1), $2, $3);
+    INSERT INTO weapon (weaponid, itemid, weapontype, weaponrange) VALUES
+    (DEFAULT, $1, $2, $3)
+    RETURNING weaponid;
   `
 })
 
-export const weaponpropertyaddquery = newPQ({
+const weaponpropertyaddquery = new PQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
-    INSERT INTO weaponproperty (weaponid, possibleweaponpropertyid) VALUES
-    ((SELECT weaponid FROM weapon WHERE itemid = (SELECT itemid FROM item WHERE name = $1)), (SELECT possibleweaponpropertyid from possibleweaponproperty WHERE name = $2));
+    INSERT INTO weaponproperty (weaponid, possibleweaponproperty) VALUES
+    ($1, $2);
   `
 })
 
-export const weaponattackaddquery = newPQ({
+const weaponattackaddquery = new PQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
-    INSERT INTO attack (name, range, attackmodifierid, ) VALUES
-    ((SELECT itemid FROM item WHERE );
+    WITH atid AS (
+      INSERT INTO attack (name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
+      ($2, $3, $4, $5, $6, $7, $8)
+    )
+    INSERT INTO weaponattack (weaponid, attackid)
+    VALUES ($1, atid);
   `
 })
+
 
 
 
 export async function createItem(userid, formdata) {
   console.log(formdata.get('name'));
   console.log(formdata);
-  db.none(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
-  .then (()=> {
+  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
+  .then ((result)=> {
+    console.log("result");
+    console.log(result);
     return "Item added";
   }).catch(error => {
     return "Error adding item";
@@ -57,12 +66,51 @@ export async function createItem(userid, formdata) {
 }
 
 export async function createWeapon(userid, formdata) {
-  console.log(formdata.get(''));
   console.log(formdata);
-  db.none(itemaddquery, [formdata.get('itemName'), formdata.get('value'), formdata.get('weight'), formdata.get('itemRarity'), formdata.get('itemDescription')])
-  .then (()=> {
-    return "Item added";
+  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
+  .then ((result) => {
+    db.one(weaponaddquery, [result.itemid, formdata.get('weapontype'), formdata.get('weaponrange')])
+    .then((result) => {
+      // These for loops will iterate on the weapon properties and attacks
+      let properties = formdata.getAll('property');
+      console.log(properties);
+      for (const property of properties) {
+        db.none(weaponpropertyaddquery, [result.weaponid, property]);
+      }
+      db.none(weaponattackaddquery, []);
+    }).catch((error) => {
+      return "Error adding weapon";
+    })
   }).catch(error => {
     return "Error adding item";
   });
 }
+
+
+// Create Weapon Form Data
+
+/*
+FormData {
+  [Symbol(state)]: [
+    { name: 'nameInput', value: 'Axe' },
+    { name: 'value', value: '1' },
+    { name: 'weight', value: '1' },
+    { name: 'itemRarity', value: 'common' },
+    { name: 'itemDescription', value: 'sfdsfsdf' },
+    { name: 'weapontype', value: 'martial' },
+    { name: 'weaponrange', value: 'ranged' },
+    { name: 'property', value: 'ammunition' },
+    { name: 'property', value: 'finesse' },
+    { name: 'property', value: 'heavy' },
+    { name: 'property', value: 'loading' },
+    { name: 'property', value: 'thrown' },
+    { name: 'attackname', value: 'Chop' },
+    { name: 'attackrange', value: '5' },
+    { name: 'attackmodifier', value: 'strength' },
+    { name: 'damagemodifier', value: 'strength' },
+    { name: 'damagedie', value: '10' },
+    { name: 'numdamagedie', value: '2' },
+    { name: 'damagetype', value: 'slashing' }
+  ]
+}
+*/

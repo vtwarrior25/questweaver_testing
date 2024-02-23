@@ -69,7 +69,8 @@ Look at [Next Instructions](./next.md) for installation help.
     - **In the playercharacter table?**
     - In seperate tables for each (race, subrace, class, subclass)?
     - In a single seperate table with columns for playercharacter id and for each item
-- [ ] Ask Chapin if this is installed [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html)
+- [ ] Consider making `ability` and `skill` tables into enums
+
 
 ### Administrative
 

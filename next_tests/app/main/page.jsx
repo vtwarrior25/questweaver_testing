@@ -136,13 +136,13 @@ function App () {
           </div>
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
-              <Accordion.Header>Custom Item</Accordion.Header>
+              <Accordion.Header>Custom Item Form</Accordion.Header>
               <Accordion.Body>
                 <ItemCreationForm></ItemCreationForm>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-              <Accordion.Header>Custom Weapon</Accordion.Header>
+              <Accordion.Header>Custom Weapon Form</Accordion.Header>
               <Accordion.Body>
                 <WeaponCreationForm></WeaponCreationForm>
               </Accordion.Body>

@@ -1,14 +1,19 @@
+import React, { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
+import { createWeapon } from '@/app/lib/itemcreation';
+import { PlayerCharacterContext } from './Contexts';
 
 function WeaponCreationForm() {
+  const playercharacterid = useContext(PlayerCharacterContext);
+  const createWeaponWithPlayerID = createWeapon.bind(playercharacterid, null);
+
   return ( 
     <div className="weaponCreationForm">
-      <form class="customItemCreationForm">
-        <span>Custom Weapon Form</span>
+      <form class="customItemCreationForm" action={createWeaponWithPlayerID}>
         <fieldset id="customWeaponBasicInfo">
           <div>
-            <label for="nameInput">Name</label>
-            <input name="nameInput"/>
+            <label for="name">Name</label>
+            <input name="name"/>
           </div>
           <div class="valueWeightFields">
             <div>
@@ -21,29 +26,31 @@ function WeaponCreationForm() {
             </div>
           </div>
           <div class="customItemRarity">
-            <label for="itemRarity">Rarity</label>
-            <select name="itemRarity" id="itemRarity">
-              <option value="common">Common</option>
-              <option value="uncommon">Uncommon</option>
-              <option value="rare">Rare</option>
-              <option value="veryrare">Very Rare</option>
+            <label htmlFor="rarity">Rarity</label>
+            <select name="rarity" id="itemRarity">
+              <option value="Common">Common</option>
+              <option value="Uncommon">Uncommon</option>
+              <option value="Rare">Rare</option>
+              <option value="Very Rare">Very Rare</option>
+              <option value="Legendary">Legendary</option>
+              <option value="Artifact">Artifact</option>
             </select>
           </div>
           <div class="customItemDescription">
-            <label for="itemDescription">Description</label>
-            <textarea name="itemDescription"></textarea>
+            <label for="description">Description</label>
+            <textarea name="description"></textarea>
           </div>
           <div class="weaponBasicRadio">
             <fieldset id="weaponTypeRadio" className='weaponTypeRadio'>
-              <input type="radio" name="weapontype" value="martial"/>
+              <input type="radio" name="weapontype" value="Martial"/>
               <label for="martial">Martial</label>
-              <input type="radio" name="weapontype" value="simple"/>
+              <input type="radio" name="weapontype" value="Simple"/>
               <label for="simple">Simple</label>
             </fieldset>
             <fieldset id="weaponRangeRadio" className='weaponTypeRadio'>
-              <input type="radio" name="weaponrange" value="melee"/>
+              <input type="radio" name="weaponrange" value="Melee"/>
               <label for="melee">Melee</label>
-              <input type="radio" name="weaponrange" value="ranged"/>
+              <input type="radio" name="weaponrange" value="Ranged"/>
               <label for="ranged">Ranged</label>
             </fieldset>
           </div>
@@ -53,49 +60,49 @@ function WeaponCreationForm() {
             <div class="customWeaponPropertiesCol">
               <fieldset>
                 <label for="ammunition">Ammunition</label>
-                <input type="checkbox" name="ammunition" id="ammunition"/>
+                <input type="checkbox" name='property' value="Ammunition" id="ammunition"/>
               </fieldset>
               <fieldset>
                 <label for="finesse">Finesse</label>
-                <input type="checkbox" name="finesse" id="finesse"/>
+                <input type="checkbox" name='property' value="Finesse" id="finesse"/>
               </fieldset>
               <fieldset>
                 <label for="heavy">Heavy</label>
-                <input type="checkbox" name="heavy" id="heavy"/>
+                <input type="checkbox" name='property' value="Heavy" id="heavy"/>
               </fieldset>
               <fieldset>
                 <label for="light">Light</label>
-                <input type="checkbox" name="light" id="light"/>
+                <input type="checkbox" name='property' value="Light" id="light"/>
               </fieldset>
               <fieldset>
                 <label for="loading">Loading</label>
-                <input type="checkbox" name="loading" id="loading"/>
+                <input type="checkbox" name='property' value="Loading" id="loading"/>
               </fieldset>
               <fieldset>
                 <label for="range">Range</label>
-                <input type="checkbox" name="range" id="range"/>
+                <input type="checkbox" name='property' value="Range" id="range"/>
               </fieldset>
             </div>
             <div class="customWeaponPropertiesCol">
               <fieldset>
                 <label for="reach">Reach</label>
-                <input type="checkbox" name="reach" id="reach"/>
+                <input type="checkbox" name='property' value="Reach" id="reach"/>
               </fieldset>
               <fieldset>
                 <label for="special">Special</label>
-                <input type="checkbox" name="special" id="special"/>
+                <input type="checkbox" name='property' value="Special" id="special"/>
               </fieldset>
               <fieldset>
                 <label for="thrown">Thrown</label>
-                <input type="checkbox" name="thrown" id="thrown"/>
+                <input type="checkbox" name='property' value="Thrown" id="thrown"/>
               </fieldset>
               <fieldset>
                 <label for="twohanded">Two-Handed</label>
-                <input type="checkbox" name="twohanded" id="twohanded"/>
+                <input type="checkbox" name='property' value="Two-Handed" id="twohanded"/>
               </fieldset>
               <fieldset>
                 <label for="versatile">Versatile</label>
-                <input type="checkbox" name="versatile" id="versatile"/>
+                <input type="checkbox" name='property' value="Versatile" id="versatile"/>
               </fieldset>
             </div>
           </div>
@@ -103,7 +110,6 @@ function WeaponCreationForm() {
         <div class="customWeaponAttacks">
           <div class="customWeaponAttacksHeader">
             Attacks
-            <button type="button" name="customWeaponAddAttackButton" onclick="toggleDisplay('customWeaponAttackFields2', 'block')">Add Another Attack</button>
           </div> 
           <fieldset class="customWeaponAttackFields" id="customWeaponAttackFields2">
             <div className='weaponFormRow'>
@@ -120,46 +126,46 @@ function WeaponCreationForm() {
               <div>
                 <label for="attackmodifier">Attack Modifer</label>
                 <select name="attackmodifier">
-                  <option value="strength">Strength</option>
-                  <option value="dexterity">Dexterity</option>
-                  <option value="constitution">Constitution</option>
-                  <option value="intelligence">Intelligence</option>
-                  <option value="wisdom">Wisdom</option>
-                  <option value="charisma">Charisma</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Dexterity">Dexterity</option>
+                  <option value="Constitution">Constitution</option>
+                  <option value="Intelligence">Intelligence</option>
+                  <option value="Wisdom">Wisdom</option>
+                  <option value="Charisma">Charisma</option>
                 </select>
               </div>
               <div>
                 <label for="damagemodifier">Damage Modifier</label>
                 <select name="damagemodifier">
-                  <option value="strength">Strength</option>
-                  <option value="dexterity">Dexterity</option>
-                  <option value="constitution">Constitution</option>
-                  <option value="intelligence">Intelligence</option>
-                  <option value="wisdom">Wisdom</option>
-                  <option value="charisma">Charisma</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Dexterity">Dexterity</option>
+                  <option value="Constitution">Constitution</option>
+                  <option value="Intelligence">Intelligence</option>
+                  <option value="Wisdom">Wisdom</option>
+                  <option value="Charisma">Charisma</option>
                 </select>
               </div>
             </div>
             <label for="damagedie">Damage Die</label>
             <select name="damagedie">
-              <option value="4">d4</option>
-              <option value="6">d6</option>
-              <option value="8">d8</option>
-              <option value="10">d10</option>
-              <option value="12">d12</option>
               <option value="20">d20</option>
+              <option value="12">d12</option>
+              <option value="10">d10</option>
+              <option value="8">d8</option>
+              <option value="6">d6</option>
+              <option value="4">d4</option>
             </select>
             <label for="numdamagedie"># Damage Die</label>
             <input class="itemNumInput" type="number" name="numdamagedie"/>
             <label for="damagetype">Damage Type</label>
             <select name="damagetype">
-              <option value="slashing">Slashing</option>
-              <option value="piercing">Piercing</option>
-              <option value="bludgeoning">Bludgeoning</option>
+              <option value="Slashing">Slashing</option>
+              <option value="Piercing">Piercing</option>
+              <option value="Bludgeoning">Bludgeoning</option>
             </select>
           </fieldset>
         </div>
-        <Button type="button">Create Item</Button>
+        <Button type="submit">Create Weapon</Button>
       </form>
     </div>
   );

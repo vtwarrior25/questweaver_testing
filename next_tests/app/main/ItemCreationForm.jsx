@@ -36,7 +36,6 @@ function ItemCreationForm() {
   return ( 
     <div className="itemCreationForm">
       <form class="customItemCreationForm" action={createItemWithPlayerID}>
-        <span>Custom Item Form</span>
         <div>
           <label htmlFor="name">Name</label>
           <input name="name" placeholder="Name"/>
