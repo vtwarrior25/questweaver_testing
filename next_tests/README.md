@@ -37,6 +37,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Make the formatting of things look good
   - [ ] Character sheet layout
   - [ ] Map section layout
+- [ ] How will we make the page load differently for the DM vs normal players
 
 ### Server (Lead: Stirling) 
 - [ ] How do we want to organize server functions? 
@@ -53,7 +54,10 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] createWeapon
 - [ ] prepareSpell
 - [ ] getChat/setChat
-- [ ] 
+- [ ] getInventory
+- [ ] getPreparedSpells
+- [ ] getAllSpells
+- [ ] getAllItems
 
 ### Database (Lead: Carter)
 - [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable
@@ -68,10 +72,12 @@ Look at [Next Instructions](./next.md) for installation help.
 ### Administrative
 
 #### Login Process
-- They enter username and password
+- Login Page
+  - They enter username and password
   - If they enter a valid set of credentials, they are brought to character selection screen
   - User ID is passed on
 - Character Selection Screen
   - They can select from the list of existing characters that they have created, or create a new character
   - User ID and Character ID are passed on 
 - Main Window
+  - Loads up the character sheet with their data

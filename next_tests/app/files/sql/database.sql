@@ -14,16 +14,11 @@
 --
 
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
 	userid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	username		varchar(30) NOT NULL UNIQUE,
 	password		varchar(30) NOT NULL
-);
 
-
-CREATE TABLE IF NOT EXISTS player (
-	userid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	username			varchar(30) NOT NULL
 );
 
 
