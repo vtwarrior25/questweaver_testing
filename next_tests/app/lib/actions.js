@@ -4,25 +4,23 @@ import { tempAuth } from '@/app/lib/tempauth';
 import { redirect } from 'next/navigation';
 
 export async function authenticate(formdata) {
+  let redirecturl = '../login';
   try {
     console.log(formdata.get('username'));
     await tempAuth(formdata)
     .then((result) => {
       console.log(result);
+      console.log('We are in the good part');
       if (result == true) {
         console.log('this should redirect beans');
-        redirect('/main');
+        //redirect('/main');
+        redirecturl = '../main';
       } else {
         console.log("This shouldn't redirect");
-        redirect('/login');
-      }
-      
-    });/*.catch(() => {
-      console.log("This shouldn't redirect 2");
-      redirect('/login');
-    });
-    */
+        //redirect('/login');
+      }});
   } catch (error) {
+    console.log('We are in the error place');
     if (error) {
       switch (error.type) {
         case 'CredentialsSignin':
@@ -33,7 +31,8 @@ export async function authenticate(formdata) {
     }
     throw error
   }
-  
+  console.log(redirecturl);
+  redirect(redirecturl);
 }
 
 export async function signUp(formdata) {

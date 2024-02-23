@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import { getcharacterinfo } from './getcharacterinfo';
+import { setCharacterHealth } from '@/app/lib/setcharacterinfo'
 import { PlayerCharacterContext } from './Contexts';
 
 function HealthSection () {
@@ -13,6 +14,24 @@ function HealthSection () {
 
   const [healthmod, setHealthMod] = useState(0);
 
+
+  const getHealth = () => {
+    /*
+    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=health`)
+    .then(res => res.json())
+    .then(res => setHealthVal(res));
+    */
+    getcharacterinfo(playercharacterid, 'health')
+    .then(results => setHealthVal(results));
+  }
+
+  const setHealth = () => {
+    console.log('sethealth');
+    setCharacterHealth(playercharacterid, healthval.currenthealth)
+    .then(results => console.log(results));
+    //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
+  }
+
   useEffect(() => {  
       getHealth();
     }, []
@@ -20,7 +39,7 @@ function HealthSection () {
 
   useEffect(() => {
       setHealth();
-    }, [healthval.currenthealth]
+    }, [healthval]
   );
 
   useEffect(() => {
@@ -57,20 +76,7 @@ function HealthSection () {
     //document.getElementById("currentHealth").value = newhealth;
   }
 
-  const getHealth = () => {
-    /*
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=health`)
-    .then(res => res.json())
-    .then(res => setHealthVal(res));
-    */
-    getcharacterinfo(playercharacterid, 'health')
-    .then(results => setHealthVal(results));
-  }
-
-  const setHealth = () => {
-    console.log('sethealth');
-    //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
-  }
+ 
 
   return ( 
     <div className="healthSection frontElement">
