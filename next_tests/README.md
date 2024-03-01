@@ -34,6 +34,10 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Should the turn order controls be hidden for all players who aren't the DM?
 - [ ] Map
   - [ ] Look into different solutions for making an interactive map (currently using HTML5/JS Canvas, which sucks) 
+    - [ ] PixiJS 
+      - [ ] [Tutorial](https://blog.logrocket.com/getting-started-pixijs-react-create-canvas/)
+      - [ ] [Pixi Dragging Example](https://pixijs.com/examples/events/dragging)
+      - [ ] [PixiReact](https://pixijs.io/pixi-react/)
 - [ ] Make the formatting of things look good
   - [ ] Character sheet layout
   - [ ] Map section layout

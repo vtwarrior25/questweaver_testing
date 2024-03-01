@@ -35,18 +35,18 @@ function ItemCreationForm() {
 
   return ( 
     <div className="itemCreationForm">
-      <form class="customItemCreationForm" action={createItemWithPlayerID}>
+      <form className="customItemCreationForm" action={createItemWithPlayerID}>
         <div>
           <label htmlFor="name">Name</label>
           <input name="name" placeholder="Name"/>
         </div>
-        <div class="valueWeightFields">
+        <div className="valueWeightFields">
           <label htmlFor="value">Value</label>
-          <input type="number" class="itemNumInput" name="value"/>
+          <input type="number" className="itemNumInput" name="value"/>
           <label htmlFor="weight">Weight</label>
-          <input type="number" class="itemNumInput" name="weight"/>
+          <input type="number" className="itemNumInput" name="weight"/>
         </div>
-        <div class="customItemRarity">
+        <div className="customItemRarity">
           <label htmlFor="rarity">Rarity</label>
           <select name="rarity" id="itemRarity">
             <option value="Common">Common</option>
@@ -57,7 +57,7 @@ function ItemCreationForm() {
             <option value="Artifact">Artifact</option>
           </select>
         </div>
-        <div class="customItemDescription">
+        <div className="customItemDescription">
           <label htmlFor="description">Description</label>
           <textarea name="description"></textarea>
         </div>

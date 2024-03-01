@@ -1,5 +1,6 @@
 import { Row, Col } from 'react-bootstrap';
 import Map from "./Map";
+import PixiMap from './PixiMap';
 import TurnOrder from "./TurnOrderBox";
 import Chat from "./Chatbox";
 
@@ -8,10 +9,10 @@ function MapSection({showboxes, setShowBoxes}) {
     <div className="mapSection">
       <Row>
         <Col>
-          {showboxes.showturnorderbox &&< TurnOrder></TurnOrder>}
+          {showboxes.showturnorderbox &&<TurnOrder></TurnOrder>}
         </Col>
         <Col>
-          <Map></Map>
+          <PixiMap></PixiMap>
         </Col>
         <Col>
           <Chat></Chat>
