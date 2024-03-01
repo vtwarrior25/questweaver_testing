@@ -14,7 +14,7 @@ export function MapRectangle({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} />;
+  return <Graphics draw={draw} eventMode='static'/>;
 }
 
 
@@ -35,7 +35,7 @@ export function MapCircle({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} />;
+  return <Graphics draw={draw} eventMode='static'/>;
 }
 
 
@@ -50,7 +50,7 @@ export function MapEllipse({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} />;
+  return <Graphics draw={draw} eventMode='static' onPointerDown={(onDragStart, this)}/>;
 }
 
 
@@ -61,5 +61,33 @@ export function MapText(shapeinfo) {
     anchor={shapeinfo.anchor}
     x={shapeinfo.x}
     y={shapeinfo.y}
+    eventMode='static'
   />;
+}
+
+let dragTarget = null;
+
+function onDragMove(event)
+{
+    if (dragTarget)
+    {
+        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
+    }
+}
+
+function onDragStart()
+{
+    this.alpha = 0.5;
+    dragTarget = this;
+    app.stage.on('pointermove', onDragMove);
+}
+
+function onDragEnd()
+{
+    if (dragTarget)
+    {
+        app.stage.off('pointermove', onDragMove);
+        dragTarget.alpha = 1;
+        dragTarget = null;
+    }
 }

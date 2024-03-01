@@ -76,8 +76,7 @@ function PixiMap() {
           color: currentcolor,
           x: 1,
           y: 1,
-          width: 1,
-          height: 1
+          radius: 1
         }
         break;
       case "ellipse":
@@ -100,8 +99,18 @@ function PixiMap() {
           height: 1
         }
         break;
+      default:
+        newobject = {
+          shape: "rectangle",
+          color: currentcolor,
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1
+        }
+        break;
     }
-    
+    return newobject;
   }
   
 
