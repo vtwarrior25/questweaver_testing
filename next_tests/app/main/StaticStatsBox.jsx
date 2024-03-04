@@ -3,7 +3,7 @@ import { Stack, Button, Accordion, Tab, Tabs } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
 import { URLContext, PlayerCharacterContext } from './Contexts';
 import { useCol } from 'react-bootstrap/esm/Col';
-import { getcharacterinfo } from './getcharacterinfo';
+import { getcharacterinfo } from '../lib/getcharacterinfo';
 
 function StaticStatsBox (setRollResults, rollresults, collapse) { 
 
