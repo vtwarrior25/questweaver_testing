@@ -77,8 +77,16 @@ function InventorySection({classname, name, items, setSectionWeight}) {
               </tr>
               <tr>
                 {dropdownshidden[index] && <td className='inventorySectionTableExpandingInfo' colSpan="6">
-                  Epic beans mode mo bamba
-                  <Button variant='secondary' size="sm"></Button>
+                  {item.description}
+                  {item.weaponinfo &&
+                    <>
+                      <div>Proficient: {item.weaponinfo.proficient}</div>
+                      <div>Attack Type: {item.weaponinfo.attacktype}</div>
+                      <div>Range: {item.weaponinfo.attacktype}</div>
+                    </>
+                  }
+                  <input type="number" placeholder='Qty' onChange={(e) => setItemQuantity(e.target.value)}></input>
+                  <Button variant="secondary" size='sm' onClick={() => {addItem(destination, item, itemquantity)}}>Add</Button>
                 </td>}
               </tr>
             </React.Fragment>
