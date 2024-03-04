@@ -42,7 +42,7 @@ const weaponattackaddquery = new PQ({
   text:`
     WITH atid AS (
       INSERT INTO attack (name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
-      ($2, $3, $4, $5, $6, $7, $8)
+      ($2, $3, $4, $5, (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
     )
     INSERT INTO weaponattack (weaponid, attackid)
     VALUES ($1, atid);
@@ -77,7 +77,7 @@ export async function createWeapon(userid, formdata) {
       for (const property of properties) {
         db.none(weaponpropertyaddquery, [result.weaponid, property]);
       }
-      db.none(weaponattackaddquery, []);
+      db.none(weaponattackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get(''), formdata.get(''), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')]);
     }).catch((error) => {
       return "Error adding weapon";
     })

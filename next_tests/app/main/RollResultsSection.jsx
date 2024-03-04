@@ -8,6 +8,13 @@ export default function RollResultsSection (rollresults) {
 
   const [rollresultslist, setRollResultList] = useState([]);
 
+  const isLast = (index) => {
+    if (rollresultslist.length < keeprolls) {
+      return index === (rollresultslist.length - 1);
+    }
+    return index === (keeprolls - 1);
+  }
+
 
   useEffect(() => {
     if (rollresults.rollresults) {
@@ -66,12 +73,16 @@ export default function RollResultsSection (rollresults) {
   useEffect(() => {
     console.log("Testing user");
   }, [rollresults]
-  )
+  );
+
+  useEffect(() => {
+    clearRollResults();
+  }, []);
 
   return (
       <div className="rollContainer">
         {rollresultslist.map((rollresult, index) =>
-          <SingleRollResult key={index} rollresults={rollresult} last={index === (keeprolls - 1)} clearresults={() => clearRollResults}></SingleRollResult>
+          <SingleRollResult key={index} rollresults={rollresult} last={isLast(index)} clearresults={() => clearRollResults()}></SingleRollResult>
         )}
       </div> 
   )
