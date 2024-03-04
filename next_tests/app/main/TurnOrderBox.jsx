@@ -2,7 +2,7 @@ import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
 import { URLContext, PlayerCharacterContext, DMContext} from "./Contexts";
-import { getcharacterinfo } from "./getcharacterinfo";
+import { getcharacterinfo } from "../lib/getcharacterinfo";
 
 function TurnOrder() {
   const isDM = useContext(DMContext);

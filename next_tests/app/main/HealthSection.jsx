@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
-import { getcharacterinfo } from './getcharacterinfo';
-import { setCharacterHealth } from '@/app/lib/sethealth'
+import { getcharacterinfo } from '../lib/getcharacterinfo';
+import { setCharacterHealth } from '@/app/lib/setcharacterinfo'
 import { PlayerCharacterContext } from './Contexts';
 
 function HealthSection () {

@@ -2,15 +2,7 @@
 
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
-/*
-const connection = {
-  host: 'localhost',
-  port: 5432,
-  database: 'questweaver',
-  user: 'questweaver',
-  password: 'p0pchuck$',
-}
-*/
+
 const connection = {
   host: process.env.DBHOST,
   port: process.env.DBPORT,
@@ -325,9 +317,9 @@ export async function getcharacterinfo(playercharacterid, infotype) {
     .then (dbinfo => {
       console.log("got character info from " + q);
       console.log(dbinfo);
-      res.status(200).json(dbinfo);
+      return dbinfo;
     }).catch (error => {
-      res.status(404).json("not found");
+      return "not found";
     });
   */
   }

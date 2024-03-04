@@ -13,7 +13,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'
 import SavingThrow from './SavingThrow';
-import { getcharacterinfo } from './getcharacterinfo';
+import { getcharacterinfo } from '../lib/getcharacterinfo';
 import { PlayerCharacterContext } from './Contexts';
 
 function SavingThrowSection ({setRollResults}) { 
