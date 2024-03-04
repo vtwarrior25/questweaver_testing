@@ -10,7 +10,6 @@ Tables to insert data into initially:
 - ??Game Log Tag
 - *Creature Size
 - *Defense
-- Proficiency Type
 - Proficiency
 - Feature Tables (this will suck, don't do it yet)
 - *Monster Type
@@ -531,14 +530,14 @@ INSERT INTO spell (name, school, casttime, spellrange, duration, components, des
 ('Wind Wall', 'Evocation', '1 Action', '120 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here');
 
 
-INSERT INTO proficiency (name) VALUES
-('Abyssal'),
-('Acrobatics'),
-('Alchemists Supplies'),
-('Animal Handling'),
-('Arcana'),
-('Athletics'),
-('Bagpipes'),
+INSERT INTO proficiency (name, proficiencytype) VALUES
+('Abyssal', 'Languages'),
+('Acrobatics', 'Skills'),
+('Alchemists Supplies', 'Tools'),
+('Animal Handling', 'Skills'),
+('Arcana', 'Skills'),
+('Athletics', 'Skills'),
+('Bagpipes', 'Tools'),
 ('Battleaxe'),
 ('Blowgun'),
 ('Brewers Supplies'),

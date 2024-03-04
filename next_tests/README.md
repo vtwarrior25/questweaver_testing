@@ -32,8 +32,9 @@ Look at [Next Instructions](./next.md) for installation help.
 
 ### UI (Lead: Nick)
 - [ ] Should the turn order controls be hidden for all players who aren't the DM?
+  - Don't hide them (they aren't hidden)
 - [ ] Map
-  - [ ] Look into different solutions for making an interactive map (currently using HTML5/JS Canvas, which sucks) 
+  - [ ] Look into different solutions for making an interactive map (currently using HTML5/JS Canvas, which sucks)
     - [ ] PixiJS 
       - [ ] [Tutorial](https://blog.logrocket.com/getting-started-pixijs-react-create-canvas/)
       - [ ] [Pixi Dragging Example](https://pixijs.com/examples/events/dragging)
@@ -42,13 +43,16 @@ Look at [Next Instructions](./next.md) for installation help.
   - [ ] Character sheet layout
   - [ ] Map section layout
 - [ ] How will we make the page load differently for the DM vs normal players
-- [ ] Fix roll results 
+- [ ] Fix roll results
 
 
 ### Server (Lead: Stirling) 
 - [ ] How do we want to organize server functions? 
   - [ ] Should we put them all in one file?
   - [ ] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
+    - [ ] Move the server files to `/app/lib` 
+- [ ] Login
+  - [ ] Figure out how to pass characterid, userid, and isDM to client/React (specifically `/app/main/page.jsx`)
 
 #### Specific Functions
 - [ ] setHealth
@@ -74,6 +78,7 @@ Look at [Next Instructions](./next.md) for installation help.
     - In seperate tables for each (race, subrace, class, subclass)?
     - In a single seperate table with columns for playercharacter id and for each item
 - [ ] Consider making `ability` and `skill` tables into enums
+  - [ ] **Do that!**
 
 
 ### Administrative

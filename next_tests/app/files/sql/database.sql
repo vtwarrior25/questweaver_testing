@@ -133,14 +133,14 @@ CREATE TABLE IF NOT EXISTS proficiencytype (
 Armor, Weapons, Tools, Languages 
 */
 
-CREATE TYPE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages');
+CREATE TYPE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages', 'Skills');
 
 
 CREATE TABLE IF NOT EXISTS proficiency (
 	proficiencyid 							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name												varchar(30) UNIQUE,
 	description									varchar(200),
-	proficiencytypeid						proficiencytype
+	proficiencytype							proficiencytype
 );
 
 

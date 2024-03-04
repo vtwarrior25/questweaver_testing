@@ -46,14 +46,19 @@ function InventoryMenu() {
 
   const addItem = (section, item, quantity) => {
     let otheritem;
-    if (matcheditems = items.filter((newitem) => newitem.name === item.name && newitem.section === item.section)) {
+    let matcheditems = items.filter((newitem) => newitem.name === item.name && newitem.section === item.section);
+    if (matcheditems.length > 0) {
       matcheditem = matcheditems[0];
+      matcheditem.quantity = matcheditems.quantity + quantity;
+      let nonmatcheditems = items.filter((newitem) => newitem.name !== item.name || newitem.section !== item.section);
+      setItems([...nonmatcheditems, matcheditem]);
     } else {
       otheritem = {...item, section: section, qty: quantity};
+      setItems([...items, otheritem]);
     }
     
     // Check if object already exists in section, if so add quantity to add to quantity
-    //setItems([...items, newitem]);
+    //setItems([...items, otheritem]);
   } 
 
 
