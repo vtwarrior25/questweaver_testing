@@ -1,10 +1,23 @@
+html {
+    background-color: aliceblue;
+}
+
 .loginsection {
     display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     flex-direction: column;
     max-width: 18rem;
     margin: auto;
     align-self: center;
     text-align: center;
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding-bottom: 3rem;
+    background-color: white;
 }
 
 form {
