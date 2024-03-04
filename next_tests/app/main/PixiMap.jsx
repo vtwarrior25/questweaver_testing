@@ -31,6 +31,21 @@ function PixiMap() {
       y: 100,
       radius: 40,
     },
+    {
+      shape: "ellipse",
+      color: 0x00ff00,
+      x: 400,
+      y: 400,
+      width: 60,
+      height: 40,
+    },
+    {
+      shape: "text",
+      text: "8==D",
+      x: 20,
+      y: 20,
+      anchor: 0.7,
+    },
   ]);
   const [selectedtool, setSelectedTool] = useState("select");
   const [currentcolor, setCurrentColor] = useState();
@@ -38,7 +53,7 @@ function PixiMap() {
     width: 0,
     height: 0,
     scale: 100,
-    backgroundcolor: 0xeef1f5
+    backgroundcolor: 0xefd1ef
   })
   const playercharacterid = useContext(PlayerCharacterContext);
 
@@ -118,7 +133,9 @@ function PixiMap() {
     if (selectedtool === "select") {
       // Allow for dragging elements around
     } else {
-      shapeToAdd(e);
+      // All for click and drag to create shapes
+      let object = addShape(e);
+
     }
   }
 
