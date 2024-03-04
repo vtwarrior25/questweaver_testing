@@ -14,6 +14,8 @@ function ManageInventory({addItem}) {
   const [itemlist, setEquipmentList] = useState([
     {
       name: "Longsword",
+      weight: 12,
+      cost: 2,
       description: "Proficiency with a longsword allows you to add your proficiency bonus to the attack roll for any attack you make with it. ",
     },
     {
@@ -77,8 +79,8 @@ function ManageInventory({addItem}) {
         {itemlist && itemlist.length > 0 && (
           founditems.map((item, index) => 
           <div key={index}>
-            <div className="equipmentListItem" key={index} onClick={() => toggleDropdown(index)}>
-              <span>{item.name}</span>
+            <div className="equipmentListItem" key={index}>
+              <span onClick={() => toggleDropdown(index)}>{item.name}</span>
               <Button variant="secondary" size='sm' onClick={() => {addItem(destination, item, 1)}}>Add</Button>
             </div>
             {dropdownshidden[index] && 
