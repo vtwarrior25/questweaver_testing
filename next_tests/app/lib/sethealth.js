@@ -12,6 +12,10 @@ const connection = {
 
 const db = pgp(connection);
 
-export async function sethealth (playercharacterid, currenthealth) {
-    const dbquery = new PQ ({text: 'INSERT INTO playercharacter c (currenthealth) JOIN playercharacter p ON c.playercharacterid = p.playercharacterid VALUES ($10) WHERE playercharacter'});
-}
+const dbquery = `UPDATE playercharacter SET currenthealth = $2 WHERE playercharacterid = $1`;
+
+export async function setCharacterHealth (playercharacterid, currenthealth) {
+    /*const dbquery = new PQ ({text: 'INSERT INTO playercharacter c (currenthealth) JOIN playercharacter p ON c.playercharacterid = p.playercharacterid VALUES ($10) WHERE playercharacter'});*/
+    db.one(dbquery, [playercharacterid, currenthealth]);
+  }
+
