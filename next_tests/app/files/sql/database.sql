@@ -651,11 +651,14 @@ CREATE TABLE IF NOT EXISTS weaponproperty (
 	possibleweaponproperty			possibleweaponproperty NOT NULL
 );
 
+CREATE TYPE characterinventorysection AS ENUM ('Equipment, Backpack');
+
 CREATE TABLE IF NOT EXISTS characterinventory (
-	characterinventoryid		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid				integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	itemid									integer REFERENCES item(itemid) NOT NULL,
-	quantity								integer
+	characterinventoryid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid						integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	characterinventorysection		characterinventorysection,
+	itemid											integer REFERENCES item(itemid) NOT NULL,
+	quantity										integer
 );
 
 /*
