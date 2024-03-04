@@ -73,12 +73,15 @@ Supporting Tables
 */
 
 
-CREATE TABLE IF NOT EXISTS ability (
+/* *CREATE TABLE IF NOT EXISTS ability (
 	abilityid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name									varchar(14) UNIQUE,
 	abbrev								char(3),
 	description						varchar(2000)
-);
+);*/
+
+CREATE TYPE ability AS ENUM ('Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma'); 
+
 
 /*
  Str, Dex, Con, Int, Wis, Cha (the base abilities)
