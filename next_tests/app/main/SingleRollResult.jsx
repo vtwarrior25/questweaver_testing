@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from 'react-bootstrap';
 
 function SingleRollResult ({rollresults, last, clearresults}) {
+  const [dropdownhidden, setDropdownHidden] = useState(true);
 
   if (last === true) {
     return (
@@ -16,10 +17,14 @@ function SingleRollResult ({rollresults, last, clearresults}) {
   } else {
     return (
       <div className="rollResults frontElement">
-        <div className="rollDescription">{rollresults.name} - {rollresults.rolltype}</div>
-        <div className="rollParts">{rollresults.rollstring}</div>
-        <div className="rollBase">{rollresults.basestring}</div>
-        <div className="rollTotal">{rollresults.rolltotal}</div>
+        <div className="rollDescription" onClick={() => setDropdownHidden(!dropdownhidden)}>{rollresults.name} - {rollresults.rolltype}</div>
+        {!dropdownhidden && 
+        <div>
+          <div className="rollParts">{rollresults.rollstring}</div>
+          <div className="rollBase">{rollresults.basestring}</div>
+          <div className="rollTotal">{rollresults.rolltotal}</div>
+        </div>
+        }
       </div>
     );
   }
