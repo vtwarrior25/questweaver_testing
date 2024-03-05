@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Graphics, Text } from '@pixi/react';
 import { Color } from 'pixi.js';
+import { onDragStart } from '/app/main/PixiMap';
 
 
 export function MapRectangle({shapeinfo}) {
@@ -50,7 +51,7 @@ export function MapEllipse({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} eventMode='static' onPointerDown={(onDragStart, this)}/>;
+  return <Graphics draw={draw} eventMode='static' cursor='pointer' onPointerDown={(onDragStart, this)}/>;
 }
 
 
@@ -63,31 +64,4 @@ export function MapText(shapeinfo) {
     y={shapeinfo.y}
     eventMode='static'
   />;
-}
-
-let dragTarget = null;
-
-function onDragMove(event)
-{
-    if (dragTarget)
-    {
-        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
-    }
-}
-
-function onDragStart()
-{
-    this.alpha = 0.5;
-    dragTarget = this;
-    app.stage.on('pointermove', onDragMove);
-}
-
-function onDragEnd()
-{
-    if (dragTarget)
-    {
-        app.stage.off('pointermove', onDragMove);
-        dragTarget.alpha = 1;
-        dragTarget = null;
-    }
 }
