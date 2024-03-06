@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
-import { getcharacterinfo } from './getcharacterinfo';
-import { setCharacterHealth } from '@/app/lib/setcharacterinfo'
+import { getcharacterinfo } from '../lib/getcharacterinfo';
+import { setCharacterHealth } from '@/app/lib/sethealth'
 import { PlayerCharacterContext } from './Contexts';
 
 function HealthSection () {
@@ -30,6 +30,26 @@ function HealthSection () {
     setCharacterHealth(playercharacterid, healthval.currenthealth)
     .then(results => console.log(results));
     //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
+  }
+
+  const onDragMove = (e) => {
+    if (dragTarget) {
+        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
+    }
+  }
+
+  const onDragStart = (e) => {
+    this.alpha = 0.5;
+    setDragTarget(e.event.target);
+    app.stage.on('pointermove', onDragMove);
+  }
+
+  const onDragEnd = () => {
+    if (dragTarget) {
+        app.stage.off('pointermove', onDragMove);
+        dragTarget.alpha = 1;
+        setDragTarget(null);
+    }
   }
 
   useEffect(() => {  

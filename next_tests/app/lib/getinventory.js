@@ -25,6 +25,7 @@ export async function getinventory(playercharacterid) {
       console.log(dbinfo);
       return dbinfo;
     }).catch (error => {
+      error.log("not found");
       return "not found";
     });
 }

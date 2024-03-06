@@ -12,10 +12,11 @@ const connection = {
 
 const db = pgp(connection);
 
-export async function sethealth (playercharacterid, currenthealth) {
+export async function setCharacterHealth (playercharacterid, currenthealth) {
     const dbquery = new PQ ({text: 'UPDATE playercharacter SET currenthealth $2 WHERE playercharacter-d = $1'});
-    db.one(dbquery, [playercharacter, currenthealth])
+    db.one(dbquery, [playercharacterid, currenthealth])
     .catch((error) => {
+        error.log("Error setting health");
         return "Error setting health";
     });
 }

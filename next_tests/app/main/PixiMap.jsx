@@ -2,11 +2,11 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { MapScaleContext, PlayerCharacterContext } from './Contexts';
 import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import { MapRectangle, MapCircle, MapEllipse, MapText } from './Shapes'; 
+import { MapRectangle, MapCircle, MapEllipse, MapText, onDragEnd} from './Shapes'; 
 
 
 function PixiMap() {
-
+  const [dragTarget, setDragTarger] = useState(null);
   const [mapshapes, setMapShapes] = useState([
     {
       shape: "rectangle",
@@ -71,6 +71,25 @@ function PixiMap() {
     console.log(scale);
   }
 
+  const onDragMove = (e) => {
+    if (dragTarget) {
+        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
+    }
+  }
+
+  const onDragStart = (e) => {
+    this.alpha = 0.5;
+    setDragTarget(e.event.target);
+    app.stage.on('pointermove', onDragMove);
+  }
+
+  const onDragEnd = () => {
+    if (dragTarget) {
+        app.stage.off('pointermove', onDragMove);
+        dragTarget.alpha = 1;
+        setDragTarget(null);
+    }
+  }
 
   const addShape = (e) => {
     let newobject;
@@ -165,6 +184,9 @@ function PixiMap() {
         width={mapsize.width}
         height={mapsize.height}
         options={{backgroundColor: mapsize.backgroundcolor}}
+        onPointerUp={onDragEnd}
+        onPointerOutCapture={onDragEnd}
+        eventMode={"static"}
       >
         {mapshapes.map((shape, index) => {
           console.log(shape);

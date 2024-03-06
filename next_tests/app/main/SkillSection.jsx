@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState} from "react";
 import SkillRow from './SkillRow'
-import { getcharacterinfo } from "./getcharacterinfo";
+import { getcharacterinfo } from "../lib/getcharacterinfo";
 import { PlayerCharacterContext } from "./Contexts";
 
 function SkillSection (setRollResults){

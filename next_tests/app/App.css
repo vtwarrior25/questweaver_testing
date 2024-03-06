@@ -436,6 +436,7 @@ Roll Results
   display: flex;
   flex-direction: column;
   text-align: left;
+  padding: 0.4rem;
 }
 
 .lastRollResult {

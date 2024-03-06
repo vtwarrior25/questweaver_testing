@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AbilityBox from './AbilityBox'
 import { ModPosContext, PlayerCharacterContext} from "./Contexts";
-import { getcharacterinfo } from "./getcharacterinfo";
+import { getcharacterinfo } from "../lib/getcharacterinfo";
 
 /*
 export async function getServerSideProps () {

@@ -50,12 +50,12 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] How do we want to organize server functions? 
   - [ ] Should we put them all in one file?
   - [ ] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
-    - [ ] Move the server files to `/app/lib` 
+    - [x] Move the server files to `/app/lib` 
 - [ ] Login
   - [ ] Figure out how to pass characterid, userid, and isDM to client/React (specifically `/app/main/page.jsx`)
 
 #### Specific Functions
-- [ ] setHealth
+- [x] setHealth
 - [x] diceRoll
 - [ ] addLogEntry/getLogEntries
 - [x] getCharacterInfo
@@ -64,7 +64,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] createWeapon
 - [ ] prepareSpell
 - [ ] getChat/setChat
-- [ ] getInventory
+- [x] getInventory
 - [ ] getPreparedSpells
 - [ ] getAllSpells
 - [ ] getAllItems
