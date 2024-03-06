@@ -44,6 +44,9 @@ Look at [Next Instructions](./next.md) for installation help.
   - [ ] Map section layout
 - [ ] How will we make the page load differently for the DM vs normal players
 - [ ] Fix roll results
+- [ ] Monster Group Form
+  - [ ] Working on making the form update state anytime something changes, so that we can replace the state when duplicating another monster group
+    - [ ] Each field in the form should be tied to one of the fields in the `formdata` state object
 
 
 ### Server (Lead: Stirling) 

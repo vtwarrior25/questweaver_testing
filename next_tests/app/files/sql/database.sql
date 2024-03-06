@@ -500,11 +500,6 @@ Race Tables
 */
 
 
-
-
-
-
-
 CREATE TABLE IF NOT EXISTS racefeature (
 	racefeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	raceid							integer REFERENCES race(raceid) NOT NULL,

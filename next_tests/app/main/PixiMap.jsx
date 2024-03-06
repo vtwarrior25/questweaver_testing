@@ -6,7 +6,7 @@ import { MapRectangle, MapCircle, MapEllipse, MapText, onDragEnd} from './Shapes
 
 
 function PixiMap() {
-  const [dragTarget, setDragTarger] = useState(null);
+  //const [dragTarget, setDragTarger] = useState(null);
   const [mapshapes, setMapShapes] = useState([
     {
       shape: "rectangle",
@@ -71,6 +71,7 @@ function PixiMap() {
     console.log(scale);
   }
 
+  /*
   const onDragMove = (e) => {
     if (dragTarget) {
         dragTarget.parent.toLocal(event.global, null, dragTarget.position);
@@ -90,7 +91,7 @@ function PixiMap() {
         setDragTarget(null);
     }
   }
-
+*/
   const addShape = (e) => {
     let newobject;
     switch (selectedtool) {
@@ -180,13 +181,11 @@ function PixiMap() {
       <Button variant="danger" onClick={() => handleClearCanvas()}>X</Button>
     </div>
     <MapScaleContext.Provider value={mapsize.scale}>
+      {/*
       <Stage
         width={mapsize.width}
         height={mapsize.height}
         options={{backgroundColor: mapsize.backgroundcolor}}
-        onPointerUp={onDragEnd}
-        onPointerOutCapture={onDragEnd}
-        eventMode={"static"}
       >
         {mapshapes.map((shape, index) => {
           console.log(shape);
@@ -202,6 +201,7 @@ function PixiMap() {
         })}
         <Text text="Beans" anchor={0.5} x={150} y={150}></Text>
       </Stage>
+    */}
     </MapScaleContext.Provider>
     </div>
   );

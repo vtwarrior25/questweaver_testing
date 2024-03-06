@@ -64,7 +64,6 @@ function MonsterSheet({setRollResults}) {
               dietype: 6,
               damagemod: 4,
               damagetype: "Slashing",
-              hp: 0
             },
             {
               name: "Shortbow",
@@ -73,7 +72,22 @@ function MonsterSheet({setRollResults}) {
               dietype: 6,
               damagemod: 4,
               damagetype: "Piercing",
-              hp: 0
+            },
+            {
+              name: "",
+              hit: 0,
+              numdice: 0,
+              dietype: 0,
+              damagemod: 0,
+              damagetype: "Piercing",
+            },
+            {
+              name: "",
+              hit: 0,
+              numdice: 0,
+              dietype: 0,
+              damagemod: 0,
+              damagetype: "Piercing",
             },
           ],
           skills: "Stealth +6; Darkvision 60",
@@ -84,6 +98,7 @@ function MonsterSheet({setRollResults}) {
         ]
       }
   ]);
+
 
   const [encounterselected, setEncounterSelected] = useState("Cragmaw");
 
@@ -168,7 +183,7 @@ function MonsterSheet({setRollResults}) {
     setTurnOrder(turnorder.filter((turn) => turn.name !== nametoremove || turn.initiative !== initiative))
   }
   */
-  
+
 
   return ( 
     <div className="monsterSheet">

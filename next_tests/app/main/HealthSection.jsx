@@ -32,26 +32,6 @@ function HealthSection () {
     //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
   }
 
-  const onDragMove = (e) => {
-    if (dragTarget) {
-        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
-    }
-  }
-
-  const onDragStart = (e) => {
-    this.alpha = 0.5;
-    setDragTarget(e.event.target);
-    app.stage.on('pointermove', onDragMove);
-  }
-
-  const onDragEnd = () => {
-    if (dragTarget) {
-        app.stage.off('pointermove', onDragMove);
-        dragTarget.alpha = 1;
-        setDragTarget(null);
-    }
-  }
-
   useEffect(() => {  
       getHealth();
     }, []
@@ -96,7 +76,7 @@ function HealthSection () {
     //document.getElementById("currentHealth").value = newhealth;
   }
 
- 
+
 
   return ( 
     <div className="healthSection frontElement">

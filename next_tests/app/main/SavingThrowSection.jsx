@@ -53,12 +53,6 @@ function SavingThrowSection ({setRollResults}) {
     ]);
 
   useEffect(() => {  
-      getStats();
-    }, []
-  )
-
-
-  const getStats = () => {
     /*
     fetch(`http://localhost:3000/api/getcharacterinfo?infotype=savingthrow`)
     .then(res => res.json())
@@ -66,7 +60,8 @@ function SavingThrowSection ({setRollResults}) {
     */
     getcharacterinfo(playercharacterid, 'savingthrow')
     .then(results => setSavingThrows(results));
-  }
+    }, [playercharacterid]
+  )
 
   return (
     /* 

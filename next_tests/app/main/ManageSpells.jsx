@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
+import { PlayerCharacterContext } from './Contexts';
+import { getSpellList, getPreparedSpells } from '../lib/spellactions';
 
 function ManageSpells() {
+  const playercharacterid = useContext(PlayerCharacterContext);
 
-  const [spelllist, setEquipmentList] = useState([
+  const [spelllist, setSpellList] = useState([
     {
       name: "Longsword",
       description: "Proficiency with a longsword allows you to add your proficiency bonus to the attack roll for any attack you make with it. ",
@@ -56,6 +59,17 @@ function ManageSpells() {
   }
 
   useEffect(() => {
+    // Get spell list and prepared spells lists
+    getSpellList(playercharacterid)
+    .then(results => setSpellList(results));
+    getPreparedSpells(playercharacterid)
+    .then(results => setPreparedSpells(results));
+  }, [playercharacterid],
+  );
+  
+  
+
+  useEffect(() => {
     spelllist.forEach((spell, index) => setSearchListDropdownsHidden[index] = false);
   }, [spelllist],
   );
@@ -74,6 +88,7 @@ function ManageSpells() {
     console.log("prepspell");
     // This should remove a spell from prepared
   }
+
 
   return ( 
       <div className='manageSpellsMenu frontElement'>
