@@ -73,14 +73,14 @@ Supporting Tables
 */
 
 
-/* *CREATE TABLE IF NOT EXISTS ability (
+CREATE TABLE IF NOT EXISTS ability (
 	abilityid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name									varchar(14) UNIQUE,
 	abbrev								char(3),
 	description						varchar(2000)
-);*/
+);
 
-CREATE TYPE ability AS ENUM ('Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma'); 
+--CREATE TYPE ability AS ENUM ('Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma'); 
 
 
 /*
@@ -540,12 +540,11 @@ CREATE TABLE IF NOT EXISTS spell (
 
 /* TODO maybe make this table inherit from spell?? */
 CREATE TABLE IF NOT EXISTS dicerollspell (
-	dicerollspellid 			integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	spellid 							integer REFERENCES spell(spellid) NOT NULL,
 	effectdicenum					integer,
 	effectdicetype				integer REFERENCES dice(diceid) NOT NULL,
 	effecttype						integer REFERENCES effecttype(effecttypeid) NOT NULL
-);
+) INHERITS (spell);
+
 
 CREATE TABLE IF NOT EXISTS spellfeature (
 	spellid							integer REFERENCES spell(spellid) NOT NULL
@@ -569,10 +568,15 @@ CREATE TABLE IF NOT EXISTS spelllist (
 	spellid 					integer REFERENCES spell(spellid) NOT NULL,
 	classid						integer REFERENCES class(classid) NOT NULL,
 	subclassid				integer REFERENCES subclass(subclassid),
-	spelllevel				integer
+	spelllevel				integer,
+	classlevel 				integer
 );
 
 
+CREATE TABLE IF NOT EXISTS preparedlist (
+	playercharacterid 	integer REFERENCES playercharacter(playercharacterid),
+	spellid					integer REFERENCES spell(spellid),
+)
 
 
 

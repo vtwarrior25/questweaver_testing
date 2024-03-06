@@ -41,14 +41,14 @@ const weaponattackaddquery = new PQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
     WITH atid AS (
-      INSERT INTO attack (name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
-      ($2, $3, $4, $5, (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
+      INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
+      (DEFAULT, $2, $3, $4, $5, (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
+      RETURNING attackid
     )
     INSERT INTO weaponattack (weaponid, attackid)
     VALUES ($1, atid);
   `
 })
-
 
 
 

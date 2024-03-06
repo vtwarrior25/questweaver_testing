@@ -33,6 +33,7 @@ function MonsterSheet({setRollResults}) {
         {
           basicinfo: {
             id: 0,
+            encounter: "",
             name: "Jeff",
             quantity: 2,
             description: "Cragmaw",
@@ -58,7 +59,7 @@ function MonsterSheet({setRollResults}) {
           },
           attacks: [
             {
-              name: "Scimitar",
+              name: "Penis",
               hit: 4,
               numdice: 1,
               dietype: 6,
@@ -184,6 +185,26 @@ function MonsterSheet({setRollResults}) {
   }
   */
 
+  const addMonsterGroup = (encounter, monstergroup) => {
+    let encounterindex = encounters.findIndex((e) => {e.encountername === encounter}) ?? -1;
+    //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];
+    if (encounterindex >= 0) {
+      // If there are encounters with the name, add the new monster group to that encounter
+      let newencounters = {...encounters}
+      newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, monstergroup];
+      setEncounters(newencounters);
+      //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
+    } else {
+      // If there aren't encounters with the name add the monster group to a new encounter
+      let newencounter = {
+        encountername: encounter,
+        monstergroups: [
+          {...monstergroup}
+        ]
+      }
+      setEncounters([...encounters, newencounter]);
+    }
+  }
 
   return ( 
     <div className="monsterSheet">
@@ -192,7 +213,7 @@ function MonsterSheet({setRollResults}) {
           <label htmlFor="encounterSelector">Encounter</label>
           <select className="encounterSelector" name="encounterSelector" value={encounterselected} onChange={((e) => updateCurrentEncounter(e.target.value))}>
             {encounters.map((encounter, index) => 
-              <option key={index} value={encounter.encounternamename}>{encounter.encountername}</option>
+              <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
             )}
           </select>
         </div>
@@ -204,7 +225,7 @@ function MonsterSheet({setRollResults}) {
         {getMonsterGroups(encounterselected) && getMonsterGroups(encounterselected).map((monstergroup, index) => 
           <MonsterGroup key={index} encounter={encounterselected} monsterinfo={monstergroup} removeMonsterGroup={removeMonsterGroup} setRollResults={setRollResults}/>
         )}
-        <MonsterGroupForm encounters={encounters}></MonsterGroupForm>
+        <MonsterGroupForm encounters={encounters} addMonsterGroup={addMonsterGroup}></MonsterGroupForm>
       </div>
     </div>
   );

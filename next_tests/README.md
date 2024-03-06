@@ -46,7 +46,11 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Fix roll results
 - [ ] Monster Group Form
   - [ ] Working on making the form update state anytime something changes, so that we can replace the state when duplicating another monster group
-    - [ ] Each field in the form should be tied to one of the fields in the `formdata` state object
+    - [x] Each field in the form should be tied to one of the fields in the `formdata` state object
+- [ ] Character Creator
+  - [ ] Grab the race/class features for each and show them in the character creator sections
+  - [ ] Create equipment section
+  - [ ] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
 
 
 ### Server (Lead: Stirling) 

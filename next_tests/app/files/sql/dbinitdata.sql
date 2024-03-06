@@ -31,14 +31,14 @@ Tables that need some initial data:
 
 */
 
-/* INSERT INTO ability (name, abbrev, description) VALUES
+INSERT INTO ability (name, abbrev, description) VALUES
 ('Strength', 'Str', ''),
 ('Dexterity', 'Dex', ''),
 ('Constitution', 'Con', ''),
 ('Intelligence', 'Int', ''),
 ('Wisdom', 'Wis', ''),
 ('Charisma', 'Cha', '');
- */
+
 
 INSERT INTO skill (name, abilityid, description) VALUES 
 ('Acrobatics', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),

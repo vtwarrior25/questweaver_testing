@@ -83,7 +83,6 @@ function CharacterCreator() {
     let a = e.target.value;
     //setDropdownValues([]);
     setSelectAbilities(selectabilities.filter(item => item !== a || item === '-'));
-    
     console.log(a);
   }
 

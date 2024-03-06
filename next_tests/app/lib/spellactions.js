@@ -8,7 +8,6 @@ const getspelllistquery = new PQ({
     SELECT  FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
     WHERE sl.classid = (SELECT classid FROM playercharacter WHERE playercharacterid = $1) AND sl.spelllevel = 
-    
   `
 })
 

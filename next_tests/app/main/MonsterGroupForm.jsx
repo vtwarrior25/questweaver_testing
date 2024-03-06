@@ -1,8 +1,10 @@
-import { useState, useRef} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button, ButtonGroup, Table, Overlay } from 'react-bootstrap';
 
-function MonsterGroupForm({encounters}) {
+function MonsterGroupForm({encounters, addMonsterGroup}) {
   
+  let [encounterscopy, setEncountersCopy] = useState([]); 
+
   const [duplicatemenudisplay, setDuplicateMenuDisplay] = useState(false);
   const duplicatetarget = useRef(null);
 
@@ -24,6 +26,7 @@ function MonsterGroupForm({encounters}) {
   const [formdata, setFormData] = useState({
     basicinfo: {
       id: 0,
+      encounter: "Cragmaw",
       name: "Jeff",
       quantity: 2,
       description: "Cragmaw",
@@ -64,6 +67,22 @@ function MonsterGroupForm({encounters}) {
         damagemod: 4,
         damagetype: "Piercing",
       },
+      {
+        name: "",
+        hit: 0,
+        numdice: 0,
+        dietype: 0,
+        damagemod: 0,
+        damagetype: "Piercing",
+      },
+      {
+        name: "",
+        hit: 0,
+        numdice: 0,
+        dietype: 0,
+        damagemod: 0,
+        damagetype: "Piercing",
+      },
     ],
     skills: "Stealth +6; Darkvision 60",
     ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
@@ -71,18 +90,29 @@ function MonsterGroupForm({encounters}) {
     health: [0,0,0,0,0,0,0,0]
     });
 
+  useEffect(() => {
+    setEncountersCopy([...encounters]);
+  }, [encounters],
+  );
+  
+  /*
   const addEncounter = () => {
     console.log("This should add a new encounter, or something");
   }
-  
+  */
+
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
   }
 
   const updateFormValue = (section, field, value, attacknumber) => {
     let formdatacopy = {...formdata};
-    console.log(section + field);
-    if (attacknumber !== 0) {
+    console.log(section + field); 
+    if (section === "skills" || section === "ability" || section === "notes") {  
+      formdatacopy[section] = value;
+    } else if (section === "health") {
+      formdatacopy[section][attacknumber] = value;
+    } else if (attacknumber){
       formdatacopy[section][attacknumber][field] = value;
     } else {
       formdatacopy[section][field] = value;
@@ -91,7 +121,8 @@ function MonsterGroupForm({encounters}) {
   }
 
   const duplicateMonsterGroup = (monstergroup) => {
-    setFormData(monstergroup);
+    
+    //setFormData(monstergroup);
   }
 
 
@@ -182,7 +213,7 @@ function MonsterGroupForm({encounters}) {
                         <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: e.target.value})}>
                           <option>Beans</option>
                         </select>
-                        <Button variant='secondary' size='sm'>Duplicate Monster Group</Button>
+                        <Button variant='secondary' size='sm' onClick={() => duplicateMonsterGroup}>Duplicate Monster Group</Button>
                       </div>
                     </Overlay>
                   </td>
@@ -253,7 +284,7 @@ function MonsterGroupForm({encounters}) {
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 0)} value={formdata.health[0]}/></td>
                 </tr>
                 <tr>
                   <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack2name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 1)} value={formdata.attacks[1].name}/></td>
@@ -266,49 +297,49 @@ function MonsterGroupForm({encounters}) {
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 1)} value={formdata.health[1]}/></td>
                 </tr>
                 <tr>
-                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack3name"/></td>
-                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack3hit"/></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack3numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack3dietype" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack3damagemod" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack3name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 2)} value={formdata.attacks[2].name}/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack3hit" onChange={(e) => updateFormValue("attacks", "hit", e.target.value, 2)} value={formdata.attacks[2].hit}/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack3numdice" size="3" onChange={(e) => updateFormValue("attacks", "numdice", e.target.value, 2)} value={formdata.attacks[2].numdice}/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack3dietype" size="4" onChange={(e) => updateFormValue("attacks", "dietype", e.target.value, 2)} value={formdata.attacks[2].dietype}/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack3damagemod" size="4" onChange={(e) => updateFormValue("attacks", "damagemod", e.target.value, 2)} value={formdata.attacks[2].damagemod}/></td>
                   <td>
-                    <select name="damagetype3">
+                    <select name="damagetype3" onChange={(e) => updateFormValue("attacks", "damagetype", e.target.value, 2)} value={formdata.attacks[2].damagetype}>
                       <option value="Slashing">Slashing</option>
                       <option value="Piercing">Piercing</option>
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 2)} value={formdata.health[2]}/></td>
                 </tr>
                 <tr>
-                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack4name"/></td>
-                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack4hit"/></td>
-                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack4numdice" size="3"/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack4dietype" size="4"/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack4damagemod" size="4"/></td>
+                  <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack4name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 3)} value={formdata.attacks[3].name}/></td>
+                  <td><input className="monsterGroupFormAttackHitInput" type="number" name="attack4hit" onChange={(e) => updateFormValue("attacks", "hit", e.target.value, 3)} value={formdata.attacks[3].hit}/></td>
+                  <td className="monsterAttackDamage"><input type="number" className="monsterGroupFormAttackNumDiceInput monsterTextSmall" name="attack4numdice" size="3" onChange={(e) => updateFormValue("attacks", "numdice", e.target.value, 3)} value={formdata.attacks[3].name}/>d<input type="number" className="monsterTextSmall monsterGroupFormAttackDiceTypeInput" name="attack4dietype" size="4" onChange={(e) => updateFormValue("attacks", "dietype", e.target.value, 3)} value={formdata.attacks[3].dietype}/><input type="number" className="monsterTextSmall monsterGroupFormAttackBonusInput" name="attack4damagemod" size="4" onChange={(e) => updateFormValue("attacks", "damagemod", e.target.value, 3)} value={formdata.attacks[3].damagemod}/></td>
                   <td>
-                    <select name="damagetype4">
+                    <select name="damagetype4" onChange={(e) => updateFormValue("attacks", "damagetype", e.target.value, 3)} value={formdata.attacks[3].damagetype}>
                       <option value="Slashing">Slashing</option>
                       <option value="Piercing">Piercing</option>
                       <option value="Pludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput4" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput4" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 3)} value={formdata.health[3]}/></td>
                 </tr>
                 <tr>
                   <td rowSpan="2"><label htmlFor="skills">Skills</label></td>
-                  <td colSpan="3" rowSpan="2"><textarea name="skills"></textarea></td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" defaultValue=""/></td>
+                  <td colSpan="3" rowSpan="2"><textarea name="skills" onChange={(e) => updateFormValue("skills", "", e.target.value)} value={formdata.skills}></textarea></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 4)} value={formdata.health[4]}/></td>
                 </tr>
                 <tr>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 5)} value={formdata.health[5]}/></td>
                 </tr>
                 <tr>
                   <td rowSpan="2"><label htmlFor="skills">Abilities</label></td>
-                  <td colSpan="3" rowSpan="2"><textarea name="ability"></textarea></td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" defaultValue=""/></td>
+                  <td colSpan="3" rowSpan="2"><textarea name="ability" onChange={(e) => updateFormValue("ability", "", e.target.value)} value={formdata.ability}></textarea></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 6)} value={formdata.health[6]}/></td>
                 </tr>
                 <tr>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput8" defaultValue=""/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput8" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 7)} value={formdata.health[7]}/></td>
                 </tr>
               </tbody>
             </Table>
@@ -316,11 +347,11 @@ function MonsterGroupForm({encounters}) {
           <div className="monsterGroupNotesSection">
             <div className="monsterGroupNotes"></div>
               <label htmlFor="monsterGroupNotesText">Notes</label>
-              <textarea name="monsterGroupNotesText"></textarea>
+              <textarea name="monsterGroupNotesText" onChange={(e) => updateFormValue("notes", "", e.target.value)} value={formdata.notes}></textarea>
             <div className="monsterGroupEncounterSelector">
               <label htmlFor="monsterGroupEncounter">Encounter</label>
-              <input type="text" name="monsterGroupEncounter"/>
-              <Button type="button" variant="secondary" size="sm" value="Add" onClick={addEncounter}>Add</Button>
+              <input type="text" name="monsterGroupEncounter" onChange={(e) => updateFormValue("basicinfo", "encounter", e.target.value)} value={formdata.basicinfo.encounter}/>
+              <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => {addMonsterGroup(formdata.basicinfo.encounter, formdata)}}>Add</Button>
             </div>
           </div>
         </div>
