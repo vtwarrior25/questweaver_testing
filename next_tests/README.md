@@ -49,6 +49,8 @@ Look at [Next Instructions](./next.md) for installation help.
     - [x] Each field in the form should be tied to one of the fields in the `formdata` state object
 - [ ] Character Creator
   - [ ] Grab the race/class features for each and show them in the character creator sections
+    - [ ] Will be implemented in [getcharactercreatorinfo.js](app\lib\getcharactercreatorinfo.js)
+    - [ ] Tables within features will be written in HTML and within the feature description 
   - [ ] Create equipment section
   - [x] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
 

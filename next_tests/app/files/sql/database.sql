@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS gamelogtag (
 );
 */
 
-CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order');
+CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order', 'Chat');
 
 
 /*
@@ -182,6 +182,7 @@ CREATE TABLE IF NOT EXISTS class (
 	hitpoints1stlevel				integer,
 	hitpointshigherlevel		integer,
 	description							varchar(2000),
+	table										varchar(5000),
 	spellcastingabilityid		integer REFERENCES ability(abilityid)
 );
 

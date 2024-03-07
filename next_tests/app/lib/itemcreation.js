@@ -1,10 +1,9 @@
-'use server'
-import { use, useEffect } from 'react';
-
-  
+'use server' 
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
+import { db } from '../lib/dbconn';
 
+/*
 const connection = {
   host: process.env.DBHOST,
   port: process.env.DBPORT,
@@ -14,6 +13,8 @@ const connection = {
 };
 
 const db = pgp(connection);
+*/
+
 
 const itemaddquery = new PQ({
   text:`
@@ -45,7 +46,7 @@ const weaponattackaddquery = new PQ({
   text:`
     WITH atid AS (
       INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
-      (DEFAULT, $2, $3, $4, $5, (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
+      (DEFAULT, $2, $3, (SELECT abilityid FROM ability WHERE name = $4), (SELECT abilityid FROM ability WHERE name = $5), (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
       RETURNING attackid
     )
     INSERT INTO weaponattack (weaponid, attackid)
@@ -80,7 +81,7 @@ export async function createWeapon(userid, formdata) {
       for (const property of properties) {
         db.none(weaponpropertyaddquery, [result.weaponid, property]);
       }
-      db.none(weaponattackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get(''), formdata.get(''), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')]);
+      db.none(weaponattackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')]);
     }).catch((error) => {
       return "Error adding weapon";
     })

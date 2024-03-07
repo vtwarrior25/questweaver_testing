@@ -2,6 +2,7 @@
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
+import { abilities, skills } from './resources';
 
 
 const playercharacteraddquery = new PQ({
@@ -18,13 +19,15 @@ const playercharacteraddquery = new PQ({
 
 const playercharacterabilityquery = new PQ({
   text: `
-    
+    INSERT INTO characterability (playercharacterid, abilityid, score, modifier) VALUES
+    ($1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4),
   `
 });
 
-const playerskillquery = new PQ({
+const playercharacterskillquery = new PQ({
   text: `
-
+    INSERT INTO characterskill (playercharacterid, skillid, proficient, bonus) VALUES
+    ($1, (SELECT skillid FROM skill WHERE name = $2), $3, $4),
   `
 });
 
@@ -32,24 +35,19 @@ const playerskillquery = new PQ({
 export async function createCharacter(formdata) {
   db.one(playercharacteraddquery, [formdata])
   .then((result) => {
-    db.one()
+    for (skill of skills) {
+      db.one(playercharacterskillquery, [])
+    }
+    for (ability of abilities) {
+      db.one(playercharacterabilityquery, [])
+    }
   }).catch((error) => {
     return "Error inserting player character";
   })
 }
 
 
-
 /*
-
--- Inserting the basic character info
-WITH pcid AS (
-  INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, armorclass, maxhealth, currenthealth, speed, initiative, proficiencybonus, characterlevel, spellsavedc, spellattackmodifier, spellabilitymodifier, totalhitdice, numhitdice) VALUES
-  (DEFAULT, "Jerome", (SELECT raceid FROM race WHERE name = 'Human'), NULL, (SELECT classid FROM class WHERE name = 'Barbarian'), 14, 20, 20, 30, 12, 2, 1, NULL, NULL, NULL, 2, 2) RETURNING playercharacterid
-) 
-INSERT INTO playercharacternote (playercharacterid, alignmentid, organizations, allies, enemies, backstory, other) VALUES
-(pcid, (SELECT alignmentid FROM alignment WHERE name = "Neutral"), 'This is Organizations', 'This is Allies', 'This is Enemies', 'This is Backstory', 'This is Other');
-
 
 -- Inserting the ability, skill, saving throw, passive ability, defense, proficiency, and features
 WITH pcid AS (

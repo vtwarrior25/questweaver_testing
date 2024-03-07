@@ -2,7 +2,8 @@
 
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
-
+import { db } from '../lib/dbconn';
+/*
 const connection = {
   host: process.env.DBHOST,
   port: process.env.DBPORT,
@@ -12,6 +13,8 @@ const connection = {
 }
 
 const db = pgp(connection);
+*/
+
 
 /*
 Example query
