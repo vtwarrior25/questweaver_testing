@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Nav, Tab, Tabs, Table, Button } from 'react-bootstrap';
 import AbilityBox from './AbilityBox';
 import AbilitySection from './AbilitySection';
+import { createCharacter } from '../lib/createcharacter';
 
 function CharacterCreator() {
   
@@ -59,10 +60,52 @@ function CharacterCreator() {
     },
   ]);
 
-  useEffect(() => {
-    setAbilities();
-    }, [abilities]
-  );
+
+  const [charactercreatordata, setCharacterCreatorData] = useState({
+    race: "",
+    subrace: "",
+    class: "",
+    subclass: "",
+    abilities: {
+      str: 10,
+      dex: 10,
+      con: 10,
+      int: 10,
+      wis: 10,
+      cha: 10,
+    },
+    equipment: [
+
+    ],
+    descriptions: [
+      {
+        order: 0,
+        sectionname: "Organizations",
+        sectiontext: "Epic beans action to the maximum moments scenario",
+      },
+      {
+        order: 1,
+        sectionname: "Allies",
+        sectiontext: "Epic beans action to the maximum moments scenario",
+      },
+      {
+        order: 2,
+        sectionname: "Enemies",
+        sectiontext: "Epic beans action to the maximum moments scenario",
+      },
+      {
+        order: 3,
+        sectionname: "Backstory",
+        sectiontext: "Epic beans action to the maximum moments scenario",
+      },
+      {
+        order: 4,
+        sectionname: "Other",
+        sectiontext: "Epic beans action to the maximum moments scenario",
+      },
+    ]
+  })
+
 
   const [classes, setClasses] = useState([
     {
@@ -73,6 +116,10 @@ function CharacterCreator() {
     },
   ]);
 
+  useEffect(() => {
+    setAbilities();
+    }, [abilities]
+  );
 
   const setAbilities = () => {
     console.log("Setting ability scores on server");
@@ -89,6 +136,18 @@ function CharacterCreator() {
 
   const setAbilityValues = () => {
     
+  }
+
+  const updateTextArea = (sectionname, text) => {
+    let sections = charactercreatordata.descriptions.filter((section) => section.sectionname !== sectionname);
+    let order = charactercreatordata.descriptions.filter((section) => section.sectionname === sectionname)[0].order;
+    let modsection = {
+      order: order,
+      sectionname: sectionname,
+      sectiontext: text,
+    }
+    setCharacterCreatorData()
+    setCharacterCreatorData({...charactercreatordata, descriptions: [...sections, modsection].sort((a,b) => {return a.order - b.order})});
   }
 
   return (  
@@ -199,7 +258,15 @@ function CharacterCreator() {
 
         </Tab>
         <Tab eventKey="description" title="Description">
-
+          <div className="notesMenu frontElement">
+            {charactercreatordata.descriptions.map((notessection, index) =>
+            <div key={index} className="notesSection">
+              <span>{notessection.sectionname}</span>
+              <textarea onChange={(e) => updateTextArea(notessection.sectionname, e.target.value)} defaultValue={notessection.sectiontext}></textarea>
+            </div>
+            )}
+            <Button onClick={() => {createCharacter(charactercreatordata)}}>Create Character</Button>
+          </div>
         </Tab>
       </Tabs>
     </div>

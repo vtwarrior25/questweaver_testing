@@ -650,3 +650,6 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Whip','Weapons'),
 ('Woodcarvers Tools','Tools');
 
+
+INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES
+();

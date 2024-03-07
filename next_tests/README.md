@@ -50,7 +50,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Character Creator
   - [ ] Grab the race/class features for each and show them in the character creator sections
   - [ ] Create equipment section
-  - [ ] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
+  - [x] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
 
 
 ### Server (Lead: Stirling) 

@@ -17,7 +17,6 @@ TODO
     return Math.floor((value - 10) / 2);
   }
 
-
   return ( 
     <div className="monsterGroupDisplay frontElement">
       <div className="monsterGroupDisplayBasicInfo">
