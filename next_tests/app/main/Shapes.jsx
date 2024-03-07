@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Graphics, Text } from '@pixi/react';
 import { Color } from 'pixi.js';
-import { onDragStart } from '/app/main/PixiMap';
+//import { onDragStart } from '/app/main/PixiMap';
 
 
 export function MapRectangle({shapeinfo}) {
@@ -51,7 +51,8 @@ export function MapEllipse({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} eventMode='static' cursor='pointer' onPointerDown={(onDragStart, this)}/>;
+  //return <Graphics draw={draw} eventMode='static' cursor='pointer' onPointerDown={(onDragStart, this)}/>;
+  return <Graphics draw={draw} eventMode='static' cursor='pointer'/>;
 }
 
 

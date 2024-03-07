@@ -29,5 +29,5 @@ const updatecharacternotesquery = new PQ({
 })
 
 export async function setCharacterNotes(playercharacterid, notes) {
-  db.one(updatecharacternotesquery, [playercharacterid, notes[0].sectiontext, notes[1].sectiontext, notes[2].sectiontext, notes[3].sectiontext, notes[4].sectiontext]); 
+  db.none(updatecharacternotesquery, [playercharacterid, notes[0].sectiontext, notes[1].sectiontext, notes[2].sectiontext, notes[3].sectiontext, notes[4].sectiontext]);
 }
