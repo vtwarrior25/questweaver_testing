@@ -15,15 +15,16 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
       speed: 30,
       initiative: 2,
       armorclass: 14,
-      perception: 5,
-      investigation: 5,
-      insight: 5,
+      passiveperception: 5,
+      passiveinvestigation: 5,
+      passiveinsight: 5,
       armor: "Light, Medium, Heavy, Shields",
       weapons: "Martial, Simple",
       tools: "Cobbler's, Land Vehicles",
       languages: "Common, Halfling",
       defenses: "Fireproof",
       conditions: "Dry Heaving",
+      alignment: "Neutral"
     });
 
   useEffect(() => {  
@@ -110,9 +111,9 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
       <Tabs defaultActiveKey="0">
         <Tab eventKey="0" title="Senses">
           <div className="statsContainer senses">
-            <div><span className='staticStatsItemName'>Perception</span> - {staticstats.perception}</div>
-            <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.investigation}</div>
-            <div><span className='staticStatsItemName'>Insight</span> - {staticstats.insight}</div>
+            <div><span className='staticStatsItemName'>Perception</span> - {staticstats.passiveperception}</div>
+            <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.passiveinvestigation}</div>
+            <div><span className='staticStatsItemName'>Insight</span> - {staticstats.passiveinsight}</div>
           </div>
         </Tab>
         <Tab eventKey="1" title="General Stats">
@@ -121,6 +122,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
             <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
             <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
             <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
+            <div><span className='staticStatsItemName'>Alignment</span> - {staticstats.alignment}</div>
           </div>
         </Tab>
         <Tab eventKey="2" title="Proficiencies">

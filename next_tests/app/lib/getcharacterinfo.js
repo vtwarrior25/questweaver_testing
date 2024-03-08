@@ -39,7 +39,14 @@ function characterInfoFromDB (playercharacterid, infotype) {
   let dbresult = {}; 
   switch (infotype) {
     case 'skill':
-      //dbquery = new PQ({text: 'SELECT * FROM skill'});
+      dbquery = new PQ({
+        text: `
+          SELECT s.name, a.abilityabbrev, c.proficient, c.bonus FROM characterskill c
+            JOIN skill s ON c.skillid = s.skillid
+            JOIN ability a ON s.abilityid = a.abilityid
+          WHERE c.playercharacterid = $1;
+        `
+      });
       dbresult = [
         {
           skillname: "Acrobatics",
@@ -152,7 +159,13 @@ function characterInfoFromDB (playercharacterid, infotype) {
       ];
       break;
     case 'ability':
-      //dbquery = new PQ({text: 'SELECT * FROM ability'});
+      dbquery = new PQ({
+        text: `
+          SELECT a.name, a.abbrev, c.score, c.modifier FROM characterability c
+            JOIN ability a ON c.abilityid = a.abilityid
+          WHERE c.playercharacterid = $1;
+        `
+      });
       dbresult = [
           {
             abilityname: "Strength",
@@ -193,28 +206,44 @@ function characterInfoFromDB (playercharacterid, infotype) {
         ]
       break;
     case 'health':
-      //dbquery = new PQ({text: 'SELECT * FROM health'});
+      dbquery = new PQ({
+        text: `
+          SELECT c.currenthealth, c.maxhealth FROM playercharacter c
+          WHERE c.playercharacterid = $1;
+        `
+      });
       dbresult = {
         currenthealth: 12,
         maxhealth: 22,
       }
       break;
     case 'staticstats':
-      //dbquery = new PQ({text: 'SELECT * FROM static_stats'});
+      dbquery = new PQ({
+        // TODO: figure out how to make this query grab the proficiencies and defenses/conditions
+        text: `
+          SELECT c.profbonus, c.speed, c.initiative, c.armorclass, p.passiveperception,
+          p.passiveinvestigation, p.passiveinsight, a.name AS alignment FROM playercharacter c
+            JOIN characterpassiveability p ON c.playercharacterid = p.playercharacterid
+            JOIN playercharacternote n ON c.playercharacterid = n.playercharacterid
+            JOIN alignment a ON n.alignmentid = a.alignmentid
+          WHERE c.playercharacterid = $1;
+        `
+      });
       dbresult = {
         profbonus: 2,
         speed: 30,
         initiative: 2,
         armorclass: 14,
-        perception: 5,
-        investigation: 5,
-        insight: 5,
+        passiveperception: 5,
+        passiveinvestigation: 5,
+        passiveinsight: 5,
         armor: "Light, Medium, Heavy, Shields",
         weapons: "Martial, Simple",
         tools: "Cobbler's, Land Vehicles",
         languages: "Common, Halfling",
         defenses: "Fireproof",
         conditions: "Dry Heaving",
+        alignment: "Neutral Good"
       };
       break;
     case 'savingthrow':
@@ -230,6 +259,13 @@ function characterInfoFromDB (playercharacterid, infotype) {
           return "bad";
       });
       */
+      dbquery = new PQ({
+        text: ` 
+          SELECT s.name, c.proficient, c.bonus FROM charactersavingthrow c
+            JOIN savingthrow s ON c.savingthrowid = s.savingthrowid
+          WHERE c.playercharacterid = $1;
+        `
+      });
       dbresult = [
         {
           name: 'STR',
@@ -265,42 +301,39 @@ function characterInfoFromDB (playercharacterid, infotype) {
       break;
     case 'turnorder':
       //dbquery = "turnorderquery";
+      dbquery = new PQ({
+        text: `
+          SELECT c.name, t.initiative FROM turnorder t
+            JOIN playercharacter c ON t.playercharacterid = c.playercharacterid;
+        `
+      });
       dbresult = [
         {
-          id: 0,
           name: "Jerome",
           initiative: 15,
         },
         {
-          id: 1,
           name: "Dylan",
           initiative: 12,
         },
         {
-          id: 2,
           name: "Greg",
           initiative: 11,
         },
         {
-          id: 3,
           name: "Rebecca",
           initiative: 8,
         },
         {
-          id: 4,
           name: "Jauffre",
           initiative: 7,
         },
         {
-          id: 5,
           name: "Erica",
           initiative: 3,
         },
       ]; 
       //dbquery = new PQ({text: 'SELECT p.name, t.initiative FROM turnorder t JOIN playercharacter p ON t.playercharacterid = p.playercharacterid'});
-      break;
-    case 'alignment':
-      //dbquery = new PQ({text: 'SELECT * FROM alignment'});
       break;
   }
   //dbresult = db.query(dbquery)

@@ -63,9 +63,6 @@ INSERT INTO charactersavingthrow (playercharacterid, savingthrowid, proficient, 
 
 
 
-
-
-
 SELECT * 
 FROM charactersavingthrow c 
   JOIN playercharacter p ON c.playercharacterid = p.playercharacterid 

@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS language (
 
 CREATE TABLE IF NOT EXISTS alignment (
 	alignmentid 		integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name		varchar(50) UNIQUE,
+	name						varchar(50) UNIQUE,
 	description			varchar(200),	
 	abbrev 					char(2)
 );
@@ -255,6 +255,13 @@ CREATE TABLE IF NOT EXISTS gamelog (
 	gamelogtag	 				gamelogtag,
 	content 						varchar(200),
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
+);
+
+
+CREATE TABLE IF NOT EXISTS turnorder (
+	turnorderid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	playercharacterid			integer REFERENCES playercharacter(playercharacterid),
+	initiativeroll				integer
 );
 
 /*
@@ -578,8 +585,8 @@ CREATE TABLE IF NOT EXISTS spelllist (
 
 
 CREATE TABLE IF NOT EXISTS preparedlist (
-	playercharacterid 	integer REFERENCES playercharacter(playercharacterid),
-	spellid					integer REFERENCES spell(spellid),
+	playercharacterid 		integer REFERENCES playercharacter(playercharacterid),
+	spellid								integer REFERENCES spell(spellid),
 )
 
 
