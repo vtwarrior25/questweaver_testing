@@ -56,9 +56,9 @@ Look at [Next Instructions](./next.md) for installation help.
 
 
 ### Server (Lead: Stirling) 
-- [ ] How do we want to organize server functions? 
+- [x] How do we want to organize server functions? 
   - [ ] Should we put them all in one file?
-  - [ ] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
+  - [x] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
     - [x] Move the server files to `/app/lib` 
 - [ ] Login
   - [ ] Figure out how to pass characterid, userid, and isDM to client/React (specifically `/app/main/page.jsx`)
@@ -74,7 +74,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] prepareSpell
 - [ ] getChat/setChat
 - [x] getInventory
-- [ ] getPreparedSpells
+- [x] getPreparedSpells
 - [ ] getAllSpells
 - [ ] getAllItems
 
