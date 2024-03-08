@@ -70,11 +70,14 @@ export async function createItem(userid, formdata) {
 }
 
 export async function createWeapon(userid, formdata) {
+  console.log("In weaponcreation");
   console.log(formdata);
   db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
   .then ((result) => {
+    console.log(result);
     db.one(weaponaddquery, [result.itemid, formdata.get('weapontype'), formdata.get('weaponrange')])
     .then((result) => {
+      console.log(result);
       // These for loops will iterate on the weapon properties and attacks
       let properties = formdata.getAll('property');
       console.log(properties);

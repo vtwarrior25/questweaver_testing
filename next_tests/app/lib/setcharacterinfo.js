@@ -1,8 +1,9 @@
 'use server'
-
+import { db } from './dbconn';
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 
+/*
 const connection = {
   host: process.env.DBHOST,
   port: process.env.DBPORT,
@@ -12,6 +13,7 @@ const connection = {
 };
 
 const db = pgp(connection);
+*/
 
 /*
 export async function setCharacterHealth(playercharacterid, health) {

@@ -2,8 +2,17 @@
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
-import { abilities, skills } from './resources';
+import { abilities } from './resources';
 
+
+const skillsquery = new PQ({
+  text: `
+    SELECT s.skillid, c.modifier FROM skill
+    JOIN characterability c ON s.abilityid = c.abilityid
+    WHERE c.playercharacterid = $1; 
+    ;
+  `
+});
 
 const playercharacteraddquery = new PQ({
   text: `
@@ -20,7 +29,7 @@ const playercharacteraddquery = new PQ({
 const playercharacterabilityquery = new PQ({
   text: `
     INSERT INTO characterability (playercharacterid, abilityid, score, modifier) VALUES
-    ($1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4),
+    ($1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4);
   `
 });
 
@@ -33,14 +42,30 @@ const playercharacterskillquery = new PQ({
 
 
 export async function createCharacter(formdata) {
+  let playercharacterid;
+  let playercharacterabilityscores = {
+    Strength: formdata.abilties.strength,
+    Dexterity: formdata.abilities.dexterity,
+    Constitution: formdata.abilities.constitution,
+    Intelligence: formdata.abilities.intelligence,
+    Wisdom: formdata.abilities.wisdom,
+    Charisma: formdata.abilities.charisma,
+  }
   db.one(playercharacteraddquery, [formdata])
-  .then((result) => {
-    for (skill of skills) {
-      db.one(playercharacterskillquery, [])
-    }
+  .then((result1) => {
+    playercharacterid = result1.pcid;
     for (ability of abilities) {
-      db.one(playercharacterabilityquery, [])
+      //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
+      db.none(playercharacterabilityquery, [playercharacterid, ability, playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2]);
     }
+    db.many(skillsquery, [playercharacterid])
+    .then((result2) => {
+      for (skill of result2) {
+        // Need to provide a way of sending which skills the character is proficient in
+        db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
+      }
+    })
+    
   }).catch((error) => {
     return "Error inserting player character";
   })
