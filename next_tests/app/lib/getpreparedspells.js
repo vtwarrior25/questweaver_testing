@@ -13,5 +13,5 @@ export async function getpreparedspells(playercharacterid) {
     .catch(error => {
         error.log("prepared spells not found");
         return "prepared spells not found";
-    })
+    });
 }
