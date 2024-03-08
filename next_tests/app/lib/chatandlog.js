@@ -1,19 +1,7 @@
 'use server'  
 const pgp = require('pg-promise')();
-import { db } from '../lib/dbconn';
 const {ParameterizedQuery: PQ} = require('pg-promise');
-
-/*
-const connection = {
-  host: process.env.DBHOST,
-  port: process.env.DBPORT,
-  database: process.env.DB,
-  user: process.env.DBUSER,
-  password: process.env.DBPWD,
-};
-
-const db = pgp(connection);
-*/
+import { db } from '../lib/dbconn';
 
 const addgamelogentry = new PQ({
   text: `

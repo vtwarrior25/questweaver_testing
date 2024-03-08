@@ -3,19 +3,6 @@ const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
 
-/*
-const connection = {
-  host: process.env.DBHOST,
-  port: process.env.DBPORT,
-  database: process.env.DB,
-  user: process.env.DBUSER,
-  password: process.env.DBPWD,
-};
-
-const db = pgp(connection);
-*/
-
-
 const itemaddquery = new PQ({
   text:`
     INSERT INTO item (itemid, name, value, weight, description, rarity) VALUES
