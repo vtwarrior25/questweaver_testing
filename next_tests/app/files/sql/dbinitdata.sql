@@ -651,5 +651,11 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Woodcarvers Tools','Tools');
 
 
+INSERT INTO effecttype (name) VALUES
+('Slashing'),
+('Bludgeoning'),
+('Piercing');
+
+
 INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES
 ();

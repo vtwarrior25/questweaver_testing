@@ -96,7 +96,8 @@ export async function createWeapon(userid, formdata) {
       }
       db.one(attackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
       .then((result) => { 
-        db.none(weaponattackaddquery, [result.attackid, weaponid])
+        console.log(result.attackid);
+        db.none(weaponattackaddquery, [weaponid, result.attackid])
         .catch((error) => {
           console.log(error);
         })

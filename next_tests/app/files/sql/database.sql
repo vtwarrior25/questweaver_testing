@@ -258,12 +258,6 @@ CREATE TABLE IF NOT EXISTS gamelog (
 );
 
 
-CREATE TABLE IF NOT EXISTS turnorder (
-	turnorderid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid			integer REFERENCES playercharacter(playercharacterid),
-	initiativeroll				integer
-);
-
 /*
 ------------------------------------------------------------------------
 Feature Tables
