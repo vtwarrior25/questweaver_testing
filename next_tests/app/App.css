@@ -587,6 +587,42 @@ Character Creation
   max-width: 8rem;
 }
 
+
+.characterCreator {
+  background-color: white;
+  padding: 20px;
+}
+
+.abilityScoresDisplay {
+  display: flex; 
+  justify-content: space-around; 
+  flex-wrap: wrap; 
+  background-color: white; 
+  padding: 10px;
+  border-radius: 5px; 
+}
+
+.abilityScoreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  border: 1px solid #ccc; 
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px; 
+}
+
+.abilityName {
+  font-size: 16px;
+  font-weight: bold; 
+  margin-bottom: 5px;
+}
+
+.abilityScore {
+  font-size: 20px;
+  color: #333; 
+}
+
 /*
 ----------------------------------------
 Character Inventory Area 
