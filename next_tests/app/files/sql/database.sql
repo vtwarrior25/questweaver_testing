@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS class (
 	hitpoints1stlevel				integer,
 	hitpointshigherlevel		integer,
 	description							varchar(2000),
-	table										varchar(5000),
+	infotable								varchar(5000),
 	spellcastingabilityid		integer REFERENCES ability(abilityid)
 );
 
@@ -586,8 +586,8 @@ CREATE TABLE IF NOT EXISTS spelllist (
 
 CREATE TABLE IF NOT EXISTS preparedlist (
 	playercharacterid 		integer REFERENCES playercharacter(playercharacterid),
-	spellid								integer REFERENCES spell(spellid),
-)
+	spellid								integer REFERENCES spell(spellid)
+);
 
 
 

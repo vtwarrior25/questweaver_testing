@@ -10,7 +10,6 @@ const skillsquery = new PQ({
     SELECT s.skillid, c.modifier FROM skill
     JOIN characterability c ON s.abilityid = c.abilityid
     WHERE c.playercharacterid = $1; 
-    ;
   `
 });
 

@@ -66,13 +66,13 @@ Look at [Next Instructions](./next.md) for installation help.
 #### Specific Functions
 - [x] setHealth
 - [x] diceRoll
-- [ ] addLogEntry/getLogEntries
+- [x] addLogEntry/getLogEntries
+- [x] addChatEntry/getChatEntries
 - [x] getCharacterInfo
 - [ ] addItemToInventory (to character inventory)
 - [x] createItem
 - [ ] createWeapon
 - [ ] prepareSpell
-- [ ] getChat/setChat
 - [x] getInventory
 - [x] getPreparedSpells
 - [ ] getAllSpells

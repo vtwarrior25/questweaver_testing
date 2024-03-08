@@ -1,1 +1,1 @@
-SELECT * from playercharacternote;
+SELECT * from weapon;
