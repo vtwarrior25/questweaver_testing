@@ -42,13 +42,13 @@ function WeaponCreationForm() {
           </div>
           <div className="weaponBasicRadio">
             <fieldset id="weaponTypeRadio" className='weaponTypeRadio'>
+              <input type="radio" name="weapontype" value="Simple" checked="checked"/>
+              <label htmlFor="simple">Simple</label>
               <input type="radio" name="weapontype" value="Martial"/>
               <label htmlFor="martial">Martial</label>
-              <input type="radio" name="weapontype" value="Simple"/>
-              <label htmlFor="simple">Simple</label>
             </fieldset>
             <fieldset id="weaponRangeRadio" className='weaponTypeRadio'>
-              <input type="radio" name="weaponrange" value="Melee"/>
+              <input type="radio" name="weaponrange" value="Melee" checked="checked"/>
               <label htmlFor="melee">Melee</label>
               <input type="radio" name="weaponrange" value="Ranged"/>
               <label htmlFor="ranged">Ranged</label>
@@ -119,7 +119,7 @@ function WeaponCreationForm() {
               </div>
               <div>
                 <label htmlFor="attackrange">Range</label>
-                <input type="number" className='weaponFormTextInput' name="attackrange"/>
+                <input type="number" className='weaponFormTextInput' name="attackrange" defaultValue={5}/>
               </div>
             </div>
             <div className='weaponFormRow'>
@@ -156,7 +156,7 @@ function WeaponCreationForm() {
               <option value="4">d4</option>
             </select>
             <label htmlFor="numdamagedie"># Damage Die</label>
-            <input className="itemNumInput" type="number" name="numdamagedie"/>
+            <input className="itemNumInput" type="number" name="numdamagedie" defaultValue={1}/>
             <label htmlFor="damagetype">Damage Type</label>
             <select name="damagetype">
               <option value="Slashing">Slashing</option>

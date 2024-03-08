@@ -28,19 +28,37 @@ const weaponpropertyaddquery = new PQ({
   `
 })
 
+
+const attackaddquery = new PQ({
+  text: `
+    INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
+    (DEFAULT, $1, $2, (SELECT abilityid FROM ability WHERE name = $3), (SELECT abilityid FROM ability WHERE name = $4), (SELECT diceid from dice where sides = $5), $6, (SELECT effecttypeid FROM effecttype WHERE name = $7))
+    RETURNING attackid;
+  `
+});
+
+const weaponattackaddquery = new PQ({
+  text: `
+    INSERT INTO weaponattack (weaponid, attackid) VALUES
+    ($1, $2);
+  `
+});
+
+
+/*
 const weaponattackaddquery = new PQ({
   // Need to insert the attacks into the attack tables, and insert the weapon properties into the weapon property table
   text:`
-    WITH atid AS (
+    WITH aid AS (
       INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid) VALUES
       (DEFAULT, $2, $3, (SELECT abilityid FROM ability WHERE name = $4), (SELECT abilityid FROM ability WHERE name = $5), (SELECT diceid from dice where sides = $6), $7, (SELECT effecttypeid FROM effecttype WHERE name = $8))
       RETURNING attackid
     )
     INSERT INTO weaponattack (weaponid, attackid)
-    VALUES ($1, atid);
+    VALUES ($1, aid);
   `
-})
-
+});
+*/
 
 
 export async function createItem(userid, formdata) {
@@ -64,14 +82,35 @@ export async function createWeapon(userid, formdata) {
     console.log(result);
     db.one(weaponaddquery, [result.itemid, formdata.get('weapontype'), formdata.get('weaponrange')])
     .then((result) => {
+      let weaponid = result.weaponid
       console.log(result);
       // These for loops will iterate on the weapon properties and attacks
       let properties = formdata.getAll('property');
       console.log(properties);
       for (const property of properties) {
-        db.none(weaponpropertyaddquery, [result.weaponid, property]);
+        db.none(weaponpropertyaddquery, [result.weaponid, property])
+        .catch((error) => {
+          console.log(error);
+          console.log("Error inserting properties");
+        });
       }
-      db.none(weaponattackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')]);
+      db.one(attackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
+      .then((result) => { 
+        db.none(weaponattackaddquery, [result.attackid, weaponid])
+        .catch((error) => {
+          console.log(error);
+        })
+      }).catch((error) => {
+        console.log(error)
+      
+      });
+      /*
+      db.none(weaponattackaddquery, [result.weaponid, formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
+      .catch((error) => {
+        console.log(error);
+        console.log("Error inserting attack")
+      });
+      */
     }).catch((error) => {
       console.log(error);
       console.log("Error adding weapon");

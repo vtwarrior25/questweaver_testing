@@ -20,6 +20,13 @@
 		"description": "Creates a new pg-promise"
 	},
 
+	"nonequery": {
+		"scope": "javascript",
+		"prefix": "dbquery",
+		"body": "db.none($1, [$2])\n.catch((error) => {\n\tconsole.log(error);\nconsole.log('$3')\n});",
+		"description": "Creates a new pg-promise"
+	},
+
 	"jsx comment": {
 		"scope": "javascriptreact",
 		"prefix" : "comment",
