@@ -17,6 +17,24 @@ const getcharactercreatorinfoquery = new PQ({
 });
 
 export async function getCharacterCreatorInfo() {
-  // Get list of races and subraces
+  let subraces = [];
+  let races = [];
+  // Get list of subraces
   db.many()
+  .then((result) => {
+    
+  }).catch((error) => {
+
+  }); 
+
+  // Get list of races that aren't connected to a subrace
+  db.many();
+
+
+  // Remove the races from the list that connect to a subrace
+
+
+  // Grab all features for each race and subrace left in the lists
+    
+  //
 }

@@ -73,9 +73,13 @@ export async function createWeapon(userid, formdata) {
       }
       db.none(weaponattackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')]);
     }).catch((error) => {
+      console.log(error);
+      console.log("Error adding weapon");
       return "Error adding weapon";
     })
   }).catch(error => {
+    console.log(error);
+    console.log("Error adding item");
     return "Error adding item";
   });
 }
