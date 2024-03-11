@@ -23,9 +23,6 @@ const getracesquery = new PQ({
 });
 
 
-
-const { db } = require('./dbconn');
-
 export async function getCharacterCreatorInfo() {
   let subracesWithRaces = [];
   let racesWithoutSubraces = [];

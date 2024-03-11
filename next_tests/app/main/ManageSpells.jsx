@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { PlayerCharacterContext } from './Contexts';
-import { getSpellList, getPreparedSpells } from '../lib/spellactions';
+import { getSpellList } from '../lib/spellactions';
+import { getpreparedspells } from '../lib/getpreparedspells';
 
 function ManageSpells() {
   const playercharacterid = useContext(PlayerCharacterContext);
@@ -61,21 +62,22 @@ function ManageSpells() {
   useEffect(() => {
     // Get spell list and prepared spells lists
     getSpellList(playercharacterid)
-    .then(results => setSpellList(results));
-    getPreparedSpells(playercharacterid)
-    .then(results => setPreparedSpells(results));
+    .then(results => setSpellList(results))
+    .catch((error) => {console.error("Error getting spell list" + error)});
+    getpreparedspells(playercharacterid)
+    .then(results => setPreparedSpells(results))
+    .catch((error) => {console.error("Error getting prepared spells" + error)});
   }, [playercharacterid],
   );
   
-  
 
   useEffect(() => {
-    spelllist.forEach((spell, index) => setSearchListDropdownsHidden[index] = false);
+    spelllist ?? spelllist.forEach((spell, index) => setSearchListDropdownsHidden[index] = false);
   }, [spelllist],
   );
 
   useEffect(() => {
-    preparedspells.forEach((spell, index) => setPreparedListDropdownsHidden[index] = false);
+    preparedspells ?? preparedspells.forEach((spell, index) => setPreparedListDropdownsHidden[index] = false);
   }, [preparedspells],
   );
 

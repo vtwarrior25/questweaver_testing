@@ -24,7 +24,3 @@ export async function getSpellList(playercharacterid) {
     
   }
 }
-
-export async function getPreparedSpells(playercharacterid) {
-  
-}
