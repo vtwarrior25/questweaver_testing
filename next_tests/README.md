@@ -90,7 +90,8 @@ Look at [Next Instructions](./next.md) for installation help.
     - In seperate tables for each (race, subrace, class, subclass)?
     - In a single seperate table with columns for playercharacter id and for each item
 - [ ] Consider making `ability` and `skill` tables into enums
-  - [ ] **Do that!**
+  - [ ] *Do that!*
+  - [ ] **We aren't doing that anymore**
 
 
 ### Administrative

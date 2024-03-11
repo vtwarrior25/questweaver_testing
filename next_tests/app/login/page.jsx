@@ -4,6 +4,9 @@ import '@/app/App.css';
 import { authenticate } from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import './login.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 
 export default function Page() {
@@ -12,23 +15,23 @@ export default function Page() {
 
   return (
     <div className='loginsection'>
-      <h3>Welcome to Questweaver login page</h3>
-      <form action={authenticatemode}>
+      <h3>Questweaver D&D System</h3>
+      <Form action={authenticatemode}>
+        <Form.Group controlId='username'>
+          <Form.Label>Username</Form.Label>
+          <Form.Control type='text' placeholder='Username' name="username" required={true}></Form.Control>
+        </Form.Group>
+        <Form.Group controlId='password'>
+          <Form.Label>Password</Form.Label>
+          <Form.Control type='password' placeholder='Password' name="password" required={true}></Form.Control>
+        </Form.Group>
+        {/*
         <input type="text" name="username" placeholder="Username" required />
         <input type="password" name="password" placeholder="Password" required />
+        */}
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
-        <LoginButton />
-      </form>
+        <Button variant='primary' type='submit'>Submit</Button>
+      </Form>
     </div>
-  )
-}
-
-function LoginButton() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button aria-disabled={pending} type="submit">
-      Login
-    </button>
   )
 }

@@ -2,7 +2,7 @@ html {
   background-color: aliceblue;
 }
 
-.loginsection {
+.characterselection {
   display: flex;
   position: absolute;
   top: 0;
@@ -11,18 +11,21 @@ html {
   right: 0;
   flex-direction: column;
   max-height: 20rem;
-  max-width: 22rem;
+  max-width: 30rem;
   margin: auto;
   align-self: center;
   text-align: center;
   border: 2px solid black;
   border-radius: 1rem;
-  padding-bottom: 2rem;
+  padding: 1rem 0rem;
   background-color: white;
+  
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
+.characterSelectEntry {
+  margin: 0.2rem 0.5rem;
+}
+
+.characterCreatorButton {
+  margin: 0.2rem 0.5rem;
 }
