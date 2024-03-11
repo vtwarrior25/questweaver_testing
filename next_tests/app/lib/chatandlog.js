@@ -18,6 +18,7 @@ const addchatmessage = new PQ({
 });
 
 export function setChatMessages(playercharacterid, messages) {
+  // TODO maybe replace this with https://vitaly-t.github.io/pg-promise/Database.html#each
   const insertQueries = messages.map(message => {
     return db.none(addchatmessage, [message.gamelogtag, message.content, playercharacterid]);
   });

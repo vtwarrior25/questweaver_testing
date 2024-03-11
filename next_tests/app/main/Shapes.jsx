@@ -4,7 +4,7 @@ import { Color } from 'pixi.js';
 //import { onDragStart } from '/app/main/PixiMap';
 
 
-export function MapRectangle({shapeinfo}) {
+export function MapRectangle({shapeinfo, onDragStart, onDragMove, onDragEnd}) {
   const draw = useCallback(
     (g) => {
       g.clear();
@@ -15,7 +15,7 @@ export function MapRectangle({shapeinfo}) {
     [shapeinfo],
   );
 
-  return <Graphics draw={draw} eventMode='static'/>;
+  return <Graphics draw={draw} eventMode='static' interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>;
 }
 
 

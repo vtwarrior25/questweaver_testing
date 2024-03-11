@@ -70,7 +70,8 @@ export async function createItem(userid, formdata) {
     console.log(result);
     return "Item added";
   }).catch(error => {
-    return "Error adding item";
+    console.error("Error adding item: " + error);
+    return "Error";
   });
 }
 
@@ -90,8 +91,7 @@ export async function createWeapon(userid, formdata) {
       for (const property of properties) {
         db.none(weaponpropertyaddquery, [result.weaponid, property])
         .catch((error) => {
-          console.log(error);
-          console.log("Error inserting properties");
+          console.error("Error inserting properties: " + error);
         });
       }
       db.one(attackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
@@ -102,8 +102,8 @@ export async function createWeapon(userid, formdata) {
           console.log(error);
         })
       }).catch((error) => {
-        console.log(error)
-      
+        console.error("Error adding attacks: " + error);
+        return "Error";
       });
       /*
       db.none(weaponattackaddquery, [result.weaponid, formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
@@ -113,14 +113,12 @@ export async function createWeapon(userid, formdata) {
       });
       */
     }).catch((error) => {
-      console.log(error);
-      console.log("Error adding weapon");
-      return "Error adding weapon";
+      console.error("Error adding weapon: " + error);
+      return "Error";
     })
   }).catch(error => {
-    console.log(error);
-    console.log("Error adding item");
-    return "Error adding item";
+    console.error("Error adding item: " + error);
+    return "Error";
   });
 }
 

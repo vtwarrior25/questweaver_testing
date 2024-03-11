@@ -39,6 +39,8 @@ Look at [Next Instructions](./next.md) for installation help.
       - [ ] [Tutorial](https://blog.logrocket.com/getting-started-pixijs-react-create-canvas/)
       - [ ] [Pixi Dragging Example](https://pixijs.com/examples/events/dragging)
       - [ ] [PixiReact](https://pixijs.io/pixi-react/)
+      - [ ] [Dragging in ReactPixi](https://roxgarage.medium.com/react-pixi-pt-1-dragging-a99f8e78f486)
+      - [ ] [ReactPixi Dragging Example](https://codepen.io/inlet/pen/qBdjvdP) 
 - [ ] Make the formatting of things look good
   - [ ] Character sheet layout
   - [ ] Map section layout
