@@ -159,7 +159,32 @@ function PixiMap() {
     }
   }
 
+  const onDragStart = (event) => {
+    console.log("dragstart");
+    let sprite = event.currentTarget;
+    sprite.alpha = 0.5;
+    sprite.data = event.data;
+    sprite.dragging = true;
+  };
 
+  const onDragEnd = (event) => {
+    console.log("dragend");
+    let sprite = event.currentTarget;
+    sprite.alpha = 1;
+    sprite.dragging = false;
+    sprite.data = null;
+  };
+
+  const onDragMove = (event) => {
+    console.log("dragmove");
+    let sprite = event.currentTarget;
+    if (sprite.dragging) {
+      const newPosition = sprite.data.getLocalPosition(sprite.parent);
+      console.log(newPosition);
+      sprite.x = newPosition.x;
+      sprite.y = newPosition.y;
+    }
+  };
 
 
   return ( 
@@ -181,7 +206,6 @@ function PixiMap() {
       <Button variant="danger" onClick={() => handleClearCanvas()}>X</Button>
     </div>
     <MapScaleContext.Provider value={mapsize.scale}>
-      {/*
       <Stage
         width={mapsize.width}
         height={mapsize.height}
@@ -190,7 +214,7 @@ function PixiMap() {
         {mapshapes.map((shape, index) => {
           console.log(shape);
           if (shape.shape === "rectangle") {
-            return <MapRectangle key={index} shapeinfo={shape}></MapRectangle>
+            return <MapRectangle key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapRectangle>
           } else if (shape.shape === "circle") {
             return <MapCircle key={index} shapeinfo={shape}></MapCircle>
           } else if (shape.shape === "ellipse") {
@@ -199,9 +223,9 @@ function PixiMap() {
             return <MapText key={index} shapeinfo={shape}></MapText>
           }
         })}
-        <Text text="Beans" anchor={0.5} x={150} y={150}></Text>
+        <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
+        <Sprite image="../files/icon.jpg" scale={{x: 0.5, y: 0.5}} x={100} y={100} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>
       </Stage>
-    */}
     </MapScaleContext.Provider>
     </div>
   );

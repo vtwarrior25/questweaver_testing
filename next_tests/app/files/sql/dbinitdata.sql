@@ -659,3 +659,6 @@ INSERT INTO effecttype (name) VALUES
 
 INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES
 ();
+
+
+INSERT INTO speedfeature (name, description, )
