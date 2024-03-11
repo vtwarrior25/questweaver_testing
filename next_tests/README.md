@@ -75,7 +75,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] createItem
 - [ ] createWeapon
 - [x] prepareSpell
-- [ ] unprepareSpell
+- [x] unprepareSpell
 - [x] getInventory
 - [x] getPreparedSpells
 - [ ] getAllSpells

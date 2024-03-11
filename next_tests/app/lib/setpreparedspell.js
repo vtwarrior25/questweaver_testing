@@ -19,7 +19,7 @@ export async function setpreparedspell(queryaction, playercharacterid, spellid) 
         .catch((error) => {
             console.log(error);
             console.log("Error unpreparing spell");
-        })
+        });
     }
     
 }
