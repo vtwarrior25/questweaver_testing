@@ -34,7 +34,7 @@ const userauthquery = new PQ({
 
 export async function userauth(username, password) {
   console.log(username + ' ' + password);
-  db.one(userauthquery, [username, password])
+  await db.one(userauthquery, [username, password])
   .then((result) => {
     console.log(result.playerid);
     return result.playerid;

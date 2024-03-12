@@ -145,7 +145,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                 </tr>
                 <tr>
                   <th>HD/CR</th>
-                  <td className="monsterFormHDCR"><input type="number" className="monsterHitDiceInput monsterTextSmall" name="hitdicenum" size="3" placeholder="1" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.hitdicenum}/>d<input className="monsterHitDiceInput monsterTextSmall" type="number" name="hitdicetype" size="3" placeholder="6" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.hitdicetype}/></td>
+                  <td className="monsterFormHDCR"><input type="number" className="monsterHitDiceInput monsterTextSmall" name="hitdicenum" size="3" placeholder="1" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.hitdicenum}/><input className="monsterHitDiceInput monsterTextSmall" type="number" name="hitdicetype" size="3" placeholder="6" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.hitdicetype}/></td>
                   <td><input className="monsterGroupFormCRInput" type="number" name="challengerating" placeholder="CR" size="3" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.challengerating}/></td>
                 </tr>
                 <tr>
@@ -284,7 +284,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 0)} value={formdata.health[0]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput1" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 0)} value={formdata.health[0]}/></td>
                 </tr>
                 <tr>
                   <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack2name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 1)} value={formdata.attacks[1].name}/></td>
@@ -297,7 +297,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 1)} value={formdata.health[1]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput2" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 1)} value={formdata.health[1]}/></td>
                 </tr>
                 <tr>
                   <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack3name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 2)} value={formdata.attacks[2].name}/></td>
@@ -310,7 +310,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <option value="Bludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 2)} value={formdata.health[2]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput3" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 2)} value={formdata.health[2]}/></td>
                 </tr>
                 <tr>
                   <td><input className="monsterGroupFormAttackNameInput" type="text" name="attack4name" onChange={(e) => updateFormValue("attacks", "name", e.target.value, 3)} value={formdata.attacks[3].name}/></td>
@@ -323,23 +323,23 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <option value="Pludgeoning">Bludgeoning</option>
                     </select>
                   </td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput4" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 3)} value={formdata.health[3]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput4" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 3)} value={formdata.health[3]}/></td>
                 </tr>
                 <tr>
                   <td rowSpan="2"><label htmlFor="skills">Skills</label></td>
                   <td colSpan="3" rowSpan="2"><textarea name="skills" onChange={(e) => updateFormValue("skills", "", e.target.value)} value={formdata.skills}></textarea></td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 4)} value={formdata.health[4]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 4)} value={formdata.health[4]}/></td>
                 </tr>
                 <tr>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 5)} value={formdata.health[5]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 5)} value={formdata.health[5]}/></td>
                 </tr>
                 <tr>
                   <td rowSpan="2"><label htmlFor="skills">Abilities</label></td>
                   <td colSpan="3" rowSpan="2"><textarea name="ability" onChange={(e) => updateFormValue("ability", "", e.target.value)} value={formdata.ability}></textarea></td>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 6)} value={formdata.health[6]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 6)} value={formdata.health[6]}/></td>
                 </tr>
                 <tr>
-                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput8" defaultValue="" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 7)} value={formdata.health[7]}/></td>
+                  <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput8" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 7)} value={formdata.health[7]}/></td>
                 </tr>
               </tbody>
             </Table>
