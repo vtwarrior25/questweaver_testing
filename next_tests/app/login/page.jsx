@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/App.css';
-import { authenticate } from '@/app/lib/actions'
+import { authenticate, gotosignup } from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import './login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,6 +31,7 @@ export default function Page() {
         */}
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
         <Button variant='primary' type='submit'>Submit</Button>
+        <Button variant='secondary' type='button' onClick={() => gotosignup()}>Sign Up</Button>
       </Form>
     </div>
   )

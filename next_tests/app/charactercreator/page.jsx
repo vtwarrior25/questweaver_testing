@@ -2,10 +2,10 @@
 
 import '@/app/App.css';
 import { useState, useEffect } from 'react';
-import CharacterSelectEntry from './CharacterSelectEntry';
-import './characterselect.css';
+import './charactercreator.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import CharacterCreator from '../main/CharacterCreator';
 
 
 export default function Page() {
@@ -46,12 +46,8 @@ export default function Page() {
   */
 
   return (  
-    <div className='characterselection'>
-      <h4>Character Select</h4>
-      {playercharacters.map((character, index) => 
-        <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
-      )}
-      <Button variant='primary' className='characterCreatorButton'>Create New Character</Button>
+    <div className='charactercreatorpage'>
+      <CharacterCreator></CharacterCreator>
     </div>
   )
 }

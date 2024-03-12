@@ -16,7 +16,7 @@
 	"dbquery" : {
 		"scope": "javascript",
 		"prefix": "dbquery",
-		"body": "db.$1($2)\n.then((result) => {\n\t$3\n}).catch((error) => {\n\tconsole.log(error)\n$4\n});",
+		"body": "db.$1($2)\n.then((result) => {\n\t$3\n}).catch((error) => {\n\tconsole.log(error);\n\t$4\n});",
 		"description": "Creates a new pg-promise"
 	},
 

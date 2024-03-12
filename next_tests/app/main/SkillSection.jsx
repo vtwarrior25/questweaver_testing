@@ -120,14 +120,6 @@ function SkillSection (setRollResults){
   const[alignments, setAlignments] = useState([]);
     
   const getSkills = () => {
-    /*
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=skill`)
-        .then(res => res.json())
-        .then(res => setSkills(res));
-    fetch(`http://localhost:3000/api/testdb`)
-    .then(res => res.json())
-    .then(res => setAlignments(res));
-    */
     getcharacterinfo(playercharacterid, 'skill')
     .then(results => setSkills(results));
   }
