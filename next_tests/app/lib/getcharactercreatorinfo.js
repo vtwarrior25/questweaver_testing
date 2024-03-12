@@ -67,7 +67,7 @@ export async function getCharacterCreatorInfo() {
       JOIN race r ON s.raceid = r.raceid;
     `); 
 
-    // For each subrace, fetch associated features
+    // For each subrace, fetch associated features, including race features
     for (const subrace of subracesWithRaces) {
       const features = await db.many(`
         SELECT f.*
@@ -75,7 +75,17 @@ export async function getCharacterCreatorInfo() {
         JOIN feature f ON sf.featureid = f.featureid
         WHERE sf.subraceid = $1;
       `, [subrace.subraceid]);
-      subrace.features = features;
+
+      // Additionally, fetch race features for each subrace
+      const raceFeatures = await db.many(`
+        SELECT f.*
+        FROM racefeature rf
+        JOIN feature f ON rf.featureid = f.featureid
+        WHERE rf.raceid = $1;
+      `, [subrace.raceid]);
+
+      // Combine race features and subrace features
+      subrace.features = [...features, ...raceFeatures];
     }
   } catch (error) {
     console.error("Error fetching subraces with races and their features:", error);
