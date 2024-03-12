@@ -3,6 +3,7 @@
 import '@/app/App.css';
 import { useState, useEffect } from 'react';
 import CharacterSelectEntry from './CharacterSelectEntry';
+import { goToCharacterCreator } from '../lib/actions';
 import './characterselect.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
@@ -51,7 +52,7 @@ export default function Page() {
       {playercharacters.map((character, index) => 
         <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
       )}
-      <Button variant='primary' className='characterCreatorButton'>Create New Character</Button>
+      <Button variant='primary' className='characterCreatorButton' onClick={() => goToCharacterCreator(userid)}>Create New Character</Button>
     </div>
   )
 }

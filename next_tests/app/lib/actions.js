@@ -9,43 +9,19 @@ import { cookies } from 'next/headers';
 
 export async function authenticate(formdata) {
   let redirecturl = '../login';
-  try {
-    console.log(formdata.get('username'));
-    userauth(formdata.get('username'), formdata.get('password'))
-    .then((result) => {
-      if (result == true) {
-        redirecturl = '../main';
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-    /*await tempAuth(formdata)
-    .then((result) => {
-      console.log(result);
-      console.log('We are in the good part');
-      if (result == true) {
-        console.log('this should redirect beans');
-        //redirect('/main');
-        redirecturl = '../main';
-      } else {
-        console.log("This shouldn't redirect");
-        //redirect('/login');
-      }});
-      */
-  } catch (error) {
-    console.log('We are in the error place');
-    if (error) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.'
-        default:
-          return 'Something went wrong.'
-      }
+  //console.log(formdata.get('username'));
+  console.log(formdata.get('username') + " " + formdata.get('password'));
+  userauth(formdata.get('username'), formdata.get('password'))
+  .then((result) => {
+    console.log("this is the result in authenticate");
+    console.log(result);
+    if (result !== null) {
+      redirecturl = '../main';
     }
-    throw error
-  }
-  console.log(redirecturl);
-  cookies().set('userid', 0);
+  }).catch((error) => {
+    console.log("fucked");
+    console.log(error);
+  });
   redirect(redirecturl);
 }
 
@@ -57,17 +33,17 @@ const userauthquery = new PQ({
 });
 
 export async function userauth(username, password) {
+  console.log(username + ' ' + password);
   db.one(userauthquery, [username, password])
   .then((result) => {
-    if (result.playerid !== null) {
-      return result.playerid;
-    } else {
-      return null;
-    }
+    console.log(result.playerid);
+    return result.playerid;
   }).catch((error) => {
+    console.log("Unable to retrieve a user with those credentials");
     console.log(error)
-  
+    return null;
   });
+  return null;
 }
 
 
@@ -95,6 +71,7 @@ export async function createuser(formdata) {
       redirect('../characterselect');
     }).catch((error) => {
       console.log(error);
+      return "Username already exists";
     });
   } else {
     return "Passwords didn't match";
@@ -129,4 +106,7 @@ export async function setSelectedPlayerCharacter(userid, playercharacterid) {
   redirect('../main');
 }
 
+export async function goToCharacterCreator(userid) {
+  redirect('../charactercreator');
+}
 

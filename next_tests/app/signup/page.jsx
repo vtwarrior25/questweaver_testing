@@ -2,7 +2,7 @@
 
 import '@/app/App.css';
 import '@/app/login/login.css'
-import { createuser } from '@/app/lib/actions'
+import { createuser} from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
