@@ -3,9 +3,13 @@ import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
 import AbilityBox from "./AbilityBox";
 import AbilitySection from "./AbilitySection";
 import { createCharacter } from "../lib/createcharacter";
+import { getCharacterClassInfo } from '../lib/getcharactercreatorinfo';
 
 function CharacterCreator() {
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
+  const [classes, setClasses] = useState([]);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [error, setError] = useState(null);
   const [abilityScores, setAbilityScores] = useState(initialScores);
   const [tempValues, setTempValues] = useState([0, 0, 0, 0, 0, 0]);
   const [selectedAbilities, setSelectedAbilities] = useState(
@@ -127,8 +131,29 @@ function CharacterCreator() {
       },
     ],
   });
+  //class tab
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const data = await getCharacterClassInfo();
+            setClasses(data);
+            if (data.length > 0) {
+                setSelectedClass(data[0]); 
+            }
+        } catch (error) {
+            console.error("Failed to fetch class data:", error);
+        }
+    };
 
-  const [classes, setClasses] = useState([{}, {}]);
+    fetchData();
+}, []);
+
+
+const handleSelectClass = (classItem) => {
+    setSelectedClass(classItem);
+};
+  //class tab 
+
 
   const rollDice = () => {
     const rolls = Array.from(
@@ -257,7 +282,36 @@ function CharacterCreator() {
             </Tab.Container>
           </div>
         </Tab>
-        <Tab eventKey="class" title="Class"></Tab>
+        <Tab eventKey="class" title="Class">
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div style={{ flex: 1, overflow: 'auto' }}>
+                {classes.map((classItem) => (
+                    <div key={classItem.classid} style={{ padding: '10px', border: '1px solid black', margin: '5px', cursor: 'pointer' }} onClick={() => handleSelectClass(classItem)}>
+                        {classItem.name}
+                    </div>
+                ))}
+            </div>
+            <div style={{ flex: 3, overflow: 'auto', padding: '10px', border: '1px solid black', marginLeft: '5px' }}>
+                {selectedClass ? (
+                    <>
+                        <h3>{selectedClass.name}</h3>
+                        <p><strong>Description:</strong> {selectedClass.description}</p>
+                        <p><strong>Hit Points at 1st Level:</strong> {selectedClass.hitpoints1stlevel}</p>
+                        <p><strong>Hit Points at Higher Levels:</strong> {selectedClass.hitpointshigherlevel}</p>
+                        {/* Display other class details as needed */}
+                        <h4>Subclasses:</h4>
+                        <ul>
+                            {selectedClass.subclasses && selectedClass.subclasses.map((subclass) => (
+                                <li key={subclass.subclassid}>{subclass.name}: {subclass.description}</li>
+                            ))}
+                        </ul>
+                    </>
+                ) : (
+                    <p>Please select a class to see its details.</p>
+                )}
+            </div>
+        </div>
+        </Tab>
         <Tab eventKey="abilities" title="Abilities">
           <div className="characterCreator">
             <div className="abilityScoresDisplay">
