@@ -1,3 +1,3 @@
-SELECT * from weapon
-JOIN item ON weapon.itemid = item.itemid;
+SELECT * from player;
 
+DELETE FROM player WHERE username = 'james1';

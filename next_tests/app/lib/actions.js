@@ -4,14 +4,22 @@ const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
 import { tempAuth } from '@/app/lib/tempauth';
-import { createuser } from '@/app/lib/createuser';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 export async function authenticate(formdata) {
   let redirecturl = '../login';
   try {
     console.log(formdata.get('username'));
-    await tempAuth(formdata)
+    userauth(formdata.get('username'), formdata.get('password'))
+    .then((result) => {
+      if (result == true) {
+        redirecturl = '../main';
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+    /*await tempAuth(formdata)
     .then((result) => {
       console.log(result);
       console.log('We are in the good part');
@@ -23,6 +31,7 @@ export async function authenticate(formdata) {
         console.log("This shouldn't redirect");
         //redirect('/login');
       }});
+      */
   } catch (error) {
     console.log('We are in the error place');
     if (error) {
@@ -36,19 +45,63 @@ export async function authenticate(formdata) {
     throw error
   }
   console.log(redirecturl);
+  cookies().set('userid', 0);
   redirect(redirecturl);
 }
 
-export async function signup(formdata) {
-  await createuser(formdata)
+const userauthquery = new PQ({
+  text: `
+    SELECT playerid from player 
+    WHERE username = $1 AND password = $2; 
+  `
+});
+
+export async function userauth(username, password) {
+  db.one(userauthquery, [username, password])
   .then((result) => {
-    if (result === true) {
-      // Redirect to character picker
-      redirect('../login');
+    if (result.playerid !== null) {
+      return result.playerid;
     } else {
-      redirect('../signUp');
-    }});
+      return null;
+    }
+  }).catch((error) => {
+    console.log(error)
+  
+  });
 }
+
+
+export async function gotosignup () {
+  redirect('../signup');
+}
+
+
+const signupquery = new PQ({
+  text: `
+    INSERT INTO player (playerid, username, password) VALUES
+    (DEFAULT, $1, $2)
+    RETURNING playerid;
+  `
+});
+
+
+export async function createuser(formdata) {
+  // Insert username and password into db
+  if (formdata.get('password') === formdata.get('password2')) {
+    db.one(signupquery, [formdata.get('username'), formdata.get('password')])
+    .then((result) => {
+      // TODO Write the resulting playerid out to state (cookies)?? 
+      console.log(result);
+      redirect('../characterselect');
+    }).catch((error) => {
+      console.log(error);
+    });
+  } else {
+    return "Passwords didn't match";
+  }
+  console.log(`${formdata.get('username')} - ${formdata.get('password')}`);
+}
+
 
 const getcharactersforplayerquery = new PQ({
   text: `
@@ -61,13 +114,19 @@ const getcharactersforplayerquery = new PQ({
   `
 });
 
-export async function getCharactersForPlayer(playerid) {
-  db.many(getcharactersforplayerquery, [playerid])
+export async function getCharactersForPlayer(userid) {
+  db.many(getcharactersforplayerquery, [userid])
   .then((result) => {
     return result;
   })
   .catch((error) => {
     console.error("Error loading characters: " + error);
-    return "Error loa"
+    return "Error loading characters";
   });
 }
+
+export async function setSelectedPlayerCharacter(userid, playercharacterid) {
+  redirect('../main');
+}
+
+

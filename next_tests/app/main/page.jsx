@@ -20,8 +20,7 @@ import WeaponCreationForm from "./WeaponCreationForm";
 
 
 function App () {
-
-  const [userid, setUserID] = useState(0); 
+  const [userid, setUserID] = useState(0);
   const [playercharacterid, setPlayerCharacterID] = useState(0);
   const [isDM, setIsDM] = useState(true);
 
