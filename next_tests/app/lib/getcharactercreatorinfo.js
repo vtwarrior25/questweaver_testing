@@ -23,38 +23,36 @@ const getracesquery = new PQ({
 });
 
 export async function getCharacterClassInfo() {
-    let classesWithSubclasses = [];
+  let classesWithSubclasses = [];
 
-    // Step 1: Fetch all classes
-    try {
-        const classes = await db.many(`
-            SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.table, c.spellcastingabilityid
-            FROM class c;
-        `);
+  // Step 1: Fetch all classes
+  try {
+      const classes = await db.many(`
+          SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.spellcastingabilityid
+          FROM class c;
+      `);
 
-        // Step 2: For each class, fetch its subclasses
-        for (const classItem of classes) {
-            const subclasses = await db.manyOrNone(`
-                SELECT s.subclassid, s.name, s.description, s.spellcastingabilityid
-                FROM subclass s
-                WHERE s.classid = $1;
-            `, [classItem.classid]);
+      // Step 2: For each class, fetch its subclasses
+      for (const classItem of classes) {
+          const subclasses = await db.manyOrNone(`
+              SELECT s.subclassid, s.name, s.description, s.spellcastingabilityid
+              FROM subclass s
+              WHERE s.classid = $1;
+          `, [classItem.classid]);
 
-            // Add subclasses to the class item
-            classItem.subclasses = subclasses;
+          // Add subclasses to the class item
+          classItem.subclasses = subclasses;
+      }
 
-            // Optionally, enrich subclass information here (e.g., with spellcasting abilities)
-            // This would require additional queries if more details are needed from other tables
-        }
+      classesWithSubclasses = classes;
+  } catch (error) {
+      console.error("Error fetching character class information:", error);
+      throw error;
+  }
 
-        classesWithSubclasses = classes;
-    } catch (error) {
-        console.error("Error fetching character class information:", error);
-        throw error; 
-    }
-
-    return classesWithSubclasses;
+  return classesWithSubclasses;
 }
+
 
 
 export async function getCharacterCreatorInfo() {

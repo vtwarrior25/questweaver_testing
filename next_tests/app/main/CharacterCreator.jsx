@@ -132,18 +132,22 @@ function CharacterCreator() {
     ],
   });
   //class tab
-  const fetchData = async () => {
-    try {
-        const classData = await getCharacterClassInfo();
-        console.log("Fetched class data:", classData); 
-        setClasses(classData);
-        if (classData.length > 0) {
-            setSelectedClass(classData[0]);
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const data = await getCharacterClassInfo();
+            setClasses(data);
+            if (data.length > 0) {
+                setSelectedClass(data[0]); 
+            }
+        } catch (error) {
+            console.error("Failed to fetch class data:", error);
         }
-    } catch (error) {
-        console.error("Failed to fetch class data:", error);
-    }
-};
+    };
+
+    fetchData();
+}, []);
+
 
 const handleSelectClass = (classItem) => {
     setSelectedClass(classItem);
