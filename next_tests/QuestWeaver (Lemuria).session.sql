@@ -1,3 +1,4 @@
 SELECT * from player;
 
-DELETE FROM player WHERE username = 'james1';
+SELECT playerid from player 
+    WHERE username = 'james1' AND password = 'beans';

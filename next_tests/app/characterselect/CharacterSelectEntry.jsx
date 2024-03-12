@@ -7,7 +7,7 @@ function CharacterSelectEntry({userid, charid, charname, charclass, charsubclass
   const [displaytext, setDisplayText] = useState(basetext);
 
   
-
+/*
   useEffect(() => {
     if (charsubrace !== null) {
       setDisplayText(displaytext + ` ${charrace} (${charsubrace}) `);  
@@ -22,18 +22,14 @@ function CharacterSelectEntry({userid, charid, charname, charclass, charsubclass
     } 
   }, [charsubrace, charsubclass, charclass, charrace]
   );
-
+*/
   
 
   return ( 
     <Button variant='secondary' className="characterSelectEntry" onClick={() => setSelectedPlayerCharacter(userid, charid)}>
-      {displaytext}
+      {`${charname}: Level ${charlevel} ${charrace} (${charsubrace}) ${charclass} (${charsubclass})`}
     </Button>
   );
 }
 
 export default CharacterSelectEntry;
-
-/*
-{`${charname}: Level ${charlevel} ${charrace} (${charsubrace}) ${charclass} (${charsubclass})`}
-*/
