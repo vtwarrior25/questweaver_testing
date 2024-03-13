@@ -50,6 +50,7 @@ INSERT INTO characterskill (playercharacterid, skillid, proficient, bonus) VALUE
 (pcid, (SELECT skillid FROM skill WHERE name = 'Stealth'), false, 2),
 (pcid, (SELECT skillid FROM skill WHERE name = 'Survival'), false, 2);
 
+
 WITH pcid AS (
   SELECT playercharacterid FROM playercharacter WHERE name = 'Jerome'
 )
@@ -60,6 +61,15 @@ INSERT INTO charactersavingthrow (playercharacterid, savingthrowid, proficient, 
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Intelligence', false, 2)),
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Wisdom', false, 2)),
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Charisma', false, 2));
+
+
+WITH pcid AS (
+  SELECT playercharacterid FROM playercharacter WHERE name = 'Jerome'
+)
+INSERT INTO characterpassiveability (playercharacterid, passiveperception, passiveinvestigation, passiveinsight) VALUES
+(10, 10, 10);
+
+
 
 
 

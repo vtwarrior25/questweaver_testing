@@ -233,7 +233,7 @@ function CharacterCreator() {
         className="characterCreatorTabs frontElement"
         defaultActiveKey="race"
       >
-         <Tab eventKey="race" title="Race">
+        <Tab eventKey="race" title="Race">
   <div className="characterCreatorSection characterCreatorRace frontElement">
     <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
       <Nav variant="pills" className="flex-column">

@@ -1,7 +1,8 @@
+import { setConfig } from 'next/config';
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
-function InventorySection({classname, name, items, setSectionWeight}) {
+function InventorySection({sectionname, name, items, setSectionWeight, setItemQuantity}) {
 
   const [sectionweight, setInnerSectionWeight] = useState(0);
 
@@ -27,9 +28,10 @@ function InventorySection({classname, name, items, setSectionWeight}) {
       let itemweight = (Number(item.weight)*Number(item.qty));
       weight += itemweight;
     });
-    console.log(`This should print ${classname} ${weight}`);
+    console.log(`This should print ${sectionname} ${weight}`);
     setInnerSectionWeight(weight);
-    setSectionWeight(classname, weight);
+    console.log(sectionname);
+    setSectionWeight(sectionname, weight);
   }
 /*
   const datadisplay = (
@@ -45,7 +47,7 @@ function InventorySection({classname, name, items, setSectionWeight}) {
 */
 
   return ( 
-    <div className={`${classname} inventorySection`}>
+    <div className={`${sectionname} inventorySection`}>
       <div className="inventorySectionHeader">
         <span>{name}</span>
         <span><b>{sectionweight}</b> lb</span>
