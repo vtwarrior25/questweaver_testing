@@ -61,7 +61,8 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] How do we want to organize server functions? 
   - [ ] Should we put them all in one file?
   - [x] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
-    - [x] Move the server files to `/app/lib` 
+    - [x] Move the server files to `/app/lib`
+  - [ ] Group categories of functions into the same file (eg. spell actions)
 - [ ] Login
   - [ ] Figure out how to pass characterid, userid, and isDM to client/React (specifically `/app/main/page.jsx`)
 

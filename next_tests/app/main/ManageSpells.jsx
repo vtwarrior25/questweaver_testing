@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { PlayerCharacterContext } from './Contexts';
 import { getSpellList } from '../lib/spellactions';
-import { getpreparedspells } from '../lib/getpreparedspells';
+
 
 function ManageSpells() {
   const playercharacterid = useContext(PlayerCharacterContext);
