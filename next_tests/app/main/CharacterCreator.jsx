@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
+import { PlayerCharacterContext, UserIDContext } from "./Contexts";
 import AbilityBox from "./AbilityBox";
 import AbilitySection from "./AbilitySection";
 import { createCharacter } from "../lib/createcharacter";
 import { getCharacterClassInfo, getCharacterCreatorInfo } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
+  const userid = useContext(UserIDContext);
+  const playercharacterid = useContext(PlayerCharacterContext);
+
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({ subracesWithRaces: [], racesWithoutSubraces: [] });
   const [classes, setClasses] = useState([]);

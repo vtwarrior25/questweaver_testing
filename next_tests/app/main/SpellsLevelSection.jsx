@@ -103,7 +103,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
         <span className="characterSheetSectionTitle">{titleHandler(level)}</span>
         <div className="spellsHeaderRightSection">
           <form className='spellsHeaderFakeForm'>
-            <Button size="sm" variant='secondary' type='reset'>Clear</Button>
+          {spellslots && spellslots.length > 0 && <Button size="sm" variant='secondary' type='reset'>Clear</Button>}
             <div className="spellHeaderSpellSlots">
               {spellslots && spellslots.length > 0 && spellslots.map((spellslot, index) => <input type="checkbox" key={index} value={spellslot}></input>)}
             </div>

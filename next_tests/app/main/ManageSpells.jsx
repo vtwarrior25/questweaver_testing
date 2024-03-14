@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { PlayerCharacterContext } from './Contexts';
-import { getSpellList } from '../lib/spellactions';
+import { getSpellList, getPreparedSpells, setPreparedSpell, unsetPreparedSpell } from '../lib/spellactions';
 
 
 function ManageSpells() {
@@ -9,24 +9,48 @@ function ManageSpells() {
 
   const [spelllist, setSpellList] = useState([
     {
-      name: "Longsword",
-      description: "Proficiency with a longsword allows you to add your proficiency bonus to the attack roll for any attack you make with it. ",
+      name: "Guidance",
+      description: "It shows you the way, man",
     },
     {
-      name: "Longbow",
-      description: "This is the longbow description",
+      name: "Light",
+      description: "Light, it's bright",
+    },
+    {
+      name: "Sacred Flame",
+      description: "Burn moment.",
+    },
+    {
+      name: "Bless",
+      description: "Bless up, life is roblox.",
+    },
+    {
+      name: "Cure Wounds",
+      description: "Like a hospital.",
     },
   ]);
 
   const [preparedspells, setPreparedSpells] = useState([
     {
-      name: "Longsword",
-      description: "Proficiency with a longsword allows you to add your proficiency bonus to the attack roll for any attack you make with it. ",
+      name: "Guidance",
+      description: "It shows you the way, man",
     },
     {
-      name: "Longbow",
-      description: "This is the longbow description",
+      name: "Light",
+      description: "Light, it's bright",
     },
+    {
+      name: "Sacred Flame",
+      description: "Burn moment.",
+    },
+    {
+      name: "Bless",
+      description: "Bless up, life is roblox.",
+    },
+    {
+      name: "Cure Wounds",
+      description: "Like a hospital.",
+    }
   ])
 
   const [searchlistdropdownshidden, setSearchListDropdownsHidden] = useState([]);
@@ -59,16 +83,18 @@ function ManageSpells() {
     setPreparedListDropdownsHidden(newdropdowns);
   }
 
+  /*
   useEffect(() => {
     // Get spell list and prepared spells lists
     getSpellList(playercharacterid)
     .then(results => setSpellList(results))
     .catch((error) => {console.error("Error getting spell list" + error)});
-    getpreparedspells(playercharacterid)
+    getPreparedSpells(playercharacterid)
     .then(results => setPreparedSpells(results))
     .catch((error) => {console.error("Error getting prepared spells" + error)});
   }, [playercharacterid],
   );
+  */
   
 
   useEffect(() => {
@@ -81,16 +107,34 @@ function ManageSpells() {
   }, [preparedspells],
   );
 
-  const prepSpell = (spell) => {
-    console.log("prepspell");
+  const prepSpell = (spellname) => {
     // This should add a spell to prepared
-  }
-
-  const unprepSpell = (spell) => {
     console.log("prepspell");
-    // This should remove a spell from prepared
+    setPreparedSpell(playercharacterid, spellname);
+    getPreparedSpells()
+    .then((result => {
+      setPreparedSpells([...result]);
+    }))
+    .catch((error) => {
+      console.log(error);
+      console.log("Error retrieving prepared spells");
+    });
   }
 
+  const unprepSpell = (spellname) => {
+    // This should remove a spell from prepared
+    console.log("prepspell");
+    unsetPreparedSpell(playercharacterid, spellname);
+    getPreparedSpells()
+    .then((result => {
+      setPreparedSpells([...result]);
+    }))
+    .catch((error) => {
+      console.log(error);
+      console.log("Error retrieving prepared spells");
+    });
+  }
+  
 
   return ( 
       <div className='manageSpellsMenu frontElement'>
@@ -99,15 +143,15 @@ function ManageSpells() {
           {spelllist && spelllist.length > 0 && (
             foundspells.map((spell, index) => 
             <div key={index}>
-            <div className="preparedSpellListItem" key={index} onClick={() => toggleSearchDropdown(index)}>
-              <span>{spell.name}</span>
-              <Button variant="secondary" size='sm' onClick={() => {prepSpell(spell)}}>Prepare</Button>
+            <div className="spellListItem" key={index}>
+              <span onClick={() => toggleSearchDropdown(index)}>{spell.name}</span>
+              <Button variant="secondary" size='sm' onClick={() => {prepSpell(spell.name)}}>Prepare</Button>
             </div>
             {searchlistdropdownshidden[index] && 
               <div className='preparedSpellListItemDropdown'>
                 <span>Description: {spell.description}</span>
                 <div className='preparedSpellListItemDropdownControls'>
-                  <Button variant="secondary" size='sm' onClick={() => {prepSpell(spell)}}>Prepare</Button>
+                  <Button variant="secondary" size='sm' onClick={() => {prepSpell(spell.name)}}>Prepare</Button>
                 </div>
               </div>}
           </div>
@@ -120,15 +164,15 @@ function ManageSpells() {
         {preparedspells && preparedspells.length > 0 && 
           preparedspells.map((prepspell, index) => 
           <div key={index}>
-            <div className="preparedSpellListItem" key={index} onClick={() => togglePreparedDropdown(index)}>
+            <div className="spellListItem" key={index} onClick={() => togglePreparedDropdown(index)}>
               <span>{prepspell.name}</span>
-              <Button variant="secondary" size='sm' onClick={() => {unprepSpell(prepspell)}}>Unprepare</Button>
+              <Button variant="secondary" size='sm' onClick={() => {unprepSpell(prepspell.name)}}>Unprepare</Button>
             </div>
             {preparedlistdropdownshidden[index] && 
               <div className='preparedSpellListItemDropdown'>
                 <span>Description: {prepspell.description}</span>
                 <div className='preparedSpellListItemDropdownControls'>
-                  <Button variant="secondary" size='sm' onClick={() => {unprepSpell(prepspell)}}>Unprepare</Button>
+                  <Button variant="secondary" size='sm' onClick={() => {unprepSpell(prepspell.name)}}>Unprepare</Button>
                 </div>
               </div>}
           </div>

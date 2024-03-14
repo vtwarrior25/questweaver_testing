@@ -208,13 +208,13 @@ function InventoryMenu() {
           <Button variant='secondary' size='sm' ref={managetarget} onClick={() => setShowManageInventory(!showmanageinventory)}>Manage Inventory</Button>
           <Overlay target={managetarget.current} show={showmanageinventory} placement='bottom'>
             <div className='manageInventoryOverlay'>
-              <ManageInventory addItem={() => addItem}></ManageInventory>
+              <ManageInventory addItem={addItem}></ManageInventory>
             </div>
           </Overlay>
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight()} setItemQuantity={() => setItemQuantity()}></InventorySection>)}
+        {/*sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={setSectionWeight} setItemQuantity={setItemQuantity}></InventorySection>)*/}
       </div>
     </div>
   );
