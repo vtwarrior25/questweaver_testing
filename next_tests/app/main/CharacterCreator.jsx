@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
+import { PlayerCharacterContext, UserIDContext } from "./Contexts";
 import AbilityBox from "./AbilityBox";
 import AbilitySection from "./AbilitySection";
 import { createCharacter } from "../lib/createcharacter";
@@ -10,6 +11,9 @@ import {
 } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
+  const userid = useContext(UserIDContext);
+  const playercharacterid = useContext(PlayerCharacterContext);
+
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({
     subracesWithRaces: [],
@@ -279,19 +283,28 @@ function CharacterCreator() {
         defaultActiveKey="race"
       >
         <Tab eventKey="race" title="Race">
-          <div className="characterCreatorSection characterCreatorRace frontElement">
-            <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
-              <Nav variant="pills" className="flex-column">
-                {raceData.subracesWithRaces.map((subrace, index) => (
-                  <Nav.Item key={index}>
-                    <Nav.Link
-                      eventKey={subrace.subrace_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "")}
-                    >
-                      {subrace.subrace_name}
-                    </Nav.Link>
-                  </Nav.Item>
+  <div className="characterCreatorSection characterCreatorRace frontElement">
+    <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
+      <Nav variant="pills" className="flex-column">
+        {raceData.subracesWithRaces.map((subrace, index) => (
+          <Nav.Item key={index}>
+            <Nav.Link eventKey={subrace.subrace_name.toLowerCase().replace(/\s+/g, '')}>{subrace.subrace_name}</Nav.Link>
+          </Nav.Item>
+        ))}
+        {raceData.racesWithoutSubraces.map((race, index) => (
+          <Nav.Item key={index}>
+            <Nav.Link eventKey={race.name.toLowerCase().replace(/\s+/g, '')}>{race.name}</Nav.Link>
+          </Nav.Item>
+        ))}
+      </Nav>
+      <Tab.Content>
+        {raceData.subracesWithRaces.concat(raceData.racesWithoutSubraces).map((item, index) => (
+          <Tab.Pane key={index} eventKey={(item.subrace_name || item.name).toLowerCase().replace(/\s+/g, '')}>
+            <div className="characterCreatorTabContent">
+              <h3>{item.subrace_name || item.name}</h3>
+              <ul>
+                {item.features && item.features.map((feature, featureIndex) => (
+                  <li key={featureIndex}>{feature.name}: {feature.description}</li>
                 ))}
                 {raceData.racesWithoutSubraces.map((race, index) => (
                   <Nav.Item key={index}>

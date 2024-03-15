@@ -1,7 +1,8 @@
+import { setConfig } from 'next/config';
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
-function InventorySection({classname, name, items, setSectionWeight}) {
+function InventorySection({sectionname, name, items, setSectionWeight, removeItem}) {
 
   const [sectionweight, setInnerSectionWeight] = useState(0);
 
@@ -20,6 +21,17 @@ function InventorySection({classname, name, items, setSectionWeight}) {
     setDropdownsHidden(newdropdowns);
   }
 
+  const setItemQuantity = (section, item, quantity) => {
+    let matcheditems = items.filter((newitem) => {newitem.section === section && newitem.name === item.name});
+    let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.name !== item.name});
+    if (matcheditems.length > 0) {
+      let matcheditem = matcheditems[0];
+      matcheditem.qty = quantity;
+      setItems([...nonmatcheditems, matcheditem]);
+    } else {
+      console.log("Item not found");
+    }
+  }
 
   const calculateWeight = () => {
     let weight = 0;
@@ -27,9 +39,10 @@ function InventorySection({classname, name, items, setSectionWeight}) {
       let itemweight = (Number(item.weight)*Number(item.qty));
       weight += itemweight;
     });
-    console.log(`This should print ${classname} ${weight}`);
+    console.log(`This should print ${sectionname} ${weight}`);
     setInnerSectionWeight(weight);
-    setSectionWeight(classname, weight);
+    console.log(sectionname);
+    setSectionWeight(sectionname, weight);
   }
 /*
   const datadisplay = (
@@ -45,7 +58,7 @@ function InventorySection({classname, name, items, setSectionWeight}) {
 */
 
   return ( 
-    <div className={`${classname} inventorySection`}>
+    <div className={`${sectionname} inventorySection`}>
       <div className="inventorySectionHeader">
         <span>{name}</span>
         <span><b>{sectionweight}</b> lb</span>
@@ -85,8 +98,8 @@ function InventorySection({classname, name, items, setSectionWeight}) {
                       <div>Range: {item.weaponinfo.attacktype}</div>
                     </>
                   }
-                  <input type="number" placeholder='Qty' onChange={(e) => setItemQuantity(e.target.value)}></input>
-                  <Button variant="secondary" size='sm' onClick={() => {addItem(destination, item, itemquantity)}}>Add</Button>
+                  <input type="number" placeholder='Qty' value={item.qty} onChange={(e) => setItemQuantity(sectionname, item, e.target.value)}></input>
+                  <Button variant="secondary" size='sm' onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
                 </td>}
               </tr>
             </React.Fragment>

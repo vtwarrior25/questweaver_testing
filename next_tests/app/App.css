@@ -588,7 +588,6 @@ Character Creation
   max-width: 8rem;
 }
 
-
 .characterCreator {
   background-color: white;
   padding: 20px;
@@ -730,7 +729,9 @@ Manage Spells Menu (temporary)
   padding: 0.2rem 0.5rem;
 }
 
-
+.preparedSpellListItem {
+  
+}
 
 /*
 ----------------------------------------

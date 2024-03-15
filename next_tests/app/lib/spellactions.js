@@ -5,51 +5,74 @@ import { db } from './dbconn';
 
 const getspelllistquery = new PQ({
   text: `
-    SELECT  FROM spell sp 
+    SELECT FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
-    WHERE sl.classid = (SELECT classid FROM playercharacter WHERE playercharacterid = $1) AND sl.spelllevel = 
+    WHERE 
+      sl.classid = (SELECT classid FROM playercharacter WHERE playercharacterid = $1) AND 
+      sl.classlevel = (SELECT characterlevel FROM playerchracter WHERE playercharacterid = $1);  
   `
 });
 
-const getpreppedquery = new PQ ({text: 'SELECT * FROM prepared_list c JOIN spell p ON c.spellid = p.spellid WHERE c.playercharacterid = $1'});
+const getpreparedspellsquery = new PQ ({
+  text: 
+    `SELECT * FROM preparedlist c 
+      JOIN spell p ON c.spellid = p.spellid 
+    WHERE c.playercharacterid = $1`
+});
 
-const preparequery = new PQ ({text : 'INSERT INTO prepared_list (playercharacterid, spellid) VALUES (DEFAULT, $1, $2)'});
+const preparequery = new PQ({
+  text: `
+  INSERT INTO preparedlist (playercharacterid, spellid) VALUES 
+  (DEFAULT, $1, (SELECT spellid FROM spell WHERE name = $2))
+  `
+});
 
-const unpreparequery = new PQ ({text: 'DELETE FROM prepared_list c JOIN spell p ON c.spellid = p.spellid WHERE c.playercharacterid = $1 AND c.spellid = $2'});
+const unpreparequery = new PQ({
+  text: `
+  DELETE FROM preparedlist c 
+    JOIN spell p ON c.spellid = p.spellid 
+  WHERE c.playercharacterid = $1 AND c.spellid = (SELECT spellid FROM spell WHERE name = $2)
+  `
+});
 
 export async function getSpellList(playercharacterid) {
   db.any(getspelllistquery, [playercharacterid])
   .then((result) => {
     return result;
   }).catch((error) => {
-    return "Error retrieving spell list";
+    console.log(error);
+    console.log("spell list not found");
+    return error;
   });
 }
 
-export async function getpreparedspells (playercharacterid) {
-  db.any(getpreppedquery, playercharacterid)
+export async function getPreparedSpells (playercharacterid) {
+  db.any(getpreparedspellsquery, [playercharacterid])
   .then (dbinfo => {
     console.log(dbinfo);
     return dbinfo;
   })
   .catch(error => {
-    error.log("prepared spells not found");
-    return "prepared spells not found";
+    console.log(error);
+    console.log("prepared spells not found");
+    return error;
   });
 }
 
-export async function setpreparedspell (playercharacterid, spellid) {
-  db.none(preparequery, playercharacterid, spellid)
+export async function setPreparedSpell (playercharacterid, spellname) {
+  db.none(preparequery, [playercharacterid, spellname])
   .catch((error) => {
     console.log(error);
     console.log("Error preparing spell");
+    return error;
   });
 }
 
-export async function unsetpreparedspell (playercharacterid, spellid) {
-  db.none(unpreparequery, playercharacterid, spellid)
+export async function unsetPreparedSpell (playercharacterid, spellname) {
+  db.none(unpreparequery, [playercharacterid, spellname])
   .catch((error) => {
     console.log(error);
     console.log("Error unpreparing spell");
+    return error;
   });
 }

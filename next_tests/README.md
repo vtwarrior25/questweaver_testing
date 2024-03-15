@@ -80,7 +80,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] getInventory
 - [x] getPreparedSpells
 - [ ] getAllSpells
-- [ ] getAllItems
+- [x] getAllItems
 
 ### Database (Lead: Carter)
 - [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable

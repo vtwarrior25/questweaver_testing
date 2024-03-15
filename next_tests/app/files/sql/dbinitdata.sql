@@ -198,7 +198,7 @@ INSERT INTO subrace (name, raceid) VALUES
 ('Hill Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
 ('Mountain Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
 ('High Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
-('Woof Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
+('Wood Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
 ('Stout', (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Lightfoot', (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Forest Gnome', (SELECT raceid FROM race WHERE name = 'Gnome')),

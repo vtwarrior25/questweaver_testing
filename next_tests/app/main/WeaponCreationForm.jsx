@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { createWeapon } from '@/app/lib/itemcreation';
+import { createWeapon } from '@/app/lib/itemactions';
 import { PlayerCharacterContext } from './Contexts';
 
 function WeaponCreationForm() {

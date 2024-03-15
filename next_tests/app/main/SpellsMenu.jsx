@@ -1,11 +1,14 @@
 import { Button, Table, Overlay } from "react-bootstrap";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext} from "react";
+import { getPreparedSpells } from "../lib/spellactions";
 import DiceRollButton from "./DiceRollButton";
 import SpellsLevelSection from "./SpellsLevelSection";
 import ManageSpells from "./ManageSpells";
+import { PlayerCharacterContext } from './Contexts';
 
 
 function SpellsMenu({setRollResults}) {
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   const [showmanagespells, setShowManageSpells] = useState(false);
   const target = useRef(null);
@@ -90,6 +93,31 @@ function SpellsMenu({setRollResults}) {
     },
   ]);
 
+
+  const [spelllist, setSpellList] = useState([
+    {
+      name: "Guidance",
+      description: "It shows you the way, man",
+    },
+    {
+      name: "Light",
+      description: "Light, it's bright",
+    },
+    {
+      name: "Sacred Flame",
+      description: "Burn moment.",
+    },
+    {
+      name: "Bless",
+      description: "Bless up, life is roblox.",
+    },
+    {
+      name: "Cure Wounds",
+      description: "Like a hospital.",
+    },
+  ]);
+
+
   useEffect(() => {
     getSpells();
     getLevels();
@@ -120,6 +148,33 @@ function SpellsMenu({setRollResults}) {
 
   }
 
+  const prepSpell = (spellname) => {
+    // This should add a spell to prepared
+    console.log("prepspell " + spellname);
+    setPreparedSpell(playercharacterid, spellname);
+    getPreparedSpells()
+    .then((result => {
+      setSpells([...result]);
+    }))
+    .catch((error) => {
+      console.log(error);
+      console.log("Error retrieving prepared spells");
+    });
+  }
+
+  const unprepSpell = (spellname) => {
+    // This should remove a spell from prepared
+    console.log("unprepspell " + spellname);
+    unsetPreparedSpell(playercharacterid, spellname);
+    setSpells()
+    .then((result => {
+      setPreparedSpells([...result]);
+    }))
+    .catch((error) => {
+      console.log(error);
+      console.log("Error retrieving prepared spells");
+    });
+  }
 
   return ( 
     <div className="spellsMenu characterInventoryAreaSection">
@@ -143,13 +198,13 @@ function SpellsMenu({setRollResults}) {
           <Button variant='secondary' size='sm' ref={target} onClick={() => setShowManageSpells(!showmanagespells)}>Manage Spells</Button>
           <Overlay target={target.current} show={showmanagespells} placement='bottom'>
             <div className='manageInventoryOverlay'>
-              <ManageSpells addSpells={addSpells}></ManageSpells>
+              <ManageSpells addSpells={addSpells} preparedspells={spells} spelllist={spelllist}></ManageSpells>
             </div>
           </Overlay>
         </div>
       </div>
       <div className="spellsSection">
-        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} savedc={spellinfo.savedc} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults}></SpellsLevelSection>)}
+        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} savedc={spellinfo.savedc} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
       </div>
     </div>
   );

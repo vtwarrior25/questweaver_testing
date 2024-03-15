@@ -35,24 +35,36 @@ function InventoryMenu() {
 
   const setSectionWeight = (sectionname, weight) => {
     console.log("Before setting");
+    console.log(sectionname);
     console.log(sections);
-    let newsections = sections.filter((section) => section.sectionname = sectionname);
-    let newsection = newsections[0];
-    newsection.sectionweight = weight;
-    setSections({...sections, newsection});
-    console.log("After setting");
-    console.log(sections); // This will show sections in console
+    let newsections = sections.filter((section) => section.sectionname === sectionname);
+    let othersections = sections.filter((section) => section.sectionname !== sectionname)
+    if (newsections.length > 0) {
+      let newsection = newsections[0];
+      newsection.sectionweight = weight;
+      setSections([...othersections, newsection]);
+      console.log("After setting");
+      console.log(sections); // This will show sections in console
+    } else {
+      console.log("Unable to find provided section: " + sectionname);
+    }
   } 
 
+
   const addItem = (section, item, quantity) => {
+    console.log(section + " " + item.name + " " + quantity);
     let otheritem;
-    let matcheditems = items.filter((newitem) => newitem.name === item.name && newitem.section === item.section);
+    let matcheditems = items.filter((newitem) => newitem.name === item.name && newitem.section === section);
+    console.log(matcheditems);
     if (matcheditems.length > 0) {
-      matcheditem = matcheditems[0];
-      matcheditem.quantity = matcheditems.quantity + quantity;
-      let nonmatcheditems = items.filter((newitem) => newitem.name !== item.name || newitem.section !== item.section);
+      console.log('found');
+      let matcheditem = matcheditems[0];
+      matcheditem.qty = Number(matcheditem.qty) + Number(quantity);
+      let nonmatcheditems = items.filter((newitem) => newitem.name !== item.name || newitem.section !== section);
+      console.log(nonmatcheditems);
       setItems([...nonmatcheditems, matcheditem]);
     } else {
+      console.log('not found');
       otheritem = {...item, section: section, qty: quantity};
       setItems([...items, otheritem]);
     }
@@ -61,8 +73,25 @@ function InventoryMenu() {
     //setItems([...items, otheritem]);
   } 
 
+  const removeItem = (section, item) => {
+    // Remove the item from the inventory section
+    /*
+    console.log(section);
+    console.log(item.name);
+    console.log("items");
+    console.log(items);
+    */
+    let newitems = items.filter((i) => i.section !== section || i.name !== item.name);
+    /*
+    console.log("newitems");
+    console.log(newitems);
+    */
+    setItems([...newitems]);
+  }
+
 
   useEffect(() => {
+    console.log("In the useeffect");
     let weightcount = 0;
     sections.forEach((section) => weightcount += section.sectionweight);
     setTotalWeight(weightcount);
@@ -194,7 +223,9 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight}></InventorySection>)}
+        {console.log("sections")}
+        {console.log(sections)}
+        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>
   );
