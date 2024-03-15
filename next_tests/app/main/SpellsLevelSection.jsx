@@ -3,7 +3,7 @@ import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'; 
 import { ModPosContext } from './Contexts';
 
-function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResults}) {
+function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResults, unprepSpell}) {
 
   
   const modPos = useContext(ModPosContext);
@@ -142,7 +142,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
                     <span>Components:</span>
                     <span>Duration:</span>
                     <span>description</span>
-                    <Button variant='secondary' size="sm">Unlearn</Button>
+                    <Button variant='secondary' size="sm" onClick={() => unprepSpell(spell.name)}>Unlearn</Button>
                   </div>
                 </td>}
               </tr>

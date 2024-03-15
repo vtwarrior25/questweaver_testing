@@ -37,11 +37,12 @@ function InventoryMenu() {
     console.log("Before setting");
     console.log(sectionname);
     console.log(sections);
-    let newsections = sections.filter((section) => section.sectionname = sectionname);
+    let newsections = sections.filter((section) => section.sectionname === sectionname);
+    let othersections = sections.filter((section) => section.sectionname !== sectionname)
     if (newsections.length > 0) {
       let newsection = newsections[0];
       newsection.sectionweight = weight;
-      setSections({...sections, newsection});
+      setSections([...othersections, newsection]);
       console.log("After setting");
       console.log(sections); // This will show sections in console
     } else {
@@ -49,9 +50,6 @@ function InventoryMenu() {
     }
   } 
 
-  const setItemQuantity = (section, item, quantity) => {
-
-  }
 
   const addItem = (section, item, quantity) => {
     console.log(section + " " + item.name + " " + quantity);
@@ -77,7 +75,18 @@ function InventoryMenu() {
 
   const removeItem = (section, item) => {
     // Remove the item from the inventory section
-
+    /*
+    console.log(section);
+    console.log(item.name);
+    console.log("items");
+    console.log(items);
+    */
+    let newitems = items.filter((i) => i.section !== section || i.name !== item.name);
+    /*
+    console.log("newitems");
+    console.log(newitems);
+    */
+    setItems([...newitems]);
   }
 
 
@@ -214,7 +223,9 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {/*sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={setSectionWeight} setItemQuantity={setItemQuantity}></InventorySection>)*/}
+        {console.log("sections")}
+        {console.log(sections)}
+        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>
   );

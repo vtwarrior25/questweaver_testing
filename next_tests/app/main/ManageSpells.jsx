@@ -1,57 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { PlayerCharacterContext } from './Contexts';
 import { getSpellList, getPreparedSpells, setPreparedSpell, unsetPreparedSpell } from '../lib/spellactions';
 
 
-function ManageSpells() {
-  const playercharacterid = useContext(PlayerCharacterContext);
-
-  const [spelllist, setSpellList] = useState([
-    {
-      name: "Guidance",
-      description: "It shows you the way, man",
-    },
-    {
-      name: "Light",
-      description: "Light, it's bright",
-    },
-    {
-      name: "Sacred Flame",
-      description: "Burn moment.",
-    },
-    {
-      name: "Bless",
-      description: "Bless up, life is roblox.",
-    },
-    {
-      name: "Cure Wounds",
-      description: "Like a hospital.",
-    },
-  ]);
-
-  const [preparedspells, setPreparedSpells] = useState([
-    {
-      name: "Guidance",
-      description: "It shows you the way, man",
-    },
-    {
-      name: "Light",
-      description: "Light, it's bright",
-    },
-    {
-      name: "Sacred Flame",
-      description: "Burn moment.",
-    },
-    {
-      name: "Bless",
-      description: "Bless up, life is roblox.",
-    },
-    {
-      name: "Cure Wounds",
-      description: "Like a hospital.",
-    }
-  ])
+function ManageSpells({addSpells, preparedspells, spelllist}) {
 
   const [searchlistdropdownshidden, setSearchListDropdownsHidden] = useState([]);
   const [preparedlistdropdownshidden, setPreparedListDropdownsHidden] = useState([]);
@@ -107,33 +59,6 @@ function ManageSpells() {
   }, [preparedspells],
   );
 
-  const prepSpell = (spellname) => {
-    // This should add a spell to prepared
-    console.log("prepspell");
-    setPreparedSpell(playercharacterid, spellname);
-    getPreparedSpells()
-    .then((result => {
-      setPreparedSpells([...result]);
-    }))
-    .catch((error) => {
-      console.log(error);
-      console.log("Error retrieving prepared spells");
-    });
-  }
-
-  const unprepSpell = (spellname) => {
-    // This should remove a spell from prepared
-    console.log("prepspell");
-    unsetPreparedSpell(playercharacterid, spellname);
-    getPreparedSpells()
-    .then((result => {
-      setPreparedSpells([...result]);
-    }))
-    .catch((error) => {
-      console.log(error);
-      console.log("Error retrieving prepared spells");
-    });
-  }
   
 
   return ( 
