@@ -4,27 +4,19 @@ import { PlayerCharacterContext, UserIDContext } from "./Contexts";
 import AbilityBox from "./AbilityBox";
 import AbilitySection from "./AbilitySection";
 import { createCharacter } from "../lib/createcharacter";
-import {
-  getCharacterClassInfo,
-  getCharacterCreatorInfo,
-  updateCharacterAbilityScores,
-} from "../lib/getcharactercreatorinfo";
+import { getCharacterClassInfo, getCharacterCreatorInfo } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
 
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
-  const [raceData, setRaceData] = useState({
-    subracesWithRaces: [],
-    racesWithoutSubraces: [],
-  });
+  const [raceData, setRaceData] = useState({ subracesWithRaces: [], racesWithoutSubraces: [] });
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
   const [error, setError] = useState(null);
   const [abilityScores, setAbilityScores] = useState(initialScores);
   const [tempValues, setTempValues] = useState([0, 0, 0, 0, 0, 0]);
-  const [playerCharacterId, setPlayerCharacterId] = useState(null);
   const [selectedAbilities, setSelectedAbilities] = useState(
     Array(6).fill("-")
   );
@@ -46,7 +38,6 @@ function CharacterCreator() {
     ];
   };
 
-  
 
   const [abilities, setAbilities] = useState([
     {
@@ -152,23 +143,7 @@ function CharacterCreator() {
   };
   //class tab
 
-  //race tab
-
-  useEffect(() => {
-    const fetchRaceData = async () => {
-      try {
-        const data = await getCharacterCreatorInfo();
-        console.log("Fetched data:", data); 
-        setRaceData(data);
-      } catch (error) {
-        console.error("Failed to fetch race data:", error);
-      }
-    };
-
-    fetchRaceData();
-  }, []);
-
-  //race tab
+  
 
 
   //ability tab
@@ -219,6 +194,25 @@ function CharacterCreator() {
   };
   
   //ability tab
+
+  //race tab
+
+
+    useEffect(() => {
+      const fetchRaceData = async () => {
+        try {
+          const data = await getCharacterCreatorInfo();
+          console.log("Fetched data:", data); 
+          setRaceData(data);
+        } catch (error) {
+          console.error("Failed to fetch race data:", error);
+        }
+      };
+
+    fetchRaceData();
+  }, []);
+
+  //race tab
   const rollDice = () => {
     const rolls = Array.from(
       { length: 4 },
@@ -240,7 +234,7 @@ function CharacterCreator() {
     updatedRolls[index] = result;
     setDiceRolls(updatedRolls);
   };
-
+ 
   useEffect(() => {
     setAbilities();
   }, [abilities]);
@@ -306,94 +300,83 @@ function CharacterCreator() {
                 {item.features && item.features.map((feature, featureIndex) => (
                   <li key={featureIndex}>{feature.name}: {feature.description}</li>
                 ))}
-                {raceData.racesWithoutSubraces.map((race, index) => (
-                  <Nav.Item key={index}>
-                    <Nav.Link
-                      eventKey={race.name.toLowerCase().replace(/\s+/g, "")}
-                    >
-                      {race.name}
-                    </Nav.Link>
-                  </Nav.Item>
-                ))}
-              </Nav>
-              <Tab.Content>
-                {raceData.subracesWithRaces
-                  .concat(raceData.racesWithoutSubraces)
-                  .map((item, index) => (
+              </ul>
+            </div>
+          </Tab.Pane>
+        ))}
+      </Tab.Content>
+    </Tab.Container>
+  </div>
+</Tab>
+
+      <Tab eventKey="class" title="Class">
+        <Tab.Container defaultActiveKey="barbarian">
+          <div
+            className="characterCreatorSection characterCreatorClass frontElement"
+            style={{ display: "flex", flexDirection: "row" }}
+          >
+            <Tab.Container defaultActiveKey="firstClassKey">
+              <div style={{ display: "flex", width: "100%" }}>
+                <Nav
+                  variant="pills"
+                  className="flex-column"
+                  style={{ minWidth: "200px" }}
+                >
+                  {" "}
+                  
+                  {classes.map((classItem, index) => (
+                    <Nav.Item key={classItem.classid}>
+                      <Nav.Link
+                        eventKey={classItem.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "")}
+                      >
+                        {classItem.name}
+                      </Nav.Link>
+                    </Nav.Item>
+                  ))}
+                </Nav>
+                <Tab.Content style={{ flex: 1, paddingLeft: "20px" }}>
+                  {" "}
+                
+                  {classes.map((classItem) => (
                     <Tab.Pane
-                      key={index}
-                      eventKey={(item.subrace_name || item.name)
+                      key={classItem.classid}
+                      eventKey={classItem.name
                         .toLowerCase()
                         .replace(/\s+/g, "")}
                     >
                       <div className="characterCreatorTabContent">
-                        <h3>{item.subrace_name || item.name}</h3>
+                        <h3>{classItem.name}</h3>
+                        <p>
+                          <strong>Description:</strong> {classItem.description}
+                        </p>
+                        <p>
+                          <strong>Hit Points at 1st Level:</strong>{" "}
+                          {classItem.hitpoints1stlevel}
+                        </p>
+                        <p>
+                          <strong>Hit Points at Higher Levels:</strong>{" "}
+                          {classItem.hitpointshigherlevel}
+                        </p>
+                        <h4>Subclasses:</h4>
                         <ul>
-                          {item.features &&
-                            item.features.map((feature, featureIndex) => (
-                              <li key={featureIndex}>
-                                {feature.name}: {feature.description}
+                          {classItem.subclasses &&
+                            classItem.subclasses.map((subclass) => (
+                              <li key={subclass.subclassid}>
+                                {subclass.name}: {subclass.description}
                               </li>
                             ))}
                         </ul>
                       </div>
                     </Tab.Pane>
                   ))}
-              </Tab.Content>
+                </Tab.Content>
+              </div>
             </Tab.Container>
           </div>
-        </Tab>
-
-        <Tab eventKey="class" title="Class">
-  <Tab.Container defaultActiveKey="firstClassKey">
-    <div
-      className="characterCreatorSection characterCreatorClass frontElement"
-      style={{ display: "flex", flexDirection: "row" }}
-    >
-      <Nav
-        variant="pills"
-        className="flex-column classNav"
-        style={{ minWidth: "200px" }}
-      >
-        {classes.map((classItem, index) => (
-          <Nav.Item key={classItem.classid}>
-            <Nav.Link
-              eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")}
-            >
-              {classItem.name}
-            </Nav.Link>
-          </Nav.Item>
-        ))}
-      </Nav>
-      <Tab.Content className="classContent">
-        {classes.map((classItem) => (
-          <Tab.Pane
-            key={classItem.classid}
-            eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")}
-          >
-            <div className="characterCreatorTabContent">
-              <h3>{classItem.name}</h3>
-              <p><strong>Hit Points at 1st Level:</strong> {classItem.hitpoints1stlevel}</p>
-              <p><strong>Hit Points at Higher Levels:</strong> {classItem.hitpointshigherlevel}</p>
-              <p><strong>Description:</strong> {classItem.description}</p>
-              <div className="subclassesSection">
-                <h4>Subclasses:</h4>
-                <ul>
-                  {classItem.subclasses && classItem.subclasses.map((subclass) => (
-                    <li key={subclass.subclassid}>
-                      {subclass.name}: {subclass.description}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Tab.Pane>
-        ))}
-      </Tab.Content>
-    </div>
-  </Tab.Container>
-</Tab>
-
+        </Tab.Container>
+      </Tab>
 
         <Tab eventKey="abilities" title="Abilities">
           <div className="characterCreator">
