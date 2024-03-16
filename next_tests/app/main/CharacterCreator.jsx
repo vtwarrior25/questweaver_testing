@@ -159,7 +159,7 @@ function CharacterCreator() {
         const score = diceRolls[index];
         newScores[ability] = score;
         abilitiesToUpdate.push({
-          abilityid: getAbilityId(ability), // Implement getAbilityId to map abilities to IDs
+          abilityid: getAbilityId(ability),
           score: score,
           modifier: calculateModifier(score),
         });
@@ -170,8 +170,9 @@ function CharacterCreator() {
     setAbilityScores(newScores);
     setSelectedAbilities(Array(6).fill("-"));
   
-    // Update database (ensure playerCharacterId is set properly in your state)
+    // Update database
     try {
+      // Assuming playerCharacterId is obtained from context
       await updateCharacterAbilityScores(playerCharacterId, abilitiesToUpdate);
       console.log('Abilities successfully updated in database');
     } catch (error) {
@@ -179,19 +180,21 @@ function CharacterCreator() {
     }
   };
   
+  
 
   const getAbilityId = (abilityName) => {
     const mapping = {
-      STR: 1,
-      DEX: 2,
-      CON: 3,
-      INT: 4,
-      WIS: 5, 
-      CHA: 6,
+      "STR": 1,
+      "DEX": 2,
+      "CON": 3,
+      "INT": 4,
+      "WIS": 5,
+      "CHA": 6,
     };
   
     return mapping[abilityName];
   };
+  
   
   //ability tab
 
