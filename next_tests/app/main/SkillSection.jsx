@@ -9,119 +9,119 @@ function SkillSection (setRollResults){
     
   const[skills, setSkills] = useState([
     {
-      skillname: "Acrobatics",
-      skillmod: "Dex",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Acrobatics",
+      mod: "Dex",
+      prof: false,
+      bonus: 2,
     }, 
     {
-      skillname: "Animal Handling",
-      skillmod: "Wis",
-      skillprof: true,
-      skillbonus: 0,
+      name: "Animal Handling",
+      mod: "Wis",
+      prof: true,
+      bonus: 3,
     }, 
     {
-      skillname: "Arcana",
-      skillmod: "Int",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Arcana",
+      mod: "Int",
+      prof: false,
+      bonus: -1,
     }, 
     {
-      skillname: "Athletics",
-      skillmod: "Str",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Athletics",
+      mod: "Str",
+      prof: false,
+      bonus: 3,
     }, 
     {
-      skillname: "Deception",
-      skillmod: "Cha",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Deception",
+      mod: "Cha",
+      prof: false,
+      bonus: 0,
     }, 
     {
-      skillname: "History",
-      skillmod: "Int",
-      skillprof: false,
-      skillbonus: 0,
+      name: "History",
+      mod: "Int",
+      prof: false,
+      bonus: -1,
     }, 
     {
-      skillname: "Insight",
-      skillmod: "Wis",
-      skillprof: true,
-      skillbonus: 0,
+      name: "Insight",
+      mod: "Wis",
+      prof: true,
+      bonus: 1,
     }, 
     {
-      skillname: "Intimidation",
-      skillmod: "Cha",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Intimidation",
+      mod: "Cha",
+      prof: false,
+      bonus: 0,
     }, 
     {
-      skillname: "Investigation",
-      skillmod: "Int",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Investigation",
+      mod: "Int",
+      prof: false,
+      bonus: -1,
     }, 
     {
-      skillname: "Medicine",
-      skillmod: "Wis",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Medicine",
+      mod: "Wis",
+      prof: false,
+      bonus: +1,
     }, 
     {
-      skillname: "Nature",
-      skillmod: "Int",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Nature",
+      mod: "Int",
+      prof: false,
+      bonus: -1,
     }, 
     {
-      skillname: "Perception",
-      skillmod: "Wis",
-      skillprof: true,
-      skillbonus: 0,
+      name: "Perception",
+      mod: "Wis",
+      prof: true,
+      bonus: +3,
     }, 
     {
-      skillname: "Performance",
-      skillmod: "Cha",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Performance",
+      mod: "Cha",
+      prof: false,
+      bonus: 0,
     }, 
     {
-      skillname: "Persuasion",
-      skillmod: "Cha",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Persuasion",
+      mod: "Cha",
+      prof: false,
+      bonus: 0,
     }, 
     {
-      skillname: "Religion",
-      skillmod: "Int",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Religion",
+      mod: "Int",
+      prof: false,
+      bonus: 0,
     }, 
     {
-      skillname: "Sleight of Hand",
-      skillmod: "Dex",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Sleight of Hand",
+      mod: "Dex",
+      prof: false,
+      bonus: +2
     }, 
     {
-      skillname: "Stealth",
-      skillmod: "Dex",
-      skillprof: true,
-      skillbonus: 0,
+      name: "Stealth",
+      mod: "Dex",
+      prof: true,
+      bonus: 2,
     }, 
     {
-      skillname: "Survival",
-      skillmod: "Wis",
-      skillprof: false,
-      skillbonus: 0,
+      name: "Survival",
+      mod: "Wis",
+      prof: false,
+      bonus: 3,
     },
   ]);
   const[alignments, setAlignments] = useState([]);
     
   const getSkills = () => {
     getcharacterinfo(playercharacterid, 'skill')
-    .then(results => setSkills(results));
+    .then(results => setSkills({...results}));
   }
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function SkillSection (setRollResults){
           </tr>
         </thead>
         <tbody>
-          {skills && skills.length > 0 && skills.map((skill) => <SkillRow key={skill.skillname} name={skill.skillname} mod={skill.skillmod} prof={skill.skillprof} bonus={skill.skillbonus} setRollResults={setRollResults}/>)}
+          {skills && skills.length > 0 && skills.map((skill, index) => <SkillRow key={index} name={skill.name} mod={skill.mod} prof={skill.prof} bonus={skill.bonus} setRollResults={setRollResults}/>)}
           {alignments && alignments.length > 0 && alignments.map((alignment, index) => 
             <tr key={index}>
               <td>{alignment.alignment_name}</td>

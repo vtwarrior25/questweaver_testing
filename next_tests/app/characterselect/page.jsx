@@ -41,6 +41,7 @@ export default function Page() {
   useEffect(() => {
     getCharactersForPlayer(userid)
     .then((result) => {
+      console.log(result);
       setPlayerCharacters([...result]);
     }).catch((error) => {
       console.error("Error retrieving characters: " + error);

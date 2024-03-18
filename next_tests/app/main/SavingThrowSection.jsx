@@ -1,14 +1,3 @@
-/*
-  return ( 
-    <div className="characterSavingThrowSection frontElement">
-      <Stack className="characterSavingThrowLeft" direction="vertical" gap={1}>
-        <div className="characterSavingThrow"></div>
-      </Stack>
-    </div>
-  );
-}
-*/
-
 import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'
@@ -59,7 +48,7 @@ function SavingThrowSection ({setRollResults}) {
     .then(res => setSavingThrows(res));
     */
     getcharacterinfo(playercharacterid, 'savingthrow')
-    .then(results => setSavingThrows(results));
+    .then(results => setSavingThrows({...results}));
     }, [playercharacterid]
   )
 
@@ -88,7 +77,7 @@ function SavingThrowSection ({setRollResults}) {
     <div className="characterSavingThrowSectionBox frontElement">
       <span className='characterSheetSectionTitle'>Saving Throws</span>
       <div className="characterSavingThrowSection">
-        {savingthrows.map((savingthrow) => <SavingThrow key={savingthrow.name} name={savingthrow.name} prof={savingthrow.prof} val={savingthrow.val} setRollResults={setRollResults}/>)}
+        {savingthrows && savingthrows.length > 0 && savingthrows.map((savingthrow) => <SavingThrow key={savingthrow.name} name={savingthrow.name} prof={savingthrow.prof} val={savingthrow.val} setRollResults={setRollResults}/>)}
       </div>
     </div>
   );

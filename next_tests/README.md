@@ -44,15 +44,15 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Make the formatting of things look good
   - [ ] Character sheet layout
   - [ ] Map section layout
-- [ ] How will we make the page load differently for the DM vs normal players
-- [ ] Fix roll results
+- [x] How will we make the page load differently for the DM vs normal players
+- [x] Fix roll results
 - [ ] Monster Group Form
   - [ ] Working on making the form update state anytime something changes, so that we can replace the state when duplicating another monster group
     - [x] Each field in the form should be tied to one of the fields in the `formdata` state object
 - [ ] Character Creator
   - [ ] Grab the race/class features for each and show them in the character creator sections
     - [ ] Will be implemented in [getcharactercreatorinfo.js](app\lib\getcharactercreatorinfo.js)
-    - [ ] Tables within features will be written in HTML and within the feature description 
+    - [ ] Tables within features will be written in HTML and within the feature description
   - [ ] Create equipment section
   - [x] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
 

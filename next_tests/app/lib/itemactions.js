@@ -135,11 +135,29 @@ export async function createWeapon(userid, formdata) {
   });
 }
 
+
+const checkcharacterinventoryforitem = new PQ({
+  text: `
+    SELECT DISTINCT itemid, quantity
+    FROM characterinventory
+    WHERE itemid = (SELECT itemid FROM item WHERE name = $1) AND characterinventorysection = $2 AND playercharacterid = $3;
+  `
+});
+
 export async function setCharacterInventory(playercharacterid, items) {
   // Check if an item exists in the table already (check for itemid from name, section, playercharacterid)
-  // If it does exist and the quantity is the same, do nothing
-  // If it does exist and the quantity is different, update the quantity
-  // If it doesn't exist, add the new item
+  for (let item of items) {
+    db.one(checkcharacterinventoryforitem, [item.name, item.sectionname, playercharacterid])
+    .then((checkitemresult) => {
+      if (checkitemresult.quantity === item.quantity) {
+        // If it does exist and the quantity is the same, do nothing
+      } else {
+        // If it does exist and the quantity is different, update the quantity
+      }
+    }).catch((error) => {
+      // If it doesn't exist, add the new item
+    });
+  }  
 }
 
 
