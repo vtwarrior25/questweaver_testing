@@ -623,6 +623,32 @@ Character Creation
   color: #333; 
 }
 
+.characterCreatorSection {
+  
+  padding: 20px;
+}
+
+.classNav .nav-link {
+  text-align: left; 
+}
+
+.classContent {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.characterCreatorTabContent {
+  text-align: left; 
+}
+
+.subclassesSection ul {
+  padding-left: 20px; 
+}
+
+.subclassesSection ul li {
+  list-style-type: disc; 
+}
+
 /*
 ----------------------------------------
 Character Inventory Area 

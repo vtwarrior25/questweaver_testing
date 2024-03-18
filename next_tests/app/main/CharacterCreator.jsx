@@ -38,17 +38,6 @@ function CharacterCreator() {
     ];
   };
 
-  const updateAbilityScores = () => {
-    const newScores = { ...abilityScores };
-    selectedAbilities.forEach((ability, index) => {
-      if (ability !== "-") {
-        newScores[ability] = diceRolls[index] || newScores[ability];
-      }
-    });
-    setAbilityScores(newScores);
-
-    setSelectedAbilities(Array(6).fill("-"));
-  };
 
   const [abilities, setAbilities] = useState([
     {
@@ -154,7 +143,60 @@ function CharacterCreator() {
   };
   //class tab
 
+  
 
+
+  //ability tab
+
+  const updateAbilityScores = async () => {
+    const calculateModifier = (score) => Math.floor((score - 10) / 2);
+  
+    let newScores = { ...abilityScores };
+    let abilitiesToUpdate = [];
+  
+    selectedAbilities.forEach((ability, index) => {
+      if (ability !== "-") {
+        const score = diceRolls[index];
+        newScores[ability] = score;
+        abilitiesToUpdate.push({
+          abilityid: getAbilityId(ability),
+          score: score,
+          modifier: calculateModifier(score),
+        });
+      }
+    });
+  
+    // Update local state
+    setAbilityScores(newScores);
+    setSelectedAbilities(Array(6).fill("-"));
+  
+    // Update database
+    try {
+      // Assuming playerCharacterId is obtained from context
+      await updateCharacterAbilityScores(playerCharacterId, abilitiesToUpdate);
+      console.log('Abilities successfully updated in database');
+    } catch (error) {
+      console.error('Error updating abilities in database:', error);
+    }
+  };
+  
+  
+
+  const getAbilityId = (abilityName) => {
+    const mapping = {
+      "STR": 1,
+      "DEX": 2,
+      "CON": 3,
+      "INT": 4,
+      "WIS": 5,
+      "CHA": 6,
+    };
+  
+    return mapping[abilityName];
+  };
+  
+  
+  //ability tab
 
   //race tab
 
@@ -163,7 +205,7 @@ function CharacterCreator() {
       const fetchRaceData = async () => {
         try {
           const data = await getCharacterCreatorInfo();
-          console.log("Fetched data:", data); // Check what's being fetched
+          console.log("Fetched data:", data); 
           setRaceData(data);
         } catch (error) {
           console.error("Failed to fetch race data:", error);
@@ -195,7 +237,7 @@ function CharacterCreator() {
     updatedRolls[index] = result;
     setDiceRolls(updatedRolls);
   };
-
+ 
   useEffect(() => {
     setAbilities();
   }, [abilities]);

@@ -22,6 +22,38 @@ const getracesquery = new PQ({
   `
 });
 
+
+export async function updateCharacterAbilityScores(playerCharacterId, abilities) {
+  try {
+      for (const ability of abilities) {
+          // Check if an entry exists
+          const existingEntry = await db.oneOrNone(`
+              SELECT characterabilityid FROM characterability
+              WHERE playercharacterid = $1 AND abilityid = $2;
+          `, [playerCharacterId, ability.abilityid]);
+
+          if (existingEntry) {
+              // Entry exists, perform an update
+              await db.none(`
+                  UPDATE characterability
+                  SET score = $3, modifier = $4
+                  WHERE characterabilityid = $5;
+              `, [playerCharacterId, ability.abilityid, ability.score, ability.modifier, existingEntry.characterabilityid]);
+          } else {
+              // No entry exists, perform an insert
+              await db.none(`
+                  INSERT INTO characterability (playercharacterid, abilityid, score, modifier)
+                  VALUES ($1, $2, $3, $4);
+              `, [playerCharacterId, ability.abilityid, ability.score, ability.modifier]);
+          }
+      }
+  } catch (error) {
+      console.error("Error updating character abilities:", error);
+      throw error;
+  }
+}
+
+
 export async function getCharacterClassInfo() {
   let classesWithSubclasses = [];
 
