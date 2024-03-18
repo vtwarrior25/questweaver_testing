@@ -41,7 +41,7 @@ export default function Page() {
   useEffect(() => {
     getCharactersForPlayer(userid)
     .then((result) => {
-      setPlayerCharacters(result);
+      setPlayerCharacters([...result]);
     }).catch((error) => {
       console.error("Error retrieving characters: " + error);
     });
@@ -51,7 +51,7 @@ export default function Page() {
   return (  
     <div className='characterselection'>
       <h4>Character Select</h4>
-      {playercharacters.map((character, index) => 
+      {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
         <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
       )}
       <Button variant='primary' className='characterCreatorButton' onClick={() => router.push('../charactercreator')}>Create New Character</Button>

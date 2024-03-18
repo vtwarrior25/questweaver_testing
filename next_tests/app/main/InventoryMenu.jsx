@@ -75,17 +75,7 @@ function InventoryMenu() {
 
   const removeItem = (section, item) => {
     // Remove the item from the inventory section
-    /*
-    console.log(section);
-    console.log(item.name);
-    console.log("items");
-    console.log(items);
-    */
     let newitems = items.filter((i) => i.section !== section || i.name !== item.name);
-    /*
-    console.log("newitems");
-    console.log(newitems);
-    */
     setItems([...newitems]);
   }
 

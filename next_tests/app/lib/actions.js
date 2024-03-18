@@ -124,8 +124,9 @@ const getcharactersforplayerquery2 = new PQ({
 });
 
 export async function getCharactersForPlayer(userid) {
-  db.many(getcharactersforplayerquery2, [userid])
+  db.many(getcharactersforplayerquery2)
   .then((result) => {
+    console.log(result);
     return result;
   })
   .catch((error) => {

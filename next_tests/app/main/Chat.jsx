@@ -56,7 +56,7 @@ function Chat() {
   return ( 
     <div className="chatInnerBox">
       <div className="chatMessageArea">
-        {chatmessages.map((message, index) => <ChatMessage key={index} character={message.character} text={message.text}/>)}
+        {chatmessages && chatmessages.length > 0 && chatmessages.map((message, index) => <ChatMessage key={index} character={message.character} text={message.text}/>)}
       </div>
       <div className="chatEntryArea">
         <textarea className='chatTextEntry' onChange={(e) => handleChange(e)}></textarea>

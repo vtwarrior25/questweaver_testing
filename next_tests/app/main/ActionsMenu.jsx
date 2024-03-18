@@ -65,7 +65,7 @@ function ActionsMenu({setRollResults}) {
             </tr>
           </thead>
           <tbody>
-            {actions.map((action, index) => 
+            {actions && actions.length > 0 && actions.map((action, index) => 
               <tr key={index}>
                 <td>{action.name}</td>
                 <td>{action.range}</td>
