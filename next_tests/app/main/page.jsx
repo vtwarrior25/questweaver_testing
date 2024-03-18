@@ -24,7 +24,7 @@ import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, U
 function App () {
   const searchParams = useSearchParams();
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 0);
-  const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 0);
+  const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 6);
   const [isDM, setIsDM] = useState(true);
 
   const [rollresults, setRollResults] = useState({
