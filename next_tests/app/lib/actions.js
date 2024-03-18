@@ -11,7 +11,7 @@ export async function authenticate(formdata) {
   let redirecturl = '../login';
   //console.log(formdata.get('username'));
   console.log(formdata.get('username') + " " + formdata.get('password'));
-  userauth(formdata.get('username'), formdata.get('password'))
+  await userauth(formdata.get('username'), formdata.get('password'))
   .then((result) => {
     console.log("this is the result in authenticate");
     console.log(result);
@@ -34,7 +34,7 @@ const userauthquery = new PQ({
 
 export async function userauth(username, password) {
   console.log(username + ' ' + password);
-  await db.one(userauthquery, [username, password])
+  db.one(userauthquery, [username, password])
   .then((result) => {
     console.log(result.playerid);
     return result.playerid;
@@ -44,6 +44,30 @@ export async function userauth(username, password) {
     return null;
   });
   return null;
+}
+
+export async function auth2(formdata) {
+  let redirecturl = '../login';
+  //console.log(formdata.get('username'));
+  console.log(formdata.get('username') + " " + formdata.get('password'));
+  db.one(userauthquery, [formdata.get('username'), formdata.get('password')])
+  .then((result) => {
+    console.log("this is the result in authenticate");
+    console.log(result);
+    if (result !== null) {
+      redirecturl = `../characterselect?userid=${result.playerid}`;
+      console.log(redirecturl);
+    }
+  }).catch((error) => {
+    console.log("fucked");
+    console.log(error);
+  }).finally(() => {
+    loginredirect(redirecturl);
+  });
+}
+
+export async function loginredirect (redirecturl) {
+  redirect(redirecturl);
 }
 
 
@@ -68,10 +92,9 @@ export async function createuser(formdata) {
     .then((result) => {
       // TODO Write the resulting playerid out to state (cookies)?? 
       console.log(result);
-      redirect('../characterselect');
+      redirect(`../characterselect?userid=${result.playerid}`);
     }).catch((error) => {
-      console.log(error);
-      return "Username already exists";
+      console.error("Username already exists" + error);
     });
   } else {
     return "Passwords didn't match";
@@ -91,8 +114,17 @@ const getcharactersforplayerquery = new PQ({
   `
 });
 
+const getcharactersforplayerquery2 = new PQ({
+  text: `
+  SELECT c.playerid, c.playercharacterid, c.name AS charname, r.name AS charrace, cl.name AS charclassname, c.characterlevel AS charlevel FROM playercharacter c
+    JOIN race r ON c.race = r.raceid
+    JOIN class cl ON c.class = cl.classid
+  WHERE c.playerid = 10;
+  `
+});
+
 export async function getCharactersForPlayer(userid) {
-  db.many(getcharactersforplayerquery, [userid])
+  db.many(getcharactersforplayerquery2, [userid])
   .then((result) => {
     return result;
   })

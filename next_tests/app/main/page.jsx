@@ -1,27 +1,30 @@
 "use client"
 // React Imports
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import '@/app/App.css';
 import RollResultsSection from "./RollResultsSection";
 import CharacterSheet from "./CharacterSheet";
 import StaticStatsBox from "./StaticStatsBox";
 import MapSection from "./MapSection";
 import MonsterSheet from "./MonsterSheet";
+import ItemCreationForm from "./ItemCreationForm";
+import WeaponCreationForm from "./WeaponCreationForm";
+import AbilityBox from "./AbilityBox";
+import ManualDiceRoller from "./ManualDiceRoller";
+import CharacterCreator from "./CharacterCreator";
+
 
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AbilityBox from "./AbilityBox";
-import ManualDiceRoller from "./ManualDiceRoller";
-import CharacterCreator from "./CharacterCreator";
 import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, DMContext }  from "./Contexts";
-import ItemCreationForm from "./ItemCreationForm";
-import WeaponCreationForm from "./WeaponCreationForm";
 
 
 function App () {
-  const [userid, setUserID] = useState(0);
-  const [playercharacterid, setPlayerCharacterID] = useState(0);
+  const searchParams = useSearchParams();
+  const [userid, setUserID] = useState(searchParams.get('userid') ?? 0);
+  const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 0);
   const [isDM, setIsDM] = useState(true);
 
   const [rollresults, setRollResults] = useState({

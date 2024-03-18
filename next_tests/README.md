@@ -74,7 +74,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] getCharacterInfo
 - [ ] addItemToInventory (to character inventory)
 - [x] createItem
-- [ ] createWeapon
+- [x] createWeapon
 - [x] prepareSpell
 - [x] unprepareSpell
 - [x] getInventory

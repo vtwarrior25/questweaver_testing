@@ -386,7 +386,7 @@ CREATE TABLE IF NOT EXISTS characterlanguage (
 CREATE TABLE IF NOT EXISTS characterproficiency (
 	characterproficiencyid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid							integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	proficiency										integer REFERENCES proficiency(proficiencyid) NOT NULL
+	proficiencyid									integer REFERENCES proficiency(proficiencyid) NOT NULL
 );
 
 

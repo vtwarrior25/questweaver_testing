@@ -1,7 +1,7 @@
 'use client'
 
 import '@/app/App.css';
-import { authenticate, gotosignup } from '@/app/lib/actions'
+import { auth2, authenticate, gotosignup } from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import './login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,12 +11,12 @@ import Button from 'react-bootstrap/Button';
 
 export default function Page() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
-  const authenticatemode = authenticate.bind(null);
+  //const authenticatemode = auth2.bind();
 
   return (
     <div className='loginsection'>
       <h3>Questweaver D&D System</h3>
-      <Form action={authenticatemode}>
+      <Form action={auth2}>
         <Form.Group controlId='username'>
           <Form.Label>Username</Form.Label>
           <Form.Control type='text' placeholder='Username' name="username" required={true}></Form.Control>

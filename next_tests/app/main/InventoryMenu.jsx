@@ -223,8 +223,6 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {console.log("sections")}
-        {console.log(sections)}
         {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>

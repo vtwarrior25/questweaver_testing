@@ -4,7 +4,7 @@ import '@/app/App.css';
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 import CharacterSelectEntry from './CharacterSelectEntry';
-import { goToCharacterCreator } from '../lib/actions';
+import { goToCharacterCreator, getCharactersForPlayer } from '../lib/actions';
 import './characterselect.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
@@ -14,7 +14,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const [userid, setUserID] = useState(0);
+  const [userid, setUserID] = useState(10);
 
   const [playercharacters, setPlayerCharacters] = useState([
     {
@@ -37,7 +37,7 @@ export default function Page() {
     },
   ])
 
-  /*
+  
   useEffect(() => {
     getCharactersForPlayer(userid)
     .then((result) => {
@@ -45,9 +45,8 @@ export default function Page() {
     }).catch((error) => {
       console.error("Error retrieving characters: " + error);
     });
-  }, [playerid]
+  }, [userid]
   );
-  */
 
   return (  
     <div className='characterselection'>

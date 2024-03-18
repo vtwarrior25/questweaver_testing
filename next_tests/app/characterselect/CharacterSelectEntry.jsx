@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { setSelectedPlayerCharacter } from '../lib/actions';
 
@@ -26,9 +27,11 @@ function CharacterSelectEntry({userid, charid, charname, charclass, charsubclass
   
 
   return ( 
-    <Button variant='secondary' className="characterSelectEntry" onClick={() => setSelectedPlayerCharacter(userid, charid)}>
-      {`${charname}: Level ${charlevel} ${charrace} (${charsubrace}) ${charclass} (${charsubclass})`}
-    </Button>
+    <Link href={{pathname: '../main', query: {userid: userid, playercharacterid: charid}}}>
+      <Button variant='secondary' className="characterSelectEntry">
+        {`${charname}: Level ${charlevel} ${charrace} (${charsubrace}) ${charclass} (${charsubclass})`}
+      </Button>
+    </Link>
   );
 }
 

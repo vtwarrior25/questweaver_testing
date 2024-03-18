@@ -20,8 +20,8 @@ const playercharacteraddquery = new PQ({
     (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), $3, (SELECT classid FROM class WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING playercharacterid
   ) 
   INSERT INTO playercharacternote (playercharacterid, alignmentid, organizations, allies, enemies, backstory, other) VALUES
-  (pcid, (SELECT alignmentid FROM alignment WHERE name = $17), $18, $19, $20, $21, $22)
-  RETURNING pcid;
+  ((SELECT * from pcid), (SELECT alignmentid FROM alignment WHERE name = $17), $18, $19, $20, $21, $22)
+  RETURNING playercharacterid;
   `
 });
 
@@ -43,6 +43,27 @@ const playercharacterpassiveabilityquery = new PQ({
   text: `
     INSERT INTO characterpassiveability (playercharacterid, passiveperception, passiveinvestigation, passiveinsight) VALUES 
     ($1, $2, $3, $4);
+  `
+});
+
+const playercharacterfeaturequery = new PQ({
+  text: `
+    INSERT INTO characterfeature (playercharacterid, featureid) VALUES
+    ($1, (SELECT featureid FROM feature WHERE name = $2));
+  `
+});
+
+const playercharacterproficiencyquery = new PQ({
+  text: `
+    INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
+    ($1, (SELECT proficiencyid FROM proficiency WHERE name = $2));
+  `
+});
+
+const playercharacterdefensequery = new PQ({
+  text: `
+    INSERT INTO characterdefense (playercharacterid, defenseid, defensestatus) VALUES
+    ($1, (SELECT defenseid FROM defense WHERE name = $2), $3);
   `
 });
 
@@ -71,7 +92,14 @@ export async function createCharacter(formdata) {
         db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
       }
     })
-    
+    for (feature of features) {
+      db.many(playercharacterfeaturequery, [playercharacterid, feature.name])
+      .then((featureresult) => {
+
+      }).catch((error) => {
+        console.error("Error adding features to character: " + error);
+      })
+    }
   }).catch((error) => {
     return "Error inserting player character";
   })
