@@ -62,7 +62,9 @@ function AbilitySection ({setRollResults, rollresults}) {
       .then(res => setAbilities(res));
   console.log(abilities);
   */
+  console.log("beans ability")
   getcharacterinfo(playercharacterid, 'ability')
+  .then(results => console.log(results))
   .then(results => setAbilities(results));
   }
   

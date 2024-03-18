@@ -22,7 +22,7 @@ function HealthSection () {
     .then(res => setHealthVal(res));
     */
     getcharacterinfo(playercharacterid, 'health')
-    .then(results => setHealthVal(results));
+    .then(results => setHealthVal({...results}));
   }
 
   const setHealth = () => {

@@ -40,7 +40,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
     .then(res => setStaticStats(res));
     */
     getcharacterinfo(playercharacterid, 'staticstats')
-    .then(results => setStaticStats(results));
+    .then(results => setStaticStats({...results}));
   }
 
 {/*
