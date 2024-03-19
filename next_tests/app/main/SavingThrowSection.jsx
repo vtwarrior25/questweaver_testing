@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'
 import SavingThrow from './SavingThrow';
-import { getcharacterinfo } from '../lib/getcharacterinfo';
+import { getSavingThrows } from '../lib/getcharacterinfo';
 import { PlayerCharacterContext } from './Contexts';
 
 function SavingThrowSection ({setRollResults}) { 
@@ -42,13 +42,8 @@ function SavingThrowSection ({setRollResults}) {
     ]);
 
   useEffect(() => {  
-    /*
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=savingthrow`)
-    .then(res => res.json())
-    .then(res => setSavingThrows(res));
-    */
-    getcharacterinfo(playercharacterid, 'savingthrow')
-    .then(results => setSavingThrows({...results}));
+    getSavingThrows(playercharacterid)
+      .then(results => setSavingThrows([...results]));
     }, [playercharacterid]
   )
 

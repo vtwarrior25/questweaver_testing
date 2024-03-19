@@ -72,7 +72,8 @@ function TurnOrder() {
     .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
     */
     getcharacterinfo(playercharacterid, 'turnorder')
-    .then(result => setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
+    .then(result => setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})))
+    .catch(error => console.error("Error setting turn order " + error));
     
   }
 

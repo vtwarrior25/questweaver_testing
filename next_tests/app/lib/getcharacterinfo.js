@@ -349,6 +349,264 @@ export async function getcharacterinfo(playercharacterid, infotype) {
       return dbinfo;
     }).catch (error => {
       console.error("Error retrieving character info " + error);
+    }).finally ((beans) => {
+      return dbresult;
     });
-  return dbresult;
 }
+
+
+const savingthrowdefaultresult = [
+  {
+    name: 'STR',
+    prof: false,
+    val: +1,
+  },
+  {
+    name: 'DEX',
+    prof: false,
+    val: +2,
+  },
+  {
+    name: 'CON',
+    prof: false,
+    val: +3,
+  },
+  {
+    name: 'INT',
+    prof: false,
+    val: +4,
+  },
+  {
+    name: 'WIS',
+    prof: false,
+    val: +5,
+  },
+  {
+    name: 'CHA',
+    prof: false,
+    val: +6,
+  }
+];
+
+const skilldefaultresult = [
+  {
+    name: "Acrobatics",
+    mod: "Dex",
+    prof: false,
+    bonus: 2,
+  }, 
+  {
+    name: "Animal Handling",
+    mod: "Wis",
+    prof: true,
+    bonus: 3,
+  }, 
+  {
+    name: "Arcana",
+    mod: "Int",
+    prof: false,
+    bonus: -1,
+  }, 
+  {
+    name: "Athletics",
+    mod: "Str",
+    prof: false,
+    bonus: 3,
+  }, 
+  {
+    name: "Deception",
+    mod: "Cha",
+    prof: false,
+    bonus: 0,
+  }, 
+  {
+    name: "History",
+    mod: "Int",
+    prof: false,
+    bonus: -1,
+  }, 
+  {
+    name: "Insight",
+    mod: "Wis",
+    prof: true,
+    bonus: 1,
+  }, 
+  {
+    name: "Intimidation",
+    mod: "Cha",
+    prof: false,
+    bonus: 0,
+  }, 
+  {
+    name: "Investigation",
+    mod: "Int",
+    prof: false,
+    bonus: -1,
+  }, 
+  {
+    name: "Medicine",
+    mod: "Wis",
+    prof: false,
+    bonus: +1,
+  }, 
+  {
+    name: "Nature",
+    mod: "Int",
+    prof: false,
+    bonus: -1,
+  }, 
+  {
+    name: "Perception",
+    mod: "Wis",
+    prof: true,
+    bonus: +3,
+  }, 
+  {
+    name: "Performance",
+    mod: "Cha",
+    prof: false,
+    bonus: 0,
+  }, 
+  {
+    name: "Persuasion",
+    mod: "Cha",
+    prof: false,
+    bonus: 0,
+  }, 
+  {
+    name: "Religion",
+    mod: "Int",
+    prof: false,
+    bonus: 0,
+  }, 
+  {
+    name: "Sleight of Hand",
+    mod: "Dex",
+    prof: false,
+    bonus: +2
+  }, 
+  {
+    name: "Stealth",
+    mod: "Dex",
+    prof: true,
+    bonus: 2,
+  }, 
+  {
+    name: "Survival",
+    mod: "Wis",
+    prof: false,
+    bonus: 3,
+  },
+];
+
+const abilitydefaultresult = [
+  {
+    abilityname: "Strength",
+    abilityabbrev: "STR",
+    abilityscore: 18,
+    abilitybonus: 3,
+  },
+  {
+    abilityname: "Dexterity",
+    abilityabbrev: "DEX",
+    abilityscore: 12,
+    abilitybonus: 2,
+  },
+  {
+    abilityname: "Constitution",
+    abilityabbrev: "CON",
+    abilityscore: 12,
+    abilitybonus: 2,
+  },
+  {
+    abilityname: "Intelligence",
+    abilityabbrev: "INT",
+    abilityscore: 12,
+    abilitybonus: -1,
+  },
+  {
+    abilityname: "Wisdom",
+    abilityabbrev: "WIS",
+    abilityscore: 12,
+    abilitybonus: +1,
+  },
+  {
+    abilityname: "Charisma",
+    abilityabbrev: "CHA",
+    abilityscore: 12,
+    abilitybonus: 0,
+  },
+]
+
+
+
+
+const charactergetsavingthrowquery = new PQ({
+  text: `
+    SELECT s.name, c.proficient, c.bonus FROM charactersavingthrow c
+      JOIN savingthrow s ON c.savingthrowid = s.savingthrowid
+    WHERE c.playercharacterid = $1;
+  `
+});
+
+
+const charactergetskillquery = new PQ({
+  text: `
+    SELECT s.name, a.abbrev AS mod, c.proficient AS prof, c.bonus FROM characterskill c
+      JOIN skill s ON c.skillid = s.skillid
+      JOIN ability a ON s.abilityid = a.abilityid
+    WHERE c.playercharacterid = $1;
+  `
+});
+
+
+const charactergetabilityquery = new PQ({
+  text: `
+    SELECT a.name AS abilityname, a.abbrev AS abilityabbrev, c.score AS abilityscore, c.modifier AS abilitybonus FROM characterability c
+      JOIN ability a ON c.abilityid = a.abilityid
+    WHERE c.playercharacterid = $1;
+  `
+});
+
+
+export async function getSkills (playercharacterid) {
+  let result = skilldefaultresult;
+  db.any(charactergetsavingthrowquery, [playercharacterid])
+    .then ((dbinfo) => {
+      console.log("got saving throw data");
+      console.log(dbinfo);
+      result = [...dbinfo];
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    });
+  return result;
+}
+
+
+export async function getSavingThrows (playercharacterid) {
+  let result = savingthrowdefaultresult;
+  db.any(charactergetskillquery, [playercharacterid])
+    .then ((dbinfo) => {
+      console.log("got skills data");
+      console.log(dbinfo);
+      result = [...dbinfo];
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    })
+  return result;
+}
+
+export async function getAbilities (playercharacterid) {
+  let result = abilitydefaultresult;
+  db.any(charactergetabilityquery, [playercharacterid])
+    .then ((dbinfo) => {
+      console.log("got abilities data");
+      console.log(dbinfo);
+      result = [...dbinfo];
+      return result;
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    })
+  return result;
+}
+

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState} from "react";
 import SkillRow from './SkillRow'
-import { getcharacterinfo } from "../lib/getcharacterinfo";
+import { getSkills } from "../lib/getcharacterinfo";
 import { PlayerCharacterContext } from "./Contexts";
 
 function SkillSection (setRollResults){
@@ -119,14 +119,11 @@ function SkillSection (setRollResults){
   ]);
   const[alignments, setAlignments] = useState([]);
     
-  const getSkills = () => {
-    getcharacterinfo(playercharacterid, 'skill')
-    .then(results => setSkills({...results}));
-  }
 
   useEffect(() => {
-    getSkills();
-  }, []
+    getSkills(playercharacterid)
+    .then(results => setSkills([...results]));
+  }, [playercharacterid]
   );
     
   return (

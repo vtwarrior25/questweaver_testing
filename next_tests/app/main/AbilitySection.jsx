@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AbilityBox from './AbilityBox'
 import { ModPosContext, PlayerCharacterContext} from "./Contexts";
-import { getcharacterinfo } from "../lib/getcharacterinfo";
+import { getAbilities } from "../lib/getcharacterinfo";
 
 /*
 export async function getServerSideProps () {
@@ -53,24 +53,14 @@ function AbilitySection ({setRollResults, rollresults}) {
       abilitybonus: 0,
     },
   ]);
-
-  
-  const getAbilities = () => {
-  /*
-  fetch(`http://localhost:3000/api/getcharacterinfo?infotype=ability`)
-      .then(res => res.json())
-      .then(res => setAbilities(res));
-  console.log(abilities);
-  */
-  console.log("beans ability")
-  getcharacterinfo(playercharacterid, 'ability')
-  .then(results => console.log(results))
-  .then(results => setAbilities(results));
-  }
   
   useEffect(() => {
-    getAbilities();
-  }, []
+    getAbilities(playercharacterid)
+    .then((results) => {
+      setAbilities([...results]);
+      console.log(results);
+    });
+  }, [playercharacterid]
   );
   
   
