@@ -144,6 +144,10 @@ const checkcharacterinventoryforitem = new PQ({
   `
 });
 
+const updateitemquantityquery = new PQ({text:'UPDATE characterinventory SET quantity = $3 WHERE playercharacterid = $1 AND itemid = (SELECT itemid FROM item WHERE name = $2);'});
+
+const addnewinventoryitemquery = new PQ({text:'INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)'});
+
 export async function setCharacterInventory(playercharacterid, items) {
   // Check if an item exists in the table already (check for itemid from name, section, playercharacterid)
   for (let item of items) {
@@ -151,13 +155,22 @@ export async function setCharacterInventory(playercharacterid, items) {
     .then((checkitemresult) => {
       if (checkitemresult.quantity === item.quantity) {
         // If it does exist and the quantity is the same, do nothing
+        console.log("Item with same quantity already exists in specified inventory");
       } else {
         // If it does exist and the quantity is different, update the quantity
+        db.none(updateitemquantityquery, playercharacterid, item.name, checkitemresult.quantity)
+        .catch(error => {
+          console.log("Error setting inventory item quantity, " + error);
+        });
       }
     }).catch((error) => {
       // If it doesn't exist, add the new item
+      db.none(addnewinventoryitemquery, playercharacterid, item.sectionname, item.quantity)
+      .catch(error => {
+        console.log("Error adding new item to inventory, " + error);
+      });
     });
-  }  
+  }
 }
 
 

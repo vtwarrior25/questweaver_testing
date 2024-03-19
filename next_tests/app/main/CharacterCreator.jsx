@@ -9,7 +9,7 @@ import { getCharacterClassInfo, getCharacterCreatorInfo } from "../lib/getcharac
 function CharacterCreator() {
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
-
+  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState(null);
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({ subracesWithRaces: [], racesWithoutSubraces: [] });
   const [classes, setClasses] = useState([]);
@@ -121,30 +121,68 @@ function CharacterCreator() {
       },
     ],
   });
-  //class tab
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCharacterClassInfo();
-        setClasses(data);
-        if (data.length > 0) {
-          setSelectedClass(data[0]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch class data:", error);
+ // Fetch class data
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const data = await getCharacterClassInfo();
+      setClasses(data);
+      if (data.length > 0) {
+        setSelectedClass(data[0]); // Set the default selected class
       }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleSelectClass = (classItem) => {
-    setSelectedClass(classItem);
+    } catch (error) {
+      console.error("Failed to fetch class data:", error);
+    }
   };
-  //class tab
+
+  fetchData();
+}, []);
+
+// Handle class selection
+const handleSelectClass = (classItem) => {
+  setSelectedClass(classItem);
+};
+
+// Handle choosing class
+const handleChooseClass = (classItem) => {
+  setSelectedEquipmentClass(classItem);
+};
+
+
+// Render equipment based on selected class
+const renderEquipment = () => {
+  if (selectedEquipmentClass) {
+    // Render equipment for the selected class
+    return (
+      <div>
+        <h3>Equipment for {selectedEquipmentClass.name}</h3>
+        <p><strong>Starting Equipment:</strong></p>
+        <ul>
+          <li>a greataxe</li>
+          <li>any martial melee weapon</li>
+          <li>two handaxes</li>
+          <li>any simple weapon</li>
+          <li>An explorer’s pack and four javelins</li> 
+        </ul>
+        <p><strong>Choose Your Equipment:</strong></p>
+        <select>
+          <option value="greataxe">Greataxe</option>
+          {/* Add other martial melee weapon options here */}
+        </select>
+        <select>
+          <option value="handaxes">Two Handaxes</option>
+          {/* Add other simple weapon options here */}
+        </select>
+        <label>
+          <input type="checkbox" value="explorersPack" /> Explorer's Pack
+        </label>
+      </div>
+    );
+  }
+  return null;
+};
 
   
-
 
   //ability tab
 
@@ -174,7 +212,7 @@ function CharacterCreator() {
     try {
       // Assuming playerCharacterId is obtained from context
       await updateCharacterAbilityScores(playerCharacterId, abilitiesToUpdate);
-      console.log('Abilities successfully updated in database');
+      console.log('Abilities successfully upda  ted in database');
     } catch (error) {
       console.error('Error updating abilities in database:', error);
     }
@@ -312,74 +350,62 @@ function CharacterCreator() {
   </div>
 </Tab>
 
-      <Tab eventKey="class" title="Class">
-        <Tab.Container defaultActiveKey="barbarian">
-          <div
-            className="characterCreatorSection characterCreatorClass frontElement"
-            style={{ display: "flex", flexDirection: "row" }}
-          >
-            <Tab.Container defaultActiveKey="firstClassKey">
-              <div style={{ display: "flex", width: "100%" }}>
-                <Nav
-                  variant="pills"
-                  className="flex-column"
-                  style={{ minWidth: "200px" }}
-                >
-                  {" "}
-                  
-                  {classes.map((classItem, index) => (
-                    <Nav.Item key={classItem.classid}>
-                      <Nav.Link
-                        eventKey={classItem.name
-                          .toLowerCase()
-                          .replace(/\s+/g, "")}
+<Tab eventKey="class" title="Class">
+          <Tab.Container defaultActiveKey="barbarian">
+            <div
+              className="characterCreatorSection characterCreatorClass frontElement"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
+              <Tab.Container defaultActiveKey="firstClassKey">
+                <div style={{ display: "flex", width: "100%" }}>
+                  <Nav
+                    variant="pills"
+                    className="flex-column"
+                    style={{ minWidth: "200px" }}
+                  >
+                    {classes.map((classItem, index) => (
+                      <Nav.Item key={index}>
+                        <Nav.Link
+                          eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")}
+                          onClick={() => handleSelectClass(classItem)}
+                        >
+                          {classItem.name}
+                        </Nav.Link>
+                      </Nav.Item>
+                    ))}
+                  </Nav>
+                  <Tab.Content style={{ flex: 1, paddingLeft: "20px" }}>
+                    {classes.map((classItem) => (
+                      <Tab.Pane
+                        key={classItem.classid}
+                        eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")}
                       >
-                        {classItem.name}
-                      </Nav.Link>
-                    </Nav.Item>
-                  ))}
-                </Nav>
-                <Tab.Content style={{ flex: 1, paddingLeft: "20px" }}>
-                  {" "}
-                
-                  {classes.map((classItem) => (
-                    <Tab.Pane
-                      key={classItem.classid}
-                      eventKey={classItem.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "")}
-                    >
-                      <div className="characterCreatorTabContent">
-                        <h3>{classItem.name}</h3>
-                        <p>
-                          <strong>Description:</strong> {classItem.description}
-                        </p>
-                        <p>
-                          <strong>Hit Points at 1st Level:</strong>{" "}
-                          {classItem.hitpoints1stlevel}
-                        </p>
-                        <p>
-                          <strong>Hit Points at Higher Levels:</strong>{" "}
-                          {classItem.hitpointshigherlevel}
-                        </p>
-                        <h4>Subclasses:</h4>
-                        <ul>
-                          {classItem.subclasses &&
-                            classItem.subclasses.map((subclass) => (
-                              <li key={subclass.subclassid}>
-                                {subclass.name}: {subclass.description}
-                              </li>
-                            ))}
-                        </ul>
-                      </div>
-                    </Tab.Pane>
-                  ))}
-                </Tab.Content>
-              </div>
-            </Tab.Container>
-          </div>
-        </Tab.Container>
-      </Tab>
+                        <div className="characterCreatorTabContent">
+                          <h3>{classItem.name}</h3>
+                          <p><strong>Description:</strong> {classItem.description}</p>
+                          <p><strong>Hit Points at 1st Level:</strong> {classItem.hitpoints1stlevel}</p>
+                          <p><strong>Hit Points at Higher Levels:</strong> {classItem.hitpointshigherlevel}</p>
+                          <h4>Subclasses:</h4>
+                          <ul>
+                            {classItem.subclasses &&
+                              classItem.subclasses.map((subclass) => (
+                                <li key={subclass.subclassid}>
+                                  {subclass.name}: {subclass.description}
+                                </li>
+                              ))}
+                          </ul>
+                        
+                          <Button onClick={() => handleChooseClass(classItem)}>Choose Class</Button>
+                        </div>
+                      </Tab.Pane>
+                    ))}
+                  </Tab.Content>
+                </div>
+              </Tab.Container>
+            </div>
+          </Tab.Container>
+        </Tab>
+
 
         <Tab eventKey="abilities" title="Abilities">
           <div className="characterCreator">
@@ -417,7 +443,9 @@ function CharacterCreator() {
             </div>
           </div>
         </Tab>
-        <Tab eventKey="equipment" title="Equipment"></Tab>
+        <Tab eventKey="equipment" title="Equipment">
+          {renderEquipment()}
+        </Tab>
         <Tab eventKey="description" title="Description">
           <div className="notesMenu frontElement">
             {charactercreatordata.descriptions.map((notessection, index) => (
