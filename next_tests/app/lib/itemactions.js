@@ -144,7 +144,13 @@ const checkcharacterinventoryforitem = new PQ({
   `
 });
 
-const updateitemquantityquery = new PQ({text:'UPDATE characterinventory SET quantity = $3 WHERE playercharacterid = $1 AND itemid = (SELECT itemid FROM item WHERE name = $2);'});
+const updateitemquantityquery = new PQ({
+  text:`
+    UPDATE characterinventory 
+    SET quantity = $3 
+    WHERE playercharacterid = $1 AND itemid = (SELECT itemid FROM item WHERE name = $2);
+  `
+});
 
 const addnewinventoryitemquery = new PQ({text:'INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)'});
 

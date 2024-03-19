@@ -338,21 +338,48 @@ export async function getcharacterinfo(playercharacterid, infotype) {
         race: "Elf",
         class: "Barbarian",
         characterlevel: 1,
-      }
+      };
       break;
   }
 
-  db.any(dbquery, [playercharacterid])
+  await db.any(dbquery, [playercharacterid])
     .then ((dbinfo) => {
       console.log("got character info from " + infotype);
       console.log(dbinfo);
       return dbinfo;
     }).catch (error => {
       console.error("Error retrieving character info " + error);
-    }).finally ((beans) => {
-      return dbresult;
-    });
+    })
+  return dbresult;
 }
+
+
+const turnorderdefaultresult = [
+  {
+    name: "Jerome",
+    initiative: 15,
+  },
+  {
+    name: "Dylan",
+    initiative: 12,
+  },
+  {
+    name: "Greg",
+    initiative: 11,
+  },
+  {
+    name: "Rebecca",
+    initiative: 8,
+  },
+  {
+    name: "Jauffre",
+    initiative: 7,
+  },
+  {
+    name: "Erica",
+    initiative: 3,
+  }
+]
 
 
 const savingthrowdefaultresult = [
@@ -539,12 +566,24 @@ const abilitydefaultresult = [
 ]
 
 
+const setturnorderquery = new PQ({
+  text: `
+    
+  `
+});
 
+const getturnorderquery = new PQ({
+  text: `
+    SELECT c.name, t.initiative FROM turnorder t
+    JOIN playercharacter c ON t.playercharacterid = c.playercharacterid;
+  `
+});
 
 const charactergetsavingthrowquery = new PQ({
   text: `
-    SELECT s.name, c.proficient, c.bonus FROM charactersavingthrow c
+    SELECT a.abbrev AS name, c.proficient AS prof, c.bonus AS val FROM charactersavingthrow c
       JOIN savingthrow s ON c.savingthrowid = s.savingthrowid
+      JOIN ability a ON s.abilityid = a.abilityid 
     WHERE c.playercharacterid = $1;
   `
 });
@@ -571,7 +610,7 @@ const charactergetabilityquery = new PQ({
 
 export async function getSkills (playercharacterid) {
   let result = skilldefaultresult;
-  db.any(charactergetsavingthrowquery, [playercharacterid])
+  await db.any(charactergetskillquery, [playercharacterid])
     .then ((dbinfo) => {
       console.log("got saving throw data");
       console.log(dbinfo);
@@ -585,7 +624,7 @@ export async function getSkills (playercharacterid) {
 
 export async function getSavingThrows (playercharacterid) {
   let result = savingthrowdefaultresult;
-  db.any(charactergetskillquery, [playercharacterid])
+  await db.any(charactergetsavingthrowquery, [playercharacterid])
     .then ((dbinfo) => {
       console.log("got skills data");
       console.log(dbinfo);
@@ -598,15 +637,41 @@ export async function getSavingThrows (playercharacterid) {
 
 export async function getAbilities (playercharacterid) {
   let result = abilitydefaultresult;
-  db.any(charactergetabilityquery, [playercharacterid])
+  await db.any(charactergetabilityquery, [playercharacterid])
     .then ((dbinfo) => {
       console.log("got abilities data");
       console.log(dbinfo);
       result = [...dbinfo];
+      console.log(result);
       return result;
     }).catch (error => {
       console.error("Error retrieving character info " + error);
-    })
+    });
   return result;
 }
 
+
+export async function getTurnOrder () {
+  let result = turnorderdefaultresult;
+  await db.any(getturnorderquery)
+    .then ((dbinfo) => {
+      console.log("got turn order data");
+      console.log(dbinfo);
+      result = [...dbinfo];
+      console.log(result);
+      return result;
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    });
+  return result;
+}
+
+/*
+export async function setTurnOrder (turnorder) {
+  db.none(, [])
+  .catch((error) => {
+    console.log(error);
+  console.log('')
+  });
+}
+*/

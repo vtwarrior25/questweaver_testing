@@ -77,16 +77,16 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
         <tbody>
           {items.map((item, index) => 
             <React.Fragment key={index}>
-              <tr className='inventorySectionTableRow' onClick={() => toggleDropdown(index)}>
-                <td><input type='checkbox'></input></td> 
+              <tr className='inventorySectionTableRow'>
+                  <td>{item.weaponinfo && <input type='checkbox'></input>}</td>
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
                 require using global context or some disgusting lifting of state.*/}
-                <td>{item.name}</td>
-                <td>{item.weight}</td>
-                <td>{item.qty}</td>
-                <td>{item.cost}</td>
-                <td>{item.notes}</td>
+                <td onClick={() => toggleDropdown(index)}>{item.name}</td>
+                <td onClick={() => toggleDropdown(index)}>{item.weight}</td>
+                <td onClick={() => toggleDropdown(index)}>{item.qty}</td>
+                <td onClick={() => toggleDropdown(index)}>{item.cost}</td>
+                <td onClick={() => toggleDropdown(index)}>{item.notes}</td>
               </tr>
               <tr>
                 {dropdownshidden[index] && <td className='inventorySectionTableExpandingInfo' colSpan="6">

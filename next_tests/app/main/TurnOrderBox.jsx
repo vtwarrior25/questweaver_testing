@@ -2,7 +2,7 @@ import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
 import { URLContext, PlayerCharacterContext, DMContext} from "./Contexts";
-import { getcharacterinfo } from "../lib/getcharacterinfo";
+import { getcharacterinfo, getTurnOrder } from "../lib/getcharacterinfo";
 
 function TurnOrder() {
   const isDM = useContext(DMContext);
@@ -60,18 +60,13 @@ function TurnOrder() {
   }
 
   useEffect(() => {  
-    getTurnOrder();
+    getTurnOrderClient();
     }, []
   )
 
 
-  const getTurnOrder = () => {
-    /*
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=turnorder`)
-    .then(res => res.json())
-    .then(res => setTurnOrder([...res].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})));
-    */
-    getcharacterinfo(playercharacterid, 'turnorder')
+  const getTurnOrderClient = () => {
+    getTurnOrder(playercharacterid)
     .then(result => setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})))
     .catch(error => console.error("Error setting turn order " + error));
     

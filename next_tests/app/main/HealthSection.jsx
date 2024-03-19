@@ -16,11 +16,6 @@ function HealthSection () {
 
 
   const getHealth = () => {
-    /*
-    fetch(`http://localhost:3000/api/getcharacterinfo?infotype=health`)
-    .then(res => res.json())
-    .then(res => setHealthVal(res));
-    */
     getcharacterinfo(playercharacterid, 'health')
     .then(results => setHealthVal({...results}));
   }
