@@ -533,9 +533,9 @@ CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(40) UNIQUE,
 	description					varchar(500),
-	school							VARCHAR(40),
+	school							varchar(40),
 	casttime 						varchar(40),
-	spellrange					VARCHAR(40),
+	spellrange					varchar(40),
 	ritual							boolean,
 	duration						varchar(40),
 	components					varchar(100),
@@ -603,12 +603,15 @@ Common, Uncommon, Rare, Very Rare
 
 CREATE TYPE rarity AS ENUM ('Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary', 'Artifact');
 
+CREATE TYPE coin AS ENUM ('cp', 'sp', 'ep', 'gp', 'pp');
+
 CREATE TABLE IF NOT EXISTS item (
 	itemid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 							varchar(50) UNIQUE,
 	value							integer,
+	coin							coin,
 	description				varchar(500),
-	weight						integer,
+	weight						real,
 	rarity						rarity
 );
 
@@ -674,7 +677,7 @@ Attack Tables
 CREATE TABLE IF NOT EXISTS attack (
 	attackid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 								varchar(40) UNIQUE NOT NULL,
-	range								integer, -- Maybe make this a varchar??
+	range								varchar(40), -- Maybe make this a varchar??
 	attackmodifierid		integer REFERENCES ability(abilityid) NOT NULL,
 	damagemodifierid		integer REFERENCES ability(abilityid) NOT NULL,
 	diceid							integer REFERENCES dice(diceid) NOT NULL,

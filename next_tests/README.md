@@ -31,6 +31,8 @@ Look at [Next Instructions](./next.md) for installation help.
 ## TODO
 
 ### UI (Lead: Nick)
+- [ ] How can I make it so that when the checkbox of a weapon is checked, it not only sends an update to the server, but it also causes the Actions section to grab the actions from the server again, or to somehow get the new action.
+- [ ] How can I make it so that information is pushed to the player, such as chat messages, log messages, and other similar things?  
 - [ ] Should the turn order controls be hidden for all players who aren't the DM?
   - Don't hide them (they aren't hidden)
 - [ ] Map

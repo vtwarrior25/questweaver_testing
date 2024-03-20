@@ -661,4 +661,13 @@ INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VAL
 ();
 
 
-INSERT INTO speedfeature (name, description, )
+INSERT INTO item (name, value, coin, description, weight, rarity) VALUES
+('Abacus', 2, 'gp', 'For counting things', 2, 'Common'),
+('Acid (vial)', 25, 'gp', '', 1, 'Uncommon'),
+('Alchemist''s fire', 50, 'gp', '', 1, 'Uncommon'),
+('Arrows (20)', 1, 'gp', '', 1, 'Common');
+('Blowgun needles (50)', 1, 'gp', '', 1, 'Common');
+('Crossbow bolts (20)', 1, 'gp', '', 1.5, 'Common');
+
+
+

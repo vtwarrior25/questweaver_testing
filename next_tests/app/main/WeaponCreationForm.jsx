@@ -119,7 +119,7 @@ function WeaponCreationForm() {
               </div>
               <div>
                 <label htmlFor="attackrange">Range</label>
-                <input type="number" className='weaponFormTextInput' name="attackrange" defaultValue={5}/>
+                <input type="text" className='weaponFormTextInput' name="attackrange" defaultValue={'5 ft'}/>
               </div>
             </div>
             <div className='weaponFormRow'>
@@ -156,7 +156,7 @@ function WeaponCreationForm() {
               <option value="4">d4</option>
             </select>
             <label htmlFor="numdamagedie"># Damage Die</label>
-            <input className="itemNumInput" type="number" name="numdamagedie" defaultValue={1}/>
+            <input className="itemNumInput" type="number" name="numdamagedie" defaultValue={5}/>
             <label htmlFor="damagetype">Damage Type</label>
             <select name="damagetype">
               <option value="Slashing">Slashing</option>

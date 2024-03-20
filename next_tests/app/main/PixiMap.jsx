@@ -6,7 +6,7 @@ import { MapRectangle, MapCircle, MapEllipse, MapText, onDragEnd} from './Shapes
 
 
 function PixiMap() {
-  //const [dragTarget, setDragTarger] = useState(null);
+  //const [dragTarget, setDragTarget] = useState(null);
   const [mapshapes, setMapShapes] = useState([
     {
       shape: "rectangle",
@@ -183,6 +183,7 @@ function PixiMap() {
       console.log(newPosition);
       sprite.x = newPosition.x;
       sprite.y = newPosition.y;
+
     }
   };
 
@@ -224,7 +225,7 @@ function PixiMap() {
           }
         })}
         <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
-        <Sprite image="../files/icon.jpg" scale={{x: 0.5, y: 0.5}} x={100} y={100} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>
+        <Sprite image="../files/icon.jpg" anchor={0.5} scale={{x: 0.25, y: 0.25}} x={100} y={100} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>
       </Stage>
     </MapScaleContext.Provider>
     </div>

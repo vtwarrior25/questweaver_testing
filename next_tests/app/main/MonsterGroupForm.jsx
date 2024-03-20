@@ -92,6 +92,8 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
 
   useEffect(() => {
     setEncountersCopy([...encounters]);
+    console.log("beans encounters");
+    console.log(encounters);
   }, [encounters],
   );
   
@@ -207,7 +209,6 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                           {encounters.map((encounter) => {
                             <option value={encounter.encountername}>{encounter.encountername}</option>
                           })}
-                          <option>Beans</option>
                         </select>
                         <label htmlFor="monster">Monster</label>
                         <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: e.target.value})}>

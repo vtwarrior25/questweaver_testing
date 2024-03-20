@@ -688,8 +688,7 @@ export async function getBasicInfo (playercharacterid) {
   await db.any(getcharacterbasicdataquery, [playercharacterid])
     .then ((dbinfo) => {
       console.log("got basic info data");
-      console.log(dbinfo);
-      result = {...dbinfo};
+      result = {...dbinfo[0]};
       console.log(result);
       return result;
     }).catch (error => {

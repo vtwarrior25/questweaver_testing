@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import ChatMessage from './ChatMessage';
+import { getAllChatMessages } from '../lib/chatandlog';
 
 
 function Chat() {
@@ -28,8 +29,9 @@ function Chat() {
 */
 
   useEffect(() => {
-    
-  }, [chatmessages]
+    let chatmessages = getAllChatMessages();
+    setChatMessages(chatmessages);
+  }, []
   );
 
   const handleChange = (e) => {
