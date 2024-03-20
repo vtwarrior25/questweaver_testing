@@ -24,6 +24,7 @@ const getracesquery = new PQ({
 
 
 export async function updateCharacterAbilityScores(playerCharacterId, abilities) {
+  console.log(abilities)
   try {
       for (const ability of abilities) {
           // Check if an entry exists
