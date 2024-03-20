@@ -15,3 +15,5 @@ export const PlayerCharacterContext = createContext(null);
 export const DMContext = createContext(false);
 
 export const MapScaleContext = createContext(100);
+
+export const UpdateGameLogContext = createContext(null);

@@ -72,14 +72,13 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] addLogEntry/getLogEntries
 - [x] addChatEntry/getChatEntries
 - [x] getCharacterInfo
-- [ ] addItemToInventory (to character inventory)
+- [x] addItemToInventory (to character inventory)
 - [x] createItem
 - [x] createWeapon
 - [x] prepareSpell
 - [x] unprepareSpell
 - [x] getInventory
 - [x] getPreparedSpells
-- [ ] getAllSpells
 - [x] getAllItems
 
 ### Database (Lead: Carter)

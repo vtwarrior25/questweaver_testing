@@ -2,7 +2,7 @@ import { setConfig } from 'next/config';
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
-function InventorySection({sectionname, name, items, setSectionWeight, removeItem}) {
+function InventorySection({sectionname, name, items, setSectionWeight, removeItem, setItems}) {
 
   const [sectionweight, setInnerSectionWeight] = useState(0);
 
