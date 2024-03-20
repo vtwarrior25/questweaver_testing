@@ -17,13 +17,13 @@ const getpreparedspellsquery = new PQ ({
   text: 
     `SELECT * FROM preparedlist c 
       JOIN spell p ON c.spellid = p.spellid 
-    WHERE c.playercharacterid = $1`
+    WHERE c.playercharacterid = $1;`
 });
 
 const preparequery = new PQ({
   text: `
   INSERT INTO preparedlist (playercharacterid, spellid) VALUES 
-  (DEFAULT, $1, (SELECT spellid FROM spell WHERE name = $2))
+  (DEFAULT, $1, (SELECT spellid FROM spell WHERE name = $2));
   `
 });
 
@@ -31,7 +31,7 @@ const unpreparequery = new PQ({
   text: `
   DELETE FROM preparedlist c 
     JOIN spell p ON c.spellid = p.spellid 
-  WHERE c.playercharacterid = $1 AND c.spellid = (SELECT spellid FROM spell WHERE name = $2)
+  WHERE c.playercharacterid = $1 AND c.spellid = (SELECT spellid FROM spell WHERE name = $2);
   `
 });
 
