@@ -211,8 +211,8 @@ const renderEquipment = () => {
     // Update database
     try {
       // Assuming playerCharacterId is obtained from context
-      await updateCharacterAbilityScores(playerCharacterId, abilitiesToUpdate);
-      console.log('Abilities successfully upda  ted in database');
+      await updateCharacterAbilityScores(playercharacterid, abilitiesToUpdate);
+      console.log('Abilities successfully updated in database');
     } catch (error) {
       console.error('Error updating abilities in database:', error);
     }

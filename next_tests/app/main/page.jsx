@@ -13,18 +13,20 @@ import WeaponCreationForm from "./WeaponCreationForm";
 import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
+import { getBasicInfo } from "../lib/getcharacterinfo";
 
 
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, DMContext }  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, DMContext, UpdateGameLogContext}  from "./Contexts";
 
 
 function App () {
   const searchParams = useSearchParams();
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 0);
   const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 3);
+  const [playername, setPlayerName] = useState("");
   const [isDM, setIsDM] = useState(true);
 
   const [rollresults, setRollResults] = useState({
@@ -50,12 +52,42 @@ function App () {
     showturnorderbox: true,
   })
 
+  const [gamelog, setGameLog] = useState([
+    {
+      id: 0,
+      character: "Jerome",
+      type: "Attack Roll",
+      text: "This is an attack roll",
+    },
+  ])
 
+  const updateGameLog = (type, text) => {
+    let newgamelogentry = {
+      id: Number(gamelog.length - 1),
+      character: playername,
+      type: type,
+      text: text
+    };
+    setGameLog([...gamelog, newgamelogentry]);
+  }
 
   useEffect(() => {
     console.log(showboxes);
     console.log("Refreshing showboxes");
   }, [showboxes]);
+
+
+  useEffect(() => {
+    getBasicInfo(playercharacterid)
+    .then((result) => {
+      setPlayerName(result.name);
+    }).catch((error) => {
+      console.error("Error getting basic character info: " + error);
+    })
+  }, [playercharacterid],
+  );
+  
+
 
   const [showToggleMenu, setShowToggleMenu] = useState(false);
 
@@ -91,6 +123,7 @@ function App () {
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <UpdateGameLogContext.Provider value={updateGameLog}>
     <DMContext.Provider value={isDM}>
     <PlayerCharacterContext.Provider value={playercharacterid}>
     <UserIDContext.Provider value={userid}>
@@ -160,6 +193,7 @@ function App () {
     </UserIDContext.Provider>
     </PlayerCharacterContext.Provider>
     </DMContext.Provider>
+    </UpdateGameLogContext.Provider>
   );
 }
 

@@ -128,11 +128,11 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
               <tr>
                 <td><Button size='sm'>Cast</Button></td>
                 <td onClick={() => toggleDropdown(index)}>{spell.name}</td>
-                <td>{spell.timetocast}</td>
-                <td>{spell.range}</td>
-                <td>{hitDcHandler(spell)}</td>
-                <td>{effectHandler(spell)}</td>
-                <td>{spell.notes}</td>
+                <td onClick={() => toggleDropdown(index)}>{spell.timetocast}</td>
+                <td onClick={() => toggleDropdown(index)}>{spell.range}</td>
+                <td onClick={() => toggleDropdown(index)}>{hitDcHandler(spell)}</td>
+                <td onClick={() => toggleDropdown(index)}>{effectHandler(spell)}</td>
+                <td onClick={() => toggleDropdown(index)}>{spell.notes}</td>
               </tr>
               <tr>
                 {dropdownshidden[index] && <td colSpan="7">

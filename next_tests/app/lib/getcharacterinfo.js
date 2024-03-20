@@ -354,6 +354,13 @@ export async function getcharacterinfo(playercharacterid, infotype) {
 }
 
 
+const basicdatadefaultresult = {
+  name: "Jerome",
+  race: "Elf",
+  class: "Barbarian",
+  characterlevel: 1,
+};
+
 const turnorderdefaultresult = [
   {
     name: "Jerome",
@@ -566,6 +573,16 @@ const abilitydefaultresult = [
 ]
 
 
+const getcharacterbasicdataquery = new PQ({
+  text: `
+    SELECT c.name, r.name AS race, cl.name AS class, c.characterlevel
+    FROM playercharacter c
+      JOIN race r ON c.race = r.raceid
+      JOIN class cl ON c.class = cl.classid
+    WHERE playercharacterid = $1; 
+  `
+});
+
 const setturnorderquery = new PQ({
   text: `
     
@@ -658,6 +675,21 @@ export async function getTurnOrder () {
       console.log("got turn order data");
       console.log(dbinfo);
       result = [...dbinfo];
+      console.log(result);
+      return result;
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    });
+  return result;
+}
+
+export async function getBasicInfo (playercharacterid) {
+  let result = basicdatadefaultresult;
+  await db.any(getcharacterbasicdataquery, [playercharacterid])
+    .then ((dbinfo) => {
+      console.log("got basic info data");
+      console.log(dbinfo);
+      result = {...dbinfo};
       console.log(result);
       return result;
     }).catch (error => {

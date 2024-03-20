@@ -152,7 +152,13 @@ const updateitemquantityquery = new PQ({
   `
 });
 
-const addnewinventoryitemquery = new PQ({text:'INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)'});
+const addnewinventoryitemquery = new PQ({
+  text:`
+    INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES 
+    (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)'});
+  `
+});
+
 
 export async function setCharacterInventory(playercharacterid, items) {
   // Check if an item exists in the table already (check for itemid from name, section, playercharacterid)
@@ -177,6 +183,21 @@ export async function setCharacterInventory(playercharacterid, items) {
       });
     });
   }
+}
+
+const charactergetactionsquery = new PQ({
+  // TODO ask Chapin about this
+  text: `
+    SELECT a.name, a.range,  FROM characterattack c 
+      JOIN attack a ON c.attackid = a.attackid
+      
+    WHERE c.playercharacterid = $1
+  `
+});
+
+
+export async function getCharacterActions (playercharacterid) {
+
 }
 
 
