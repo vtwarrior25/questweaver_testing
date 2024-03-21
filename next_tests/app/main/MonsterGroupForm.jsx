@@ -94,6 +94,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     setEncountersCopy([...encounters]);
     console.log("beans encounters");
     console.log(encounters);
+    setDuplicateMenuState({...duplicatemenustate, encounter: encounters[0].encountername})
   }, [encounters],
   );
   
@@ -125,6 +126,35 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   const duplicateMonsterGroup = (monstergroup) => {
     
     //setFormData(monstergroup);
+  }
+
+  const monsterGroupsInSelectedEncounter = (selectedencountername) => {
+    const errorencounter = {
+      encountername: "Default",
+      monstergroups: [
+        {
+          basicinfo: {
+            id: 0,
+            name: "--",
+            quantity: 0,
+            description: "",
+          }
+        }
+      ]
+    };
+    console.log("selectedencountername");
+    console.log(selectedencountername);
+    // Get all encounters with the same name as the selected one
+    let selectedencounters = encounters.filter((encounter) => encounter.encountername === duplicatemenustate.encounter);
+    // We should only find 1 with the selected name, but if there are multiple, we handle it decently
+    if (selectedencounters.length > 0) {
+      // Get the single object out of the array
+      let encountertoparse = selectedencounters[0];
+      // Return the object
+      return encountertoparse; 
+    } else {
+      return errorencounter;
+    }
   }
 
 
@@ -206,13 +236,15 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <div className='monsterGroupDuplicateMenu frontElement'>
                         <label htmlFor="encounter">Encounter</label>
                         <select name="encounter" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, encounter: e.target.value})}>
-                          {encounters.map((encounter) => {
-                            <option value={encounter.encountername}>{encounter.encountername}</option>
-                          })}
+                          {encounters.map((encounter, index) => 
+                            <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
+                          )}
                         </select>
                         <label htmlFor="monster">Monster</label>
                         <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: e.target.value})}>
-                          <option>Beans</option>
+                          {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
+                            <option key={index} value={monstergroup.basicinfo.id}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
+                          )}
                         </select>
                         <Button variant='secondary' size='sm' onClick={() => duplicateMonsterGroup}>Duplicate Monster Group</Button>
                       </div>

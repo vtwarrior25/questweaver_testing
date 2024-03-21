@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS gamelogtag (
 );
 */
 
-CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order', 'Chat');
+CREATE TYPE gamelogtag AS ENUM ('Diceroll', 'Health', 'Turn Order', 'Chat', 'Lore');
 
 
 /*

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import GameLogMessage from './GameLogMessage';
+import { getAllGameLog } from '../lib/chatandlog';
+
 
 function GameLog() {
-
   const [logmessages, setLogMessages] = useState([
     {
       id: 0,
@@ -30,7 +31,7 @@ function GameLog() {
     },
   ]);
 
-  /*
+  
   useEffect(() => {  
     getLog();
     }, []
@@ -38,14 +39,20 @@ function GameLog() {
 
 
   const getLog = () => {
-    fetch(`http://localhost:9000/getcharacterinfo?infotype=log`)
-    .then(res => res.json())
-    .then(res => setLogMessages(res));
+    getAllGameLog()
+    .then((result) => {
+      console.log("moment");
+      setLogMessages([...result]);
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error("Error retrieving game log" + error);
+    });
   }
-  */
+  
   return ( 
     <div className="gameLogInnerBox">
-      {logmessages.map((message) => <GameLogMessage key={message.id} character={message.character} type={message.type} text={message.text}/>)}
+      {logmessages && logmessages.length > 0 && logmessages.map((message, index) => <GameLogMessage key={index} character={message.character} type={message.type} text={message.text}/>)}
     </div>
   );
 }

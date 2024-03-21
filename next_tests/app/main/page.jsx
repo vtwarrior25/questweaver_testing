@@ -14,12 +14,13 @@ import AbilityBox from "./AbilityBox";
 import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
 import { getBasicInfo } from "../lib/getcharacterinfo";
+import { addToGameLog } from "../lib/chatandlog";
 
 
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, DMContext, UpdateGameLogContext}  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, PlayerNameContext, DMContext, UpdateGameLogContext}  from "./Contexts";
 
 
 function App () {
@@ -52,6 +53,7 @@ function App () {
     showturnorderbox: true,
   })
 
+  /*
   const [gamelog, setGameLog] = useState([
     {
       id: 0,
@@ -60,8 +62,10 @@ function App () {
       text: "This is an attack roll",
     },
   ])
+  */
 
   const updateGameLog = (type, text) => {
+    /*
     let newgamelogentry = {
       id: Number(gamelog.length - 1),
       character: playername,
@@ -69,7 +73,10 @@ function App () {
       text: text
     };
     setGameLog([...gamelog, newgamelogentry]);
+    */
+    addToGameLog(playercharacterid, type, text);
   }
+  
 
   useEffect(() => {
     console.log(showboxes);
@@ -125,6 +132,7 @@ function App () {
   return (
     <UpdateGameLogContext.Provider value={updateGameLog}>
     <DMContext.Provider value={isDM}>
+    <PlayerNameContext.Provider value={playername}>
     <PlayerCharacterContext.Provider value={playercharacterid}>
     <UserIDContext.Provider value={userid}>
     <ModPosContext.Provider value={modPos}>
@@ -147,6 +155,7 @@ function App () {
               <Tab eventKey="characterCreator" title="Character Creator">
                 <CharacterCreator></CharacterCreator>
               </Tab>
+              <Button onClick={toggleMenuOpen}>&</Button>
             </Tabs>
           </Col>
           <Col>
@@ -154,7 +163,6 @@ function App () {
             <RollResultsSection rollresults={rollresults}/>
           </Col>
         </Row>
-        <Button onClick={toggleMenuOpen}>&</Button>
       </Container>
       <Offcanvas show={showToggleMenu} onHide={toggleMenuClose}>
         <Offcanvas.Header closeButton>
@@ -192,6 +200,7 @@ function App () {
     </ModPosContext.Provider>
     </UserIDContext.Provider>
     </PlayerCharacterContext.Provider>
+    </PlayerNameContext.Provider>
     </DMContext.Provider>
     </UpdateGameLogContext.Provider>
   );

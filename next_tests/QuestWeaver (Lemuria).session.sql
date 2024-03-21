@@ -1,2 +1,1 @@
-SELECT * from subrace;
-
+SELECT * FROM gamelog;

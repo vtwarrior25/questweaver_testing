@@ -13,13 +13,24 @@ const addgamelogentry = new PQ({
 const addchatmessage = new PQ({
   text: `
     INSERT INTO gamelog (gamelogtag, content, playercharacterid) VALUES 
-    ($1, $2, $3);
+    ($1, $2, $3));
   `
 });
 
+
+const getchatmessageswithlimitquery = new PQ({
+  text: `
+    SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+      JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
+    WHERE gamelogtag = 'Chat' LIMIT $1;
+  `
+});
+
+
 const getallchatmessagesquery = new PQ({
   text: `
-    SELECT * from gamelog 
+    SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+      JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
     WHERE gamelogtag = 'Chat';
   `
 });
@@ -31,8 +42,15 @@ const getcharacterchatmessagesquery = new PQ({
   `
 })
 
+const getallgamelogquery = new PQ({
+  text: `
+  SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+    JOIN playercharacter p ON g.playercharacterid = p.playercharacterid;
+  `
+});
+
+
 export async function setChatMessages(playercharacterid, messages) {
-  // TODO maybe replace this with https://vitaly-t.github.io/pg-promise/Database.html#each
   const insertQueries = messages.map(message => {
     return db.none(addchatmessage, [message.gamelogtag, message.content, playercharacterid]);
   });
@@ -48,33 +66,60 @@ export async function setChatMessages(playercharacterid, messages) {
 }
 
 export async function getChatMessages(playercharacterid) {
-  return db.any(getcharacterchatmessagesquery, [playercharacterid])
-    .then(chatMessages => {
-      return chatMessages;
-    })
-    .catch(error => {
-      console.error("Error getting chat messages: ", error);
-      return "Error";
-    });
-}
-
-export async function getAllChatMessages() {
-  db.any(getallchatmessagesquery)
-  .then((result) => {
-    return result;
-  }).catch((error) => {
-    console.log("Error getting all chat messages: " + error);
-    return "Error";
+  db.any(getcharacterchatmessagesquery, [playercharacterid])
+  .then(chatMessages => {
+    return chatMessages;
+  })
+  .catch(error => {
+    console.error("Error getting chat messages: ", error);
+    return;
   });
 }
 
-export async function addGameLog(playercharacterid, gamelogtag, content) {
-  return db.none(addgamelogentry, [gamelogtag, content, playercharacterid])
-    .then(() => {
-      return true;
-    })
-    .catch(error => {
-      console.error("Error adding game log entry:", error);
-      return "Error";
+export async function getAllChatMessages(number) {
+  if (number !== 0) {
+    await db.any(getchatmessageswithlimitquery, [number])
+    .then((result) => {
+      return result;
+    }).catch((error) => {
+      console.log("Error getting all chat messages: " + error);
+      return;
     });
+  } else {
+    await db.any(getallchatmessagesquery)
+    .then((result) => {
+      return result;
+    }).catch((error) => {
+      console.log("Error getting all chat messages: " + error);
+      return;
+    });
+  }
 }
+
+export async function addToGameLog(playercharacterid, gamelogtag, content) {
+  await db.none(addgamelogentry, [gamelogtag, content, playercharacterid])
+  .catch(error => {
+    console.error("Error adding game log entry:", error);
+    return;
+  });
+}
+
+export async function getAllGameLog() {
+  let defaultresult = [];
+  console.log('Getting game log');
+  db.any(getallgamelogquery)
+  .then((result) => {
+    console.log(result);
+    defaultresult = [...result];
+  })
+  .catch(error => {
+    console.error("Error adding game log entry:", error);
+  });
+  return defaultresult;
+}
+
+/*
+export async function handleLogChange(status) {
+  
+}
+*/
