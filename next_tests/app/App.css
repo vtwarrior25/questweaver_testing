@@ -568,7 +568,62 @@ Monster Group Form
 Character Creation
 ----------------------------------------
 */
+.equipmentContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
+.equipmentSection {
+  margin-bottom: 20px;
+}
+
+.equipmentBox {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.equipmentBox h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkboxContainer label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  margin-right: 5px;
+  transform: scale(0.8); 
+}
+
+.dropdownContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dropdownContainer label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.dropdownContainer select {
+  font-size: 14px;
+  padding: 5px;
+  margin-left: 10px;
+}
+/**/
 .characterCreatorRace {
   display: flex;
   flex-direction: row;
