@@ -38,6 +38,47 @@ function CharacterCreator() {
     ];
   };
 
+  const martialWeapons = [
+    "Glaive", 
+    "Longsword", 
+    "Battleaxe", 
+    "Flail", 
+    "Greataxe", 
+    "Greatsword", 
+    "Halberd", 
+    "Lance", 
+    "Maul", 
+    "Morningstar", 
+    "Pike", 
+    "Rapier", 
+    "Scimitar", 
+    "Shortsword", 
+    "Trident", 
+    "War Pick", 
+    "Warhammer", 
+    "Whip", 
+    "Double-Bladed Scimitar"
+  ];
+  
+  const simpleWeapons = [
+    "Dagger", 
+    "Club", 
+    "Greatclub", 
+    "Handaxe", 
+    "Javelin", 
+    "Light Hammer", 
+    "Mace", 
+    "Quarterstaff", 
+    "Sickle", 
+    "Spear", 
+    "Crossbow, light", 
+    "Dart", 
+    "Shortbow", 
+    "Sling", 
+    "Boomerang", 
+    "Yklwa"
+  ];
+  
 
   const [abilities, setAbilities] = useState([
     {
@@ -156,31 +197,41 @@ const renderEquipment = () => {
     return (
       <div>
         <h3>Equipment for {selectedEquipmentClass.name}</h3>
-        <p><strong>Starting Equipment:</strong></p>
-        <ul>
-          <li>a greataxe</li>
-          <li>any martial melee weapon</li>
-          <li>two handaxes</li>
-          <li>any simple weapon</li>
-          <li>An explorer’s pack and four javelins</li> 
-        </ul>
         <p><strong>Choose Your Equipment:</strong></p>
-        <select>
-          <option value="greataxe">Greataxe</option>
-          {/* Add other martial melee weapon options here */}
-        </select>
-        <select>
-          <option value="handaxes">Two Handaxes</option>
-          {/* Add other simple weapon options here */}
-        </select>
-        <label>
-          <input type="checkbox" value="explorersPack" /> Explorer's Pack
-        </label>
+        <div>
+          <input type="checkbox" id="greataxe" name="greataxe" value="greataxe" />
+          <label htmlFor="greataxe">Greataxe</label>
+        </div>
+        <div> 
+          <select>
+            <option value="martialMelee">Martial Weapon</option>
+            {martialWeapons.map((weapon, index) => (
+              <option key={index} value={weapon}>{weapon}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <input type="checkbox" id="handaxes" name="handaxes" value="handaxes" />
+          <label htmlFor="handaxes">Two Handaxes</label>
+        </div>
+        <div>
+          <select>
+            <option value="simpleWeapon">Simple Weapon</option>
+            {simpleWeapons.map((weapon, index) => (
+              <option key={index} value={weapon}>{weapon}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <input type="checkbox" id="explorersPack" name="explorersPack" value="explorersPack" />
+          <label htmlFor="explorersPack">Explorer's Pack</label>
+        </div>
       </div>
     );
   }
   return null;
 };
+
 
   
 
