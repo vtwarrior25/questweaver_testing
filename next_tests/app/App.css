@@ -407,6 +407,10 @@ Chat Section
   border-radius: 0.5rem;
 }
 
+.loreMessage {
+  background-color: lightgoldenrodyellow;
+}
+
 .chatMessageCharacter {
   justify-self: left;
   color: green;

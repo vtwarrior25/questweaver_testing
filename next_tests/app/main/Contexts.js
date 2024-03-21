@@ -1,3 +1,4 @@
+import { createActionURL } from "@auth/core";
 import { createContext } from "react";
 
 export const RollResultsContext = createContext(null);
@@ -17,3 +18,5 @@ export const DMContext = createContext(false);
 export const MapScaleContext = createContext(100);
 
 export const UpdateGameLogContext = createContext(null);
+
+export const PlayerNameContext = createContext(null);

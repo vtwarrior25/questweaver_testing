@@ -155,7 +155,7 @@ const updateitemquantityquery = new PQ({
 const addnewinventoryitemquery = new PQ({
   text:`
     INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES 
-    (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)'});
+    (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)});
   `
 });
 

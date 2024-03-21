@@ -33,7 +33,6 @@ function MonsterSheet({setRollResults}) {
         {
           basicinfo: {
             id: 0,
-            encounter: "",
             name: "Jeff",
             quantity: 2,
             description: "Cragmaw",
