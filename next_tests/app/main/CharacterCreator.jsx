@@ -7,6 +7,13 @@ import { createCharacter } from "../lib/createcharacter";
 import { getCharacterClassInfo, getCharacterCreatorInfo, updateCharacterAbilityScores } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
+  const [twoHandaxesSelected, setTwoHandaxesSelected] = useState(false);
+const [simpleWeaponSelected, setSimpleWeaponSelected] = useState(false);
+const [selectedSimpleWeapon, setSelectedSimpleWeapon] = useState("");
+  const [explorersPackSelected, setExplorersPackSelected] = useState(true);
+  const [greataxeSelected, setGreataxeSelected] = useState(false);
+  const [martialWeaponSelected, setMartialWeaponSelected] = useState(false); 
+  const [selectedMartialWeapon, setSelectedMartialWeapon] = useState("");
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
   const [selectedEquipmentClass, setSelectedEquipmentClass] = useState(null);
@@ -57,7 +64,6 @@ function CharacterCreator() {
     "War Pick", 
     "Warhammer", 
     "Whip", 
-    "Double-Bladed Scimitar"
   ];
   
   const simpleWeapons = [
@@ -189,42 +195,108 @@ const handleChooseClass = (classItem) => {
   setSelectedEquipmentClass(classItem);
 };
 
+//equipment 
+const handleGreataxeChange = (e) => {
+  const isChecked = e.target.checked;
+  setGreataxeSelected(isChecked);
+  if (isChecked) {
+    setMartialWeaponSelected(false);
+    setSelectedMartialWeapon("");
+    // Also reset the handaxes and simple weapon selections
+    setTwoHandaxesSelected(false);
+    setSimpleWeaponSelected(false);
+    setSelectedSimpleWeapon("");
+  }
+};
 
-// Render equipment based on selected class
+const handleMartialWeaponChange = (e) => {
+  const isChecked = e.target.checked;
+  setMartialWeaponSelected(isChecked);
+  if (isChecked) {
+    setGreataxeSelected(false);
+    // Also reset the handaxes and simple weapon selections
+    setTwoHandaxesSelected(false);
+    setSimpleWeaponSelected(false);
+    setSelectedSimpleWeapon("");
+  }
+};
+
+const handleTwoHandaxesChange = (e) => {
+  const isChecked = e.target.checked;
+  setTwoHandaxesSelected(isChecked);
+  if (isChecked) {
+    setSimpleWeaponSelected(false);
+    setSelectedSimpleWeapon("");
+    // Also reset the greataxe and martial weapon selections
+    setGreataxeSelected(false);
+    setMartialWeaponSelected(false);
+    setSelectedMartialWeapon("");
+  }
+};
+
+const handleSimpleWeaponChange = (e) => {
+  const isChecked = e.target.checked;
+  setSimpleWeaponSelected(isChecked);
+  if (isChecked) {
+    setTwoHandaxesSelected(false);
+    // Also reset the greataxe and martial weapon selections
+    setGreataxeSelected(false);
+    setMartialWeaponSelected(false);
+    setSelectedMartialWeapon("");
+  }
+};
+
+
+
 const renderEquipment = () => {
   if (selectedEquipmentClass) {
-    // Render equipment for the selected class
     return (
-      <div>
-        <h3>Equipment for {selectedEquipmentClass.name}</h3>
-        <p><strong>Choose Your Equipment:</strong></p>
-        <div>
-          <input type="checkbox" id="greataxe" name="greataxe" value="greataxe" />
-          <label htmlFor="greataxe">Greataxe</label>
-        </div>
-        <div> 
-          <select>
-            <option value="martialMelee">Martial Weapon</option>
-            {martialWeapons.map((weapon, index) => (
-              <option key={index} value={weapon}>{weapon}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <input type="checkbox" id="handaxes" name="handaxes" value="handaxes" />
-          <label htmlFor="handaxes">Two Handaxes</label>
-        </div>
-        <div>
-          <select>
-            <option value="simpleWeapon">Simple Weapon</option>
-            {simpleWeapons.map((weapon, index) => (
-              <option key={index} value={weapon}>{weapon}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <input type="checkbox" id="explorersPack" name="explorersPack" value="explorersPack" />
-          <label htmlFor="explorersPack">Explorer's Pack</label>
+      <div className="equipmentContainer">
+        <div className="equipmentBox">
+          <h3>Barbarian Starting Equipment</h3>
+          <label className="custom-checkbox">
+            <input
+              type="checkbox"
+              checked={greataxeSelected}
+              onChange={handleGreataxeChange}
+            />
+            <span className="weaponLabel">a greataxe</span>
+          </label>
+          <label className="custom-checkbox">
+            <input
+              type="checkbox"
+              checked={martialWeaponSelected}
+              onChange={handleMartialWeaponChange}
+            />
+            <span className="weaponLabel">any martial melee weapon</span>
+          </label>
+          {martialWeaponSelected && (
+            <div className="dropdownContainer">
+              <select
+                value={selectedMartialWeapon}
+                onChange={(e) => setSelectedMartialWeapon(e.target.value)}
+              >
+                <option value="">Select Martial Weapon</option>
+                {martialWeapons.map((weapon, index) => (
+                  <option key={index} value={weapon}>
+                    {weapon}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {/* Repeat structure for handaxes/simple weapon here */}
+          <label className="custom-checkbox">
+            <input
+              type="checkbox"
+              checked={explorersPackSelected}
+              onChange={() => setExplorersPackSelected(!explorersPackSelected)}
+            />
+            <span className="weaponLabel">An explorer’s pack and four javelins</span>
+          </label>
+          <div className="explorersPackDescription">
+            Includes a backpack, a bedroll, a mess kit, a tinderbox, 10 torches, 10 days of rations, and a waterskin. The pack also has 50 feet of hempen rope strapped to the side of it.
+          </div>
         </div>
       </div>
     );
@@ -233,7 +305,8 @@ const renderEquipment = () => {
 };
 
 
-  
+
+
 
   //ability tab
 
