@@ -10,13 +10,6 @@ const addgamelogentry = new PQ({
   `
 });
 
-const addchatmessage = new PQ({
-  text: `
-    INSERT INTO gamelog (gamelogtag, content, playercharacterid) VALUES 
-    ($1, $2, $3));
-  `
-});
-
 
 const getchatmessageswithlimitquery = new PQ({
   text: `
@@ -77,10 +70,12 @@ export async function getChatMessages(playercharacterid) {
 }
 
 export async function getAllChatMessages(number) {
-  if (number !== 0) {
+  let chatmessages = []; 
+  if (number !== 0 && number !== undefined) {
     await db.any(getchatmessageswithlimitquery, [number])
     .then((result) => {
-      return result;
+      console.log("Got chat messages: " + number);
+      chatmessages = [...result];
     }).catch((error) => {
       console.log("Error getting all chat messages: " + error);
       return;
@@ -88,12 +83,14 @@ export async function getAllChatMessages(number) {
   } else {
     await db.any(getallchatmessagesquery)
     .then((result) => {
-      return result;
+      console.log("Got chat messages");
+      chatmessages = [...result];
     }).catch((error) => {
       console.log("Error getting all chat messages: " + error);
       return;
     });
   }
+  return chatmessages;
 }
 
 export async function addToGameLog(playercharacterid, gamelogtag, content) {

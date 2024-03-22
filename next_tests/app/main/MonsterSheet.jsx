@@ -96,7 +96,142 @@ function MonsterSheet({setRollResults}) {
           health: [0,0,0,0,0,0,0,0]
           },
         ]
-      }
+      },
+      {
+        encountername: "Your Mom's House",
+        monstergroups: [
+          {
+            basicinfo: {
+              id: 0,
+              name: "Bob",
+              quantity: 2,
+              description: "On Your Head",
+              hitdicenum: 2,
+              hitdicetype: 6,
+              challengerating: 0.25,
+              size: "Small",
+              type: "Monster",
+              alignment: "Neutral Evil",
+              xpper: 50,
+              xptotal: 100,
+              ac: 13,
+              speed: 50
+            },
+            abilities: {
+              init: 2,
+              str: 8,
+              dex: 14,
+              con: 10,
+              int: 10,
+              wis: 8,
+              cha: 8,
+            },
+            attacks: [
+              {
+                name: "Penis",
+                hit: 4,
+                numdice: 1,
+                dietype: 6,
+                damagemod: 4,
+                damagetype: "Slashing",
+              },
+              {
+                name: "Shortbow",
+                hit: 4,
+                numdice: 1,
+                dietype: 6,
+                damagemod: 4,
+                damagetype: "Piercing",
+              },
+              {
+                name: "",
+                hit: 0,
+                numdice: 0,
+                dietype: 0,
+                damagemod: 0,
+                damagetype: "Piercing",
+              },
+              {
+                name: "",
+                hit: 0,
+                numdice: 0,
+                dietype: 0,
+                damagemod: 0,
+                damagetype: "Piercing",
+              },
+            ],
+            skills: "Stealth +6; Darkvision 60",
+            ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+            notes: "",
+            health: [0,0,0,0,0,0,0,0]
+            },
+            {
+              basicinfo: {
+                id: 0,
+                name: "Bob",
+                quantity: 2,
+                description: "On Your Head",
+                hitdicenum: 2,
+                hitdicetype: 6,
+                challengerating: 0.25,
+                size: "Small",
+                type: "Monster",
+                alignment: "Neutral Evil",
+                xpper: 50,
+                xptotal: 100,
+                ac: 13,
+                speed: 50
+              },
+              abilities: {
+                init: 2,
+                str: 8,
+                dex: 14,
+                con: 10,
+                int: 10,
+                wis: 8,
+                cha: 8,
+              },
+              attacks: [
+                {
+                  name: "Penis",
+                  hit: 4,
+                  numdice: 1,
+                  dietype: 6,
+                  damagemod: 4,
+                  damagetype: "Slashing",
+                },
+                {
+                  name: "Shortbow",
+                  hit: 4,
+                  numdice: 1,
+                  dietype: 6,
+                  damagemod: 4,
+                  damagetype: "Piercing",
+                },
+                {
+                  name: "",
+                  hit: 0,
+                  numdice: 0,
+                  dietype: 0,
+                  damagemod: 0,
+                  damagetype: "Piercing",
+                },
+                {
+                  name: "",
+                  hit: 0,
+                  numdice: 0,
+                  dietype: 0,
+                  damagemod: 0,
+                  damagetype: "Piercing",
+                },
+              ],
+              skills: "Stealth +6; Darkvision 60",
+              ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+              notes: "",
+              health: [0,0,0,0,0,0,0,0]
+              }
+          ]
+        }
   ]);
 
 

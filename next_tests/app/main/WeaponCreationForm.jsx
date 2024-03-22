@@ -19,6 +19,13 @@ function WeaponCreationForm() {
             <div>
               <label htmlFor="value">Value</label>
               <input type="number" className="itemNumInput" name="value"/>
+              <select name="coin">
+                <option value='cp'>cp</option>
+                <option value='sp'>sp</option>
+                <option value='ep'>ep</option>
+                <option value='gp'>gp</option>
+                <option value='pp'>pp</option>
+              </select>
             </div>
             <div>
               <label htmlFor="weight">Weight</label>

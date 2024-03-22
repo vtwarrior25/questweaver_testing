@@ -545,9 +545,11 @@ CREATE TABLE IF NOT EXISTS spell (
 
 /* TODO maybe make this table inherit from spell?? */
 CREATE TABLE IF NOT EXISTS dicerollspell (
-	effectdicenum					integer,
-	effectdicetype				integer REFERENCES dice(diceid) NOT NULL,
-	effecttype						integer REFERENCES effecttype(effecttypeid) NOT NULL
+	hitdcdicetype							integer REFERENCES dice(diceid) NOT NULL,
+	hitdcdicenum							integer,
+	effectdicetype						integer REFERENCES dice(diceid) NOT NULL,
+	effectdicenum							integer,
+	effecttype								integer REFERENCES effecttype(effecttypeid) NOT NULL
 ) INHERITS (spell);
 
 
