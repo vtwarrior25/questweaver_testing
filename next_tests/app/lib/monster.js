@@ -20,6 +20,7 @@ export async function getMonsterTypes() {
     console.log("getting monster types");
     console.log(result);
     monstertypes = [...result];
+    return monstertypes;
   }).catch((error) => {
     console.error("Error getting monster types: " + error);
     return;
