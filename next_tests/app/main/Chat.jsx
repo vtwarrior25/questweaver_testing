@@ -35,8 +35,12 @@ function Chat() {
 */
 
   useEffect(() => {
-    //let chatmessages = getAllChatMessages();
-    //setChatMessages([...chatmessages]);
+    getAllChatMessages(5)
+    .then((result) => {
+      console.log(result);
+      setChatMessages([...result]);
+    });
+    
   }, []
   );
 

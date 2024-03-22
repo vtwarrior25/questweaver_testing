@@ -33,22 +33,14 @@ function GameLog() {
 
   
   useEffect(() => {  
-    getLog();
-    }, []
-  );
-
-
-  const getLog = () => {
     getAllGameLog()
     .then((result) => {
       console.log("moment");
-      setLogMessages([...result]);
       console.log(result);
-    })
-    .catch((error) => {
-      console.error("Error retrieving game log" + error);
+      setLogMessages([...result]);
     });
-  }
+    }, []
+  );
   
   return ( 
     <div className="gameLogInnerBox">

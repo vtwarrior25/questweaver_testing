@@ -155,7 +155,6 @@ function App () {
               <Tab eventKey="characterCreator" title="Character Creator">
                 <CharacterCreator></CharacterCreator>
               </Tab>
-              <Button onClick={toggleMenuOpen}>&</Button>
             </Tabs>
           </Col>
           <Col>
@@ -163,6 +162,7 @@ function App () {
             <RollResultsSection rollresults={rollresults}/>
           </Col>
         </Row>
+        <Button onClick={toggleMenuOpen}>&</Button>
       </Container>
       <Offcanvas show={showToggleMenu} onHide={toggleMenuClose}>
         <Offcanvas.Header closeButton>

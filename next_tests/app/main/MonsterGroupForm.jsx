@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button, ButtonGroup, Table, Overlay } from 'react-bootstrap';
+import { getMonsterTypes } from '../lib/monster';
 
 function MonsterGroupForm({encounters, addMonsterGroup}) {
   
@@ -22,6 +23,8 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     wis: 0,
     cha: 0,
   });
+
+  const [monstertypes, setMonsterTypes] = useState([]);
 
   const [formdata, setFormData] = useState({
     basicinfo: {
@@ -91,6 +94,12 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     });
 
   useEffect(() => {
+    getMonsterTypes()
+    .then((result) => {
+      console.log('getting monster types');
+      console.log(result);
+      setMonsterTypes([...result]);
+    });
     setEncountersCopy([...encounters]);
     console.log("beans encounters");
     console.log(encounters);
