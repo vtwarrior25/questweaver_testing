@@ -8,11 +8,13 @@ import {
   getCharacterClassInfo,
   getCharacterCreatorInfo,
   updateCharacterAbilityScores,
+  addItemsToCharacterInventory,
 } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
   const [selectedBardWeapon, setSelectedBardWeapon] = useState("");
   const [selectedWeapon, setSelectedWeapon] = useState("");
+  const [equipmentIdMapping, setEquipmentIdMapping] = useState({});
   const [selectedPack, setSelectedPack] = useState("");
   const [selectedInstrument, setSelectedInstrument] = useState("");
   const [isLeatherArmorSelected, setIsLeatherArmorSelected] = useState(true);
@@ -298,6 +300,41 @@ function CharacterCreator() {
       setSelectedBardWeapon(weaponType);
     }
   };
+
+  useEffect(() => {
+    const fetchEquipmentIds = async () => {
+      try {
+        const result = await db.many('SELECT itemid, name FROM item;');
+        const mapping = result.reduce((acc, item) => {
+          acc[item.name.toLowerCase()] = item.itemid;
+          return acc;
+        }, {});
+        setEquipmentIdMapping(mapping);
+      } catch (error) {
+        console.error("Error fetching equipment IDs:", error);
+      }
+    };
+
+    fetchEquipmentIds();
+  }, []);
+
+  const addEquipmentToInventory = async () => {
+    const equipmentToAdd = [];
+
+   
+    if (greataxeSelected) {
+      equipmentToAdd.push({ itemId: equipmentIdMapping['greataxe'], quantity: 1 });
+    }
+    try {
+     
+      await addItemsToCharacterInventory(playercharacterid, equipmentToAdd);
+      alert('Equipment added to inventory!');
+    } catch (error) {
+      console.error("Error adding equipment to inventory:", error);
+    }
+  };
+
+  
 
   const renderEquipment = () => {
     if (selectedClass === "Barbarian") {
@@ -801,6 +838,7 @@ function CharacterCreator() {
         </Tab>
         <Tab eventKey="equipment" title="Equipment">
           {renderEquipment()}
+          <Button onClick={addEquipmentToInventory}>Add Equipment to Inventory</Button>
         </Tab>
         <Tab eventKey="description" title="Description">
           <div className="notesMenu frontElement">

@@ -665,9 +665,43 @@ INSERT INTO item (name, value, coin, description, weight, rarity) VALUES
 ('Abacus', 2, 'gp', 'For counting things', 2, 'Common'),
 ('Acid (vial)', 25, 'gp', '', 1, 'Uncommon'),
 ('Alchemist''s fire', 50, 'gp', '', 1, 'Uncommon'),
-('Arrows (20)', 1, 'gp', '', 1, 'Common');
-('Blowgun needles (50)', 1, 'gp', '', 1, 'Common');
-('Crossbow bolts (20)', 1, 'gp', '', 1.5, 'Common');
+('Arrows (20)', 1, 'gp', '', 1, 'Common'),
+('Blowgun needles (50)', 1, 'gp', '', 1, 'Common'),
+('Crossbow bolts (20)', 1, 'gp', '', 1.5, 'Common'),
+('Quarterstaff', 2, 'gp', 'A long wooden staff used for defense and attack', 4, 'Common'),
+('Dagger', 2, 'gp', 'A short knife with a pointed and edged blade', 1, 'Common'),
+('Light Crossbow', 25, 'gp', 'A lightweight crossbow with a set of 20 bolts', 5, 'Common'),
+('Rapier', 25, 'gp', 'A thin, light, sharp-pointed sword used for thrusting', 2, 'Uncommon'),
+('Shortsword', 10, 'gp', 'A small sword that is easy to handle', 2, 'Common'),
+('Shortbow', 25, 'gp', 'A small bow with a quiver that holds 20 arrows', 2, 'Common'),
+('Leather Armor', 10, 'gp', 'Armor made from toughened leather pieces', 10, 'Common'),
+('Scale Mail', 50, 'gp', 'Armor made of overlapping scales', 45, 'Common'),
+('Two Shortswords', 20, 'gp', 'A pair of small swords for dual-wielding', 4, 'Common'),
+('Greataxe', 30, 'gp', 'A large axe designed for combat', 7, 'Common'),
+('Wooden Shield', 15, 'gp', 'A broad piece of wood used for protection', 6, 'Common'),
+('Scimitar', 25, 'gp', 'A short sword with a curved blade that broadens toward the point', 3, 'Common'),
+('Chain Mail', 75, 'gp', 'Armor made of interlocking metal rings', 55, 'Common'),
+('Warhammer', 15, 'gp', 'A hammer with a head suitable for battle', 6, 'Common'),
+('Thieves’ Tools', 25, 'gp', 'Tools include lock picks, a small mirror, a narrow-bladed knife, a set of narrow-bladed scissors, and a pair of pliers', 1, 'Uncommon'),
+('Druidic Focus (Sprig of Mistletoe)', 1, 'gp', 'A focus for druidic spells and rituals', 1, 'Common'),
+('Druidic Focus (Totem)', 1, 'gp', 'A totemic object used as a focus for druidic spells and rituals', 1, 'Common'),
+('Druidic Focus (Wooden Staff)', 5, 'gp', 'A wooden staff used as a focus for druidic spells and rituals', 4, 'Common'),
+('Druidic Focus (Yew Wand)', 10, 'gp', 'A wand made of yew used as a focus for druidic spells and rituals', 1, 'Common'),
+('Holy Symbol (Reliquary)', 5, 'gp', 'A small box containing sacred relics used as a focus for divine spells', 2, 'Common'),
+('Holy Symbol (Emblem)', 1, 'gp', 'An emblem representing a deity used as a focus for divine spells', 1, 'Common'),
+('Holy Symbol (Amulet)', 20, 'gp', 'An amulet representing a deity used as a focus for divine spells', 1, 'Common');
 
+
+  INSERT INTO weapon (itemid, weapontype, weaponrange) VALUES
+  ((SELECT itemid FROM item WHERE name = 'Quarterstaff'), 'Melee', 'Medium'),
+  ((SELECT itemid FROM item WHERE name = 'Dagger'), 'Melee', 'Short'),
+  ((SELECT itemid FROM item WHERE name = 'Light Crossbow'), 'Ranged', 'Long'),
+  ((SELECT itemid FROM item WHERE name = 'Rapier'), 'Melee', 'Medium'),
+  ((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Melee', 'Short'),
+  ((SELECT itemid FROM item WHERE name = 'Shortbow and Quiver'), 'Ranged', 'Medium'),
+  ((SELECT itemid FROM item WHERE name = 'Two Shortswords'), 'Melee', 'Short'), 
+  ((SELECT itemid FROM item WHERE name = 'Greataxe'), 'Melee', 'Medium'),
+  ((SELECT itemid FROM item WHERE name = 'Scimitar'), 'Melee', 'Medium'),
+  ((SELECT itemid FROM item WHERE name = 'Warhammer'), 'Melee', 'Medium');
 
 
