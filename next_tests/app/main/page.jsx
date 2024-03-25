@@ -115,6 +115,9 @@ function App () {
     let modifier = modval;
     if (space === true) {
       modifier = ` ${modifier}`;
+      if (modval === 0) {
+        return "";
+      }
     }
     if (modifier > 0) {
       return `+${modifier}`;

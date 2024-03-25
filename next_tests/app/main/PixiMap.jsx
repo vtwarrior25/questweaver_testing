@@ -9,6 +9,7 @@ function PixiMap() {
   //const [dragTarget, setDragTarget] = useState(null);
   const [mapshapes, setMapShapes] = useState([
     {
+      id: 0,
       shape: "rectangle",
       color: 0xff0000,
       x: 300,
@@ -17,6 +18,7 @@ function PixiMap() {
       height: 50,
     },
     {
+      id: 1,
       shape: "rectangle",
       color: 0x00ff00,
       x: 200,
@@ -25,6 +27,7 @@ function PixiMap() {
       height: 50,
     },
     {
+      id: 2,
       shape: "circle",
       color: 0x00ff00,
       x: 100,
@@ -32,6 +35,7 @@ function PixiMap() {
       radius: 40,
     },
     {
+      id: 3,
       shape: "ellipse",
       color: 0x00ff00,
       x: 400,
@@ -39,7 +43,8 @@ function PixiMap() {
       width: 60,
       height: 40,
     },
-    {
+    { 
+      id: 4,
       shape: "text",
       text: "8==D",
       x: 20,
@@ -183,7 +188,6 @@ function PixiMap() {
       console.log(newPosition);
       sprite.x = newPosition.x;
       sprite.y = newPosition.y;
-
     }
   };
 

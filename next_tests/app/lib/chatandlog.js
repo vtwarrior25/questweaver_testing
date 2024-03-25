@@ -37,7 +37,7 @@ const getcharacterchatmessagesquery = new PQ({
 
 const getallgamelogquery = new PQ({
   text: `
-  SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character FROM gamelog g
     JOIN playercharacter p ON g.playercharacterid = p.playercharacterid;
   `
 });
@@ -104,7 +104,7 @@ export async function addToGameLog(playercharacterid, gamelogtag, content) {
 export async function getAllGameLog() {
   let defaultresult = [];
   console.log('Getting game log');
-  db.any(getallgamelogquery)
+  await db.any(getallgamelogquery)
   .then((result) => {
     console.log(result);
     defaultresult = [...result];
@@ -112,6 +112,7 @@ export async function getAllGameLog() {
   .catch(error => {
     console.error("Error adding game log entry:", error);
   });
+  console.log(defaultresult);
   return defaultresult;
 }
 

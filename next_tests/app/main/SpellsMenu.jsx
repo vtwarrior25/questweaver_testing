@@ -16,7 +16,7 @@ function SpellsMenu({setRollResults}) {
   const [spelllevels, setSpellLevels] = useState([]); 
 
   const [spellinfo, setSpellInfo] = useState({
-    castmodifier: 4,
+    spellabilitymod: 4,
     spellattackmod: 7,
     savedc: 15,
     spellslots: {
@@ -32,14 +32,14 @@ function SpellsMenu({setRollResults}) {
       name: "Guidance",
       timetocast: "1A",
       range: "Touch",
-      hitdcroll: false,
-      hitdc: "n/a",
+      saveability: "",
       hitdcdie: 0,
       hitdcdienum: 0,
+      hitdcmod: 'None',
       effect: "Buff",
       effectdie: 0,
       effectdienum: 0,
-      effectdiemod: 0,
+      effectmod: 'None',
       notes: "D: 1m, V/S",
     },
     {
@@ -47,13 +47,14 @@ function SpellsMenu({setRollResults}) {
       name: "Light",
       timetocast: "1A",
       range: "Touch",
-      hitdcroll: false,
+      saveability: "Dex",
       hitdcdie: 0,
       hitdcdienum: 0,
-      hitdc: "Dex",
+      hitdcmod: 'Save DC',
       effect: "Creation",
       effectdie: 0,
       effectdienum: 0,
+      effectmod: 'None',
       notes: "D: 1m, V/S",
     },
     {
@@ -61,14 +62,14 @@ function SpellsMenu({setRollResults}) {
       name: "Sacred Flame",
       timetocast: "1A",
       range: "60 ft",
-      hitdcroll: false,
-      hitdc: "Dex",
+      saveability: 'Dex',
       hitdcdie: 0,
       hitdcdienum: 0,
+      hitdcmod: 'Save DC',
       effect: "Damage",
       effectdie: 8,
       effectdienum: 2,
-      effectdiemod: 0,
+      effectmod: 'None',
       notes: "D: 1m, V/S",
     },
     {
@@ -76,14 +77,14 @@ function SpellsMenu({setRollResults}) {
       name: "Bless",
       timetocast: "1A",
       range: "30 ft",
-      hitdc: "",
+      saveability: "",
       hitdcdie: 0,
       hitdcdienum: 0,
+      hitdcmod: "None",
       effect: "Buff",
-      effectdamage: true,
       effectdie: 0,
       effectdienum: 0,
-      effectdiemod: 0,
+      effectmod: 'None',
       notes: "D: 1m, V/S/M",
     },
     {
@@ -91,14 +92,14 @@ function SpellsMenu({setRollResults}) {
       name: "Cure Wounds",
       timetocast: "1A",
       range: "30 ft",
-      hitdcroll: false,
-      hitdc: "",
+      saveability: "",
       hitdcdie: 0,
       hitdcdienum: 0,
+      hitdcmod: "None",
       effect: "Heal",
       effectdie: 8,
       effectdienum: 1,
-      effectdiemod: 4,
+      effectmod: "Spell Ability",
       notes: "D: 1m, V/S",
     },
   ]);
@@ -193,7 +194,7 @@ function SpellsMenu({setRollResults}) {
           <div className="spellsMenuHeaderStat">
             {/* TODO reformat this later */}
             <span>Modifier</span>
-            <span>{spellinfo.castmodifier}</span>
+            <span>{spellinfo.spellabilitymod}</span>
           </div>
           <div className="spellsMenuHeaderStat">
             <span>Spell Attack</span>
@@ -214,7 +215,7 @@ function SpellsMenu({setRollResults}) {
         </div>
       </div>
       <div className="spellsSection">
-        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} savedc={spellinfo.savedc} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
+        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} spellinfo={spellinfo} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
       </div>
     </div>
   );

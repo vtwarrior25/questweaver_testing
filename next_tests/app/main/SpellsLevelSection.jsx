@@ -3,7 +3,7 @@ import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'; 
 import { ModPosContext } from './Contexts';
 
-function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResults, unprepSpell}) {
+function SpellsLevelSection({level, numspellslots, spellinfo, spells, setRollResults, unprepSpell}) {
 
   
   const modPos = useContext(ModPosContext);
@@ -79,20 +79,49 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
 
 
   const hitDcHandler = (spell) => {
-    if (spell.hitdcroll === false) {
-      if (spell.hitdc !== "") {
-        return `${spell.hitdc} ${savedc}`;
+    // 3 conditions
+    // hitdcdie = 0 or null, hitdcmod = 0 or null, hitdcmod = 'None' or null, save ability = "" or null  
+    if ((spell.hitdcdie === 0 || spell.hitdcdie === null) && (spell.hitdcdienum === 0 || spell.hitdcdienum === null)) {
+      console.log("beans1");
+      if ((spell.hitdcmod === "None" || spell.hitdcmod === null) && (spell.saveability === "" || spell.saveability === null)) {
+        return 'n/a';
+      } else if (spell.hitdcmod === 'Save DC' && (spell.saveability !== "" || spell.saveability !== null)) {
+        return `${spell.saveability} ${spellinfo.savedc}`
+      }
+    } else if (spell.hitdcdie > 0 && spell.hitdcdienum > 0){
+      if (spell.hitdcmod === 'Spell Ability') {
+        return <DiceRollButton name={spell.name} rolltype={"Cast"} die={spell.hitdcdie} num={spell.hitdcdienum} mod={spellinfo.spellabilitymod} setRollResults={setRollResults} text={`${spell.hitdcdienum}d${spell.hitdcdie} ${modPos(spellinfo.spellabilitymod, true)}`}></DiceRollButton>
+      } else if (spell.hitdcmod === 'Spell Attack') {
+        return <DiceRollButton name={spell.name} rolltype={"Attack"} die={spell.hitdcdie} num={spell.hitdcdienum} mod={spellinfo.spellattackmod} setRollResults={setRollResults} text={`${spell.hitdcdienum}d${spell.hitdcdie} ${modPos(spellinfo.spellattackmod, true)}`}></DiceRollButton>
       }
     }
-    return spell.hitdc; 
   }
 
   const effectHandler = (spell) => {
-    let text = `${spell.effectdienum}d${spell.effectdie} ${modPos(spell.effectdiemod, true)}`;
-    if (spell.effectdie === 0 || spell.effectdienum === 0) {
+    //let text = `${spell.effectdienum}d${spell.effectdie} ${modPos(spell.effectdiemod, true)}`;
+    if ((spell.effectdie === 0 || spell.effectdie === null) && (spell.effectdienum === 0 || spell.effectdienum === null)) {
       return spell.effect;
+    } else if (spell.effectmod === "Spell Ability") {
+      return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={spellinfo.spellabilitymod} setRollResults={setRollResults} text={`${spell.effectdienum}d${spell.effectdie} ${modPos(spellinfo.spellabilitymod, true)}`}></DiceRollButton>
+    } else if (spell.effectmod === "None") {
+      return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={0} setRollResults={setRollResults} text={`${spell.effectdienum}d${spell.effectdie} ${modPos(0, true)}`}></DiceRollButton>
     } else {
-      return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={spell.effectdiemod} setRollResults={setRollResults} text={text}></DiceRollButton>
+      return 'n/a'
+    }
+  }
+
+  const castHandler = (spell) => {
+    let text = "Cast";
+    if (spell.hitdcdie > 0 && spell.hitdcdienum > 0 && spell.hitdcmod === 'Spell Ability') {
+      return <DiceRollButton name={spell.name} rolltype={"Cast"} die={spell.hitdcdie} num={spell.hitdcdienum} mod={spellinfo.spellabilitymod} setRollResults={setRollResults} text={text}></DiceRollButton>
+    } else if (spell.hitdcdie > 0 && spell.hitdcdienum > 0 && spell.hitdcmod === 'Spell Attack') {
+      return <DiceRollButton name={spell.name} rolltype={"Attack"} die={spell.hitdcdie} num={spell.hitdcdienum} mod={spellinfo.spellattackmod} setRollResults={setRollResults} text={text}></DiceRollButton>
+    } else if (spell.effectmod === "Spell Ability") {
+      return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={spellinfo.spellabilitymod} setRollResults={setRollResults} text={text}></DiceRollButton>
+    } else if (spell.effectmod === "None" && spell.effectdie > 0 && spell.effectdienum > 0) {
+      return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={0} setRollResults={setRollResults} text={text}></DiceRollButton>
+    } else {
+      return "";
     }
   }
 
@@ -103,7 +132,7 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
         <span className="characterSheetSectionTitle">{titleHandler(level)}</span>
         <div className="spellsHeaderRightSection">
           <form className='spellsHeaderFakeForm'>
-          {spellslots && spellslots.length > 0 && <Button size="sm" variant='secondary' type='reset'>Clear</Button>}
+            {spellslots && spellslots.length > 0 && <Button size="sm" variant='secondary' type='reset'>Clear</Button>}
             <div className="spellHeaderSpellSlots">
               {spellslots && spellslots.length > 0 && spellslots.map((spellslot, index) => <input type="checkbox" key={index} value={spellslot}></input>)}
             </div>
@@ -126,12 +155,12 @@ function SpellsLevelSection({level, numspellslots, savedc, spells, setRollResult
           {spells && spells.length > 0 && spells.map((spell, index) => 
             <React.Fragment key={index}>
               <tr>
-                <td><Button size='sm'>Cast</Button></td>
+                <td>{castHandler(spell)}</td>
                 <td onClick={() => toggleDropdown(index)}>{spell.name}</td>
                 <td onClick={() => toggleDropdown(index)}>{spell.timetocast}</td>
                 <td onClick={() => toggleDropdown(index)}>{spell.range}</td>
-                <td onClick={() => toggleDropdown(index)}>{hitDcHandler(spell)}</td>
-                <td onClick={() => toggleDropdown(index)}>{effectHandler(spell)}</td>
+                <td>{hitDcHandler(spell)}</td>
+                <td>{effectHandler(spell)}</td>
                 <td onClick={() => toggleDropdown(index)}>{spell.notes}</td>
               </tr>
               <tr>

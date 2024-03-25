@@ -133,7 +133,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   }
 
   const duplicateMonsterGroup = (monstergroup) => {
-    
+    setFormData({...monstergroup})
     //setFormData(monstergroup);
   }
 
