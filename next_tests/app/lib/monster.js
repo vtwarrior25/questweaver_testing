@@ -34,3 +34,51 @@ export async function getMonsterTypes() {
     // If no encounter exists with that name, add a new encounter to the encounter table, and then add the monster group to the monster group table with the new encounterid
   // Add data of each ability into monsterability
   // Add data for each attack into attack, then attach the attacks to monsterattack using attackid and monsterid 
+
+const getencounternamequery = new PQ({
+  text: 'SELECT name FROM encounter'
+});
+
+const addnewmonstergroupquery = new PQ({
+  text: `
+  INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, monstertypeid, alignment, groupname, description, hitdie, hitdienum, challengerating, xp, armorclass, speed, initiative, skills, features, notes)
+  VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`
+});
+
+const addnewencounterquery = new PQ({
+  text: `
+  INSERT INTO encounter (encounterid, name)
+  VALUES (DEFAULT, $1)`
+});
+
+export async function addgroupfromform(formdata, encountername) {
+  let encounternames = [];
+  db.any(getencounternamequery)
+  .then((result) => {
+    encounternames = [...result];
+    let ename;
+    for (ename of encounternames) {
+      if (ename == encountername) {
+        // add monster group to monstergroup table with encounterid attatched
+        break;
+      }
+    }
+    if (ename != encountername) {
+      // add new encounter to encounter table, and add monster group
+      db.one(addnewencounterquery, encountername)
+      .then({
+        // add monster group to monstergroup table with encounterid attatched
+      })
+      .catch((error) => {
+        console.log("Error adding new encounter: " + error);
+        return;
+      });
+    }
+    // add ability data from formdata into monsterability
+    // add attack data from formdata into attack
+    // link attacks to monsterattack with attackid/monsterid
+  }).catch((error) => {
+    console.log("Error getting encounter names: " + error);
+    return;
+  })
+}
