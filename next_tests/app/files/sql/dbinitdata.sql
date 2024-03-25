@@ -676,7 +676,7 @@ INSERT INTO item (name, value, coin, description, weight, rarity) VALUES
 ('Shortbow', 25, 'gp', 'A small bow with a quiver that holds 20 arrows', 2, 'Common'),
 ('Leather Armor', 10, 'gp', 'Armor made from toughened leather pieces', 10, 'Common'),
 ('Scale Mail', 50, 'gp', 'Armor made of overlapping scales', 45, 'Common'),
-('Two Shortswords', 20, 'gp', 'A pair of small swords for dual-wielding', 4, 'Common'),
+('Shortsword', 20, 'gp', 'A pair of small swords for dual-wielding', 4, 'Common'),
 ('Greataxe', 30, 'gp', 'A large axe designed for combat', 7, 'Common'),
 ('Wooden Shield', 15, 'gp', 'A broad piece of wood used for protection', 6, 'Common'),
 ('Scimitar', 25, 'gp', 'A short sword with a curved blade that broadens toward the point', 3, 'Common'),
@@ -699,7 +699,7 @@ INSERT INTO item (name, value, coin, description, weight, rarity) VALUES
   ((SELECT itemid FROM item WHERE name = 'Rapier'), 'Melee', 'Medium'),
   ((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Melee', 'Short'),
   ((SELECT itemid FROM item WHERE name = 'Shortbow and Quiver'), 'Ranged', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Two Shortswords'), 'Melee', 'Short'), 
+  ((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Melee', 'Short'), 
   ((SELECT itemid FROM item WHERE name = 'Greataxe'), 'Melee', 'Medium'),
   ((SELECT itemid FROM item WHERE name = 'Scimitar'), 'Melee', 'Medium'),
   ((SELECT itemid FROM item WHERE name = 'Warhammer'), 'Melee', 'Medium');
