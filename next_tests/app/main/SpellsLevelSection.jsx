@@ -121,7 +121,7 @@ function SpellsLevelSection({level, numspellslots, spellinfo, spells, setRollRes
     } else if (spell.effectmod === "None" && spell.effectdie > 0 && spell.effectdienum > 0) {
       return <DiceRollButton name={spell.name} rolltype={spell.effect} die={spell.effectdie} num={spell.effectdienum} mod={0} setRollResults={setRollResults} text={text}></DiceRollButton>
     } else {
-      return "";
+      return "-";
     }
   }
 

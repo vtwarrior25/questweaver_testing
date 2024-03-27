@@ -42,6 +42,13 @@ const getallgamelogquery = new PQ({
   `
 });
 
+const getallgamelogwithlimitquery = new PQ({
+  text: `
+  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character FROM gamelog g
+    JOIN playercharacter p ON g.playercharacterid = p.playercharacterid LIMIT $1;
+  `
+});
+
 
 export async function setChatMessages(playercharacterid, messages) {
   const insertQueries = messages.map(message => {
@@ -94,14 +101,15 @@ export async function getAllChatMessages(number) {
 }
 
 export async function addToGameLog(playercharacterid, gamelogtag, content) {
-  await db.none(addgamelogentry, [gamelogtag, content, playercharacterid])
+  db.none(addgamelogentry, [gamelogtag, content, playercharacterid])
   .catch(error => {
     console.error("Error adding game log entry:", error);
     return;
   });
 }
 
-export async function getAllGameLog() {
+/*
+export async function getAllGameLog(number) {
   let defaultresult = [];
   console.log('Getting game log');
   await db.any(getallgamelogquery)
@@ -113,6 +121,31 @@ export async function getAllGameLog() {
     console.error("Error adding game log entry:", error);
   });
   console.log(defaultresult);
+  return defaultresult;
+}
+*/
+
+export async function getAllGameLog(number) {
+  let defaultresult = []; 
+  if (number !== 0 && number !== undefined) {
+    await db.any(getallgamelogwithlimitquery, [number])
+    .then((result) => {
+      console.log("Got game log entries: " + number);
+      defaultresult = [...result];
+    }).catch((error) => {
+      console.log("Error getting all game log entries: " + error);
+      return;
+    });
+  } else {
+    await db.any(getallgamelogquery)
+    .then((result) => {
+      console.log("Got game log entries");
+      defaultresult = [...result];
+    }).catch((error) => {
+      console.log("Error getting all game log entries: " + error);
+      return;
+    });
+  }
   return defaultresult;
 }
 

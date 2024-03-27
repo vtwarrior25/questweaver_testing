@@ -1,9 +1,9 @@
 function GameLogMessage({character, type, text}) {
   return ( 
     <div className="gameLogMessage">
-      <div className="gameLogCharacter">{character}</div>
-      <div className="gameLogType">{type}</div>
-      <div className="gameLogText">{text}</div>
+      <span className="gameLogCharacter">{character + " - "}</span>
+      <span className="gameLogType">{type + "\n"}</span>
+      <span className="gameLogText">{text}</span>
     </div>
   );
 }

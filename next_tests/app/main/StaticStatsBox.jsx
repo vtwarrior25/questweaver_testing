@@ -120,7 +120,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
           <div className="statsContainer generalStats">
             <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
             <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
-            <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults}>{staticstats.initiative}</DiceRollButton></div>
+            <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults} advantage={false} initiative={true}>{staticstats.initiative}</DiceRollButton></div>
             <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
             <div><span className='staticStatsItemName'>Alignment</span> - {staticstats.alignment}</div>
           </div>

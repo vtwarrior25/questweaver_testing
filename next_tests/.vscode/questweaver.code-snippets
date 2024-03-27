@@ -23,7 +23,7 @@
 	"nonequery": {
 		"scope": "javascript",
 		"prefix": "nonequery",
-		"body": "db.none($1, [$2])\n.catch((error) => {\n\tconsole.log(error);\nconsole.log('$3')\n});",
+		"body": "db.none($1, [$2])\n.catch((error) => {\n\tconsole.log('$3' + error);\n});",
 		"description": "Creates a new pg-promise"
 	},
 

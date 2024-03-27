@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Graphics, Text } from '@pixi/react';
+import { Graphics, Text, Sprite } from '@pixi/react';
 import { Color } from 'pixi.js';
 //import { onDragStart } from '/app/main/PixiMap';
 
@@ -56,6 +56,20 @@ export function MapEllipse({shapeinfo}) {
 }
 
 
+export function MapSprite({shapeinfo}) {
+  return <Sprite
+    image={shapeinfo.image}
+    anchor={0.5}
+    scale={{x: shapeinfo.scale, y: shapeinfo.scale}} 
+    x={shapeinfo.x}
+    y={shapeinfo.y}
+    interactive={true}
+    pointerdown={onDragStart} 
+    pointerup={onDragEnd} 
+    pointerupoutside={onDragEnd} 
+    pointermove={onDragMove}
+  />
+}
 
 export function MapText(shapeinfo) {
   return <Text

@@ -2,7 +2,7 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { MapScaleContext, PlayerCharacterContext } from './Contexts';
 import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import { MapRectangle, MapCircle, MapEllipse, MapText, onDragEnd} from './Shapes'; 
+import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
 
 
 function PixiMap() {
@@ -186,8 +186,11 @@ function PixiMap() {
     if (sprite.dragging) {
       const newPosition = sprite.data.getLocalPosition(sprite.parent);
       console.log(newPosition);
+      console.log(sprite);
+      console.log(sprite.data);
       sprite.x = newPosition.x;
       sprite.y = newPosition.y;
+      
     }
   };
 
@@ -226,6 +229,8 @@ function PixiMap() {
             return <MapEllipse key={index} shapeinfo={shape}></MapEllipse>
           } else if (shape.shape === "text") {
             return <MapText key={index} shapeinfo={shape}></MapText>
+          } else if (shape.shape === "sprite") {
+            return <MapSprite key={index} shapeinfo={shape}></MapSprite>
           }
         })}
         <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>

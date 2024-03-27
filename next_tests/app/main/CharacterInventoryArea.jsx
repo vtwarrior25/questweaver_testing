@@ -4,9 +4,17 @@ import SpellsMenu from './SpellsMenu';
 import InventoryMenu from './InventoryMenu';
 import NotesMenu from './NotesMenu';
 import FeaturesMenu from './FeaturesMenu';
+import { ActionUpdateContext } from './Contexts';
 
 function CharacterInventoryArea({setRollResults}) {
+
+  const updateActions = () => {
+    
+  }
+
+
   return ( 
+    <ActionUpdateContext.Provider value={updateActions}>
     <div className="characterInventoryArea frontElement">
       <Tabs defaultActiveKey='actions'>
         <Tab eventKey='actions' title="Actions">  
@@ -26,6 +34,7 @@ function CharacterInventoryArea({setRollResults}) {
         </Tab>
       </Tabs>
     </div>
+    </ActionUpdateContext.Provider>
   );
 }
 

@@ -35,7 +35,7 @@ function Chat() {
 */
 
   useEffect(() => {
-    getAllChatMessages(5)
+    getAllChatMessages(0)
     .then((result) => {
       console.log(result);
       setChatMessages([...result]);

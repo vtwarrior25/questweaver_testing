@@ -20,3 +20,5 @@ export const MapScaleContext = createContext(100);
 export const UpdateGameLogContext = createContext(null);
 
 export const PlayerNameContext = createContext(null);
+
+export const ActionUpdateContext = createContext(null);

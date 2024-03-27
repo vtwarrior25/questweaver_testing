@@ -463,7 +463,8 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	hitdie												integer,
 	hitdienum											integer,
 	challengerating								integer,
-	xp														integer,
+	xpper													integer,
+	xptotal												integer,
 	armorclass										integer,
 	speed													integer,
 	initiative										integer,
@@ -714,7 +715,8 @@ Turn Order
 CREATE TABLE IF NOT EXISTS turnorder (
 	turnorderid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid) UNIQUE,
-	initiative					integer
+	initiative					integer,
+	currentturn					boolean
 );
 
 

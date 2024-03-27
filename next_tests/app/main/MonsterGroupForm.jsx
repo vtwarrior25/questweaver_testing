@@ -28,7 +28,6 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
 
   const [formdata, setFormData] = useState({
     basicinfo: {
-      id: 0,
       encounter: "Cragmaw",
       name: "Jeff",
       quantity: 2,

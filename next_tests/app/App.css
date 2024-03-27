@@ -400,6 +400,11 @@ Chat Section
 .chatMessageArea {
   display: flex;
   flex-direction: column;
+  min-height: 18rem;
+  max-height: 18rem;
+  min-width: 5rem;
+  max-width: 20rem;
+  overflow-y: scroll;
 } 
 
 .chatMessage {
@@ -419,11 +424,17 @@ Chat Section
 .gameLogInnerBox {
   display: flex;
   flex-direction: column;
+  min-height: 18rem;
+  max-height: 18rem;
+  min-width: 5rem;
+  max-width: 20rem;
+  overflow-y: scroll;
 } 
 
 .gameLogMessage {
   border: var(--thinBorder);
   border-radius: 0.5rem;
+  text-align: center;
 }
 
 

@@ -591,7 +591,7 @@ const setturnorderquery = new PQ({
 
 const getturnorderquery = new PQ({
   text: `
-    SELECT c.name, t.initiative FROM turnorder t
+    SELECT c.name, t.initiative, t.currentturn FROM turnorder t
     JOIN playercharacter c ON t.playercharacterid = c.playercharacterid;
   `
 });
@@ -697,12 +697,4 @@ export async function getBasicInfo (playercharacterid) {
   return result;
 }
 
-/*
-export async function setTurnOrder (turnorder) {
-  db.none(, [])
-  .catch((error) => {
-    console.log(error);
-  console.log('')
-  });
-}
-*/
+
