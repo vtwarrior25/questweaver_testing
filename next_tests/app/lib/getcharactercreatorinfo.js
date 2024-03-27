@@ -24,15 +24,15 @@ const getracesquery = new PQ({
 
 export async function addItemsToCharacterInventory(playerCharacterId, items) {
   const cs = new pgp.helpers.ColumnSet(['playercharacterid', 'itemid', 'quantity'], {table: 'characterinventory'});
+  
+
   const values = items.map(item => ({
     playercharacterid: playerCharacterId,
     itemid: item.itemId,
     quantity: item.quantity
   }));
 
-  const query = pgp.helpers.insert(values, cs) + `
-    ON CONFLICT (playercharacterid, itemid) DO UPDATE SET quantity = EXCLUDED.quantity + characterinventory.quantity;
-  `;
+  const query = pgp.helpers.insert(values, cs);
 
   try {
     await db.none(query);
@@ -42,6 +42,7 @@ export async function addItemsToCharacterInventory(playerCharacterId, items) {
     throw error;
   }
 }
+
 
 
 export async function updateCharacterAbilityScores(playerCharacterId, abilities) {
