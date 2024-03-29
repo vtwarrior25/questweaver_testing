@@ -2,6 +2,7 @@
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
+import scoreToMod from '../lib/calcs.js';
 
 const getmonstertypesquery = new PQ({
   text: `
@@ -36,23 +37,31 @@ export async function getMonsterTypes() {
   // Add data for each attack into attack, then attach the attacks to monsterattack using attackid and monsterid 
 
 const getencounternamequery = new PQ({
-  text: 'SELECT name FROM encounter'
+  text: 'SELECT name FROM encounter;'
 });
 
 const addnewmonstergroupquery = new PQ({
   text: `
   INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, monstertypeid, alignment, groupname, description, hitdie, hitdienum, challengerating, xp, armorclass, speed, initiative, skills, features, notes)
-  VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`
+  VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+  RETURNING monstergroupid;`
 });
 
 const addnewencounterquery = new PQ({
   text: `
   INSERT INTO encounter (encounterid, name)
-  VALUES (DEFAULT, $1)`
+  VALUES (DEFAULT, $1);`
 });
+
+const addmonsterabilitiesquery = new PQ({
+  text: `
+  INSERT INTO monsterability (monsterabilityid, monstergroupid, abilityid, score, modifier)
+  VALUES (DEFAULT, $1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4);`
+})
 
 export async function addgroupfromform(formdata, encountername) {
   let encounternames = [];
+  let newmonstergroupid = "";
   db.any(getencounternamequery)
   .then((result) => {
     encounternames = [...result];
@@ -61,6 +70,9 @@ export async function addgroupfromform(formdata, encountername) {
       if (ename == encountername) {
         // add monster group to monstergroup table with encounterid attatched
         db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.skills, formdata.ability, formdata.notes])
+        .then((result) => {
+          newmonstergroupid = result.monstergroupid;
+        })
         .catch((error) => {
           console.log("Error adding new monster group to encounter: " + error);
           return;
@@ -74,6 +86,9 @@ export async function addgroupfromform(formdata, encountername) {
       .then((result) => {
         // add monster group to monstergroup table with encounterid attatched
         db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.skills, formdata.ability, formdata.notes])
+        .then((result) => {
+          newmonstergroupid = result.monstergroupid;
+        })
         .catch((error) => {
           console.log("Error adding new monster group to encounter: " + error);
           return;
@@ -85,6 +100,12 @@ export async function addgroupfromform(formdata, encountername) {
       });
     }
     // add ability data from formdata into monsterability
+    for (const ab of Object.keys(formdata.abilities)) {
+      db.one(addmonsterabilitiesquery, newmonstergroupid,ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab],scoreToMod(formdata.abilities[ab]))
+      .catch((error) => {
+        console.log("Error inserting monster ability data: " + error);
+      });
+    }
     // add attack data from formdata into attack
     // link attacks to monsterattack with attackid/monsterid
   }).catch((error) => {
