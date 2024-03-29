@@ -213,9 +213,8 @@ export async function getCharacterMoney (playercharacterid) {
   .then((result) => {
     if (result.length > 0) {
       console.log('Got character money');
-      console.log(playercharacterid);
-      console.log(result);
       money = {...result[0]};
+      console.log(money)
     }
   }).catch((error) => {
     console.log('Unable to get money for character' + error);

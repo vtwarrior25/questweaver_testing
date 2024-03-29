@@ -16,11 +16,11 @@ function InventoryMenu() {
   const managetarget = useRef(null);
 
   const [money, setMoney] = useState({
-    copper: 0,
-    silver: 0,
-    electrum: 0,
-    gold: 0,
-    platinum: 0,
+    cp: 0,
+    sp: 0,
+    ep: 0,
+    gp: 0,
+    pp: 0,
   });
 
   const [sections, setSections] = useState([
@@ -92,7 +92,12 @@ function InventoryMenu() {
   )
 
   useEffect(() => {
-    getCharacterMoney(playercharacterid);
+    getCharacterMoney(playercharacterid)
+    .then((result) => {
+      setMoney({...result});
+    }).catch((error) => {
+      console.error("Error getting character money: " + error);
+    });
   }, [],
   );
 
@@ -193,26 +198,26 @@ function InventoryMenu() {
                 <tbody>
                   <tr>
                     <td>Platinum</td>
-                    <td><input type="number" size="5" value={money.platinum} onChange={(e) => setMoney({...money, platinum: Number(e.target.value)})}></input></td>
+                    <td><input type="number" size="5" value={money.pp} onChange={(e) => setMoney({...money, pp: Number(e.target.value)})}></input></td>
                   </tr>
                   <tr>
                     <td>Gold</td>
-                    <td><input type="number" size="5" value={money.gold} onChange={(e) => setMoney({...money, gold: Number(e.target.value)})}></input></td>
+                    <td><input type="number" size="5" value={money.gp} onChange={(e) => setMoney({...money, gp: Number(e.target.value)})}></input></td>
                   </tr>
                   <tr>
                     <td>Electrum</td>
-                    <td><input type="number" size="5" value={money.electrum} onChange={(e) => setMoney({...money, electrum: Number(e.target.value)})}></input></td>
+                    <td><input type="number" size="5" value={money.ep} onChange={(e) => setMoney({...money, ep: Number(e.target.value)})}></input></td>
                   </tr>
                   <tr>
                     <td>Silver</td>
-                    <td><input type="number" size="5" value={money.silver} onChange={(e) => setMoney({...money, silver: Number(e.target.value)})}></input></td>
+                    <td><input type="number" size="5" value={money.sp} onChange={(e) => setMoney({...money, sp: Number(e.target.value)})}></input></td>
                   </tr>
                   <tr>
                     <td>Copper</td>
-                    <td><input type="number" size="5" value={money.copper} onChange={(e) => setMoney({...money, copper: Number(e.target.value)})}></input></td>
+                    <td><input type="number" size="5" value={money.cp} onChange={(e) => setMoney({...money, cp: Number(e.target.value)})}></input></td>
                   </tr>
                   <tr>
-                    <td><Button onClick={setCharacterMoney(playercharacterid, money)}></Button></td>
+                    <td colSpan={2}><Button onClick={() => setCharacterMoney(playercharacterid, money)}>Save</Button></td>
                   </tr>
                 </tbody>
               </table>
