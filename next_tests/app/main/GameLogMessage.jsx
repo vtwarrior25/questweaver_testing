@@ -1,9 +1,17 @@
-function GameLogMessage({character, type, text}) {
+import { useState } from 'react';
+
+function GameLogMessage({character, type, text, time}) {
+  const [showDropdown, setShowDropdown] = useState(false);
   return ( 
-    <div className="gameLogMessage">
+    <div className="gameLogMessage" onClick={() => setShowDropdown(!showDropdown)}>
       <span className="gameLogCharacter">{character + " - "}</span>
       <span className="gameLogType">{type + "\n"}</span>
-      <span className="gameLogText">{text}</span>
+      {showDropdown &&
+      <div className='gameLogMessageDropdown'>
+        <span className='gameLogTime'>{time} - </span>
+        <span className="gameLogText">{text}</span>
+      </div>
+      }
     </div>
   );
 }

@@ -15,7 +15,7 @@ const getspelllistquery = new PQ({
 
 const getpreparedspellsquery = new PQ ({
   text: 
-    `SELECT s.name, s.casttime AS timetocast, s.spellrange AS range,  FROM preparedlist p
+    `SELECT s.name, s.casttime AS timetocast, s.spellrange AS range FROM preparedlist p
       JOIN spell s ON p.spellid = s.spellid 
       JOIN spelllist sl ON p.spellid = sl.spellid
     WHERE c.playercharacterid = $1;`
@@ -38,27 +38,33 @@ const unpreparequery = new PQ({
 });
 
 export async function getSpellList(playercharacterid) {
-  db.any(getspelllistquery, [playercharacterid])
+  let spelllist = [];
+  await db.any(getspelllistquery, [playercharacterid])
   .then((result) => {
-    return result;
+    spelllist = [...result];
+    return spelllist;
   }).catch((error) => {
     console.log(error);
     console.log("spell list not found");
     return error;
   });
+  return spelllist;
 }
 
 export async function getPreparedSpells (playercharacterid) {
-  db.any(getpreparedspellsquery, [playercharacterid])
+  let preparedspells = [];
+  await db.any(getpreparedspellsquery, [playercharacterid])
   .then (dbinfo => {
     console.log(dbinfo);
-    return dbinfo;
+    preparedspells = [...dbinfo];
+    return preparedspells;
   })
   .catch(error => {
     console.log(error);
     console.log("prepared spells not found");
     return error;
   });
+  return preparedspells;
 }
 
 export async function setPreparedSpell (playercharacterid, spellname) {

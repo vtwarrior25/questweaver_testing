@@ -5,15 +5,15 @@ import { db } from '../lib/dbconn';
 
 const addgamelogentry = new PQ({
   text: `
-    INSERT INTO gamelog (gamelogtag, content, playercharacterid) VALUES 
-    ($1, $2, $3);
+    INSERT INTO gamelog (gamelogtag, content, playercharacterid, timeadded) VALUES 
+    ($1, $2, $3, $4);
   `
 });
 
 
 const getchatmessageswithlimitquery = new PQ({
   text: `
-    SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+    SELECT g.gamelogtag, g.content, p.name, g.timeadded FROM gamelog g
       JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
     WHERE gamelogtag = 'Chat' LIMIT $1;
   `
@@ -22,11 +22,19 @@ const getchatmessageswithlimitquery = new PQ({
 
 const getallchatmessagesquery = new PQ({
   text: `
-    SELECT g.gamelogtag, g.content, p.name FROM gamelog g
+    SELECT g.gamelogtag, g.content, p.name, g.timeadded FROM gamelog g
       JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
     WHERE gamelogtag = 'Chat';
   `
 });
+
+const gettodaychatmessagesquery = new PQ({
+  text: `
+  SELECT g.gamelogtag, g.content, p.name, g.timeadded FROM gamelog g
+  JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
+WHERE g.gamelogtag = 'Chat' AND date_trunc('day', g.timeadded) = date_trunc('day', CURRENT_TIMESTAMP);
+  `
+})
 
 const getcharacterchatmessagesquery = new PQ({
   text: `
@@ -37,14 +45,14 @@ const getcharacterchatmessagesquery = new PQ({
 
 const getallgamelogquery = new PQ({
   text: `
-  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character FROM gamelog g
+  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character, g.timeadded FROM gamelog g
     JOIN playercharacter p ON g.playercharacterid = p.playercharacterid;
   `
 });
 
 const getallgamelogwithlimitquery = new PQ({
   text: `
-  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character FROM gamelog g
+  SELECT g.gamelogtag AS type, g.content AS text, p.name AS character, g.timeadded FROM gamelog g
     JOIN playercharacter p ON g.playercharacterid = p.playercharacterid LIMIT $1;
   `
 });
@@ -91,17 +99,24 @@ export async function getAllChatMessages(number) {
     await db.any(getallchatmessagesquery)
     .then((result) => {
       console.log("Got chat messages");
+      //console.log(result[result.length-1].timeadded.toISOString());
       chatmessages = [...result];
     }).catch((error) => {
       console.log("Error getting all chat messages: " + error);
       return;
     });
   }
+  for (let message of chatmessages) {
+    if (message.timeadded !== null) {
+      message.timeadded = message.timeadded.toLocaleString();
+    }
+  }
   return chatmessages;
 }
 
 export async function addToGameLog(playercharacterid, gamelogtag, content) {
-  db.none(addgamelogentry, [gamelogtag, content, playercharacterid])
+  let timestamp = new Date().toISOString();
+  db.none(addgamelogentry, [gamelogtag, content, playercharacterid, timestamp])
   .catch(error => {
     console.error("Error adding game log entry:", error);
     return;
@@ -126,7 +141,8 @@ export async function getAllGameLog(number) {
 */
 
 export async function getAllGameLog(number) {
-  let defaultresult = []; 
+  let defaultresult = [];
+  let today = new Date();
   if (number !== 0 && number !== undefined) {
     await db.any(getallgamelogwithlimitquery, [number])
     .then((result) => {
@@ -145,6 +161,16 @@ export async function getAllGameLog(number) {
       console.log("Error getting all game log entries: " + error);
       return;
     });
+  }
+  for (let message of defaultresult) {
+    if (message.timeadded !== null) {
+      let split = message.timeadded.toLocaleString().split(','); 
+      if (message.timeadded > today) {
+        message.timeadded = split[1];
+      } else {
+        message.timeadded = split[0];
+      }
+    }
   }
   return defaultresult;
 }

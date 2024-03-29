@@ -1,5 +1,23 @@
-function ChatMessage({name, content, gamelogtag}) {
-  /*
+import { useState } from 'react';
+function ChatMessage({name, content, time, gamelogtag}) {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  if (gamelogtag === 'Lore') {
+    return (
+      <div className="chatMessage loreMessage">
+        <span className="chatMessageCharacter">{name + ": "}</span>
+        <span className="chatMessageText">{content}</span>
+      </div>
+    );
+  } else {
+    return (
+      <div className="chatMessage">
+        <span className="chatMessageCharacter">{name + ": "}</span>
+        <span className="chatMessageText">{content}</span>
+      </div>
+    );
+  }
+    /*
   if (gamelogtag === 'Lore') {
     return (
       <div className="chatMessage loreMessage">
@@ -16,21 +34,6 @@ function ChatMessage({name, content, gamelogtag}) {
     );
   }
   */
-  if (gamelogtag === 'Lore') {
-    return (
-      <div className="chatMessage loreMessage">
-        <span className="chatMessageCharacter">{name + ": "}</span>
-        <span className="chatMessageText">{content}</span>
-      </div>
-    );
-  } else {
-    return (
-      <div className="chatMessage">
-        <span className="chatMessageCharacter">{name + ": "}</span>
-        <span className="chatMessageText">{content}</span>
-      </div>
-    );
-  }
 }
 
 export default ChatMessage;

@@ -254,6 +254,7 @@ CREATE TABLE IF NOT EXISTS gamelog (
 	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	gamelogtag	 				gamelogtag,
 	content 						varchar(200),
+	timeadded						timestamp without time zone NOT NULL,
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
 );
 

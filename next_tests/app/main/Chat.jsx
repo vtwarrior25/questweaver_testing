@@ -40,13 +40,15 @@ function Chat() {
       console.log(result);
       setChatMessages([...result]);
     });
-    
+    setInterval(() => {
+      getAllChatMessages(0)
+        .then((result) => {
+      console.log(result);
+      setChatMessages([...result]);
+      });
+    }, 1500);
   }, []
   );
-
-  useEffect(() => {
-    
-  })
 
   const handleChange = (e) => {
     setChatTextBox(e.target.value);
@@ -87,7 +89,7 @@ function Chat() {
   return ( 
     <div className="chatInnerBox">
       <div className="chatMessageArea">
-        {chatmessages && chatmessages.length > 0 && chatmessages.map((message, index) => <ChatMessage key={index} name={message.name} content={message.content} gamelogtag={message.gamelogtag}/>)}
+        {chatmessages && chatmessages.length > 0 && chatmessages.map((message, index) => <ChatMessage key={index} name={message.name} content={message.content} time={message.timeadded} gamelogtag={message.gamelogtag}/>)}
       </div>
       <div className="chatEntryArea">
         <textarea className='chatTextEntry' onChange={(e) => handleChange(e)}></textarea>

@@ -30,21 +30,27 @@ function GameLog() {
       text: "This is an attack roll",
     },
   ]);
-
   
   useEffect(() => {  
     getAllGameLog()
     .then((result) => {
-      console.log("moment");
-      console.log(result);
       setLogMessages([...result]);
     });
+    setInterval(() => {
+      getAllGameLog()
+      .then((result) => {
+        setLogMessages([...result]);
+    });
+    }, 1500);
     }, []
   );
+
   
   return ( 
     <div className="gameLogInnerBox">
-      {logmessages && logmessages.length > 0 && logmessages.map((message, index) => <GameLogMessage key={index} character={message.character} type={message.type} text={message.text}/>)}
+      {logmessages && logmessages.length > 0 && logmessages.map((message, index) => 
+      <GameLogMessage key={index} character={message.character} type={message.type} text={message.text} time={message.timeadded}/>
+      )}
     </div>
   );
 }

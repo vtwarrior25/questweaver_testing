@@ -326,6 +326,7 @@ Turn Order
 .turnOrderBox {
   padding: 0.1rem;
   margin: 0.1rem;
+  max-width: 17rem;
 }
 
 .turnOrderList {
@@ -402,14 +403,14 @@ Chat Section
   flex-direction: column;
   min-height: 18rem;
   max-height: 18rem;
-  min-width: 5rem;
+  min-width: 13rem;
   max-width: 20rem;
   overflow-y: scroll;
 } 
 
 .chatMessage {
   border: var(--thinBorder);
-  border-radius: 0.5rem;
+  /*border-radius: 0.5rem;*/
 }
 
 .loreMessage {
@@ -426,15 +427,19 @@ Chat Section
   flex-direction: column;
   min-height: 18rem;
   max-height: 18rem;
-  min-width: 5rem;
+  min-width: 13rem;
   max-width: 20rem;
   overflow-y: scroll;
 } 
 
 .gameLogMessage {
   border: var(--thinBorder);
-  border-radius: 0.5rem;
+  /*border-radius: 0.5rem;*/
   text-align: center;
+}
+
+.gameLogTime {
+  font-size: small;
 }
 
 

@@ -354,6 +354,24 @@ export async function getcharacterinfo(playercharacterid, infotype) {
 }
 
 
+
+const staticstatsdefaultresult = {
+  profbonus: 2,
+  speed: 30,
+  initiative: 2,
+  armorclass: 14,
+  passiveperception: 5,
+  passiveinvestigation: 5,
+  passiveinsight: 5,
+  armor: "Light, Medium, Heavy, Shields",
+  weapons: "Martial, Simple",
+  tools: "Cobbler's, Land Vehicles",
+  languages: "Common, Halfling",
+  defenses: "Fireproof",
+  conditions: "Dry Heaving",
+  alignment: "Neutral Good"
+};
+
 const basicdatadefaultresult = {
   name: "Jerome",
   race: "Elf",
@@ -572,6 +590,18 @@ const abilitydefaultresult = [
   },
 ]
 
+const getcharacterstaticstatsquery = new PQ({
+  text: `
+    SELECT c.proficiencybonus AS profbonus, c.speed, c.initiative, c.armorclass, p.passiveperception,
+    p.passiveinvestigation, p.passiveinsight, a.name AS alignment FROM playercharacter c
+      JOIN characterpassiveability p ON c.playercharacterid = p.playercharacterid
+      JOIN playercharacternote n ON c.playercharacterid = n.playercharacterid
+      JOIN alignment a ON n.alignmentid = a.alignmentid
+    WHERE c.playercharacterid = $1;
+    `
+});
+
+
 
 const getcharacterbasicdataquery = new PQ({
   text: `
@@ -697,4 +727,18 @@ export async function getBasicInfo (playercharacterid) {
   return result;
 }
 
+
+export async function getStaticStats(playercharacterid) {
+  let result = staticstatsdefaultresult;
+  await db.any(getcharacterstaticstatsquery, [playercharacterid])
+    .then ((dbinfo) => {
+      console.log("got static stats data");
+      result = {...dbinfo[0]};
+      console.log(result);
+      return result;
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    });
+  return result;
+}
 

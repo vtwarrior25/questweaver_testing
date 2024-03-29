@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef } from "react";
 import { Button, ButtonGroup, Overlay } from 'react-bootstrap';
 import { ModPosContext, SetRollResultsContext, URLContext, PlayerCharacterContext, UpdateGameLogContext } from "./Contexts";
 import { rollCheck } from "../lib/rollcheck";
-import { addCharacterToTurnOrder } from "../lib/setcharacterinfo";
+import { addCharacterToTurnOrder } from "../lib/turnorder";
 
 
 function DiceRollButton ({name, rolltype, die, num, mod, setRollResults, text, advantage, initiative}) {

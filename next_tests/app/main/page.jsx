@@ -51,7 +51,7 @@ function App () {
     showcharacterinventoryarea: true,
     showdefensesconditions: true,
     showturnorderbox: true,
-  })
+  });
 
   /*
   const [gamelog, setGameLog] = useState([

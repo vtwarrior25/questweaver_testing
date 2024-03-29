@@ -3,7 +3,7 @@ import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
 import { URLContext, PlayerCharacterContext, DMContext} from "./Contexts";
 import { getcharacterinfo, getTurnOrder } from "../lib/getcharacterinfo";
-import { removeTurn, updateTurn, clearTurnOrder} from '../lib/setcharacterinfo'
+import { removeTurn, updateTurn, clearTurnOrder} from '../lib/turnorder'
 
 function TurnOrder() {
   const isDM = useContext(DMContext);
@@ -71,6 +71,10 @@ function TurnOrder() {
 
   useEffect(() => {  
     getTurnOrderClient();
+    setInterval(() => {
+      getTurnOrderClient(); 
+      console.log("Getting turn order");
+    }, 1500);
     }, []
   )
 
@@ -83,7 +87,7 @@ function TurnOrder() {
 
   const removeTurnOrderItem = (nametoremove, initiative) => {
     setTurnOrder(turnorder.filter((turn) => turn.name !== nametoremove || turn.initiative !== initiative))
-    removeTurn()
+    removeTurn(nametoremove)
     .catch((error) => {
       console.error("Error clearing turn order: " + error);
     });
