@@ -205,12 +205,12 @@ CREATE TABLE IF NOT EXISTS playercharacter (
 	class										integer REFERENCES class(classid) NOT NULL,
 	subclass								integer REFERENCES subclass(subclassid),
 	armorclass							integer,
-	maxhealth								integer,
-	currenthealth 					integer,
-	speed										integer,
-	initiative							integer,
-	proficiencybonus				integer,
-	characterlevel					integer,
+	maxhealth								integer DEFAULT 0,
+	currenthealth 					integer DEFAULT 0,
+	speed										integer DEFAULT 30,
+	initiative							integer DEFAULT 0,
+	proficiencybonus				integer DEFAULT 2,
+	characterlevel					integer DEFAULT 1,
 	spellsavedc							integer,
 	spellattackmodifier			integer,
 	spellabilitymodifier		integer,
@@ -229,6 +229,11 @@ CREATE TABLE IF NOT EXISTS playercharacternote (
 	enemies									varchar(2000),
 	backstory								varchar(2000),
 	other										varchar(2000)
+	cp											integer DEFAULT 0,
+	sp											integer DEFAULT 0,
+	ep											integer DEFAULT 0,
+	gp											integer DEFAULT 0,
+	pp											integer DEFAULT 0
 );
 
 
@@ -668,8 +673,9 @@ CREATE TABLE IF NOT EXISTS attack (
 	attackid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 								varchar(40) UNIQUE NOT NULL,
 	range								varchar(40), -- Maybe make this a varchar??
-	attackmodifierid		integer REFERENCES ability(abilityid) NOT NULL,
-	damagemodifierid		integer REFERENCES ability(abilityid) NOT NULL,
+	attackmodifierid		integer REFERENCES ability(abilityid),
+	damagemodifierid		integer REFERENCES ability(abilityid),
+	flatdamagemod				integer,
 	diceid							integer REFERENCES dice(diceid) NOT NULL,
 	numdamagedie				integer,
 	effecttypeid				integer REFERENCES effecttype(effecttypeid) NOT NULL,

@@ -32,8 +32,8 @@ Look at [Next Instructions](./next.md) for installation help.
 
 ### UI (Lead: Nick)
 - [ ] How can I make it so that when the checkbox of a weapon is checked, it not only sends an update to the server, but it also causes the Actions section to grab the actions from the server again, or to somehow get the new action.
-- [ ] How can I make it so that information is pushed to the player, such as chat messages, log messages, and other similar things?  
-- [ ] Should the turn order controls be hidden for all players who aren't the DM?
+- [x] How can I make it so that information is pushed to the player, such as chat messages, log messages, and other similar things?  
+- [x] Should the turn order controls be hidden for all players who aren't the DM?
   - Don't hide them (they aren't hidden)
 - [ ] Map
   - [ ] Look into different solutions for making an interactive map (currently using HTML5/JS Canvas, which sucks)
@@ -55,7 +55,7 @@ Look at [Next Instructions](./next.md) for installation help.
   - [ ] Grab the race/class features for each and show them in the character creator sections
     - [ ] Will be implemented in [getcharactercreatorinfo.js](app\lib\getcharactercreatorinfo.js)
     - [ ] Tables within features will be written in HTML and within the feature description
-  - [ ] Create equipment section
+  - [x] Create equipment section
   - [x] Create description section (copy from [notesmenu.jsx](./app/main/NotesMenu.jsx))
 
 
@@ -92,9 +92,9 @@ Look at [Next Instructions](./next.md) for installation help.
 - [ ] Finish creating init info for tables (list of tables to make data for in [`dbinit.sql`](./app/files/sql/dbinitdata.sql)`)
 - [ ] Where should we store prepared spells for a character?
 - [x] How will we store race/subrace and class/subclass info about a character?
-    - **In the playercharacter table?**
-    - In seperate tables for each (race, subrace, class, subclass)?
-    - In a single seperate table with columns for playercharacter id and for each item
+  - **In the playercharacter table?**
+  - In seperate tables for each (race, subrace, class, subclass)?
+  - In a single seperate table with columns for playercharacter id and for each item
 - [ ] Consider making `ability` and `skill` tables into enums
   - [ ] *Do that!*
   - [ ] **We aren't doing that anymore**
