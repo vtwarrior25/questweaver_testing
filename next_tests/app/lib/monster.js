@@ -57,7 +57,13 @@ const addmonsterabilitiesquery = new PQ({
   text: `
   INSERT INTO monsterability (monsterabilityid, monstergroupid, abilityid, score, modifier)
   VALUES (DEFAULT, $1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4);`
-})
+});
+
+const addmonsterattackquery = new PQ({
+  text: `
+  INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid, description)
+  VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, (SELECT effecttypeid FROM effecttype WHERE name = $7), $8);`
+});
 
 export async function addgroupfromform(formdata, encountername) {
   let encounternames = [];
@@ -107,6 +113,12 @@ export async function addgroupfromform(formdata, encountername) {
       });
     }
     // add attack data from formdata into attack
+    for (const atk of formdata.attacks) {
+      db.one(addmonsterattackquery, atk.name, null, null, atk.damagemod, null, atk.numdice, atk.damagetype, null)
+      .catch((error) => {
+        console.log("Error inserting monster attack data: " + error);
+      });
+    }
     // link attacks to monsterattack with attackid/monsterid
   }).catch((error) => {
     console.log("Error getting encounter names: " + error);
