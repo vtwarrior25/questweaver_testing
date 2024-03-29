@@ -1,13 +1,16 @@
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef, useContext} from 'react';
 import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
 import ManageInventory from './ManageInventory';
+import { PlayerCharacterContext } from './Contexts';
+import { getCharacterMoney, setCharacterMoney } from '../lib/itemactions';
 
 function InventoryMenu() {
 
   const [totalweight, setTotalWeight] = useState(0);
   const [showmoneymenu, setShowMoneyMenu] = useState(false);
   const [showmanageinventory, setShowManageInventory] = useState();
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   const moneytarget = useRef(null);
   const managetarget = useRef(null);
@@ -87,8 +90,15 @@ function InventoryMenu() {
     setTotalWeight(weightcount);
   }, [sections]
   )
-  
-  
+
+  useEffect(() => {
+    getCharacterMoney(playercharacterid);
+  }, [],
+  );
+
+  useEffect(() => {
+  }, [],
+  );
 
   const [items, setItems] = useState([
     {
@@ -200,6 +210,9 @@ function InventoryMenu() {
                   <tr>
                     <td>Copper</td>
                     <td><input type="number" size="5" value={money.copper} onChange={(e) => setMoney({...money, copper: Number(e.target.value)})}></input></td>
+                  </tr>
+                  <tr>
+                    <td><Button onClick={setCharacterMoney(playercharacterid, money)}></Button></td>
                   </tr>
                 </tbody>
               </table>

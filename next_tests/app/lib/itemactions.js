@@ -200,6 +200,47 @@ export async function getCharacterActions (playercharacterid) {
 
 }
 
+const getcharactermoneyquery = new PQ({
+  text: `
+    SELECT cp, sp, ep, gp, pp FROM playercharacternote
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function getCharacterMoney (playercharacterid) {
+  let money = {};
+  await db.any(getcharactermoneyquery, [playercharacterid])
+  .then((result) => {
+    if (result.length > 0) {
+      console.log('Got character money');
+      console.log(playercharacterid);
+      console.log(result);
+      money = {...result[0]};
+    }
+  }).catch((error) => {
+    console.log('Unable to get money for character' + error);
+  });
+  return money;
+}
+
+
+const setcharactermoneyquery = new PQ({
+  text: `
+    UPDATE playercharacternote
+    SET cp = $2, sp = $3, ep = $4, gp = $5, pp = $6
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function setCharacterMoney (playercharacterid, money) {
+  db.none(setcharactermoneyquery, [playercharacterid, money.cp, money.sp, money.ep, money.gp, money.pp])
+  .catch((error) => {
+    console.log('Unable to get money for character' + error);
+    return;
+  });
+  return;
+}
+
 
 // Create Weapon Form Data
 
