@@ -60,16 +60,16 @@ Look at [Next Instructions](./next.md) for installation help.
 
 
 ### Server (Lead: Stirling) 
-- [x] How do we want to organize server functions? 
-  - [ ] Should we put them all in one file?
+- [x] How do we want to organize server functions?
   - [x] Should the file/files be within the `/app/main` folder, within the `/app` folder, or within the `/app/lib` folder?
     - [x] Move the server files to `/app/lib`
-  - [ ] Group categories of functions into the same file (eg. spell actions)
+  - [x] Group categories of functions into the same file (eg. spell actions)
 - [ ] Login
   - [ ] Figure out how to pass characterid, userid, and isDM to client/React (specifically `/app/main/page.jsx`)
-- [ ] Optimization
-  - [ ] How will server actions be optimized to reduce both client and server resources?
-  - [ ] How will smaller data structures such as turn order get pushed between multiple clients when the DM ends a turn?
+- [x] Optimization
+  - [x] How will server actions be optimized to reduce both client and server resources?
+  - [x] How will smaller data structures such as turn order get pushed between multiple clients when the DM ends a turn?
+    - [x] Server data will be pulled often
 
 #### Specific Functions
 - [x] setHealth
@@ -85,7 +85,7 @@ Look at [Next Instructions](./next.md) for installation help.
 - [x] getInventory
 - [x] getPreparedSpells
 - [x] getAllItems
-- [ ] addMonsterGroupFromForm
+- [x] addMonsterGroupFromForm
 
 ### Database (Lead: Carter)
 - [ ] Set database tables which don't need to be modified at runtime (class, race, skill) to immutable
