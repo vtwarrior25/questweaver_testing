@@ -7,6 +7,7 @@ import { tempAuth } from '@/app/lib/tempauth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
+/* 
 export async function authenticate(formdata) {
   let redirecturl = '../login';
   //console.log(formdata.get('username'));
@@ -23,7 +24,7 @@ export async function authenticate(formdata) {
     console.log(error);
   });
   redirect(redirecturl);
-}
+} */
 
 const userauthquery = new PQ({
   text: `
@@ -32,7 +33,7 @@ const userauthquery = new PQ({
   `
 });
 
-export async function userauth(username, password) {
+/* export async function userauth(username, password) {
   console.log(username + ' ' + password);
   await db.one(userauthquery, [username, password])
   .then((result) => {
@@ -44,7 +45,7 @@ export async function userauth(username, password) {
     return null;
   });
   return null;
-}
+} */
 
 export async function auth2(formdata) {
   let redirecturl = '../login';
@@ -66,8 +67,10 @@ export async function auth2(formdata) {
   });
 }
 
-export async function loginredirect (redirecturl) {
-  redirect(redirecturl);
+export async function loginredirect(redirecturl) {
+  if (typeof window !== 'undefined') {
+    Router.push(redirecturl);
+  }
 }
 
 

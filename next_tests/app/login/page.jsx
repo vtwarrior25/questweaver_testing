@@ -1,6 +1,7 @@
 'use client'
 
 import '@/app/App.css';
+import { useState } from 'react';
 import { auth2, authenticate, gotosignup } from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import './login.css';
@@ -10,13 +11,26 @@ import Button from 'react-bootstrap/Button';
 
 
 export default function Page() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined)
-  //const authenticatemode = auth2.bind();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      await auth2(formData);
+    } catch (error) {
+      setErrorMessage('Authentication failed. Please try again.');
+    }
+  };
+
+  
 
   return (
     <div className='loginsection'>
       <h3>Questweaver D&D System</h3>
-      <Form action={auth2}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId='username'>
           <Form.Label>Username</Form.Label>
           <Form.Control type='text' placeholder='Username' name="username" required={true}></Form.Control>
