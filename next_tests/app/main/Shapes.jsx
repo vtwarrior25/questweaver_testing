@@ -56,8 +56,9 @@ export function MapEllipse({shapeinfo}) {
 }
 
 
-export function MapSprite({shapeinfo}) {
+export function MapSprite({shapeinfo, onDragStart, onDragEnd, onDragMove}) {
   return <Sprite
+    id={shapeinfo.id}
     image={shapeinfo.image}
     anchor={0.5}
     scale={{x: shapeinfo.scale, y: shapeinfo.scale}} 

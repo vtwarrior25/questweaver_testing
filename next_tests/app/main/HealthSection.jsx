@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
-import { getcharacterinfo } from '../lib/getcharacterinfo';
-import { setCharacterHealth } from '@/app/lib/sethealth'
+import { getCharacterHealth, setCharacterHealth } from '@/app/lib/healthfunctions'
 import { PlayerCharacterContext } from './Contexts';
 
 function HealthSection () {
@@ -15,27 +14,24 @@ function HealthSection () {
   const [healthmod, setHealthMod] = useState(0);
 
 
-  const getHealth = () => {
-    getcharacterinfo(playercharacterid, 'health')
-    .then(results => setHealthVal({...results}));
-  }
-
   const setHealth = () => {
     console.log('sethealth');
     setCharacterHealth(playercharacterid, healthval.currenthealth)
-    .then(results => console.log(results));
+    .catch((error) => {
+      console.error("Error setting character health: " + error);
+    });
     //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
   }
 
   useEffect(() => {  
-      getHealth();
+    getCharacterHealth(playercharacterid)
+    .then((results) => {
+      setHealthVal({...results})
+    }).catch((error) => {
+      console.error('Error retrieving character health: ' + error)
+    });
     }, []
   ); 
-
-  useEffect(() => {
-      setHealth();
-    }, [healthval]
-  );
 
   useEffect(() => {
     console.log(`healthmod ${healthmod}`); 
@@ -62,7 +58,7 @@ function HealthSection () {
       console.log(`${newhealth} = ${currenthealth} - ${healthmod}`)
       newhealth = Number(currenthealth) - Number(healthmod);
     } else {
-      throw "Shit's fucked brothers!";
+      throw "Update health has failed!!";
     }
     //newhealthobj.currenthealth = newhealth;
     setHealthVal({...healthval, currenthealth: newhealth});
@@ -85,7 +81,7 @@ function HealthSection () {
         <Stack direction="horizontal" gap={1}>
           <div className="healthBox">
             <label htmlFor="currenthealth">Current</label>
-            <input className="healthSectionInput" name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => setHealthVal({...healthval, currenthealth: e.target.value})}></input>
+            <input className="healthSectionInput" name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => {setHealthVal({...healthval, currenthealth: e.target.value}); setHealth()}}></input>
           </div>
           <div className="healthBox">
             <label htmlFor="maxhealth">Max</label>

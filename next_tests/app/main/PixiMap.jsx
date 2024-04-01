@@ -3,12 +3,14 @@ import { MapScaleContext, PlayerCharacterContext } from './Contexts';
 import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
+import StaticGenerationSearchParamsBailoutProvider from 'next/dist/client/components/static-generation-searchparams-bailout-provider';
 
 
 function PixiMap() {
   //const [dragTarget, setDragTarget] = useState(null);
+  //<Sprite id={3} image="../files/icon.jpg" anchor={0.5} scale={{x: 0.25, y: 0.25}} x={100} y={100} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>
   const [mapshapes, setMapShapes] = useState([
-    {
+    /*{
       id: 0,
       shape: "rectangle",
       color: 0xff0000,
@@ -46,11 +48,21 @@ function PixiMap() {
     { 
       id: 4,
       shape: "text",
-      text: "8==D",
+      text: "beans",
       x: 20,
       y: 20,
       anchor: 0.7,
     },
+    */
+    {
+      id: 0,
+      shape: 'sprite',
+      image: './files/icon.jpg',
+      scale: 0.25,
+      x: 100,
+      y: 100,
+      //text: '10',
+    }
   ]);
   const [selectedtool, setSelectedTool] = useState("select");
   const [currentcolor, setCurrentColor] = useState();
@@ -67,9 +79,16 @@ function PixiMap() {
     }, []
   );
 
-  useEffect(() => {
-
-  })
+  /*
+  useEffect(() => { 
+    getMapData();
+    setInterval(() => {
+      getMapData(); 
+      console.log("Getting turn order");
+    }, 1500);
+    }, []
+  );
+  */
 
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
@@ -97,6 +116,7 @@ function PixiMap() {
     }
   }
 */
+/*
   const addShape = (e) => {
     let newobject;
     switch (selectedtool) {
@@ -152,8 +172,9 @@ function PixiMap() {
     }
     return newobject;
   }
-  
+*/
 
+/*
   const handleClick = (e) => {
     if (selectedtool === "select") {
       // Allow for dragging elements around
@@ -163,6 +184,7 @@ function PixiMap() {
 
     }
   }
+*/
 
   const onDragStart = (event) => {
     console.log("dragstart");
@@ -184,15 +206,28 @@ function PixiMap() {
     console.log("dragmove");
     let sprite = event.currentTarget;
     if (sprite.dragging) {
+      //console.log(sprite);
+      //console.log(sprite.id);
       const newPosition = sprite.data.getLocalPosition(sprite.parent);
-      console.log(newPosition);
-      console.log(sprite);
-      console.log(sprite.data);
+      //console.log(newPosition);
+      //console.log(sprite);
+      //console.log(sprite.data);
       sprite.x = newPosition.x;
       sprite.y = newPosition.y;
-      
+      updateState(sprite.id, sprite.x, sprite.y);
     }
   };
+
+  const updateState = (id, x, y) => {
+    let statetoupdate = mapshapes.filter((mapshape) => mapshape.id == id);
+    let statenottoupdate = mapshapes.filter((mapshape) => mapshape.id !== id);
+    if (statetoupdate.length > 0) {
+      let objecttoupdate = statetoupdate[0];
+      objecttoupdate.x = x;
+      objecttoupdate.y = y;
+      setMapShapes([...statetoupdate, ...statenottoupdate]);
+    }
+  } 
 
 
   return ( 
@@ -230,11 +265,10 @@ function PixiMap() {
           } else if (shape.shape === "text") {
             return <MapText key={index} shapeinfo={shape}></MapText>
           } else if (shape.shape === "sprite") {
-            return <MapSprite key={index} shapeinfo={shape}></MapSprite>
+            return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
           }
         })}
         <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
-        <Sprite image="../files/icon.jpg" anchor={0.5} scale={{x: 0.25, y: 0.25}} x={100} y={100} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}/>
       </Stage>
     </MapScaleContext.Provider>
     </div>

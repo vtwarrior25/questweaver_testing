@@ -120,7 +120,6 @@ function InventoryMenu() {
         damage: "1d4",
         damagetype: 'piercing',
         properties: "Finesse, Light, Thrown",
-        active: true,
       },
       description: "Proficiency with a dagger allows you to add your proficiency bonus to the attack roll for any attack you make with it. "
     },

@@ -214,8 +214,8 @@ CREATE TABLE IF NOT EXISTS playercharacter (
 	spellsavedc							integer,
 	spellattackmodifier			integer,
 	spellabilitymodifier		integer,
-	totalhitdice						integer,
-	numhitdice							integer
+	totalhitdice						integer DEFAULT 1,
+	numhitdice							integer DEFAULT 1
 );
 
 
@@ -270,42 +270,50 @@ Feature Tables
 ------------------------------------------------------------------------
 */
 
+CREATE TYPE featuretype AS ENUM ('None', 'Proficiency', 'Action', 'Speed', 'Ability Score', 'Ability Action', 'Defense', 'Condition');
 
 CREATE TABLE IF NOT EXISTS feature (
 	featureid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(20) UNIQUE,
-	description					varchar(2000)
+	description					varchar(2000),
+	featuretype					featuretype
 );
 
 CREATE TABLE IF NOT EXISTS proficiencyfeature (
+	featureid								integer REFERENCES feature(featureid) NOT NULL,
 	proficiencyid						integer REFERENCES proficiency(proficiencyid) NOT NULL
-) INHERITS (feature);
+);
 
 CREATE TABLE IF NOT EXISTS actionfeature (
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	uses									integer,
 	usesperlevel					integer,
 	recovery							integer
-) INHERITS (feature); 
+); 
 
 CREATE TABLE IF NOT EXISTS speedfeature (
+	featureid						integer REFERENCES feature(featureid) NOT NULL,
 	speed								integer
-) INHERITS (feature);
+);
 
 CREATE TABLE IF NOT EXISTS abilityscorefeature (
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	abilityid							integer REFERENCES ability(abilityid) NOT NULL,
 	scorebonus						integer
-) INHERITS (feature);
+);
 
 CREATE TABLE IF NOT EXISTS abilityactionfeature (
+	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	abilityid									integer REFERENCES ability(abilityid) NOT NULL,
 	uses											integer
-) INHERITS (feature);
+);
 
 CREATE TABLE IF NOT EXISTS classactionfeature (
+	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	level											integer,
 	uses											integer,
 	recovery									integer
-) INHERITS (feature);
+);
 
 /*
 CREATE TABLE IF NOT EXISTS manualfeature (
@@ -315,12 +323,14 @@ CREATE TABLE IF NOT EXISTS manualfeature (
 */
 
 CREATE TABLE IF NOT EXISTS defensefeature (
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	defenseid							integer REFERENCES defense(defenseid) NOT NULL
-) INHERITS (feature);
+);
 
 CREATE TABLE IF NOT EXISTS conditionfeature (
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	conditionid						integer REFERENCES condition(conditionid) NOT NULL
-) INHERITS (feature);
+);
 
 
 /*
@@ -559,8 +569,9 @@ CREATE TABLE IF NOT EXISTS spell (
 CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
 
 CREATE TABLE IF NOT EXISTS spellfeature (
+	featureid						integer REFERENCES feature(featureid) NOT NULL,
 	spellid							integer REFERENCES spell(spellid) NOT NULL
-) INHERITS (feature);
+);
 
 
 CREATE TABLE IF NOT EXISTS spelllist (
@@ -708,14 +719,15 @@ CREATE TABLE IF NOT EXISTS weaponattack (
 
 
 CREATE TABLE IF NOT EXISTS attackfeature (
+	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	attackid							integer REFERENCES attack(attackid) NOT NULL
-) INHERITS (feature);
+);
 
 
 
 /*
 ------------------------------------------------------------------------
-Turn Order
+Turn Order and Map
 ------------------------------------------------------------------------
 */
 
@@ -725,6 +737,18 @@ CREATE TABLE IF NOT EXISTS turnorder (
 	initiative					integer,
 	currentturn					boolean
 );
+
+
+CREATE TABLE IF NOT EXISTS mapdata (
+	mapdataid						integer,
+	playercharacterid		integer REFERENCES playercharacter(playercharacterid) UNIQUE,
+	monstergroupid			integer REFERENCES monstergroup(monstergroupid) UNIQUE,
+	shape								varchar(20),
+	image								varchar(50),
+	scale								real,
+	x										real,
+	y										real,
+)
 
 
 
