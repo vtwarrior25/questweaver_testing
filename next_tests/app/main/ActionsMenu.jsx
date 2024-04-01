@@ -4,10 +4,10 @@ import DiceRollButton from "./DiceRollButton";
 import { ModPosContext } from "./Contexts";
 
 
-function ActionsMenu({setRollResults}) {
+function ActionsMenu({setRollResults, actions, bonusactions}) {
 
   const modPos = useContext(ModPosContext);
-
+/*
   const [actions, setActions] = useState([
     {
       name: "Mace",
@@ -37,8 +37,8 @@ function ActionsMenu({setRollResults}) {
       notes: "",
     },
   ]); 
-
-
+*/
+/*
   const [bonusactions, setBonusActions] = useState([
     {
       name: "Mace",
@@ -50,18 +50,7 @@ function ActionsMenu({setRollResults}) {
       notes: "Simple",
     },
   ]);
-
-
-  useEffect(() => {
-    getActions();
-  }, []
-  );
-
-  // Gets actions from the server
-  const getActions = () => {
-    console.log("Getting actions!");
-  }
-
+*/
 
   return ( 
     <div className="actionsMenu characterInventoryAreaSection">

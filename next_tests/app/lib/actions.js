@@ -19,7 +19,7 @@ export async function authenticate(formdata) {
       redirecturl = '../main';
     }
   }).catch((error) => {
-    console.log("fucked");
+    console.log("whoops");
     console.log(error);
   });
   redirect(redirecturl);
@@ -59,7 +59,7 @@ export async function auth2(formdata) {
       console.log(redirecturl);
     }
   }).catch((error) => {
-    console.log("fucked");
+    console.log("whoops");
     console.log(error);
   }).finally(() => {
     loginredirect(redirecturl);

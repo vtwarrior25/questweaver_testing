@@ -1,11 +1,11 @@
 import { setConfig } from 'next/config';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { ActionUpdateContext } from './Contexts';
 
 function InventorySection({sectionname, name, items, setSectionWeight, removeItem, setItems}) {
-
+  const updateActions = useContext(ActionUpdateContext);
   const [sectionweight, setInnerSectionWeight] = useState(0);
-
   const [dropdownshidden, setDropdownsHidden] = useState([]);
 
   useEffect(() => {
@@ -44,6 +44,12 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     console.log(sectionname);
     setSectionWeight(sectionname, weight);
   }
+
+  const toggleActiveAction = (weaponname, state) => {
+    
+    updateActions();
+  }
+
 /*
   const datadisplay = (
     <React.Fragment>

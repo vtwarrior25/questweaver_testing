@@ -58,7 +58,7 @@ function MonsterSheet({setRollResults}) {
           },
           attacks: [
             {
-              name: "Penis",
+              name: "Slap",
               hit: 4,
               numdice: 1,
               dietype: 6,
@@ -128,7 +128,7 @@ function MonsterSheet({setRollResults}) {
             },
             attacks: [
               {
-                name: "Penis",
+                name: "Slap",
                 hit: 4,
                 numdice: 1,
                 dietype: 6,
@@ -193,7 +193,7 @@ function MonsterSheet({setRollResults}) {
               },
               attacks: [
                 {
-                  name: "Penis",
+                  name: "Slap",
                   hit: 4,
                   numdice: 1,
                   dietype: 6,

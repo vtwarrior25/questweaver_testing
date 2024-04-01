@@ -1,24 +1,71 @@
+import { useState, useEffect, useContext } from 'react';
 import { Stack, Button, Tab, Tabs } from 'react-bootstrap';
 import ActionsMenu from './ActionsMenu';
 import SpellsMenu from './SpellsMenu';
 import InventoryMenu from './InventoryMenu';
 import NotesMenu from './NotesMenu';
 import FeaturesMenu from './FeaturesMenu';
-import { ActionUpdateContext } from './Contexts';
+import { ActionUpdateContext, PlayerCharacterContext } from './Contexts';
 
 function CharacterInventoryArea({setRollResults}) {
+  const playercharacterid = useContext(PlayerCharacterContext);
+  const [actions, setActions] = useState([
+    {
+      name: "Mace",
+      range: "5 ft",
+      hitdc: 5,
+      effectdie: 12,
+      effectdienum: 1,
+      effectbonus: 3,
+      notes: "Simple",
+    },
+    {
+      name: "Dagger",
+      range: "20 (60)",
+      hitdc: 6,
+      effectdie: 4,
+      effectdienum: 1,
+      effectbonus: 3,
+      notes: "Simple, Light, Thrown",
+    },
+    {
+      name: "Unarmed Strike",
+      range: "5 ft",
+      hitdc: 5,
+      effectdie: 0,
+      effectdienum: 0,
+      effectbonus: 4,
+      notes: "",
+    },
+  ]); 
+  const [bonusactions, setBonusActions] = useState([
+    {
+      name: "Mace",
+      range: "5 ft",
+      hitdc: 5,
+      effectdie: 12,
+      effectdienum: 1,
+      effectbonus: 3,
+      notes: "Simple",
+    },
+  ]);
 
   const updateActions = () => {
     
   }
 
+  useEffect(() => {
+    
+  }, [],
+  );
+  
 
   return ( 
     <ActionUpdateContext.Provider value={updateActions}>
     <div className="characterInventoryArea frontElement">
       <Tabs defaultActiveKey='actions'>
         <Tab eventKey='actions' title="Actions">  
-          <ActionsMenu></ActionsMenu>
+          <ActionsMenu actions={actions} bonusactions={bonusactions}></ActionsMenu>
         </Tab>
         <Tab eventKey='spells' title="Spells">
           <SpellsMenu></SpellsMenu>

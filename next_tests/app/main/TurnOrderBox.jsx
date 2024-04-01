@@ -76,7 +76,7 @@ function TurnOrder() {
       console.log("Getting turn order");
     }, 1500);
     }, []
-  )
+  );
 
 
   const getTurnOrderClient = () => {
