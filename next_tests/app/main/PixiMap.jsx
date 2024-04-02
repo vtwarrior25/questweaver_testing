@@ -4,7 +4,7 @@ import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
 import StaticGenerationSearchParamsBailoutProvider from 'next/dist/client/components/static-generation-searchparams-bailout-provider';
-
+import { getMapData, updateMapData, updateAvatar, addMapData } from '../lib/mapactions';
 
 function PixiMap() {
   //const [dragTarget, setDragTarget] = useState(null);
@@ -55,12 +55,13 @@ function PixiMap() {
     },
     */
     {
-      id: 0,
+      mapdataid: 0,
       shape: 'sprite',
-      image: './files/icon.jpg',
+      image: '/avatars/bloke.jpg',
       scale: 0.25,
       x: 100,
       y: 100,
+      visible: true,
       //text: '10',
     }
   ]);
@@ -73,27 +74,42 @@ function PixiMap() {
     backgroundcolor: 0xefd1ef
   })
   const playercharacterid = useContext(PlayerCharacterContext);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     setMapSize({width: 500, height: 500, scale: 100});
     }, []
   );
 
-  /*
   useEffect(() => { 
-    getMapData();
+    retrieveMapData();
     setInterval(() => {
-      getMapData(); 
-      console.log("Getting turn order");
+      if (dragging === false) {
+        retrieveMapData(); 
+        console.log("Getting turn order");
+      } else {
+        console.log("Not ");
+      }
     }, 1500);
     }, []
   );
-  */
+
+  const retrieveMapData = () => {
+    getMapData()
+    .then((result) => {
+      setMapShapes([...result]);
+    }).catch((error) => {
+      console.error("Error retrieving map data: " + error);
+    })
+  }
+
 
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
     console.log(scale);
   }
+
+ 
 
   /*
   const onDragMove = (e) => {
@@ -192,6 +208,7 @@ function PixiMap() {
     sprite.alpha = 0.5;
     sprite.data = event.data;
     sprite.dragging = true;
+    setDragging(true);
   };
 
   const onDragEnd = (event) => {
@@ -200,6 +217,7 @@ function PixiMap() {
     sprite.alpha = 1;
     sprite.dragging = false;
     sprite.data = null;
+    setDragging(false);
   };
 
   const onDragMove = (event) => {
@@ -226,6 +244,7 @@ function PixiMap() {
       objecttoupdate.x = x;
       objecttoupdate.y = y;
       setMapShapes([...statetoupdate, ...statenottoupdate]);
+      updateMapData(id, x, y);
     }
   } 
 

@@ -2,6 +2,7 @@ import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
 import { useState, useContext } from 'react';
 import { ModPosContext } from './Contexts';
+import AvatarUpload from './AvatarUpload';
 
 function MonsterGroup({monsterinfo, encounter, setRollResults, removeMonsterGroup}) {
 
@@ -142,9 +143,9 @@ TODO
         </Table>
       </div>
       <div className="monsterGroupNotesSection">
-        <div className="monsterGroupNotes"></div>
-          <label htmlFor="monsterGroupNotesText">Notes</label>
-          <textarea name="monsterGroupNotesText"></textarea>
+        <label htmlFor="monsterGroupNotesText">Notes</label>
+        <textarea name="monsterGroupNotesText"></textarea>
+        <AvatarUpload type='monster'></AvatarUpload>
       </div>
     </div>
   );

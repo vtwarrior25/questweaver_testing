@@ -13,7 +13,7 @@ function HealthSection () {
 
   const [healthmod, setHealthMod] = useState(0);
 
-
+/*
   const setHealth = () => {
     console.log('sethealth');
     setCharacterHealth(playercharacterid, healthval.currenthealth)
@@ -22,6 +22,7 @@ function HealthSection () {
     });
     //fetch(`http://localhost:9000/sendcharacterinfo?infotype=health&currenthealth=${healthval.currenthealth}`);
   }
+  */
 
   useEffect(() => {  
     getCharacterHealth(playercharacterid)
@@ -63,6 +64,10 @@ function HealthSection () {
     //newhealthobj.currenthealth = newhealth;
     setHealthVal({...healthval, currenthealth: newhealth});
     console.log("Current Health: " + currenthealth + "  HealthMod: " + healthmod + " NewHealth: " + newhealth);
+    setCharacterHealth(playercharacterid, healthval.currenthealth)
+    .catch((error) => {
+      console.error("Error setting character health: " + error);
+    });
     //addLogEntry(`Health: ${currenthealth} -> ${newhealth}`);
     //document.getElementById("currentHealth").value = newhealth;
   }
@@ -81,7 +86,7 @@ function HealthSection () {
         <Stack direction="horizontal" gap={1}>
           <div className="healthBox">
             <label htmlFor="currenthealth">Current</label>
-            <input className="healthSectionInput" name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => {setHealthVal({...healthval, currenthealth: e.target.value}); setHealth()}}></input>
+            <input className="healthSectionInput" name="currenthealth" type="number" size="4" value={healthval.currenthealth} onChange={(e) => {setHealthVal({...healthval, currenthealth: e.target.value}); setCharacterHealth(playercharacterid, e.target.value)}}></input>
           </div>
           <div className="healthBox">
             <label htmlFor="maxhealth">Max</label>

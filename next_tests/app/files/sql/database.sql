@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS subclass (
 CREATE TABLE IF NOT EXISTS playercharacter (
 	playercharacterid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playerid								integer REFERENCES player(playerid) NOT NULL,
-	name 										varchar(40),
+	name 										varchar(40) UNIQUE,
 	race										integer REFERENCES race(raceid) NOT NULL,
 	subrace									integer REFERENCES subrace(subraceid),
 	class										integer REFERENCES class(classid) NOT NULL,
@@ -556,7 +556,7 @@ CREATE TABLE IF NOT EXISTS spell (
 	ritual							boolean,
 	duration						varchar(40),
 	components					varchar(100),
-	saveability					integer REFERENCES ability(abilityid)
+	saveability					integer REFERENCES ability(abilityid),
 	hitdcdie						integer REFERENCES dice(diceid),
 	hitdcdicenum				integer,
 	hitdcmod						spellmod,
@@ -740,7 +740,7 @@ CREATE TABLE IF NOT EXISTS turnorder (
 
 
 CREATE TABLE IF NOT EXISTS mapdata (
-	mapdataid						integer,
+	mapdataid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid) UNIQUE,
 	monstergroupid			integer REFERENCES monstergroup(monstergroupid) UNIQUE,
 	shape								varchar(20),
@@ -748,7 +748,8 @@ CREATE TABLE IF NOT EXISTS mapdata (
 	scale								real,
 	x										real,
 	y										real,
-)
+	visible							boolean DEFAULT false
+);
 
 
 
