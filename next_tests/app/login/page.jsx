@@ -19,11 +19,17 @@ export default function Page() {
     const formData = new FormData(form);
 
     try {
-      await auth2(formData);
+      const redirectUrl = await auth2(formData); // Ensure this function is designed to return a URL string
+      if (redirectUrl) {
+        window.location.href = redirectUrl; // Direct redirection without useRouter
+      } else {
+        setErrorMessage('Authentication failed. Please try again.');
+      }
     } catch (error) {
-      setErrorMessage('Authentication failed. Please try again.');
+      setErrorMessage('An unexpected error occurred.');
     }
   };
+  
 
   
 
@@ -45,7 +51,7 @@ export default function Page() {
         */}
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
         <Button variant='primary' type='submit'>Submit</Button>
-        <Button variant='secondary' type='button' onClick={() => gotosignup()}>Sign Up</Button>
+        <Button variant='secondary' type='button' onClick={gotosignup}>Sign Up</Button>
       </Form>
     </div>
   )
