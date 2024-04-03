@@ -185,6 +185,33 @@ export async function setCharacterInventory(playercharacterid, items) {
   }
 }
 
+
+
+const getplayercharacterinventoryquery = new PQ({
+  text: `
+    SELECT * FROM characterinventory c 
+      JOIN playercharacter p ON c.playercharacterid = p.playercharacterid 
+      JOIN characterinventory ON c.characterinventoryid = s.characterinventoryid 
+    WHERE playercharacter = $1;
+  `
+});
+
+export async function getInventory(playercharacterid) {
+  let inventory = [];
+  await db.any(getplayercharacterinventoryquery, [playercharacterid])
+  .then (dbinfo => {
+    console.log("Got character inventory");
+    //console.log(dbinfo);
+    inventory = [...dbinfo];
+    return dbinfo;
+  }).catch (error => {
+    console.error("Unable to get character inventory: " + error);
+  });
+  return inventory; 
+}
+
+
+
 const charactergetactionsquery = new PQ({
   // TODO ask Chapin about this
   text: `

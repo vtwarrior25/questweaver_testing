@@ -88,7 +88,7 @@ function PixiMap() {
         retrieveMapData(); 
         console.log("Getting turn order");
       } else {
-        console.log("Not ");
+        console.log("Not");
       }
     }, 1500);
     }, []
@@ -222,6 +222,7 @@ function PixiMap() {
 
   const onDragMove = (event) => {
     console.log("dragmove");
+    setDragging(true);
     let sprite = event.currentTarget;
     if (sprite.dragging) {
       //console.log(sprite);
