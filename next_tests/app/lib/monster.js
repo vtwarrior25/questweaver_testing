@@ -69,7 +69,7 @@ const addmonsterattackquery = new PQ({
 const linkmonsterattackquery = new PQ ({
   text: `
   INSERT INTO monsterattack (monsterattackid, monstergroupid, attackid)
-  VALUES (DEFAULT, $1, $2)`
+  VALUES (DEFAULT, $1, $2);`
 })
 
 export async function addgroupfromform(formdata, encountername) {

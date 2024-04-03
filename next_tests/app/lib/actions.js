@@ -113,7 +113,7 @@ const getcharactersforplayerquery = new PQ({
       JOIN subrace sr ON c.subrace = sr.subraceid
       JOIN class cl ON c.class = cl.classid
       JOIN subclass sc ON c.subclass = sc.subclassid
-    WHERE c.playerid = $1
+    WHERE c.playerid = $1;
   `
 });
 
