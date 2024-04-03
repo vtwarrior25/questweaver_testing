@@ -1047,3 +1047,30 @@ Item Creation Forms
 .weaponFormTextInput {
   max-width: 8rem;
 }
+
+/*
+----------------------------------------
+Avatar Upload
+----------------------------------------
+*/
+
+.avatarUploadSection {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.avatarUploadForm {
+  display: flex;
+  flex-direction: column;
+  border: var(--thinBorder);
+  padding: 0.5rem;
+}
+
+.avatarSelectionArea {
+  display: flex;
+  flex-direction: column;
+  border: var(--thinBorder);
+  padding: 0.5rem;
+}

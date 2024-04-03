@@ -204,9 +204,10 @@ INSERT INTO subrace (name, raceid) VALUES
 ('Forest Gnome', (SELECT raceid FROM race WHERE name = 'Gnome')),
 ('Rock Gnome', (SELECT raceid FROM race WHERE name = 'Gnome'));
 
+--String to add:  , 0, 0, 'Save DC','Acid', (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'
 
-INSERT INTO spell (name, school, casttime, spellrange, duration, components, description) VALUES
-('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here'),
+INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdienum, hitdcmod, effect, effectdie, effectdienum, effectmod) VALUES
+('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', 0, 0, 'Save DC','Acid', (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'),
 ('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'Add description here'),
 ('Booming Blade', 'Evocation', '1 Action', 'Self (5-foot radius)', '1 round', 'S, M', 'Add description here'),
 ('Chill Touch', 'Necromancy', '1 Action', '120 feet', '1 round', 'V, S', 'Add description here'),
@@ -528,6 +529,10 @@ INSERT INTO spell (name, school, casttime, spellrange, duration, components, des
 ('Water Breathing', 'Transmutation', '1 Action R', '30 feet', '24 hours', 'V, S, M', 'Add description here'),
 ('Water Walk', 'Transmutation', '1 Action R', '30 feet', '1 hour', 'V, S, M', 'Add description here'),
 ('Wind Wall', 'Evocation', '1 Action', '120 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here');
+
+
+INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES 
+((SELECT spellid from spell WHERE name = 'Acid Splash'), );
 
 
 INSERT INTO proficiency (name, proficiencytype) VALUES

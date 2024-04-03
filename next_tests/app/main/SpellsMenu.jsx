@@ -218,6 +218,7 @@ function SpellsMenu({setRollResults}) {
         {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} spellinfo={spellinfo} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
       </div>
     </div>
+    
   );
 }
 

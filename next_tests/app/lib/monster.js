@@ -69,7 +69,7 @@ const addmonsterattackquery = new PQ({
 const linkmonsterattackquery = new PQ ({
   text: `
   INSERT INTO monsterattack (monsterattackid, monstergroupid, attackid)
-  VALUES (DEFAULT, $1, $2)`
+  VALUES (DEFAULT, $1, $2);`
 })
 
 export async function addgroupfromform(formdata, encountername) {
@@ -137,4 +137,59 @@ export async function addgroupfromform(formdata, encountername) {
     console.log("Error getting encounter names: " + error);
     return;
   })
+}
+
+
+const getencountersquery = new PQ({
+  text: 'SELECT encounterid FROM encounter;'
+});
+
+const getmonstergroupquery = new PQ({
+  text: `
+  SELECT monstergroupid, encounterid, creaturesize, monstertypeid, 
+  alignment, groupname, description, hitdie, hitdienum, challengerating, 
+  xp, armorclass, speed, initiative, skills, features, notes 
+  FROM monstergroup mg
+  WHERE encounterid = $1;
+  `
+});
+
+
+const getmonsterabilitiesquery = new PQ({
+  text: `
+  SELECT m.monstergroupid, a.name, m.score 
+  FROM monsterability m
+    JOIN ability a ON m.abilityid = a.abilityid;
+  WHERE monstergroupid = $1;
+  `
+});
+
+const getmonsterattackquery = new PQ({
+  text: `
+  SELECT a.name, a.attackmodifierid
+  FROM monsterattack m
+    JOIN attack a ON m.attackid = a.attackid;
+  WHERE monstergroupid = $1;
+
+  INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid, description)
+  VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, (SELECT effecttypeid FROM effecttype WHERE name = $7), $8)
+  RETURNING attackid;
+  `
+});
+
+/*
+const linkmonsterattackquery = new PQ ({
+  text: `
+  INSERT INTO monsterattack (monsterattackid, monstergroupid, attackid)
+  VALUES (DEFAULT, $1, $2)`
+})
+*/
+
+
+
+export async function getEncounters() {
+  let encounters = [];
+  // Get list of encounterid
+  // For each encounterid, grab monstergroups
+  // For each monstergroupid, get abilities from monsterability and attacks from monsterattack
 }

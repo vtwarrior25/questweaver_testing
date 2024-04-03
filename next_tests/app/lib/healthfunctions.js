@@ -6,7 +6,7 @@ import { db } from '../lib/dbconn';
 const setcharacterhealthquery = new PQ({
   text: `
     UPDATE playercharacter 
-    SET currenthealth $2 
+    SET currenthealth = $2 
     WHERE playercharacterid = $1;
   `
 });
@@ -14,7 +14,7 @@ const setcharacterhealthquery = new PQ({
 export async function setCharacterHealth (playercharacterid, currenthealth) {
   db.none(setcharacterhealthquery, [playercharacterid, currenthealth])
   .catch((error) => {
-    console.error("Errotr setting character health: " + error);
+    console.error("Error setting character health: " + error);
     return "Error setting health";
   });
 }
@@ -29,10 +29,12 @@ const getcharacterhealthquery = new PQ({
 
 export async function getCharacterHealth (playercharacterid) {
   let health = {};
-  db.one(getcharacterhealthquery , [playercharacterid])
+  await db.any(getcharacterhealthquery, [playercharacterid])
   .then((result) => {
+    console.log('got character health for ' + playercharacterid);
     health = {...result[0]};
     console.log(health);
+    return health;
   }).catch((error) => {
     console.error("Error retrieving character health: " + error);
     return;
