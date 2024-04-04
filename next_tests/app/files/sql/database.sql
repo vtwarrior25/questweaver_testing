@@ -570,7 +570,7 @@ CREATE TABLE IF NOT EXISTS spell (
 
 CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
 
-CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod');
+CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod', 'None');
 
 CREATE TABLE IF NOT EXISTS spellfeature (
 	featureid						integer REFERENCES feature(featureid) NOT NULL,

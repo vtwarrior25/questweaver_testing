@@ -210,8 +210,8 @@ INSERT INTO effecttype (name, description) VALUES
 
 --String to add:  , 0, 0, 'Save DC','Acid', (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'
 
-INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdienum, hitdcmod, effect, effectdie, effectdienum, effectmod) VALUES
-('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effect WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'),
+INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdienum, hitdcmod, effect, effectdie, effectdienum, effectmod, levelmod, levelmodtype) VALUES
+('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effect WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
 ('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'Add description here'),
 ('Booming Blade', 'Evocation', '1 Action', 'Self (5-foot radius)', '1 round', 'S, M', 'Add description here'),
 ('Chill Touch', 'Necromancy', '1 Action', '120 feet', '1 round', 'V, S', 'Add description here'),

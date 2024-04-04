@@ -230,8 +230,6 @@ export async function getEncounters() {
       }).catch((error) => {
         console.error("Error retrieving encounters" + error);
       });
-      
-  
     }
   }).catch((error) => {
     console.error("Error retrieving encounters" + error);
