@@ -40,6 +40,22 @@
 		"body": "useEffect(() => {\n\t$1\n}, [$2],\n);\n",
 		"description": "Creates a useEffectBlock"
 	},
+
+	"spelllist": {
+		"scope": "sql",
+		"prefix": "spelllist",
+		"body": "((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = '${2|Bard,Cleric,Druid,Paladin,Ranger,Sorcerer,Warlock,Wizard|}'), NULL, $4, $5),",
+		"description": "Creates a value row for spell list initial insert"
+	},
+
+	"arcanelist": {
+		"scope": "sql",
+		"prefix": "arcanelist",
+		"body": "((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Warlock'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, $2, $3),",
+		"description": "Creates a value row for spell list initial insert"
+	},
+	
+
 	// Place your next_tests workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
 	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
 	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 

@@ -37,7 +37,7 @@ function AvatarUpload({type, id}) {
   );
 
   useEffect(() => {
-    toggleDisplayAvatar(displayavatar);
+    toggleDisplayAvatar(type, id, displayavatar);
   }, [displayavatar]
   );
   
