@@ -536,7 +536,8 @@ INSERT INTO spell (name, school, casttime, spellrange, duration, components, des
 
 
 INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES 
-((SELECT spellid from spell WHERE name = 'Acid Splash'), );
+((SELECT spellid from spell WHERE name = 'Acid Splash'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 0, 1),
+((SELECT spellid from spell WHERE name = 'Acid Splash'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 0, 1),
 
 
 INSERT INTO proficiency (name, proficiencytype) VALUES
