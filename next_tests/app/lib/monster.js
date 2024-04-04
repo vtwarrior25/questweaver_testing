@@ -141,7 +141,7 @@ export async function addgroupfromform(formdata, encountername) {
 
 
 const getencountersquery = new PQ({
-  text: 'SELECT encounterid FROM encounter;'
+  text: 'SELECT encounterid, name AS encountername FROM encounter;'
 });
 
 const getmonstergroupquery = new PQ({
@@ -157,7 +157,7 @@ const getmonstergroupquery = new PQ({
 
 const getmonsterabilitiesquery = new PQ({
   text: `
-  SELECT m.monstergroupid, a.name, m.score 
+  SELECT m.monstergroupid, a.abbrev, m.score 
   FROM monsterability m
     JOIN ability a ON m.abilityid = a.abilityid;
   WHERE monstergroupid = $1;
@@ -188,8 +188,55 @@ const linkmonsterattackquery = new PQ ({
 
 
 export async function getEncounters() {
+  //let abilitylist = ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha']
   let encounters = [];
   // Get list of encounterid
-  // For each encounterid, grab monstergroups
-  // For each monstergroupid, get abilities from monsterability and attacks from monsterattack
+  await db.many(getencountersquery)
+  .then((encounterresult) => {
+    for (let result in encounterresult) {
+      let blankencounter = {};
+      blankencounter.encountername = encounter.encountername;
+      // For each encounterid, grab monstergroups.
+      db.many(getmonstergroupquery, [result.encounterid])
+      .then((monstergroupresult) => {
+        // For each monstergroupid, get abilities from monsterability and attacks from monsterattack
+        let abilityobject = {
+          init: 0,
+          str: 0,
+          dex: 0,
+          con: 0,
+          int: 0,
+          wis: 0,
+          cha: 0,
+        }
+        db.many(getmonsterabilitiesquery, [monstergroupresult.monstergroupid, ability])
+        .then((monsterabilityresult) => {
+          for (let ability of monsterabilityresult) {
+            abilityobject[ability.abbrev.toLowerCase()] = ability.score;
+          }
+          abilityobject.init = abilityobject.dex;  
+        }).catch((error) => {
+          console.log(error);
+        });
+        blankencounter.abilities = {...abilityobject}; 
+        // For each monstergroupid, get attacks from monsterattack
+        db.many(getmonsterattackquery)
+        .then((monsterattackresult) => {
+          
+        }).catch((error) => {
+          console.log(error);
+          
+        });
+      }).catch((error) => {
+        console.error("Error retrieving encounters" + error);
+      });
+      
+  
+    }
+  }).catch((error) => {
+    console.error("Error retrieving encounters" + error);
+  });
+  
+
+  return encounters;
 }

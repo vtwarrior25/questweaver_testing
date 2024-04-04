@@ -3,7 +3,7 @@ import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
 import ManageInventory from './ManageInventory';
 import { PlayerCharacterContext } from './Contexts';
-import { getCharacterMoney, setCharacterMoney } from '../lib/itemactions';
+import { getCharacterMoney, getInventory, setCharacterMoney } from '../lib/itemactions';
 
 function InventoryMenu() {
 
@@ -25,13 +25,11 @@ function InventoryMenu() {
 
   const [sections, setSections] = useState([
     {
-      sectionname: "equipment",
-      capname: "Equipment",
+      sectionname: "Equipment",
       sectionweight: 0,
     },
     {
-      sectionname: "backpack",
-      capname: "Backpack",
+      sectionname: "Backpack",
       sectionweight: 0,
     }
   ]);
@@ -62,13 +60,13 @@ function InventoryMenu() {
     if (matcheditems.length > 0) {
       console.log('found');
       let matcheditem = matcheditems[0];
-      matcheditem.qty = Number(matcheditem.qty) + Number(quantity);
+      matcheditem.quantity = Number(matcheditem.quantity) + Number(quantity);
       let nonmatcheditems = items.filter((newitem) => newitem.name !== item.name || newitem.section !== section);
       console.log(nonmatcheditems);
       setItems([...nonmatcheditems, matcheditem]);
     } else {
       console.log('not found');
-      otheritem = {...item, section: section, qty: quantity};
+      otheritem = {...item, section: section, quantity: quantity};
       setItems([...items, otheritem]);
     }
     
@@ -92,6 +90,12 @@ function InventoryMenu() {
   )
 
   useEffect(() => {
+    getInventory(playercharacterid)
+    .then((result) => {
+      setItems([...result]);
+    }).catch((error) => {
+      console.error("Error getting character inventory: " + error);
+    });
     getCharacterMoney(playercharacterid)
     .then((result) => {
       setMoney({...result});
@@ -106,7 +110,7 @@ function InventoryMenu() {
   );
 
   const [items, setItems] = useState([
-    {
+    {/*
       section: "equipment",
       name: "Dagger",
       weight: 1,
@@ -121,62 +125,86 @@ function InventoryMenu() {
         damagetype: 'piercing',
         properties: "Finesse, Light, Thrown",
       },
+      description: "Proficiency with a dagger allows you to add your proficiency bonus to the attack roll for any attack you make with it."
+    */
+      section: "Equipment",
+      name: "Dagger",
+      weight: 1,
+      quantity: 1,
+      cost: 2,
+      currency: 'gp',
+      notes: "",
+      weaponinfo : {
+        //proficient: true,
+        weapontype: "Melee",
+        range: "20 ft/60 ft",
+        damage: "1d4",
+        damagetype: 'Piercing',
+        properties: "Finesse, Light, Thrown",
+      },
       description: "Proficiency with a dagger allows you to add your proficiency bonus to the attack roll for any attack you make with it. "
     },
     {
-      section: "equipment",
+      section: "Equipment",
       name: "Mace",
       weight: 4,
       quantity: 1,
-      value: 5,
+      cost: 5,
+      currency: 'gp',
       notes: "",
     },
     {
-      section: "equipment",
+      section: "Equipment",
       name: "Scale Mail",
       weight: 45,
       quantity: 1,
-      value: 50,
+      cost: 50,
+      currency: 'gp',
       notes: "",
     },
     {
-      section: "backpack",
+      section: "Backpack",
       name: "Blanket",
       weight: 3,
       quantity: 1,
-      value: 0.5,
+      cost: 5,
+      currency: 'sp',
       notes: "",
     },
     {
-      section: "backpack",
+      section: "Backpack",
       name: "Block of Incense",
       weight: 0,
       quantity: 2,
-      value: 0,
+      cost: 0,
+      currency: 'gp',
       notes: "",
     },
     {
-      section: "backpack",
+      section: "Backpack",
       name: "Candle",
       weight: 0,
       quantity: 10,
-      value: 0.1,
+      cost: 1,
+      currency: 'sp',
       notes: "",
     },
     {
-      section: "backpack",
+      section: "Backpack",
       name: "Vestments",
       weight: 0,
       quantity: 1,
-      value: 0,
+      cost: 0,
+      currency: 'gp',
       notes: "",
     },
     {
-      section: "backpack",
+      section: "Backpack",
       name: "Waterskin",
       weight: 5,
       quantity: 2,
-      value: 0.2,
+      cost: 2,
+      currency: 'sp',
       notes: "",
     },
   ]);
@@ -231,7 +259,7 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.capname} setItems={() => setItems()} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
+        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.sectionname} setItems={() => setItems()} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>
   );

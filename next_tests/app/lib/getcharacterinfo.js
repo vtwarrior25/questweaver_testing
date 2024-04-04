@@ -703,9 +703,9 @@ export async function getTurnOrder () {
   await db.any(getturnorderquery)
     .then ((dbinfo) => {
       console.log("got turn order data");
-      console.log(dbinfo);
+      //console.log(dbinfo);
       result = [...dbinfo];
-      console.log(result);
+      //console.log(result);
       return result;
     }).catch (error => {
       console.error("Error retrieving character info " + error);

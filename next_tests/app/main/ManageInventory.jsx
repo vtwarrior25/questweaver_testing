@@ -4,6 +4,7 @@ Reference: https://www.kindacode.com/article/how-to-create-a-filter-search-list-
 
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { getAllItems } from '../lib/itemactions';
 
 function ManageInventory({addItem}) {
 
@@ -66,6 +67,18 @@ function ManageInventory({addItem}) {
     itemlist.forEach((item, index) => setDropdownsHidden[index] = false);
   }, [itemlist],
   );
+
+  useEffect(() => {
+    getAllItems()
+    .then((result) => {
+      setEquipmentList([...result]);
+    }).catch((error) => {
+      console.error("Error getting all items: " + error);
+    })
+    
+  }, [],
+  );
+  
 
   return (  
     <div className="manageInventoryMenu">

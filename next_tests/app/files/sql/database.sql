@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS gamelog (
 	gamelogid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	gamelogtag	 				gamelogtag,
 	content 						varchar(200),
-	timeadded						timestamp without time zone NOT NULL,
+	timeadded						timestamp with time zone NOT NULL,
 	playercharacterid		integer REFERENCES playercharacter(playercharacterid)
 );
 
@@ -563,10 +563,14 @@ CREATE TABLE IF NOT EXISTS spell (
 	effectdicetype			integer REFERENCES dice(diceid),
 	effectdicenum				integer,
 	effectmod						spellmod,
-	effecttype					integer REFERENCES effecttype(effecttypeid) NOT NULL
+	levelmod						integer,
+	levelmodtype				spelllevelmod,
+	effecttypeid				integer REFERENCES effecttype(effecttypeid) NOT NULL
 );
 
 CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
+
+CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod');
 
 CREATE TABLE IF NOT EXISTS spellfeature (
 	featureid						integer REFERENCES feature(featureid) NOT NULL,
@@ -587,6 +591,7 @@ CREATE TABLE IF NOT EXISTS spelllist (
 CREATE TABLE IF NOT EXISTS preparedlist (
 	playercharacterid 		integer REFERENCES playercharacter(playercharacterid),
 	spellid								integer REFERENCES spell(spellid)
+	-- Should this instead link to spelllist?
 );
 
 
@@ -615,7 +620,7 @@ CREATE TABLE IF NOT EXISTS item (
 	itemid 						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name 							varchar(50) UNIQUE,
 	value							integer,
-	coin							coin,
+	currency					coin,
 	description				varchar(500),
 	weight						real,
 	rarity						rarity
@@ -640,7 +645,8 @@ CREATE TABLE IF NOT EXISTS weapon (
 	weaponid 					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	itemid						integer REFERENCES item(itemid) UNIQUE NOT NULL,
 	weapontype				weapontype NOT NULL,
-	weaponrange				weaponrange NOT NULL
+	weaponrange				weaponrange NOT NULL,
+	properties				varchar(150)
 	--damagebonus				integer			
 );
 
@@ -655,6 +661,7 @@ CREATE TABLE IF NOT EXISTS possibleweaponproperty (
 Finesse, Thrown, Light 
 */
 
+/*
 CREATE TYPE possibleweaponproperty AS ENUM ('Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading', 'Range', 'Reach', 'Special', 'Thrown', 'Two-Handed', 'Versatile');
 
 
@@ -663,8 +670,9 @@ CREATE TABLE IF NOT EXISTS weaponproperty (
 	weaponid										integer REFERENCES weapon(weaponid) NOT NULL,
 	possibleweaponproperty			possibleweaponproperty NOT NULL
 );
+*/
 
-CREATE TYPE characterinventorysection AS ENUM ('Equipment, Backpack');
+CREATE TYPE characterinventorysection AS ENUM ('Equipment', 'Backpack');
 
 CREATE TABLE IF NOT EXISTS characterinventory (
 	characterinventoryid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

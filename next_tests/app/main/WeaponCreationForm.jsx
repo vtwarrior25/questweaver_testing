@@ -19,7 +19,7 @@ function WeaponCreationForm() {
             <div>
               <label htmlFor="value">Value</label>
               <input type="number" className="itemNumInput" name="value"/>
-              <select name="coin">
+              <select name="currency">
                 <option value='cp'>cp</option>
                 <option value='sp'>sp</option>
                 <option value='ep'>ep</option>

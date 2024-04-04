@@ -16,14 +16,14 @@
 	"dbquery" : {
 		"scope": "javascript",
 		"prefix": "dbquery",
-		"body": "db.$1($2)\n.then((result) => {\n\t$3\n}).catch((error) => {\n\tconsole.log(error);\n\t$4\n});",
+		"body": "db.$1($2)\n.then((result) => {\n\t$3\n}).catch((error) => {\n\tconsole.error('$4' + error);\n\t\n});",
 		"description": "Creates a new pg-promise"
 	},
 
 	"nonequery": {
 		"scope": "javascript",
 		"prefix": "nonequery",
-		"body": "db.none($1, [$2])\n.catch((error) => {\n\tconsole.log('$3' + error);\n});",
+		"body": "db.none($1, [$2])\n.catch((error) => {\n\tconsole.error('$3' + error);\n});",
 		"description": "Creates a new pg-promise"
 	},
 

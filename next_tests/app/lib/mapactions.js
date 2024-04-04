@@ -21,7 +21,9 @@ export async function getMapData () {
   let mapdata = [];
   await db.many(getmapdataquery)
   .then((result) => {
-    console.log(result);
+    //console.log(result);
+    console.log('Got map data');
+    console.log(`${new Date().toLocaleTimeString()}: ---------------`);
     mapdata = [...result];
   }).catch((error) => {
     console.error('Error getting map data: ' + error);  

@@ -5,13 +5,10 @@ import { useSearchParams } from "next/navigation";
 import '@/app/App.css';
 import RollResultsSection from "./RollResultsSection";
 import CharacterSheet from "./CharacterSheet";
-import StaticStatsBox from "./StaticStatsBox";
 import MapSection from "./MapSection";
 import MonsterSheet from "./MonsterSheet";
 import ItemCreationForm from "./ItemCreationForm";
 import WeaponCreationForm from "./WeaponCreationForm";
-import AbilityBox from "./AbilityBox";
-import ManualDiceRoller from "./ManualDiceRoller";
 import CharacterCreator from "./CharacterCreator";
 import { getBasicInfo } from "../lib/getcharacterinfo";
 import { addToGameLog } from "../lib/chatandlog";
@@ -20,7 +17,7 @@ import { addToGameLog } from "../lib/chatandlog";
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, PlayerNameContext, DMContext, UpdateGameLogContext}  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, PlayerNameContext, DMContext, ToggleUpdatesContext, UpdateGameLogContext}  from "./Contexts";
 
 
 function App () {
@@ -29,6 +26,11 @@ function App () {
   const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 3);
   const [playername, setPlayerName] = useState("");
   const [isDM, setIsDM] = useState(true);
+  const [toggleUpdates, setToggleUpdates] = useState(true);
+
+  const getToggleUpdates = () => {
+    return toggleUpdates;
+  }
 
   const [rollresults, setRollResults] = useState({
     /*
@@ -52,30 +54,6 @@ function App () {
     showdefensesconditions: true,
     showturnorderbox: true,
   });
-
-  /*
-  const [gamelog, setGameLog] = useState([
-    {
-      id: 0,
-      character: "Jerome",
-      type: "Attack Roll",
-      text: "This is an attack roll",
-    },
-  ])
-  */
-
-  const updateGameLog = (type, text) => {
-    /*
-    let newgamelogentry = {
-      id: Number(gamelog.length - 1),
-      character: playername,
-      type: type,
-      text: text
-    };
-    setGameLog([...gamelog, newgamelogentry]);
-    */
-    addToGameLog(playercharacterid, type, text);
-  }
   
 
   useEffect(() => {
@@ -94,6 +72,20 @@ function App () {
   }, [playercharacterid],
   );
   
+
+
+  const updateGameLog = (type, text) => {
+    /*
+    let newgamelogentry = {
+      id: Number(gamelog.length - 1),
+      character: playername,
+      type: type,
+      text: text
+    };
+    setGameLog([...gamelog, newgamelogentry]);
+    */
+    addToGameLog(playercharacterid, type, text);
+  }
 
 
   const [showToggleMenu, setShowToggleMenu] = useState(false);
@@ -134,6 +126,7 @@ function App () {
   */
   return (
     <UpdateGameLogContext.Provider value={updateGameLog}>
+    <ToggleUpdatesContext.Provider value={getToggleUpdates}>
     <DMContext.Provider value={isDM}>
     <PlayerNameContext.Provider value={playername}>
     <PlayerCharacterContext.Provider value={playercharacterid}>
@@ -194,6 +187,7 @@ function App () {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          <input type='checkbox' checked={toggleUpdates} onChange={() => setToggleUpdates(!toggleUpdates)}></input>
         </Offcanvas.Body>
       </Offcanvas>
     </div>
@@ -205,6 +199,7 @@ function App () {
     </PlayerCharacterContext.Provider>
     </PlayerNameContext.Provider>
     </DMContext.Provider>
+    </ToggleUpdatesContext.Provider>
     </UpdateGameLogContext.Provider>
   );
 }

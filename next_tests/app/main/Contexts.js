@@ -22,3 +22,5 @@ export const UpdateGameLogContext = createContext(null);
 export const PlayerNameContext = createContext(null);
 
 export const ActionUpdateContext = createContext(null);
+
+export const ToggleUpdatesContext = createContext(null);

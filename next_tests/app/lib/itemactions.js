@@ -3,7 +3,11 @@ const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
 
-const getallitemsquery = new PQ ({text: 'SELECT * FROM item'});
+const getallitemsquery = new PQ ({
+  text: `
+    SELECT i.itemid, i.name, i.weight, i.value, i.currency FROM item i;
+  `
+});
 
 const itemaddquery = new PQ({
   text:`
@@ -29,6 +33,14 @@ const weaponpropertyaddquery = new PQ({
     ($1, $2);
   `
 })
+
+const updateweaponpropertyquery = new PQ({
+  text: `
+    UPDATE weapon
+    SET weaponproperties = $2
+    WHERE weaponid = $1;
+  `
+});
 
 
 const attackaddquery = new PQ({
@@ -63,15 +75,17 @@ const weaponattackaddquery = new PQ({
 */
 
 
-export async function getallitems() {
-  db.any(getallitemsquery)
+export async function getAllItems() {
+  let allitems = [];
+  await db.any(getallitemsquery)
   .then(dbinfo => {
       console.log(dbinfo);
-      return dbinfo;
+      allitems = [...dbinfo];
   }).catch(error => {
       console.log("Error getting all items:" + error);
-      return "Error getting items";
+      //return "Error getting items";
   });
+  return allitems;
 }
 
 export async function createItem(userid, formdata) {
@@ -101,19 +115,27 @@ export async function createWeapon(userid, formdata) {
       // These for loops will iterate on the weapon properties and attacks
       let properties = formdata.getAll('property');
       console.log(properties);
+      let propertystring = "";
       for (const property of properties) {
+        /*
         db.none(weaponpropertyaddquery, [result.weaponid, property])
         .catch((error) => {
           console.error("Error inserting properties: " + error);
         });
+        */
+        propertystring += `${property}`;
       }
+      db.none(updateweaponpropertyquery)
+      .catch((error) => {
+        console.error('Error setting weapon properties: ' + error);
+      });
       db.one(attackaddquery, [formdata.get('attackname'), formdata.get('attackrange'), formdata.get('attackmodifier'), formdata.get('damagemodifier'), formdata.get('damagedie'), formdata.get('numdamagedie'), formdata.get('damagetype')])
       .then((result) => { 
         console.log(result.attackid);
         db.none(weaponattackaddquery, [weaponid, result.attackid])
         .catch((error) => {
           console.log(error);
-        })
+        });
       }).catch((error) => {
         console.error("Error adding attacks: " + error);
         return "Error";
@@ -128,8 +150,8 @@ export async function createWeapon(userid, formdata) {
     }).catch((error) => {
       console.error("Error adding weapon: " + error);
       return "Error";
-    })
-  }).catch(error => {
+    });
+  }).catch((error) => {
     console.error("Error adding item: " + error);
     return "Error";
   });
@@ -186,27 +208,67 @@ export async function setCharacterInventory(playercharacterid, items) {
 }
 
 
-
 const getplayercharacterinventoryquery = new PQ({
   text: `
-    SELECT * FROM characterinventory c 
-      JOIN playercharacter p ON c.playercharacterid = p.playercharacterid 
-      JOIN characterinventory ON c.characterinventoryid = s.characterinventoryid 
-    WHERE playercharacter = $1;
+    SELECT i.itemid, c.characterinventorysection AS section, i.name, i.weight, 
+    i.value, i.currency, c.quantity FROM characterinventory c 
+      JOIN item i ON c.itemid = i.itemid 
+    WHERE c.playercharacterid = $1;
   `
 });
 
+const getinventoryweaponinfo = new PQ({
+  /*
+  text: `
+    SELECT w.weapontype, w.weaponrange, a.range, a.numdamagedie, d.name, et.name, w.properties,
+    ab.name AS attackmodifier, ac.name AS damagemodifier
+    FROM weapon w
+      JOIN weaponattack wa ON w.weaponid = wa.weaponid
+      JOIN attack a ON wa.attackid = a.attackid
+      JOIN dice d ON a.diceid = d.diceid
+      JOIN effecttype et ON a.effecttypeid = et.effecttypeid
+      JOIN ability ab ON a.attackmodifierid = ab.abilityid
+      JOIN ability ac ON a.attackmodifierid = ac.abilityid
+    WHERE w.itemid = 13;
+  `
+  */
+  text: `
+    SELECT w.weapontype, a.range, a.numdamagedie, d.name, et.name, w.properties
+    FROM weapon w
+      JOIN weaponattack wa ON w.weaponid = wa.weaponid
+      JOIN attack a ON wa.attackid = a.attackid
+      JOIN dice d ON a.diceid = d.diceid
+      JOIN effecttype et ON a.effecttypeid = et.effecttypeid
+    WHERE w.itemid = $1;
+  `
+});
+
+
 export async function getInventory(playercharacterid) {
   let inventory = [];
-  await db.any(getplayercharacterinventoryquery, [playercharacterid])
-  .then (dbinfo => {
+  await db.many(getplayercharacterinventoryquery, [playercharacterid])
+  .then ((dbinfo) => {
     console.log("Got character inventory");
-    //console.log(dbinfo);
-    inventory = [...dbinfo];
-    return dbinfo;
+    console.log(dbinfo);
+    for (item in dbinfo) {
+      console.log('At item' + item);
+      let itemprototype = {...item};
+      db.any(getinventoryweaponinfo, [item.itemid])
+      .then((result) => {
+        if (result !== null) {
+          itemprototype.weaponinfo = {...result}; 
+        }
+      }).catch((error) => {
+        console.error("Error getting weapon info for item " + item.name + ": " + error);
+      })
+      inventory = [...inventory, itemprototype];
+    }
+    //inventory = [...dbinfo];
+    //return dbinfo;
   }).catch (error => {
     console.error("Unable to get character inventory: " + error);
   });
+  //console.log(inventory);
   return inventory; 
 }
 

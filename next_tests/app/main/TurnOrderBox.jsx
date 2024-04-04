@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
-import { URLContext, PlayerCharacterContext, DMContext} from "./Contexts";
+import { URLContext, PlayerCharacterContext, DMContext, ToggleUpdatesContext} from "./Contexts";
 import { getcharacterinfo, getTurnOrder } from "../lib/getcharacterinfo";
 import { removeTurn, updateTurn, clearTurnOrder} from '../lib/turnorder'
 
 function TurnOrder() {
   const isDM = useContext(DMContext);
+  const getToggleUpdates = useContext(ToggleUpdatesContext)
 
   const [turnorder, setTurnOrder] = useState([
     {
@@ -72,8 +73,11 @@ function TurnOrder() {
   useEffect(() => {  
     getTurnOrderClient();
     setInterval(() => {
-      getTurnOrderClient(); 
-      console.log("Getting turn order");
+      if (getToggleUpdates() === false) {
+        console.log(getToggleUpdates());
+        getTurnOrderClient(); 
+        console.log("Getting turn order");
+      }
     }, 1500);
     }, []
   );
