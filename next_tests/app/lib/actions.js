@@ -49,23 +49,29 @@ const userauthquery = new PQ({
 
 export async function auth2(formdata) {
   let redirecturl = '../login';
-  //console.log(formdata.get('username'));
   console.log(formdata.get('username') + " " + formdata.get('password'));
-  db.one(userauthquery, [formdata.get('username'), formdata.get('password')])
-  .then((result) => {
+
+  // Use try/catch for async/await error handling
+  try {
+    const result = await db.one(userauthquery, [formdata.get('username'), formdata.get('password')]);
     console.log("this is the result in authenticate");
     console.log(result);
+
     if (result !== null) {
       redirecturl = `../characterselect?userid=${result.playerid}`;
       console.log(redirecturl);
     }
-  }).catch((error) => {
+  } catch (error) {
     console.log("whoops");
     console.log(error);
-  }).finally(() => {
-    loginredirect(redirecturl);
-  });
+    // Handle error (e.g., incorrect credentials or database error)
+    // Optionally, set redirecturl to a specific "error" page or keep it as '../login'
+  }
+
+  // Return the determined redirect URL
+  return redirecturl;
 }
+
 
 export async function loginredirect(redirecturl) {
   if (typeof window !== 'undefined') {
