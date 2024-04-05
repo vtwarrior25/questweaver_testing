@@ -13,13 +13,13 @@ const getspelllistquery = new PQ({
   `
 });
 
-const getpreparedspellsquery = new PQ ({
+const getpreparedspellsquery = new PQ({
   text: 
-    `SELECT s.name, s.casttime AS timetocast, s.spellrange AS range FROM preparedlist p
+    `SELECT sl.spelllevel, s.name, s.casttime AS timetocast, s.spellrange AS range,
+    FROM preparedlist p
       JOIN spell s ON p.spellid = s.spellid 
       JOIN spelllist sl ON p.spellid = sl.spellid
     WHERE c.playercharacterid = $1;`
-    // Might need to also join dicerollspell
 });
 
 const preparequery = new PQ({

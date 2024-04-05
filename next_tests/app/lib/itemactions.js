@@ -199,13 +199,14 @@ export async function setCharacterInventory(playercharacterid, items) {
       }
     }).catch((error) => {
       // If it doesn't exist, add the new item
-      db.none(addnewinventoryitemquery, playercharacterid, item.sectionname, item.quantity)
+      db.none(addnewinventoryitemquery, [playercharacterid, item.sectionname, item.name, item.quantity])
       .catch(error => {
         console.log("Error adding new item to inventory, " + error);
       });
     });
   }
 }
+
 
 
 const getplayercharacterinventoryquery = new PQ({
@@ -233,7 +234,7 @@ const getinventoryweaponinfo = new PQ({
   `
   */
   text: `
-    SELECT w.weapontype, a.range, a.numdamagedie, d.name, et.name, w.properties
+    SELECT w.weapontype, w.weaponrange, a.range, a.numdamagedie AS numdice, d.name AS dietype, et.name AS damagetype, w.properties
     FROM weapon w
       JOIN weaponattack wa ON w.weaponid = wa.weaponid
       JOIN attack a ON wa.attackid = a.attackid
@@ -250,25 +251,27 @@ export async function getInventory(playercharacterid) {
   .then ((dbinfo) => {
     console.log("Got character inventory");
     console.log(dbinfo);
-    for (item in dbinfo) {
-      console.log('At item' + item);
+    for (let item of dbinfo) {
       let itemprototype = {...item};
       db.any(getinventoryweaponinfo, [item.itemid])
       .then((result) => {
-        if (result !== null) {
-          itemprototype.weaponinfo = {...result}; 
+        console.log(result);
+        if (result.length >= 1) {
+          itemprototype.weaponinfo = {...result[0]};
+          console.log('itemprototype')
+          console.log(itemprototype);
         }
       }).catch((error) => {
         console.error("Error getting weapon info for item " + item.name + ": " + error);
+      }).finally(() => {
+        inventory = [...inventory, {...itemprototype}];
+        console.log('inventory');
+        console.log(inventory);
       })
-      inventory = [...inventory, itemprototype];
     }
-    //inventory = [...dbinfo];
-    //return dbinfo;
   }).catch (error => {
     console.error("Unable to get character inventory: " + error);
   });
-  //console.log(inventory);
   return inventory; 
 }
 

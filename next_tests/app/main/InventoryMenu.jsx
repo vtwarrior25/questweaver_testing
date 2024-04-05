@@ -92,6 +92,7 @@ function InventoryMenu() {
   useEffect(() => {
     getInventory(playercharacterid)
     .then((result) => {
+      console.log('Setting items!!');
       setItems([...result]);
     }).catch((error) => {
       console.error("Error getting character inventory: " + error);
@@ -131,14 +132,16 @@ function InventoryMenu() {
       name: "Dagger",
       weight: 1,
       quantity: 1,
-      cost: 2,
+      value: 2,
       currency: 'gp',
       notes: "",
       weaponinfo : {
         //proficient: true,
-        weapontype: "Melee",
+        weapontype: "Simple",
+        weaponrange: "Melee",
         range: "20 ft/60 ft",
-        damage: "1d4",
+        dietype: 'd20',
+        numdice: 1,
         damagetype: 'Piercing',
         properties: "Finesse, Light, Thrown",
       },
@@ -149,7 +152,7 @@ function InventoryMenu() {
       name: "Mace",
       weight: 4,
       quantity: 1,
-      cost: 5,
+      value: 5,
       currency: 'gp',
       notes: "",
     },
@@ -158,7 +161,7 @@ function InventoryMenu() {
       name: "Scale Mail",
       weight: 45,
       quantity: 1,
-      cost: 50,
+      value: 50,
       currency: 'gp',
       notes: "",
     },
@@ -167,7 +170,7 @@ function InventoryMenu() {
       name: "Blanket",
       weight: 3,
       quantity: 1,
-      cost: 5,
+      value: 5,
       currency: 'sp',
       notes: "",
     },
@@ -176,7 +179,7 @@ function InventoryMenu() {
       name: "Block of Incense",
       weight: 0,
       quantity: 2,
-      cost: 0,
+      value: 0,
       currency: 'gp',
       notes: "",
     },
@@ -185,7 +188,7 @@ function InventoryMenu() {
       name: "Candle",
       weight: 0,
       quantity: 10,
-      cost: 1,
+      value: 1,
       currency: 'sp',
       notes: "",
     },
@@ -194,7 +197,7 @@ function InventoryMenu() {
       name: "Vestments",
       weight: 0,
       quantity: 1,
-      cost: 0,
+      value: 0,
       currency: 'gp',
       notes: "",
     },
@@ -203,7 +206,7 @@ function InventoryMenu() {
       name: "Waterskin",
       weight: 5,
       quantity: 2,
-      cost: 2,
+      value: 2,
       currency: 'sp',
       notes: "",
     },
@@ -259,7 +262,7 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} className={section.sectionname} sectionname={section.sectionname} name={section.sectionname} setItems={() => setItems()} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
+        {sections.map((section, index) => <InventorySection key={index} sectionname={section.sectionname} name={section.sectionname} setItems={() => setItems()} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>
   );

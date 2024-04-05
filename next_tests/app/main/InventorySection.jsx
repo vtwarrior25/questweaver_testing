@@ -100,8 +100,10 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
                   {item.description}
                   {item.weaponinfo &&
                     <>
-                      <div>Attack Type: {item.weaponinfo.attacktype}</div>
-                      <div>Range: {item.weaponinfo.attacktype}</div>
+                      <div>Attack Type: {item.weaponinfo.weapontype} {item.weaponinfo.weaponrange}</div>
+                      <div>Range: {item.weaponinfo.range}</div>
+                      <div>Damage: {item.weaponinfo.dietype}{item.weaponinfo.numdice} {item.weaponinfo.damagetype}</div>
+                      <div>Properties: {item.weaponinfo.properties}</div>
                     </>
                   }
                   <input type="number" placeholder='Qty' value={item.quantity} onChange={(e) => setItemQuantity(sectionname, item, e.target.value)}></input>
