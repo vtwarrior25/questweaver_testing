@@ -5,7 +5,7 @@ import { db } from '../lib/dbconn';
 
 const getallitemsquery = new PQ ({
   text: `
-    SELECT i.itemid, i.name, i.weight, i.value, i.currency FROM item i;
+    SELECT i.itemid, i.name, i.weight, i.value, i.currency, i.description FROM item i;
   `
 });
 
@@ -177,7 +177,7 @@ const updateitemquantityquery = new PQ({
 const addnewinventoryitemquery = new PQ({
   text:`
     INSERT INTO characterinventory (characterinventoryid, playercharacterid, characterinventorysection, itemid, quantity) VALUES 
-    (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4)});
+    (DEFAULT, $1, $2, (SELECT itemid FROM item WHERE name = $3), $4);
   `
 });
 
@@ -185,7 +185,7 @@ const addnewinventoryitemquery = new PQ({
 export async function setCharacterInventory(playercharacterid, items) {
   // Check if an item exists in the table already (check for itemid from name, section, playercharacterid)
   for (let item of items) {
-    db.one(checkcharacterinventoryforitem, [item.name, item.sectionname, playercharacterid])
+    db.one(checkcharacterinventoryforitem, [item.name, item.section, playercharacterid])
     .then((checkitemresult) => {
       if (checkitemresult.quantity === item.quantity) {
         // If it does exist and the quantity is the same, do nothing
@@ -199,14 +199,47 @@ export async function setCharacterInventory(playercharacterid, items) {
       }
     }).catch((error) => {
       // If it doesn't exist, add the new item
-      db.none(addnewinventoryitemquery, [playercharacterid, item.sectionname, item.name, item.quantity])
+      db.none(addnewinventoryitemquery, [playercharacterid, item.section, item.name, item.quantity])
       .catch(error => {
-        console.log("Error adding new item to inventory, " + error);
+        console.log("Error adding new item to inventory: " + error);
       });
     });
   }
 }
 
+
+
+export async function addItemToInventory(playercharacterid, item) {
+  db.none(addnewinventoryitemquery, [playercharacterid, item.section, item.name, item.quantity])
+  .catch(error => {
+    console.log("Error adding new item to inventory: " + error);
+  });
+}
+
+
+export async function updateItemInInventory(playercharacterid, item, quantity) {
+  db.none(updateitemquantityquery, [playercharacterid, item.name, quantity])
+  .catch(error => {
+    console.log("Error setting inventory item quantity, " + error);
+  });
+}
+
+
+
+const removeitemfrominventoryquery = new PQ({
+  text: `
+    DELETE FROM characterinventory
+    WHERE playercharacterid = $1 AND itemid = (SELECT itemid FROM item WHERE name = $2) AND characterinventorysection = $3;
+  `
+});
+
+
+export async function removeItemFromInventory(playercharacterid, item) {
+  db.none(removeitemfrominventoryquery, [playercharacterid, item.name, item.sectionname])
+  .catch((error) => {
+    console.error('Error removing item from character inventory: ' + error);
+  });
+}
 
 
 const getplayercharacterinventoryquery = new PQ({

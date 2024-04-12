@@ -3,7 +3,7 @@ import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
 import ManageInventory from './ManageInventory';
 import { PlayerCharacterContext } from './Contexts';
-import { getCharacterMoney, getInventory, setCharacterMoney } from '../lib/itemactions';
+import { getCharacterMoney, getInventory, setCharacterMoney, setCharacterInventory, addItemToInventory, updateItemInInventory } from '../lib/itemactions';
 
 function InventoryMenu() {
 
@@ -60,14 +60,20 @@ function InventoryMenu() {
     if (matcheditems.length > 0) {
       console.log('found');
       let matcheditem = matcheditems[0];
-      matcheditem.quantity = Number(matcheditem.quantity) + Number(quantity);
+      let newquantity = Number(matcheditem.quantity) + Number(quantity);
+      matcheditem.quantity = newquantity;
       let nonmatcheditems = items.filter((newitem) => newitem.name !== item.name || newitem.section !== section);
       console.log(nonmatcheditems);
       setItems([...nonmatcheditems, matcheditem]);
+      updateItemInInventory(playercharacterid, matcheditem, newquantity);
+      //setCharacterInventory(playercharacterid, [...nonmatcheditems, matcheditem])
     } else {
       console.log('not found');
       otheritem = {...item, section: section, quantity: quantity};
       setItems([...items, otheritem]);
+      console.log(otheritem);
+      addItemToInventory(playercharacterid, otheritem);
+      //setCharacterInventory(playercharacterid, [...items, otheritem])
     }
     
     // Check if object already exists in section, if so add quantity to add to quantity

@@ -75,6 +75,7 @@ function PixiMap() {
   })
   const playercharacterid = useContext(PlayerCharacterContext);
   const [dragging, setDragging] = useState(false);
+  const [pauseupdate, setPauseUpdate] = useState(false);
 
   useEffect(() => {
     setMapSize({width: 500, height: 500, scale: 100});
@@ -82,31 +83,39 @@ function PixiMap() {
   );
 
   useEffect(() => { 
-    retrieveMapData();
+    retrieveMapData(pauseupdate);
     setInterval(() => {
+      /*
       if (dragging === false) {
         retrieveMapData(); 
         console.log("Getting turn order");
       } else {
         console.log("Not");
       }
+      */
+      retrieveMapData(pauseupdate); 
     }, 1500);
     }, []
   );
 
-  const retrieveMapData = () => {
-    getMapData()
-    .then((result) => {
-      setMapShapes([...result]);
-    }).catch((error) => {
-      console.error("Error retrieving map data: " + error);
-    })
+
+  const retrieveMapData = (update) => {
+    if (update !== true) {
+      //console.log('Gaming');
+      //console.log('Pauseupdate = ' + update);
+      getMapData()
+      .then((result) => {
+        setMapShapes([...result]);
+      }).catch((error) => {
+        console.error("Error retrieving map data: " + error);
+      });
+    }
   }
 
 
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
-    console.log(scale);
+    //console.log(scale);
   }
 
  
@@ -203,7 +212,7 @@ function PixiMap() {
 */
 
   const onDragStart = (event) => {
-    console.log("dragstart");
+    //console.log("dragstart");
     let sprite = event.currentTarget;
     sprite.alpha = 0.5;
     sprite.data = event.data;
@@ -212,7 +221,7 @@ function PixiMap() {
   };
 
   const onDragEnd = (event) => {
-    console.log("dragend");
+    //console.log("dragend");
     let sprite = event.currentTarget;
     sprite.alpha = 1;
     sprite.dragging = false;
@@ -221,7 +230,7 @@ function PixiMap() {
   };
 
   const onDragMove = (event) => {
-    console.log("dragmove");
+    //console.log("dragmove");
     setDragging(true);
     let sprite = event.currentTarget;
     if (sprite.dragging) {
@@ -253,6 +262,7 @@ function PixiMap() {
   return ( 
     <div className="mapCanvasWrapper">
     <div className='mapToolButtons'>
+      {/*
       <ToggleButtonGroup type="radio" name="maptoolbuttons">
         <ToggleButton variant="secondary" value={0} onClick={() => setSelectedTool("color")}>C</ToggleButton>
         <ToggleButton variant="secondary" value={1} onClick={() => setSelectedTool("select")}>S</ToggleButton>
@@ -261,6 +271,11 @@ function PixiMap() {
         <ToggleButton variant="secondary" value={4} onClick={() => setSelectedTool("ellipse")}>⬬</ToggleButton>
         <ToggleButton variant="secondary" value={5} onClick={() => setSelectedTool("text")}>T</ToggleButton>
       </ToggleButtonGroup>
+      */}
+      <div className='updateMapToggle frontElement'>
+        <span>Freeze Map </span>
+        <input type='checkbox' value={pauseupdate} onChange={() => setPauseUpdate(!pauseupdate)}></input>
+      </div>
       <div className='mapZoomButtons'>
         <Button onClick={() => scaleMap(mapsize.scale - 5)}>-</Button>
         <input type="text" size={4} value={String(mapsize.scale)} onChange={(e) => scaleMap(Number(e.target.value))}></input>
@@ -275,7 +290,7 @@ function PixiMap() {
         options={{backgroundColor: mapsize.backgroundcolor}}
       >
         {mapshapes.map((shape, index) => {
-          console.log(shape);
+          //console.log(shape);
           if (shape.shape === "rectangle") {
             return <MapRectangle key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapRectangle>
           } else if (shape.shape === "circle") {

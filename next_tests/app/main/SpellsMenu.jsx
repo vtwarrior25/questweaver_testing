@@ -1,6 +1,6 @@
 import { Button, Table, Overlay } from "react-bootstrap";
 import { useState, useEffect, useRef, useContext} from "react";
-import { getPreparedSpells } from "../lib/spellactions";
+import { getPreparedSpells, setPreparedSpell, unsetPreparedSpell, getSpellList } from "../lib/spellactions";
 import DiceRollButton from "./DiceRollButton";
 import SpellsLevelSection from "./SpellsLevelSection";
 import ManageSpells from "./ManageSpells";
@@ -13,7 +13,7 @@ function SpellsMenu({setRollResults}) {
   const [showmanagespells, setShowManageSpells] = useState(false);
   const target = useRef(null);
 
-  const [spelllevels, setSpellLevels] = useState([]); 
+  const [spelllevels, setSpellLevels] = useState([0]); 
 
   const [spellinfo, setSpellInfo] = useState({
     spellabilitymod: 4,
@@ -132,31 +132,44 @@ function SpellsMenu({setRollResults}) {
   useEffect(() => {
     getSpells();
     getLevels();
+    retrieveSpellList();
   }, []
   );
 
   // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
+    getPreparedSpells()
+    .then((result) => {
+      setSpells([...result]);
+    })
+    .catch((error) => {
+      console.error("Error retreiving prepared spells: " +  error);
+    })
   }
 
   const getLevels = () => {
-    /*
     spells.forEach((spell) => {
       if (!spelllevels.includes(spell.level)) {
         setSpellLevels([...spelllevels, spell.level]);
       }});
-      */
-    setSpellLevels([0, 1]);
+    console.log('spelllevels');
+    console.log(spelllevels);
+    //setSpellLevels([0, 1]);
+  }
+
+  const retrieveSpellList = () => {
+    getSpellList()
+    .then((result) => {
+      setSpellList([...result]);
+    })
+    .catch((error) => {
+      console.error("Error retreiving list of spells: " +  error);
+    })
   }
 
   const addSpells = () => {
     console.log("This will handle adding spells from the manage spells menu");
-  }
-
-
-  const handleCast = () => {
-    //
   }
 
   const prepSpell = (spellname) => {

@@ -206,12 +206,16 @@ INSERT INTO subrace (name, raceid) VALUES
 
 
 INSERT INTO effecttype (name, description) VALUES
-('Acid', 'Add description')
+('Acid', 'Add description'),
+('Slashing', 'Add description'),
+('Bludgeoning', 'Add description'),
+('Piercing', 'Add description');
+
 
 --String to add:  , 0, 0, 'Save DC','Acid', (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'
 
-INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdienum, hitdcmod, effect, effectdie, effectdienum, effectmod, levelmod, levelmodtype) VALUES
-('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effect WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
+INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdicenum, hitdcmod, effecttypeid, effectdicetype, effectdicenum, effectmod, levelmod, levelmodtype) VALUES
+('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
 ('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'Add description here'),
 ('Booming Blade', 'Evocation', '1 Action', 'Self (5-foot radius)', '1 round', 'S, M', 'Add description here'),
 ('Chill Touch', 'Necromancy', '1 Action', '120 feet', '1 round', 'V, S', 'Add description here'),
@@ -726,16 +730,6 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Woodcarvers Tools','Tools');
 
 
-INSERT INTO effecttype (name) VALUES
-('Slashing'),
-('Bludgeoning'),
-('Piercing');
-
-
-INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VALUES
-();
-
-
 INSERT INTO item (name, value, currency, description, weight, rarity) VALUES
 ('Abacus', 2, 'gp', 'For counting things', 2, 'Common'),
 ('Acid (vial)', 25, 'gp', '', 1, 'Uncommon'),
@@ -767,16 +761,15 @@ INSERT INTO item (name, value, currency, description, weight, rarity) VALUES
 ('Holy Symbol (Amulet)', 20, 'gp', 'An amulet representing a deity used as a focus for divine spells', 1, 'Common');
 
 
-  INSERT INTO weapon (itemid, weapontype, weaponrange) VALUES
-  ((SELECT itemid FROM item WHERE name = 'Quarterstaff'), 'Melee', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Dagger'), 'Melee', 'Short'),
-  ((SELECT itemid FROM item WHERE name = 'Light Crossbow'), 'Ranged', 'Long'),
-  ((SELECT itemid FROM item WHERE name = 'Rapier'), 'Melee', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Melee', 'Short'),
-  ((SELECT itemid FROM item WHERE name = 'Shortbow and Quiver'), 'Ranged', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Melee', 'Short'), 
-  ((SELECT itemid FROM item WHERE name = 'Greataxe'), 'Melee', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Scimitar'), 'Melee', 'Medium'),
-  ((SELECT itemid FROM item WHERE name = 'Warhammer'), 'Melee', 'Medium');
+INSERT INTO weapon (itemid, weapontype, weaponrange, properties) VALUES
+((SELECT itemid FROM item WHERE name = 'Quarterstaff'), 'Simple', 'Melee', 'Versatile'),
+((SELECT itemid FROM item WHERE name = 'Dagger'), 'Simple', 'Melee', 'Finesse, Light, Thrown'),
+((SELECT itemid FROM item WHERE name = 'Light Crossbow'), 'Simple', 'Ranged', 'Ammunition, Loading, Two-Handed'),
+((SELECT itemid FROM item WHERE name = 'Rapier'), 'Martial', 'Melee', 'Finesse'),
+((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Martial', 'Melee', 'Finesse, Light'),
+((SELECT itemid FROM item WHERE name = 'Shortbow'), 'Simple', 'Ranged', 'Ammunition, Two-Handed'),
+((SELECT itemid FROM item WHERE name = 'Greataxe'), 'Martial', 'Melee', 'Heavy, Two-Handed'),
+((SELECT itemid FROM item WHERE name = 'Scimitar'), 'Martial', 'Melee', 'Finesse, Light'),
+((SELECT itemid FROM item WHERE name = 'Warhammer'), 'Martial', 'Melee', 'Versatile');
 
 

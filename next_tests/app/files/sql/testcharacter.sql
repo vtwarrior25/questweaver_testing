@@ -69,3 +69,6 @@ WITH pcid AS (
 INSERT INTO characterpassiveability (playercharacterid, passiveperception, passiveinvestigation, passiveinsight) VALUES
 ((SELECT * FROM pcid), 10, 10, 10);
 
+INSERT INTO mapdata (playercharacterid, monstergroupid, shape, image, scale, x, y) VALUES
+((SELECT playercharacterid FROM playercharacter WHERE name = 'Jerome'), NULL, 'sprite', './files/icon.jpg', 0.25, 200, 100);
+

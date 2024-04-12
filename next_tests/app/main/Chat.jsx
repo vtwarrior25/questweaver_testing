@@ -43,8 +43,8 @@ function Chat() {
     setInterval(() => {
       getAllChatMessages(0)
         .then((result) => {
-      console.log(result);
-      setChatMessages([...result]);
+      //console.log(result);
+        setChatMessages([...result]);
       });
     }, 1500);
   }, []

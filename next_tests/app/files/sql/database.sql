@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS playercharacternote (
 	allies									varchar(2000),
 	enemies									varchar(2000),
 	backstory								varchar(2000),
-	other										varchar(2000)
+	other										varchar(2000),
 	cp											integer DEFAULT 0,
 	sp											integer DEFAULT 0,
 	ep											integer DEFAULT 0,
@@ -546,6 +546,10 @@ Spell Tables
 */
 
 
+CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
+
+CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod', 'None');
+
 CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(40) UNIQUE,
@@ -568,9 +572,6 @@ CREATE TABLE IF NOT EXISTS spell (
 	effecttypeid				integer REFERENCES effecttype(effecttypeid) NOT NULL
 );
 
-CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
-
-CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod', 'None');
 
 CREATE TABLE IF NOT EXISTS spellfeature (
 	featureid						integer REFERENCES feature(featureid) NOT NULL,

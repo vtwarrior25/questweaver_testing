@@ -5,20 +5,29 @@ import { db } from './dbconn';
 
 const getspelllistquery = new PQ({
   text: `
-    SELECT FROM spell sp 
+    SELECT sp.name FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
     WHERE 
       sl.classid = (SELECT classid FROM playercharacter WHERE playercharacterid = $1) AND 
-      sl.classlevel = (SELECT characterlevel FROM playerchracter WHERE playercharacterid = $1);  
+      sl.classlevel = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $1);  
   `
 });
 
 const getpreparedspellsquery = new PQ({
   text: 
-    `SELECT sl.spelllevel, s.name, s.casttime AS timetocast, s.spellrange AS range FROM preparedlist p
-      JOIN spell s ON p.spellid = s.spellid 
-      JOIN spelllist sl ON p.spellid = sl.spellid
-    WHERE c.playercharacterid = $1;`
+    `
+      SELECT sl.spelllevel, s.name, s.casttime AS timetocast, s.spellrange AS range,
+      a.abbrev AS saveability, d1.sides AS hitdcdie, s.hitdcdicenum, s.hitdcmod, d2.sides AS effectdicetype,
+      s.effectdicenum, s.effectmod, s.levelmod, s.levelmodtype, e.name AS effect 
+      FROM preparedlist p
+        JOIN spell s ON p.spellid = s.spellid 
+        JOIN spelllist sl ON p.spellid = sl.spellid
+        JOIN ability a ON s.saveability = a.abilityid
+        JOIN dice d1 ON s.hitdcdie = d1.diceid
+        JOIN dice d2 ON s.effectdicetype = d2.diceid
+        JOIN effecttype e ON s.effecttypeid = e.effecttypeid
+      WHERE p.playercharacterid = $1;
+    `
 });
 
 const preparequery = new PQ({

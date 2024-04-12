@@ -8,11 +8,12 @@ import { getAllItems } from '../lib/itemactions';
 
 function ManageInventory({addItem}) {
 
-  const [destination, setDestination] = useState("equipment");
+  const [destination, setDestination] = useState("Equipment");
 
   const [itemquantity, setItemQuantity] = useState(0);
 
-  const [itemlist, setEquipmentList] = useState([
+  const [itemlist, setItemList] = useState([
+    /*
     {
       name: "Longsword",
       weight: 12,
@@ -38,12 +39,13 @@ function ManageInventory({addItem}) {
       },
       description: "Proficiency with a dagger allows you to add your proficiency bonus to the attack roll for any attack you make with it. "
     },
+    */
   ]);
 
   const [dropdownshidden, setDropdownsHidden] = useState([]);
 
   const [searchterm, setSearchTerm] = useState("");
-  const [founditems, setFoundItems] = useState(itemlist);
+  const [founditems, setFoundItems] = useState();
 
   const filter = (e) => {
     const keyword = e.target.value;
@@ -71,11 +73,11 @@ function ManageInventory({addItem}) {
   useEffect(() => {
     getAllItems()
     .then((result) => {
-      setEquipmentList([...result]);
+      setItemList([...result]);
+      setFoundItems([...result]);
     }).catch((error) => {
       console.error("Error getting all items: " + error);
     })
-    
   }, [],
   );
   
@@ -84,8 +86,8 @@ function ManageInventory({addItem}) {
     <div className="manageInventoryMenu">
       <span>Destination</span>
       <select onChange={(e) => setDestination(e.target.value)} value={destination}>
-        <option value='equipment'>Equipment</option>
-        <option value="backpack">Backpack</option>
+        <option value='Equipment'>Equipment</option>
+        <option value="Backpack">Backpack</option>
       </select>
       <input placeholder="Search.." onChange={(e) => filter(e)}></input>
       <div className='searchEquipmentList'>

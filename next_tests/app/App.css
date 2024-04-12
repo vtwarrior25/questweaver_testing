@@ -386,6 +386,9 @@ Map Section
   flex-direction: row;
 }
 
+.updateMapToggle {
+  padding: 0.5rem;
+}
 
 /*
 ----------------------------------------
@@ -973,11 +976,13 @@ Manage Inventory Menu (temporary)
   display: flex;
   flex-direction: column;
   max-width: 20rem;
+  max-height: 27rem;
 }
 
 .searchEquipmentList {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 }
 
 .equipmentListItem {
@@ -985,7 +990,8 @@ Manage Inventory Menu (temporary)
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.2rem 0.5rem;
+  font-size: medium;
+  padding: 0.2rem 0.2rem;
 }
 
 
