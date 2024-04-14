@@ -548,12 +548,12 @@ Spell Tables
 
 CREATE TYPE spellmod AS ENUM ('Spell Ability', 'Spell Attack', 'Save DC', 'None');
 
-CREATE TYPE spelllevelmod AS ENUM ('AbilityDie', 'AbilityMod', 'HitDCDie', 'HitDCMod', 'None');
+CREATE TYPE spelllevelmod AS ENUM ('EffectDie', 'EffectDieNum', 'HitDCDie', 'HitDCDieNum', 'None');
 
 CREATE TABLE IF NOT EXISTS spell (
 	spellid							integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name								varchar(40) UNIQUE,
-	description					varchar(500),
+	description					varchar(700),
 	school							varchar(40),
 	casttime 						varchar(40),
 	spellrange					varchar(40),

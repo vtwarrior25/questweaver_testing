@@ -61,7 +61,6 @@ export function useCanvas() {
     ctx.clearRect(0,0, canvasWidth, canvasHeight);
     console.log(coords.length);
     coords.forEach((coord) => {draw(ctx, coord)});
-    console.log("Shit should be drawn now, otherwise shit's fucked fam")
   }, [coords]);
 
   return [coords, setCoords, zoom, setZoom, canvasRef, canvasWidth, canvasHeight];

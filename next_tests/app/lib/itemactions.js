@@ -278,6 +278,7 @@ const getinventoryweaponinfo = new PQ({
 });
 
 
+// TODO: to fix this, we need to ensure that the for loop on 288 finishes before we return
 export async function getInventory(playercharacterid) {
   let inventory = [];
   await db.many(getplayercharacterinventoryquery, [playercharacterid])
@@ -291,8 +292,8 @@ export async function getInventory(playercharacterid) {
         console.log(result);
         if (result.length >= 1) {
           itemprototype.weaponinfo = {...result[0]};
-          console.log('itemprototype')
-          console.log(itemprototype);
+          //console.log('itemprototype')
+          //console.log(itemprototype);
         }
       }).catch((error) => {
         console.error("Error getting weapon info for item " + item.name + ": " + error);
@@ -305,6 +306,8 @@ export async function getInventory(playercharacterid) {
   }).catch (error => {
     console.error("Unable to get character inventory: " + error);
   });
+  console.log('Epic mode');
+  console.log(inventory);
   return inventory; 
 }
 

@@ -99,6 +99,7 @@ function InventoryMenu() {
     getInventory(playercharacterid)
     .then((result) => {
       console.log('Setting items!!');
+      console.log(result);
       setItems([...result]);
     }).catch((error) => {
       console.error("Error getting character inventory: " + error);

@@ -96,7 +96,6 @@ function App () {
 
   const changeShowBoxes = (showbox) => {
     let newshowboxes = {...showboxes};
-    console.log('epic shit brothers');
     console.log(showbox);
     newshowboxes[showbox] = !newshowboxes[showbox];
     setShowBoxes(newshowboxes);
