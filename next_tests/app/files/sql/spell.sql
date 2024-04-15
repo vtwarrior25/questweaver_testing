@@ -1,461 +1,40 @@
-/*
-Tables to insert data into initially:
-- *Ability (do first)
-- *Alignment
-- *Skill (FK to Ability)
-- *Class
-- *Subclass
-- *Saving Throw
-- *Dice
-- ??Game Log Tag
-- *Creature Size
-- *Defense
-- Proficiency
-- Feature Tables (this will suck, don't do it yet)
-- *Monster Type
-- *Race
-- *Subrace
-- Spell
-- Spell List
-- *Rarity
-- *Possible Weapon Property
-
-
-
-Tables that need some initial data:
-- Item
-- Armor
-- Weapon
-
-
-
-*/
-
-INSERT INTO ability (name, abbrev, description) VALUES
-('Strength', 'Str', ''),
-('Dexterity', 'Dex', ''),
-('Constitution', 'Con', ''),
-('Intelligence', 'Int', ''),
-('Wisdom', 'Wis', ''),
-('Charisma', 'Cha', '');
-
-
-INSERT INTO skill (name, abilityid, description) VALUES 
-('Acrobatics', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
-('Animal Handling', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
-('Arcana', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
-('Athletics', (SELECT abilityid FROM ability WHERE abbrev = 'Str'), ''),
-('Deception', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
-('History', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
-('Insight', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
-('Intimidation', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
-('Investigation', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
-('Medicine', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
-('Nature', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
-('Perception', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), ''),
-('Performance', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
-('Persuasion', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), ''),
-('Religion', (SELECT abilityid FROM ability WHERE abbrev = 'Int'), ''),
-('Sleight of Hand', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
-('Stealth', (SELECT abilityid FROM ability WHERE abbrev = 'Dex'), ''),
-('Survival', (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), '');
-
-
-INSERT INTO alignment (name, description, abbrev) VALUES 
-('Lawful Good', 'Lawful good (LG) creatures can be counted on to do the right thing as expected by society. Gold dragons, paladins, and most dwarves are lawful good.', 'LG'),
-('Neutral Good', 'Neutral good (NG) folk do the best they can to help others according to their needs. Many celestials, some cloud giants, and most gnomes are neutral good.', 'NG'),
-('Chaotic Good', 'Chaotic good (CG) creatures act as their conscience directs, with little regard for what others expect. Copper dragons, many elves, and unicorns are chaotic good.', 'CG'),
-('Lawful Neutral', 'Lawful neutral (LN) individuals act in accordance with law, tradition, or personal codes. Many monks and some wizards are lawful neutral.', 'LN'),
-('Neutral', 'Neutral (N) is the alignment of those who prefer to steer clear of moral questions and don''t take sides, doing what seems best at the time. Lizardfolk, most druids, and many humans are neutral.', 'N'),
-('Chaotic Neutral', 'Chaotic neutral (CN) creatures follow their whims, holding their personal freedom above all else. Many barbarians and rogues, and some bards, are chaotic neutral.', 'CN'),
-('Lawful Evil ', 'Lawful evil (LE) creatures methodically take what they want, within the limits of a code of tradition, loyalty, or order. Devils, blue dragons, and hobgoblins are lawful evil.', 'LE'),
-('Neutral Evil', 'Neutral evil (NE) is the alignment of those who do whatever they can get away with, without compassion or qualms. Many drow, some cloud giants, and goblins are neutral evil.', 'NE'),
-('Chaotic Evil', 'Chaotic evil (CE) creatures act with arbitrary violence, spurred by their greed, hatred, or bloodlust. Demons, red dragons, and orcs are chaotic evil.', 'CG');
-
-
-INSERT INTO savingthrow (name, abilityid) VALUES
-('Strength', (SELECT abilityid FROM ability WHERE abbrev = 'Str')),
-('Dexterity', (SELECT abilityid FROM ability WHERE abbrev = 'Dex')),
-('Constitution', (SELECT abilityid FROM ability WHERE abbrev = 'Con')),
-('Intelligence', (SELECT abilityid FROM ability WHERE abbrev = 'Int')),
-('Wisdom', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
-('Charisma', (SELECT abilityid FROM ability WHERE abbrev = 'Cha'));
-
-/*
-INSERT INTO creaturesize (name, description) VALUES
-('Tiny', ''),
-('Small', ''),
-('Medium', ''),
-('Large', ''),
-('Huge', ''),
-('Gargantuan', '');
-*/
-
-INSERT INTO dice (name, sides) VALUES
-('d20', 20),
-('d12', 12),
-('d10', 10),
-('d8', 8),
-('d6', 6),
-('d4', 4);
-
-
-INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid) VALUES
-('Barbarian', (SELECT diceid FROM dice WHERE sides = 12), '12', (SELECT diceid FROM dice WHERE sides = 12),'', NULL),
-('Bard', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
-('Cleric', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
-('Druid', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
-('Fighter', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', NULL),
-('Monk', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
-('Paladin', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
-('Ranger', (SELECT diceid FROM dice WHERE sides = 10), '10', (SELECT diceid FROM dice WHERE sides = 10), '', (SELECT abilityid FROM ability WHERE abbrev = 'Wis')),
-('Rogue', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', NULL),
-('Sorcerer', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
-('Warlock', (SELECT diceid FROM dice WHERE sides = 8), '8', (SELECT diceid FROM dice WHERE sides = 8), '', (SELECT abilityid FROM ability WHERE abbrev = 'Cha')),
-('Wizard', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Int'));
-
-
-INSERT INTO subclass (name, description, classid) VALUES
-('Path of the Berserker','', (SELECT classid FROM class WHERE name = 'Barbarian')),
-('College of Valor', '', (SELECT classid FROM class WHERE name = 'Bard')),
-('Life Domain', '', (SELECT classid FROM class WHERE name = 'Cleric')),
-('Circle of the Moon', '', (SELECT classid FROM class WHERE name = 'Druid')),
-('Champion', '', (SELECT classid FROM class WHERE name = 'Fighter')),
-('Way of the Open Hand', '', (SELECT classid FROM class WHERE name = 'Monk')),
-('Oath of Devotion', '', (SELECT classid FROM class WHERE name = 'Paladin')),
-('Hunter', '', (SELECT classid FROM class WHERE name = 'Ranger')),
-('Thief', '', (SELECT classid FROM class WHERE name = 'Rogue')),
-('Divine Soul', '', (SELECT classid FROM class WHERE name = 'Sorcerer')),
-('The Undying', '', (SELECT classid FROM class WHERE name = 'Warlock')),
-('School of Illusions', '', (SELECT classid FROM class WHERE name = 'Wizard'));
-
-
-INSERT INTO monstertype (name) VALUES 
-('Aberration'),
-('Animal'),
-('Beast'),
-('Construct'),
-('Dragon'),
-('Elemental'),
-('Fey'),
-('Fiend'),
-('Giant'),
-('Humanoid'),
-('Monstrosity'),
-('Ooze'),
-('Plant'),
-('Undead');
-
-
-INSERT INTO condition (name, description) VALUES
-('Blinded', ''),
-('Charmed', ''),
-('Deafened', ''),
-('Frightened', ''),
-('Grappled', ''),
-('Incapacitated', ''),
-('Invisible', ''),
-('Paralyzed', ''),
-('Petrified', ''),
-('Poisoned', ''),
-('Prone', ''),
-('Restrained', ''),
-('Stunned', ''),
-('Unconscious', ''),
-('Exhaustion', '');
-
-INSERT INTO defense (name, description) VALUES
-('Fire', ''),
-('Acid', ''),
-('Bludgeoning', ''),
-('Damage from Spells', ''),
-('Thunder', ''),
-('Psychic', ''),
-('Radiant', ''),
-('Poison', ''),
-('Piercing', ''),
-('Necrotic', ''),
-('Lightning', ''),
-('Trap Dammage', ''),
-('Cold', ''),
-('Force', ''),
-('Range Attacks', ''),
-('Slashing', '');
-
-INSERT INTO race (name, creaturesize) VALUES
-('Dwarf', 'Medium'),
-('Elf', 'Medium'),
-('Halfling', 'Small'),
-('Human', 'Medium'),
-('Dragonborn', 'Medium'),
-('Gnome', 'Small'),
-('Half-Elf', 'Medium'),
-('Half-Orc', 'Medium'),
-('Tiefling', 'Medium');
-
-
-INSERT INTO subrace (name, raceid) VALUES
-('Hill Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
-('Mountain Dwarf', (SELECT raceid FROM race WHERE name = 'Dwarf')),
-('High Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
-('Wood Elf', (SELECT raceid FROM race WHERE name = 'Elf')),
-('Stout', (SELECT raceid FROM race WHERE name = 'Halfling')),
-('Lightfoot', (SELECT raceid FROM race WHERE name = 'Halfling')),
-('Forest Gnome', (SELECT raceid FROM race WHERE name = 'Gnome')),
-('Rock Gnome', (SELECT raceid FROM race WHERE name = 'Gnome'));
-
-
-INSERT INTO effecttype (name, description) VALUES
-('Fire', ''),
-('Acid', ''),
-('Bludgeoning', ''),
-('Damage from Spells', ''),
-('Thunder', ''),
-('Psychic', ''),
-('Radiant', ''),
-('Poison', ''),
-('Piercing', ''),
-('Necrotic', ''),
-('Lightning', ''),
-('Trap Dammage', ''),
-('Cold', ''),
-('Force', ''),
-('Range Attacks', ''),
-('Slashing', '');
-
-INSERT INTO proficiency (name, proficiencytype) VALUES
-('Abyssal', 'Languages'),
-('Acrobatics', 'Skills'),
-('Alchemists Supplies', 'Tools'),
-('Animal Handling', 'Skills'),
-('Arcana', 'Skills'),
-('Athletics', 'Skills'),
-('Bagpipes', 'Tools'),
-('Battleaxe', 'Weapons'),
-('Blowgun', 'Weapons'),
-('Brewers Supplies', 'Tools'),
-('Calligraphers Supplies', 'Tools'),
-('Carpenters Tools', 'Tools'),
-('Cartographers Tools', 'Tools'),
-('Celestial','Languages'),
-('Club', 'Weapons'),
-('Cobblers Tools', 'Tools'),
-('Common', 'Languages'),
-('Cooks Utensils', 'Tools'),
-('Dagger', 'Weapons'),
-('Dart', 'Weapons'),
-('Deception', 'Skills'),
-('Deep Speech', 'Languages'),
-('Dice Set', 'Tools'),
-('Disguise Kit', 'Tools'),
-('Draconic', 'Languages'),
-('Dragonchess Set', 'Weapons'),
-('Drum', 'Weapons'),
-('Dulcimer', 'Tools'),
-('Dwarvish', 'Languages'),
-('Elvish', 'Languages'),
-('Flail','Weapons'),
-('Flute','Tools'),
-('Forgery Kit','Tools'),
-('Giant','Languages'),
-('Glaive','Weapons'),
-('Glassblowers Tools','Tools'),
-('Gnomish','Languages'),
-('Goblin','Languages'),
-('Greataxe','Weapons'),
-('Greatclub','Weapons'),
-('Greatsword','Weapons'),
-('Halberd','Weapons'),
-('Halfling','Languages'),
-('Hand Crossbow','Weapons'),
-('Handaxe','Weapons'),
-('Heavy Armor','Armor'),
-('Heavy Crossbow','Weapons'),
-('Herbalism Kit','Tools'),
-('History','Skills'),
-('Horn','Tools'),
-('Improvised Weapon','Weapons'),
-('Infernal','Languages'),
-('Insight','Skills'),
-('Intimidation','Skills'),
-('Investigation','Skills'),
-('Javelin','Weapons'),
-('Jewelers Tools','Tools'),
-('Lance','Weapons'),
-('Land Vehicles','Tools'),
-('Leatherworkers Tools', 'Tools'),
-('Light Armor','Armor'),
-('Light Crossbow','Armor'),
-('Light Hammer','Weapons'),
-('Longbow','Weapons'),
-('Longsword','Weapons'),
-('Lute','Tools'),
-('Lyre','Tools'),
-('Mace','Weapons'),
-('Martial Weapons','Weapons'),
-('Masons Tools','Tools'),
-('Maul','Weapons'),
-('Medicine','Skills'),
-('Medium Armor','Armor'),
-('Morningstar','Weapons'),
-('Nature','Skills'),
-('Navigators Tools','Tools'),
-('Net','Tools'),
-('Orc','Languages'),
-('Painters Supplies','Tools'),
-('Pan Flute','Tools'),
-('Perception','Skills'),
-('Performance','Skills'),
-('Persuasion','Skills'),
-('Pike','Weapons'),
-('Playing Card Set','Tools'),
-('Poisoners kit','Tools'),
-('Potters Tools','Tools'),
-('Primordial','Languages'),
-('Quarterstaff','Weapons'),
-('Rapier','Weapons'),
-('Religion','Skills'),
-('Scimitar','Weapons'),
-('Shawm','Tools'),
-('Shields','Armor'),
-('Shortbow','Weapons'),
-('Shortsword','Weapons'),
-('Sickle','Weapons'),
-('Simple Weapons','Weapons'),
-('Sleight of Hand','Skills'),
-('Sling','Weapons'),
-('Smiths Tools','Tools'),
-('Spear','Weapons'),
-('Stealth','Skills'),
-('Survival','Skills'),
-('Sylvan','Languages'),
-('Thieves Tools','Tools'),
-('Three-Dragon Ante Set','Tools'),
-('Tinkers Tools', 'Tools'),
-('Trident','Weapons'),
-('Unarmed Strike','Weapons'),
-('Undercommon','Languages'),
-('Viol','Tools'),
-('War Pick','Weapons'),
-('Warhammer','Weapons'),
-('Water Vehicles','Tools'),
-('Weavers Tools','Tools'),
-('Whip','Weapons'),
-('Woodcarvers Tools','Tools');
-
-
-INSERT INTO item (name, value, currency, description, weight, rarity) VALUES
-('Abacus', 2, 'gp', 'For counting things', 2, 'Common'),
-('Acid (vial)', 25, 'gp', '', 1, 'Uncommon'),
-('Alchemist''s fire', 50, 'gp', '', 1, 'Uncommon'),
-('Arrows (20)', 1, 'gp', '', 1, 'Common'),
-('Blowgun needles (50)', 1, 'gp', '', 1, 'Common'),
-('Crossbow bolts (20)', 1, 'gp', '', 1.5, 'Common'),
-('Quarterstaff', 2, 'gp', 'A long wooden staff used for defense and attack', 4, 'Common'),
-('Dagger', 2, 'gp', 'A short knife with a pointed and edged blade', 1, 'Common'),
-('Light Crossbow', 25, 'gp', 'A lightweight crossbow with a set of 20 bolts', 5, 'Common'),
-('Rapier', 25, 'gp', 'A thin, light, sharp-pointed sword used for thrusting', 2, 'Uncommon'),
-('Shortsword', 10, 'gp', 'A small sword that is easy to handle', 2, 'Common'),
-('Shortbow', 25, 'gp', 'A small bow with a quiver that holds 20 arrows', 2, 'Common'),
-('Leather Armor', 10, 'gp', 'Armor made from toughened leather pieces', 10, 'Common'),
-('Scale Mail', 50, 'gp', 'Armor made of overlapping scales', 45, 'Common'),
-('Shortsword', 20, 'gp', 'A pair of small swords for dual-wielding', 4, 'Common'),
-('Greataxe', 30, 'gp', 'A large axe designed for combat', 7, 'Common'),
-('Wooden Shield', 15, 'gp', 'A broad piece of wood used for protection', 6, 'Common'),
-('Scimitar', 25, 'gp', 'A short sword with a curved blade that broadens toward the point', 3, 'Common'),
-('Chain Mail', 75, 'gp', 'Armor made of interlocking metal rings', 55, 'Common'),
-('Warhammer', 15, 'gp', 'A hammer with a head suitable for battle', 6, 'Common'),
-('Thieves’ Tools', 25, 'gp', 'Tools include lock picks, a small mirror, a narrow-bladed knife, a set of narrow-bladed scissors, and a pair of pliers', 1, 'Uncommon'),
-('Druidic Focus (Sprig of Mistletoe)', 1, 'gp', 'A focus for druidic spells and rituals', 1, 'Common'),
-('Druidic Focus (Totem)', 1, 'gp', 'A totemic object used as a focus for druidic spells and rituals', 1, 'Common'),
-('Druidic Focus (Wooden Staff)', 5, 'gp', 'A wooden staff used as a focus for druidic spells and rituals', 4, 'Common'),
-('Druidic Focus (Yew Wand)', 10, 'gp', 'A wand made of yew used as a focus for druidic spells and rituals', 1, 'Common'),
-('Holy Symbol (Reliquary)', 5, 'gp', 'A small box containing sacred relics used as a focus for divine spells', 2, 'Common'),
-('Holy Symbol (Emblem)', 1, 'gp', 'An emblem representing a deity used as a focus for divine spells', 1, 'Common'),
-('Holy Symbol (Amulet)', 20, 'gp', 'An amulet representing a deity used as a focus for divine spells', 1, 'Common');
-
-
-INSERT INTO weapon (itemid, weapontype, weaponrange, properties) VALUES
-((SELECT itemid FROM item WHERE name = 'Quarterstaff'), 'Simple', 'Melee', 'Versatile'),
-((SELECT itemid FROM item WHERE name = 'Dagger'), 'Simple', 'Melee', 'Finesse, Light, Thrown'),
-((SELECT itemid FROM item WHERE name = 'Light Crossbow'), 'Simple', 'Ranged', 'Ammunition, Loading, Two-Handed'),
-((SELECT itemid FROM item WHERE name = 'Rapier'), 'Martial', 'Melee', 'Finesse'),
-((SELECT itemid FROM item WHERE name = 'Shortsword'), 'Martial', 'Melee', 'Finesse, Light'),
-((SELECT itemid FROM item WHERE name = 'Shortbow'), 'Simple', 'Ranged', 'Ammunition, Two-Handed'),
-((SELECT itemid FROM item WHERE name = 'Greataxe'), 'Martial', 'Melee', 'Heavy, Two-Handed'),
-((SELECT itemid FROM item WHERE name = 'Scimitar'), 'Martial', 'Melee', 'Finesse, Light'),
-((SELECT itemid FROM item WHERE name = 'Warhammer'), 'Martial', 'Melee', 'Versatile');
-
-
-/*
-Old 
+--String to add:  , 0, 0, 'Save DC','Acid', (SELECT diceid FROM dice WHERE sides = 6), 1, 'None'
 
 INSERT INTO spell (name, school, casttime, spellrange, duration, components, description, hitdcdie, hitdcdicenum, hitdcmod, effecttypeid, effectdicetype, effectdicenum, effectmod, levelmod, levelmodtype) VALUES
-('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
-('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
-('Booming Blade', 'Evocation', '1 Action', 'Self (5-foot radius)', '1 round', 'S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
-('Chill Touch', 'Necromancy', '1 Action', '120 feet', '1 round', 'V, S', 'Add description here'),
-('Control Flames', 'Transmutation', '1 Action', '60 Feet', 'Instantaneous or 1 hour', 'S', 'Add description here'),
-('Create Bonfire', 'Conjuration', '1 Action', '60 Feet', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
-('Dancing Lights', 'Evocation', '1 Action', '120 feet', 'Concentration up to 1 minute', 'V, S, M', 'Add description here'),
-('Decompose (HB)', 'Necromancy', '1 Action', 'Touch', '1 minute', 'V, S', 'Add description here'),
-('Druidcraft', 'Transmutation', '1 Action', '30 Feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Eldritch Blast', 'Evocation', '1 Action', '120 Feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Encode Thoughts', 'Enchantment', '1 Action', 'Self', '8 hours', 'S', 'Add description here'),
-('Fire Bolt', 'Evocation', '1 Action', '120 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Friends', 'Enchantment', '1 Action', 'Self', 'Concentration, up to 1 minute', 'S, M', 'Add description here'),
-('Frostbite', 'Evocation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Green-Flame Blade', 'Evocation', '1 Action', 'Self (5-foot radius)', 'Instantaneous', 'S, M', 'Add description here'),
-('Guidance', 'Divination', '1 Action', 'Touch', 'Concentration up to 1 minute', 'V, S', 'Add description here'),
-('Gust', 'Transmutation', '1 Action', '30 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Hand of Radiance (UA)', 'Evocation', '1 Action', '5 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Infestation', 'Conjuration', '1 Action', '30 feet', 'Instantaneous', 'V, S, M', 'Add description here'),
-('Light', 'Evocation', '1 Action', 'Touch', '1 hour', 'V, M', 'Add description here'),
-('Lightning Lure', 'Evocation', '1 Action', 'Self (15-foot radius)', 'Instantaneous', 'V', 'Add description here'),
-('Mage Hand', 'Conjuration', '1 Action', '30 feet', '1 minute', 'V, S', 'Add description here'),
-('Magic Stone', 'Transmutation', '1 Bonus Action', 'Touch', '1 minute', 'V, S', 'Add description here'),
-('Mending', 'Transmutation', '1 Minute', 'Touch', 'Instantaneous', 'V, S, M', 'Add description here'),
-('Message', 'Transmutation', '1 Action', '120 feet', '1 round', 'V, S, M', 'Add description here'),
-('Mind Sliver', 'Enchantment', '1 Action', '60 feet', '1 round', 'V', 'Add description here'),
-('Minor Illusion', 'Illusion', '1 Action', '30 feet', '1 minute', 'S, M', 'Add description here'),
-('Mold Earth', 'Transmutation', '1 Action', '30 feet', 'Instantaneous or 1 hour', 'S', 'Add description here'),
-('On/Off (UA)', 'Transmutation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Poison Spray', 'Conjuration', '1 Action', '10 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Prestidigitation', 'Transmutation', '1 Action', '10 feet', 'Up to 1 hour', 'V, S', 'Add description here'),
-('Primal Savagery', 'Transmutation', '1 Action', 'Self', 'Self', 'S', 'Add description here'),
-('Produce Flame', 'Conjuration', '1 Action', 'Self', '10 minutes', 'V, S', 'Add description here'),
-('Ray of Frost', 'Evocation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Resistance', 'Abjuration', '1 Action', 'Touch', 'Concentration up to 1 minute', 'V, S, M', 'Add description here'),
-('Sacred Flame', 'Evocation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Sapping Sting', 'Necromancy', '1 Action', '30 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('Shape Water', 'Transmutation', '1 Action', '30 feet', 'Instantaneous or 1 hour', 'S', 'Add description here'),
-('Shillelagh', 'Transmutation', '1 Bonus Action', 'Touch', '1 minute', 'V, S, M', 'Add description here'),
+('Acid Splash', 'Conjuration', '1 Action', '60 Feet', 'Instantaneous', 'V, S', 'You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage. ', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Acid'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
+('Blade Ward', 'Abjuration', '1 Action', 'Self', '1 round', 'V, S', 'You extend your hand and trace a sigil of warding in the air. Until the end of your next turn, you have resistance against bludgeoning, piercing, and slashing damage dealt by weapon attacks.', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Chill Touch', 'Necromancy', '1 Action', '120 feet', '1 round', 'V, S', 'You create a ghostly, skeletal hand in the space of a creature within range. Make a ranged spell attack against the creature to assail it with the chill of the grave. On a hit, the target takes 1d8 necrotic damage, and it can’t regain hit points until the start of your next turn. Until then, the hand clings to the target. If you hit an undead target, it also has disadvantage on attack rolls against you until the end of your next turn.', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Necrotic'), (SELECT diceid FROM dice WHERE sides = 8), 1, 'None', 0, 'None'),
+('Dancing Lights', 'Evocation', '1 Action', '120 feet', 'Concentration up to 1 minute', 'V, S, M', 'You create up to four torch-sized lights within range, making them appear as torches, lanterns, or glowing orbs that hover in the air for the duration. You can also combine the four lights into one glowing vaguely humanoid form of Medium size. Whichever form you choose, each light sheds dim light in a 10-foot radius. As a bonus action on your turn, you can move the lights up to 60 feet to a new spot within range. A light must be within 20 feet of another light created by this spell, and a light winks out if it exceeds the spell’s range. ', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Druidcraft', 'Transmutation', '1 Action', '30 Feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Eldritch Blast', 'Evocation', '1 Action', '120 Feet', 'Instantaneous', 'V, S', 'Add description here', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Force'), (SELECT diceid FROM dice WHERE sides = 10), 1, 'None', 0, 'None'),
+('Fire Bolt', 'Evocation', '1 Action', '120 feet', 'Instantaneous', 'V, S', 'Add description here', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Fire'), (SELECT diceid FROM dice WHERE sides = 10), 1, 'None', 0, 'None'),
+('Friends', 'Enchantment', '1 Action', 'Self', 'Concentration, up to 1 minute', 'S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Guidance', 'Divination', '1 Action', 'Touch', 'Concentration up to 1 minute', 'V, S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Light', 'Evocation', '1 Action', 'Touch', '1 hour', 'V, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Mage Hand', 'Conjuration', '1 Action', '30 feet', '1 minute', 'V, S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Mending', 'Transmutation', '1 Minute', 'Touch', 'Instantaneous', 'V, S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Message', 'Transmutation', '1 Action', '120 feet', '1 round', 'V, S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Minor Illusion', 'Illusion', '1 Action', '30 feet', '1 minute', 'S, M', 'Add description here', NULL, 0, 'Save DC', NULL, NULL, 0, 'None', 0, 'None'),
+('Poison Spray', 'Conjuration', '1 Action', '10 feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Poison'), (SELECT diceid from dice WHERE sides = 12), 1, 'None', 0, 'None' ),
+('Prestidigitation', 'Transmutation', '1 Action', '10 feet', 'Up to 1 hour', 'V, S', 'Add description here', NULL, 0, 'Save DC', NULL, NULL, 0, 'None', 0, 'None'),
+('Produce Flame', 'Conjuration', '1 Action', 'Self', '10 minutes', 'V, S', 'Add description here', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Fire'), (SELECT diceid FROM dice WHERE sides = 8), 1, 'None', 0, 'None'),
+('Ray of Frost', 'Evocation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Frost'), (SELECT diceid FROM dice WHERE sides = 8), 1, 'None', 0, 'None'),
+('Resistance', 'Abjuration', '1 Action', 'Touch', 'Concentration up to 1 minute', 'V, S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Sacred Flame', 'Evocation', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Radiant'), (SELECT diceid FROM dice WHERE sides = 8), 1, 'None', 0, 'None'),
+('Shillelagh', 'Transmutation', '1 Bonus Action', 'Touch', '1 minute', 'V, S, M', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
 ('Shocking Grasp', 'Evocation', '1 Action', 'Touch', 'Instantaneous', 'V, S', 'Add description here'),
-('Spare the Dying', 'Necromancy', '1 Action', 'Touch', 'Instantaneous', 'V, S', 'Add description here'),
-('Sword Burst', 'Conjuration', '1 Action', 'Self (5-foot radius)', 'Instantaneous', 'V', 'Add description here'),
-('Thaumaturgy', 'Transmutation', '1 Action', '30 feet', 'Up to 1 minute', 'V', 'Add description here'),
-('Thorn Whip', 'Transmutation', '1 Action', '30 feet', 'Instantaneous', 'V, S, M', 'Add description here'),
-('Thunderclap', 'Evocation', '1 Action', 'Self (5-foot radius)', 'Instantaneous', 'S', 'Add description here'),
-('Toll the Dead', 'Necromancy', '1 Action', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
-('True Strike', 'Divination', '1 Action', '30 feet', 'Concentration up to 1 round', 'S', 'Add description here'),
-('Vicious Mockery', 'Enchantment', '1 Action', '60 feet', 'Instantaneous', 'V', 'Add description here'),
-('Virtue (UA)', 'Abjuration', '1 Action', 'Touch', '1 round', 'V, S', 'Add description here'),
-('Word of Radiance', 'Evocation', '1 Action', '5 feet', 'Instantaneous', 'V, M', 'Add description here'),
-('Absorb Elements', 'Abjuration', '1 Reaction', 'Self', '1 round', 'S', 'Add description here'),
-('Acid Stream (UA)', 'Evocation', '1 Action', 'Self (30-foot line)', 'Concentration, up to 1 minute', 'V, S, M' , 'Add description here'),
+('Spare the Dying', 'Necromancy', '1 Action', 'Touch', 'Instantaneous', 'V, S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Thaumaturgy', 'Transmutation', '1 Action', '30 feet', 'Up to 1 minute', 'V', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Thorn Whip', 'Transmutation', '1 Action', '30 feet', 'Instantaneous', 'V, S, M', 'Add description here', (SELECT diceid FROM dice WHERE sides = 20), 1, 'Spell Attack', (SELECT effecttypeid FROM effecttype WHERE name = 'Piercing'), (SELECT diceid FROM dice WHERE sides = 6), 1, 'None', 0, 'None'),
+('True Strike', 'Divination', '1 Action', '30 feet', 'Concentration up to 1 round', 'S', 'Add description here', NULL, 0, 'None', NULL, NULL, 0, 'None', 0, 'None'),
+('Vicious Mockery', 'Enchantment', '1 Action', '60 feet', 'Instantaneous', 'V', 'Add description here', NULL, 0, 'Save DC', (SELECT effecttypeid FROM effecttype WHERE name = 'Psychic'), (SELECT diceid FROM dice WHERE sides = 4), 1, 'None', 0, 'None'),
 ('Alarm', 'Abjuration', '1 Minute R', '30 feet', '8 Hours', 'V, S, M' , 'Add description here'),
 ('Animal Friendship', 'Enchantment', '1 Action', '30 feet', '24 hours', 'V, S, M', 'Add description here'),
-('Arcane Weapon (UA)', 'Transmutation', '1 Bonus Action', 'Self', 'Concentration, up to 1 hour', 'V, S', 'Add description here'),
 ('Armor of Agathys', 'Abjuration', '1 Action', 'Self', '1 hour', 'V, S, M', 'Add description here'),
 ('Arms of Hadar', 'Conjuration', '1 Action', 'Self (10-foot radius)', 'Instantaneous', 'V, S', 'Add description here'),
 ('Bane', 'Enchantment', '1 Action', '30 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here'),
-('Beast Bond', 'Divination', '1 Action', 'Touch', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here'),
 ('Bless', 'Enchantment', '1 Action', '30 feet', 'Concentration, up to 1 minute', 'V, S, M', 'Add description here'),
 ('Burning Hands', 'Evocation', '1 Action', 'Self (15-foot cone)', 'Instantaneous', 'V, S', 'Add description here'),
-('Catapult', 'Transmutation', '1 Action', '60 feet', 'Instantaneous', 'S', 'Add description here'),
-('Cause Fear', 'Necromancy', '1 Action', '60 feet', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
-('Ceremony', 'Evocation', '1 Action R', 'Touch', 'Instantaneous', 'V, S, M', 'Add description here'),
-('Chaos Bolt', 'Evocation', '1 Action', '120 feet', 'Instantaneous', 'V, S', 'Add description here'),
 ('Charm Person', 'Enchantment', '1 Action', '30 feet', '1 hour', 'V, S', 'Add description here'),
 ('Chromatic Orb', 'Evocation', '1 Action', '90 feet', 'Instantaneous', 'V, S, M', 'Add description here'),
 ('Color Spray', 'Illusion', '1 Action', 'Self (15-foot cone)', '1 round', 'V, S, M', 'Add description here'),
@@ -469,9 +48,7 @@ INSERT INTO spell (name, school, casttime, spellrange, duration, components, des
 ('Detect Poison and Disease', 'Divination', '1 Action R', 'Self', 'Concentration, up to 10 minutes', 'V, S, M', 'Add description here'),
 ('Disguise Self', 'Illusion', '1 Action', 'Self', '1 hour', 'V, S', 'Add description here'),
 ('Dissonant Whispers', 'Enchantment', '1 Action', '60 feet', 'Instantaneous', 'V', 'Add description here'),
-('Distort Value', 'Illusion', '1 Minute', 'Touch', '8 hours', 'V', 'Add description here'),
 ('Divine Favor', 'Evocation', '1 Bonus Action', 'Self', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
-('Earth Tremor', 'Evocation', '1 Action', 'Self (10-foot radius)', 'Instantaneous', 'V, S', 'Add description here'),
 ('Ensnaring Strike', 'Conjuration', '1 Bonus Action', 'Self', 'Concentration, up to 1 minute', 'V', 'Add description here'),
 ('Entangle', 'Conjuration', '1 Action', '90 feet', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
 ('Expeditious Retreat', 'Transmutation', '1 Bonus Action', 'Self', 'Concentration, up to 10 minutes', 'V, S', 'Add description here'),
@@ -480,24 +57,17 @@ INSERT INTO spell (name, school, casttime, spellrange, duration, components, des
 ('Feather Fall', 'Transmutation', '1 Reaction', '60 feet', '1 minute', 'V, M', 'Add description here'),
 ('Find Familiar', 'Conjuration', '1 Hour R', '10 feet', 'Instantaneous', 'V, S, M', 'Add description here'),
 ('Fog Cloud', 'Conjuration', '1 Action', '120 feet', 'Concentration, up to 1 hour', 'V, S', 'Add description here'),
-('Frost Fingers', 'Evocation', '1 Action', 'Self (15-foot cone)', 'Instantaneous', 'V, S', 'Add description here'),
-('Gift of Alacrity', 'Divination DC', '1 Minute', 'Touch', '8 hours', 'V, S', 'Add description here'),
 ('Goodberry', 'Transmutation', '1 Action', 'Touch', 'Instantaneous', 'V, S, M', 'Add description here'),
 ('Grease', 'Conjuration', '1 Action', '60 feet', '1 minute', 'V, S, M', 'Add description here'),
 ('Guiding Bolt', 'Evocation', '1 Action', '120 feet', '1 round', 'V, S', 'Add description here'),
-('Guiding Hand (UA)', 'Divination', '1 Minute R', '5 feet', 'Concentration, up to 8 hours', 'V, S', 'Add description here'),
 ('Hail of Thorns', 'Conjuration', '1 Bonus Action', 'Self', 'Concentration, up to 1 minute', 'V', 'Add description here'),
-('Healing Elixir (UA)', 'Conjuration', '1 Minute', 'Self', '24 hours', 'V, S, M', 'Add description here'),
 ('Healing Word', 'Evocation', '1 Bonus Action', '60 feet', 'Instantaneous', 'V', 'Add description here'),
 ('Hellish Rebuke', 'Evocation', '1 Reaction', '60 feet', 'Instantaneous', 'V, S', 'Add description here'),
 ('Heroism', 'Enchantment', '1 Action', 'Touch', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
 ('Hex', 'Enchantment', '1 Bonus Action', '90 feet', 'Concentration, up to 1 hour', 'V, S, M', 'Add description here'),
 ('Hunters Mark', 'Divination', '1 Bonus Action', '90 feet', 'Concentration, up to 1 hour', 'V', 'Add description here'),
-('Ice Knife', 'Conjuration', '1 Action', '60 feet', 'Instantaneous', 'S, M', 'Add description here'),
-('Id Insinuation (UA)', 'Enchantment', '1 Action', '60 feet', 'Concentration, up to 1 minute', 'V, S', 'Add description here'),
 ('Identify', 'Divination', '1 Minute R', 'Touch', 'Instantaneous', 'V, S, M', 'Add description here'),
 ('Illusory Script', 'Illusion', '1 Minute R', 'Touch', '10 days', 'S, M', 'Add description here'),
-('Infallible Relay (UA)', 'Divination T', '1 Minute', 'Self', 'Concentration, up to 10 minutes', 'V, S, M', 'Add description here'),
 ('Inflict Wounds', 'Necromancy', '1 Action', 'Touch', 'Instantaneous', 'V, S', 'Add description here'),
 ('Jims Magic Missile', 'Evocation', '1 Action', '120 feet', 'Instantaneous', 'V, S, M', 'Add description here'),
 ('Jump', 'Transmutation', '1 Action', 'Touch', '1 minute', 'V, S, M', 'Add description here'),
