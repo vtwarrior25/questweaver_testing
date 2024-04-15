@@ -22,6 +22,7 @@ db.any(getAlignments)
 });
 */
 
+/*
 export async function getcharacterinfo(playercharacterid, infotype) {
   let dbquery = "";
   let dbresult = {}; 
@@ -235,7 +236,6 @@ export async function getcharacterinfo(playercharacterid, infotype) {
       };
       break;
     case 'savingthrow':
-      /**
       dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
       db.any(dbquery)
         .then (savingthrows => {
@@ -246,7 +246,6 @@ export async function getcharacterinfo(playercharacterid, infotype) {
           error.log("bad");
           return "bad";
       });
-      */
       dbquery = new PQ({
         text: ` 
           SELECT s.name, c.proficient, c.bonus FROM charactersavingthrow c
@@ -352,7 +351,7 @@ export async function getcharacterinfo(playercharacterid, infotype) {
     })
   return dbresult;
 }
-
+*/
 
 
 const staticstatsdefaultresult = {
@@ -615,7 +614,7 @@ const getcharacterbasicdataquery = new PQ({
 
 const setturnorderquery = new PQ({
   text: `
-    
+  
   `
 });
 
@@ -779,21 +778,30 @@ const featuresdefaultresult = [
 
 const getcharacterfeatures = new PQ({
   text: `
-
+  SELECT * FROM feature c
+  JOIN characterfeature p ON c.featureid = p.featureid
+  WHERE playercharacterid = $1
+  RETURNING c.featuretype;
   `
 });
 
 
 const getclassfeatures = new PQ({
   text: `
-  
+  SELECT * FROM feature c
+  JOIN classfeature p ON c.featureid = p.featureid
+  WHERE p.classid = $1
+  RETURNING c.featuretype;
   `
 });
 
 
 const getracefeatures = new PQ({
   text: `
-  
+  SELECT * FROM feature c
+  JOIN racefeature p ON c.featureid = p.featureid
+  WHERE p.raceid = $1
+  RETURNING c.featuretype;
   `
 });
 
