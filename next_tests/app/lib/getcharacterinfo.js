@@ -776,17 +776,17 @@ const featuresdefaultresult = [
 ];
 
 
-const getcharacterfeatures = new PQ({
+const getcharacterfeaturesquery = new PQ({
   text: `
   SELECT * FROM feature c
   JOIN characterfeature p ON c.featureid = p.featureid
-  WHERE playercharacterid = $1
+  WHERE p.playercharacterid = $1
   RETURNING c.featuretype;
   `
 });
 
 
-const getclassfeatures = new PQ({
+const getclassfeaturesquery = new PQ({
   text: `
   SELECT * FROM feature c
   JOIN classfeature p ON c.featureid = p.featureid
@@ -796,7 +796,7 @@ const getclassfeatures = new PQ({
 });
 
 
-const getracefeatures = new PQ({
+const getracefeaturesquery = new PQ({
   text: `
   SELECT * FROM feature c
   JOIN racefeature p ON c.featureid = p.featureid
@@ -824,7 +824,7 @@ export async function getFeatures(playercharacterid) {
 
 
 function getFeatureData(feature) {
-  featuredata = {};
+  let featuredata = {};
   featuredata.name = feature.name;
   featuredata.description = feature.description;
   featuredata.featuretype = feature.featuretype;
