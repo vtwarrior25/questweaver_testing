@@ -409,7 +409,8 @@ CREATE TABLE IF NOT EXISTS characterproficiency (
 CREATE TABLE IF NOT EXISTS characterfeature (
 	characterfeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid					integer REFERENCES playercharacter(playercharacterid) NOT NULL,
-	featureid									integer REFERENCES feature(featureid) NOT NULL
+	featureid									integer REFERENCES feature(featureid) NOT NULL,
+	UNIQUE (playercharacterid, featureid)
 );
 
 
