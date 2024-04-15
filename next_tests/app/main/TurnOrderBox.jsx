@@ -2,7 +2,7 @@ import { useState, useEffect, useContext} from "react";
 import TurnOrderItem from "./TurnOrderItem";
 import { Button } from 'react-bootstrap';
 import { URLContext, PlayerCharacterContext, DMContext, ToggleUpdatesContext} from "./Contexts";
-import { getcharacterinfo, getTurnOrder } from "../lib/getcharacterinfo";
+import { getTurnOrder } from "../lib/getcharacterinfo";
 import { removeTurn, updateTurn, clearTurnOrder} from '../lib/turnorder'
 
 function TurnOrder() {
