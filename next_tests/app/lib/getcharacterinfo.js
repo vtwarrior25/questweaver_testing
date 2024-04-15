@@ -839,3 +839,25 @@ function getFeatureData(feature) {
   }
   return featuredata;
 }
+
+
+const getcharinfoforfeaturesquery = new PQ({
+  text: `
+    SELECT race, subrace, class, subclass, characterlevel FROM playercharacter
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function addFeaturesToCharacter(playercharacterid) {
+  let charinfo = {};
+  // Get characterlevel, class, race, subclass, subrace 
+  await db.one(getcharinfoforfeaturesquery, [playercharacterid])
+  .then((result) => {
+    charinfo = {...result[0]};
+  }).catch((error) => {
+    console.error('Error getting basic character info for features:' + error);
+  });
+  // Get class features for class id and level
+
+  // Get race features for class id and level
+}

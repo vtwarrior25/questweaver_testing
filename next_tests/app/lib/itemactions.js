@@ -281,33 +281,35 @@ const getinventoryweaponinfo = new PQ({
 // TODO: to fix this, we need to ensure that the for loop on 288 finishes before we return
 export async function getInventory(playercharacterid) {
   let inventory = [];
+  let tempthing = [];
   await db.many(getplayercharacterinventoryquery, [playercharacterid])
   .then ((dbinfo) => {
     console.log("Got character inventory");
     console.log(dbinfo);
-    for (let item of dbinfo) {
-      console.log("we are here brothers!!");
-      let itemprototype = {...item};
-      db.any(getinventoryweaponinfo, [item.itemid])
-      .then((result) => {
-        console.log("we are here brothers2!!");
-        console.log(result);
-        if (result.length >= 1) {
-          itemprototype.weaponinfo = {...result[0]};
-          //console.log('itemprototype')
-          //console.log(itemprototype);
-        }
-      }).catch((error) => {
-        console.error("Error getting weapon info for item " + item.name + ": " + error);
-      }).finally(() => {
-        inventory = [...inventory, {...itemprototype}];
-        console.log('inventory');
-        console.log(inventory);
-      })
-    }
+    tempthing = [...dbinfo];
   }).catch (error => {
     console.error("Unable to get character inventory: " + error);
   });
+  for (let item of tempthing) {
+    console.log("we are here brothers!!");
+    let itemprototype = {...item};
+    await db.any(getinventoryweaponinfo, [item.itemid])
+    .then((result) => {
+      console.log("we are here brothers2!!");
+      console.log(result);
+      if (result.length >= 1) {
+        itemprototype.weaponinfo = {...result[0]};
+        //console.log('itemprototype')
+        //console.log(itemprototype);
+      }
+    }).catch((error) => {
+      console.error("Error getting weapon info for item " + item.name + ": " + error);
+    }).finally(() => {
+      inventory = [...inventory, {...itemprototype}];
+      console.log('inventory');
+      console.log(inventory);
+    })
+  }
   console.log('Epic mode');
   console.log(inventory);
   return inventory; 
