@@ -742,3 +742,101 @@ export async function getStaticStats(playercharacterid) {
   return result;
 }
 
+
+const featuresdefaultresult = [
+  {
+    sectionname: "Class Features",
+    sectionfeatures: [
+      {
+        featuretitle: "Rage",
+        featuretext: "As a bonus action enter a rage for up to 1 minute (10 rounds). You gain advantage on STR checks and saving throws (not attacks), melee damage with STR weapons, resistance to bludgeoning, piercing, slashing damage. You can't cast or concentrate on spells while raging. \n Your rage ends early if you are knocked unconscious or if your turn ends and you haven’t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage as a bonus action.",
+      },
+      {
+        featuretitle: "Unarmored Defense",
+        featuretext: "While not wearing armor, your AC equals 10 + DEX modifier + CON modifier + any shield bonus. ",
+      },
+    ],
+  },
+  {
+    sectionname: "Race Features",
+    sectionfeatures: [
+      {
+        featuretitle: "Darkvision",
+        featuretext: "You can see in darkness (shades of gray) up to 60 ft.",
+      },
+      {
+        featuretitle: "Keen Senses",
+        featuretext: "You have proficiency in the Perception skill.",
+      },
+      {
+        featuretitle: "Fleet of Foot",
+        featuretext: "Your base walking speed increases to 35 feet.",
+      },
+    ],
+  },
+];
+
+
+const getcharacterfeatures = new PQ({
+  text: `
+
+  `
+});
+
+
+const getclassfeatures = new PQ({
+  text: `
+  
+  `
+});
+
+
+const getracefeatures = new PQ({
+  text: `
+  
+  `
+});
+
+
+export async function getFeatures(playercharacterid) {
+  let result = featuresdefaultresult;
+  await db.any(getcharacterfeaturesquery, [playercharacterid])
+    .then ((dbinfo) => {
+      for (const feature of db) {
+        featuredata = getFeatureData(feature);
+      }
+      console.log("got features!!"); 
+      console.log(result);
+      return result;
+    }).catch (error => {
+      console.error("Error retrieving character info " + error);
+    });
+  return result;
+}
+
+
+function getFeatureData(feature) {
+  featuredata = {};
+  featuredata.name = feature.name;
+  featuredata.description = feature.description;
+  featuredata.featuretype = feature.featuretype;
+  switch (feature.featuretype) {
+    case 'Proficiency':
+      // Get info from proficiency, add to featuredata
+      
+      break;
+    case 'Action':
+      // Get info from proficiency, add to featuredata
+      break;
+    case 'Speed':
+      // Get info from proficiency, add to featuredata
+      break;
+    case 'Ability Score':
+      // Get info from proficiency, add to featuredata
+      break;
+    case 'Ability Action':
+      // Get info from proficiency, add to featuredata
+      break;
+  }
+  return featuredata;
+}

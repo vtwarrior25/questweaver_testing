@@ -569,7 +569,7 @@ CREATE TABLE IF NOT EXISTS spell (
 	effectmod						spellmod,
 	levelmod						integer,
 	levelmodtype				spelllevelmod,
-	effecttypeid				integer REFERENCES effecttype(effecttypeid) NOT NULL
+	effecttypeid				integer REFERENCES effecttype(effecttypeid)
 );
 
 

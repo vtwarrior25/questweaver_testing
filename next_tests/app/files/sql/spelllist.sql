@@ -58,7 +58,7 @@ INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VAL
 ((SELECT spellid from spell WHERE name = 'Shillelagh'), (SELECT classid FROM class WHERE name = 'Druid'), NULL, 0, 1),
 ((SELECT spellid from spell WHERE name = 'Shocking Grasp'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 0, 1),
 ((SELECT spellid from spell WHERE name = 'Shocking Grasp'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 0, 1),
-((SELECT spellid from spell WHERE name = 'Spare The Dying'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 0, 1),
+((SELECT spellid from spell WHERE name = 'Spare the Dying'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 0, 1),
 ((SELECT spellid from spell WHERE name = 'Thaumaturgy'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 0, 1),
 ((SELECT spellid from spell WHERE name = 'Thorn Whip'), (SELECT classid FROM class WHERE name = 'Druid'), NULL, 0, 1),
 ((SELECT spellid from spell WHERE name = 'True Strike'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, 0, 1),
@@ -71,3 +71,30 @@ INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VAL
 ((SELECT spellid from spell WHERE name = 'Animal Friendship'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, 1, 1),
 ((SELECT spellid from spell WHERE name = 'Animal Friendship'), (SELECT classid FROM class WHERE name = 'Druid'), NULL, 1, 1),
 ((SELECT spellid from spell WHERE name = 'Animal Friendship'), (SELECT classid FROM class WHERE name = 'Ranger'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Armor of Agathys'), (SELECT classid FROM class WHERE name = 'Warlock'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Arms of Hadar'), (SELECT classid FROM class WHERE name = 'Warlock'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Bane'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Bane'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Bless'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Bless'), (SELECT classid FROM class WHERE name = 'Paladin'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Burning Hands'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Burning Hands'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Charm Person'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Charm Person'), (SELECT classid FROM class WHERE name = 'Druid'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Charm Person'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Charm Person'), (SELECT classid FROM class WHERE name = 'Warlock'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Charm Person'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Chromatic Orb'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Chromatic Orb'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Color Spray'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Color Spray'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Command'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Command'), (SELECT classid FROM class WHERE name = 'Paladin'), NULL, 1, 1),
+((SELECT spellid from spell WHERE name = 'Compelled Duel'), (SELECT classid FROM class WHERE name = 'Paladin'), NULL, 1, 1),
+
+
+
+
+
+
+

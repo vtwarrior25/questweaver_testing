@@ -1,6 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { getSpellList, getPreparedSpells, setPreparedSpell, unsetPreparedSpell } from '../lib/spellactions';
+import { PlayerCharacterContext } from './Contexts';
 
 
 function ManageSpells({addSpells, preparedspells, spelllist}) {

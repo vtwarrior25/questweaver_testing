@@ -8,7 +8,7 @@ const getspelllistquery = new PQ({
     SELECT sp.name FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
     WHERE 
-      sl.classid = (SELECT classid FROM playercharacter WHERE playercharacterid = $1) AND 
+      sl.classid = (SELECT class FROM playercharacter WHERE playercharacterid = $1) AND 
       sl.classlevel = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $1);  
   `
 });
@@ -49,13 +49,15 @@ export async function getSpellList(playercharacterid) {
   let spelllist = [];
   await db.any(getspelllistquery, [playercharacterid])
   .then((result) => {
-    spelllist = [...result];
-    return spelllist;
+    console.log('returning spell list');
+    console.log(result);
+    spelllist = [...result]; 
   }).catch((error) => {
     console.log(error);
     console.log("spell list not found");
     return error;
   });
+  console.log("We are already returning, because why not!!");
   return spelllist;
 }
 

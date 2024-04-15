@@ -55,6 +55,11 @@
 		"description": "Creates a value row for spell list initial insert"
 	},
 	
+	"spelldata": {
+		"scope": "sql",
+		"prefix": "spelldata",
+		"body": ", ${1|NULL,(SELECT abilityid FROM ability WHERE abbrev = 'Dex')|}, ${2|NULL,(SELECT diceid FROM dice WHERE sides = 20)|}, ${3:0}, ${4|'None','Save DC','Spell Ability','Spell Attack'|}, ${5|NULL,(SELECT effecttypeid FROM effecttype WHERE name = 'Force')|}, ${6|NULL,(SELECT diceid FROM dice WHERE sides = 10)|}, ${7:0}, ${8|'None','Save DC','Spell Ability','Spell Attack'|}, ${9:0}, ${10|'None','EffectDie','EffectDieNum','HitDCDie','HitDCDieNum'|}"
+	}
 
 	// Place your next_tests workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
 	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
