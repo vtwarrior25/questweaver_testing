@@ -3,7 +3,7 @@ import { Button, Overlay } from 'react-bootstrap';
 import InventorySection from "./InventorySection";
 import ManageInventory from './ManageInventory';
 import { PlayerCharacterContext } from './Contexts';
-import { getCharacterMoney, getInventory, setCharacterMoney, setCharacterInventory, addItemToInventory, updateItemInInventory } from '../lib/itemactions';
+import { getCharacterMoney, getInventory, setCharacterMoney, setCharacterInventory, addItemToInventory, updateItemInInventory, removeItemFromInventory } from '../lib/itemactions';
 
 function InventoryMenu() {
 
@@ -73,7 +73,10 @@ function InventoryMenu() {
       otheritem = {...item, section: section, quantity: quantity};
       setItems([...items, otheritem]);
       console.log(otheritem);
-      addItemToInventory(playercharacterid, otheritem);
+      addItemToInventory(playercharacterid, otheritem)
+      .catch((error) => {
+        console.error('Error adding item to inventory: ' + error);
+      });
       //setCharacterInventory(playercharacterid, [...items, otheritem])
     }
     
@@ -85,6 +88,11 @@ function InventoryMenu() {
     // Remove the item from the inventory section
     let newitems = items.filter((i) => i.section !== section || i.name !== item.name);
     setItems([...newitems]);
+    console.log(item);
+    removeItemFromInventory(playercharacterid, item)
+    .catch((error) => {
+      console.error('Error removing item from inventory: ' + error);
+    });
   }
 
 

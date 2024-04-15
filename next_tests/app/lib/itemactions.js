@@ -235,7 +235,7 @@ const removeitemfrominventoryquery = new PQ({
 
 
 export async function removeItemFromInventory(playercharacterid, item) {
-  db.none(removeitemfrominventoryquery, [playercharacterid, item.name, item.sectionname])
+  db.none(removeitemfrominventoryquery, [playercharacterid, item.name, item.section])
   .catch((error) => {
     console.error('Error removing item from character inventory: ' + error);
   });
