@@ -22,6 +22,7 @@ db.any(getAlignments)
 });
 */
 
+/*
 export async function getcharacterinfo(playercharacterid, infotype) {
   let dbquery = "";
   let dbresult = {}; 
@@ -235,7 +236,6 @@ export async function getcharacterinfo(playercharacterid, infotype) {
       };
       break;
     case 'savingthrow':
-      /**
       dbquery = new PQ({text: 'SELECT * FROM charactersavingthrow c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN savingthrow s ON c.savingthrowid = s.savingthrowid WHERE playercharacter'});
       db.any(dbquery)
         .then (savingthrows => {
@@ -246,7 +246,6 @@ export async function getcharacterinfo(playercharacterid, infotype) {
           error.log("bad");
           return "bad";
       });
-      */
       dbquery = new PQ({
         text: ` 
           SELECT s.name, c.proficient, c.bonus FROM charactersavingthrow c
@@ -352,7 +351,7 @@ export async function getcharacterinfo(playercharacterid, infotype) {
     })
   return dbresult;
 }
-
+*/
 
 
 const staticstatsdefaultresult = {
@@ -615,7 +614,7 @@ const getcharacterbasicdataquery = new PQ({
 
 const setturnorderquery = new PQ({
   text: `
-    
+  
   `
 });
 
@@ -777,23 +776,29 @@ const featuresdefaultresult = [
 ];
 
 
-const getcharacterfeatures = new PQ({
+const getcharacterfeaturesquery = new PQ({
   text: `
-
+    SELECT * FROM feature c
+    JOIN characterfeature p ON c.featureid = p.featureid
+    WHERE p.playercharacterid = $1;
   `
 });
 
 
-const getclassfeatures = new PQ({
+const getclassfeaturesquery = new PQ({
   text: `
-  
+    SELECT * FROM feature c
+    JOIN classfeature p ON c.featureid = p.featureid
+    WHERE p.classid = (SELECT classid FROM class WHERE name = $1);
   `
 });
 
 
-const getracefeatures = new PQ({
+const getracefeaturesquery = new PQ({
   text: `
-  
+    SELECT * FROM feature c
+    JOIN racefeature p ON c.featureid = p.featureid
+    WHERE p.raceid = $1 (SELECT raceid FROM race WHERE name = $1);
   `
 });
 
@@ -802,7 +807,7 @@ export async function getFeatures(playercharacterid) {
   let result = featuresdefaultresult;
   await db.any(getcharacterfeaturesquery, [playercharacterid])
     .then ((dbinfo) => {
-      for (const feature of db) {
+      for (const feature of dbinfo) {
         featuredata = getFeatureData(feature);
       }
       console.log("got features!!"); 
@@ -816,7 +821,7 @@ export async function getFeatures(playercharacterid) {
 
 
 function getFeatureData(feature) {
-  featuredata = {};
+  let featuredata = {};
   featuredata.name = feature.name;
   featuredata.description = feature.description;
   featuredata.featuretype = feature.featuretype;
@@ -838,4 +843,107 @@ function getFeatureData(feature) {
       break;
   }
   return featuredata;
+}
+
+export async function getClassFeature(classname) {
+
+}
+
+export async function getRaceFeature(racename) {
+  
+}
+
+
+const getcharinfoforfeaturesquery = new PQ({
+  text: `
+    SELECT race, subrace, class, subclass, characterlevel FROM playercharacter
+    WHERE playercharacterid = $1;
+  `
+});
+
+const getclassfeaturesforcharquery = new PQ({
+  text: `
+    SELECT featureid FROM classfeature
+    WHERE classid = $1 AND characterlevel = $2;
+  `
+});
+
+const getracefeaturesforcharquery = new PQ({
+  text: `
+    SELECT featureid FROM racefeature
+    WHERE raceid = $1;
+  `
+});
+
+
+const getsubclassfeaturesquery = new PQ({
+  text: `
+    SELECT featureid FROM subclassfeature
+    WHERE subclassid = $1 AND characterlevel = $2;
+  `
+});
+
+const getsubracefeaturesquery = new PQ({
+  text: `
+    SELECT featureid FROM subracefeature
+    WHERE subrace = $1;
+  `
+});
+
+const addcharacterfeaturequery = new PQ({
+  text: `
+    INSERT INTO characterfeature cf (playercharacterid, featureid) VALUES
+    ($1, $2)
+    ON CONFLICT (characterfeature_playercharacterid_featureid_key) DO NOTHING;
+  `
+});
+
+export async function addFeaturesToCharacter(playercharacterid) {
+  let charinfo = {};
+  let features = [];
+  // Get characterlevel, class, race, subclass, subrace 
+  await db.one(getcharinfoforfeaturesquery, [playercharacterid])
+  .then((result) => {
+    charinfo = {...result[0]};
+  }).catch((error) => {
+    console.error('Error getting basic character info for features:' + error);
+  });
+
+  // Get class features for class id and level
+  await db.many(getclassfeaturesforcharquery, [charinfo.class, charinfo.characterlevel])
+  .then((result) => {
+    features = [...features, ...result];
+  }).catch((error) => {
+    console.error('Error getting class features: ' + error);
+  });
+  // Get race features for raceid
+  await db.many(getracefeaturesforcharquery, [charinfo.race])
+  .then((result) => {
+    features = [...features, ...result];
+  }).catch((error) => {
+    console.error('Error getting race features: ' + error);
+  });
+  // Get subclass features for subclass id and level
+  await db.many(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
+  .then((result) => {
+    features = [...features, ...result];
+  }).catch((error) => {
+    console.error('Error getting subclass features: ' + error);
+  });
+  // Get subrace features for subrace id and level
+  await db.many(getsubracefeaturesquery, [charinfo.subrace])
+  .then((result) => {
+    features = [...features, ...result];
+  }).catch((error) => {
+    console.error('Error getting subrace features: ' + error);
+  });
+
+  // Add features to characterfeatures
+  for (const feature of features) {
+    db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
+    .catch((error) => {
+      console.error('Error adding feature' + feature.featureid + ' : ' + error);
+    });
+  }
+
 }

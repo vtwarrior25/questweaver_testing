@@ -44,6 +44,7 @@ function InventoryMenu() {
       let newsection = newsections[0];
       newsection.sectionweight = weight;
       setSections([...othersections, newsection]);
+      updateTotalWeight();
       console.log("After setting");
       console.log(sections); // This will show sections in console
     } else {
@@ -87,11 +88,15 @@ function InventoryMenu() {
   }
 
 
-  useEffect(() => {
-    console.log("In the useeffect");
+  const updateTotalWeight = () => {
     let weightcount = 0;
     sections.forEach((section) => weightcount += section.sectionweight);
     setTotalWeight(weightcount);
+  }
+
+  useEffect(() => {
+    console.log("In the useeffect");
+    updateTotalWeight();
   }, [sections]
   )
 
