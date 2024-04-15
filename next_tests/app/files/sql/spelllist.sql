@@ -97,4 +97,3 @@ INSERT INTO spelllist (spellid, classid, subclassid, spelllevel, classlevel) VAL
 
 
 
-

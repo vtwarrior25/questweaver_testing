@@ -89,7 +89,7 @@ export async function getAllChatMessages(number) {
   if (number !== 0 && number !== undefined) {
     await db.any(getchatmessageswithlimitquery, [number])
     .then((result) => {
-      console.log("Got chat messages: " + number);
+      //console.log("Got chat messages: " + number);
       chatmessages = [...result];
     }).catch((error) => {
       console.log("Error getting all chat messages: " + error);
@@ -98,7 +98,7 @@ export async function getAllChatMessages(number) {
   } else {
     await db.any(getallchatmessagesquery)
     .then((result) => {
-      console.log("Got chat messages");
+      //console.log("Got chat messages");
       //console.log(result[result.length-1].timeadded.toISOString());
       chatmessages = [...result];
     }).catch((error) => {
@@ -146,7 +146,7 @@ export async function getAllGameLog(number) {
   if (number !== 0 && number !== undefined) {
     await db.any(getallgamelogwithlimitquery, [number])
     .then((result) => {
-      console.log("Got game log entries: " + number);
+      //console.log("Got game log entries: " + number);
       defaultresult = [...result];
     }).catch((error) => {
       console.log("Error getting all game log entries: " + error);
@@ -155,7 +155,7 @@ export async function getAllGameLog(number) {
   } else {
     await db.any(getallgamelogquery)
     .then((result) => {
-      console.log("Got game log entries");
+      //console.log("Got game log entries");
       defaultresult = [...result];
     }).catch((error) => {
       console.log("Error getting all game log entries: " + error);
@@ -164,7 +164,7 @@ export async function getAllGameLog(number) {
   }
   for (let message of defaultresult) {
     if (message.timeadded !== null) {
-      console.log(`${message.timeadded.toLocaleString()}`);
+      //console.log(`${message.timeadded.toLocaleString()}`);
       let split = message.timeadded.toLocaleString().split(','); 
       if (message.timeadded > today) {
         message.timeadded = split[1];

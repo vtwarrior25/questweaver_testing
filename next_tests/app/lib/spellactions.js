@@ -7,7 +7,7 @@ const getspelllistquery = new PQ({
   text: `
     SELECT sp.name FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
-    WHERE 
+    WHERE
       sl.classid = (SELECT class FROM playercharacter WHERE playercharacterid = $1) AND 
       sl.classlevel = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $1);  
   `
@@ -63,6 +63,7 @@ export async function getSpellList(playercharacterid) {
 
 export async function getPreparedSpells (playercharacterid) {
   let preparedspells = [];
+  console.log('Player character id: ' + playercharacterid);
   await db.any(getpreparedspellsquery, [playercharacterid])
   .then (dbinfo => {
     console.log(dbinfo);

@@ -831,7 +831,6 @@ function getFeatureData(feature) {
   switch (feature.featuretype) {
     case 'Proficiency':
       // Get info from proficiency, add to featuredata
-      
       break;
     case 'Action':
       // Get info from proficiency, add to featuredata

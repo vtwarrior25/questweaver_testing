@@ -159,7 +159,7 @@ function SpellsMenu({setRollResults}) {
   }
 
   const retrieveSpellList = () => {
-    getSpellList()
+    getSpellList(playercharacterid)
     .then((result) => {
       setSpellList([...result]);
     })
