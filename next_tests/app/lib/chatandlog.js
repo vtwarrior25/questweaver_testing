@@ -164,7 +164,7 @@ export async function getAllGameLog(number) {
   }
   for (let message of defaultresult) {
     if (message.timeadded !== null) {
-      console.log(`${message.timeadded.toLocaleString()}`);
+      //console.log(`${message.timeadded.toLocaleString()}`);
       let split = message.timeadded.toLocaleString().split(','); 
       if (message.timeadded > today) {
         message.timeadded = split[1];
