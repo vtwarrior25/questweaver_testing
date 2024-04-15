@@ -286,9 +286,11 @@ export async function getInventory(playercharacterid) {
     console.log("Got character inventory");
     console.log(dbinfo);
     for (let item of dbinfo) {
+      console.log("we are here brothers!!");
       let itemprototype = {...item};
       db.any(getinventoryweaponinfo, [item.itemid])
       .then((result) => {
+        console.log("we are here brothers2!!");
         console.log(result);
         if (result.length >= 1) {
           itemprototype.weaponinfo = {...result[0]};
