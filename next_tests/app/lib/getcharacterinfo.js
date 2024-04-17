@@ -658,7 +658,7 @@ export async function getSkills (playercharacterid) {
   let result = skilldefaultresult;
   await db.any(charactergetskillquery, [playercharacterid])
     .then ((dbinfo) => {
-      console.log("got saving throw data");
+      console.log("got skills data");
       console.log(dbinfo);
       result = [...dbinfo];
     }).catch (error => {
@@ -672,7 +672,7 @@ export async function getSavingThrows (playercharacterid) {
   let result = savingthrowdefaultresult;
   await db.any(charactergetsavingthrowquery, [playercharacterid])
     .then ((dbinfo) => {
-      console.log("got skills data");
+      console.log("got saving throw data");
       console.log(dbinfo);
       result = [...dbinfo];
     }).catch (error => {

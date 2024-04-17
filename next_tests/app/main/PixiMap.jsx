@@ -261,8 +261,8 @@ function PixiMap() {
 
   return ( 
     <div className="mapCanvasWrapper">
+    {/*
     <div className='mapToolButtons'>
-      {/*
       <ToggleButtonGroup type="radio" name="maptoolbuttons">
         <ToggleButton variant="secondary" value={0} onClick={() => setSelectedTool("color")}>C</ToggleButton>
         <ToggleButton variant="secondary" value={1} onClick={() => setSelectedTool("select")}>S</ToggleButton>
@@ -272,6 +272,7 @@ function PixiMap() {
         <ToggleButton variant="secondary" value={5} onClick={() => setSelectedTool("text")}>T</ToggleButton>
       </ToggleButtonGroup>
       */}
+      {/*
       <div className='updateMapToggle frontElement'>
         <span>Freeze Map </span>
         <input type='checkbox' value={pauseupdate} onChange={() => setPauseUpdate(!pauseupdate)}></input>
@@ -283,6 +284,7 @@ function PixiMap() {
       </div>
       <Button variant="danger" onClick={() => handleClearCanvas()}>X</Button>
     </div>
+    */}
     <MapScaleContext.Provider value={mapsize.scale}>
       <Stage
         width={mapsize.width}

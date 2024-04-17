@@ -13,6 +13,8 @@ const getspelllistquery = new PQ({
   `
 });
 
+
+// TODO: talk to Chapin about this query, specifically how to handle the nulls with the joins
 const getpreparedspellsquery = new PQ({
   text: 
     `
@@ -33,7 +35,7 @@ const getpreparedspellsquery = new PQ({
 const preparequery = new PQ({
   text: `
   INSERT INTO preparedlist (playercharacterid, spellid) VALUES 
-  (DEFAULT, $1, (SELECT spellid FROM spell WHERE name = $2));
+  ($1, (SELECT spellid FROM spell WHERE name = $2));
   `
 });
 
@@ -68,13 +70,16 @@ export async function getPreparedSpells (playercharacterid) {
   .then (dbinfo => {
     console.log(dbinfo);
     preparedspells = [...dbinfo];
-    return preparedspells;
+    console.log('This should be before the return');
   })
   .catch(error => {
     console.log(error);
     console.log("prepared spells not found");
     return error;
   });
+  console.log('We are returning');
+  console.log('Prepared list');
+  console.log(preparedspells);
   return preparedspells;
 }
 

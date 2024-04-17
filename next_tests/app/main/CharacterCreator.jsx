@@ -321,12 +321,12 @@ function CharacterCreator() {
   const addEquipmentToInventory = async () => {
     const equipmentToAdd = [];
 
-   
+
     if (greataxeSelected) {
       equipmentToAdd.push({ itemId: equipmentIdMapping['greataxe'], quantity: 1 });
     }
     try {
-     
+    
       await addItemsToCharacterInventory(playercharacterid, equipmentToAdd);
       alert('Equipment added to inventory!');
     } catch (error) {

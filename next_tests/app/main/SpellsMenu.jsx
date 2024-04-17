@@ -139,7 +139,7 @@ function SpellsMenu({setRollResults}) {
   // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
-    getPreparedSpells()
+    getPreparedSpells(playercharacterid)
     .then((result) => {
       setSpells([...result]);
     })
@@ -175,28 +175,32 @@ function SpellsMenu({setRollResults}) {
   const prepSpell = (spellname) => {
     // This should add a spell to prepared
     console.log("prepspell " + spellname);
-    setPreparedSpell(playercharacterid, spellname);
-    getPreparedSpells()
+    setPreparedSpell(playercharacterid, spellname)
+    .catch((error) => {
+      console.error('Error preparing spell: ' + error);
+    });
+    getPreparedSpells(playercharacterid)
     .then((result => {
       setSpells([...result]);
     }))
     .catch((error) => {
-      console.log(error);
-      console.log("Error retrieving prepared spells");
+      console.error("Error retrieving prepared spells: " + error);
     });
   }
 
   const unprepSpell = (spellname) => {
     // This should remove a spell from prepared
     console.log("unprepspell " + spellname);
-    unsetPreparedSpell(playercharacterid, spellname);
-    setSpells()
+    unsetPreparedSpell(playercharacterid, spellname)
+    .catch((error) => {
+      console.error('Error unpreparing spell: ' + error);
+    });
+    getPreparedSpells(playercharacterid)
     .then((result => {
-      setPreparedSpells([...result]);
+      setSpells([...result]);
     }))
     .catch((error) => {
-      console.log(error);
-      console.log("Error retrieving prepared spells");
+      console.error("Error retrieving prepared spells: " + error);
     });
   }
 
@@ -222,7 +226,7 @@ function SpellsMenu({setRollResults}) {
           <Button variant='secondary' size='sm' ref={target} onClick={() => setShowManageSpells(!showmanagespells)}>Manage Spells</Button>
           <Overlay target={target.current} show={showmanagespells} placement='bottom'>
             <div className='manageInventoryOverlay'>
-              <ManageSpells addSpells={addSpells} preparedspells={spells} spelllist={spelllist}></ManageSpells>
+              <ManageSpells addSpells={addSpells} preparedspells={spells} spelllist={spelllist} prepSpell={prepSpell} unprepSpell={unprepSpell}></ManageSpells>
             </div>
           </Overlay>
         </div>

@@ -53,6 +53,9 @@ function App () {
     showcharacterinventoryarea: true,
     showdefensesconditions: true,
     showturnorderbox: true,
+    showmap: true,
+    showchat: true,
+    showrollresults: true,
   });
   
 
@@ -153,18 +156,18 @@ function App () {
             </Tabs>
           </Col>
           <Col>
-            <MapSection showboxes={showboxes} setShowBoxes={setShowBoxes}></MapSection>
-            <RollResultsSection rollresults={rollresults}/>
+            <MapSection showboxes={showboxes} setShowBoxes={setShowBoxes} rollresults={rollresults}></MapSection>
           </Col>
         </Row>
         <Button onClick={toggleMenuOpen}>&</Button>
       </Container>
       <Offcanvas show={showToggleMenu} onHide={toggleMenuClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Dev Settings</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="offcanvasVisibilityToggles">
+            <b><u>Toggle Elements</u></b>
           {Object.keys(showboxes).map((showbox, index) =>
             <div key={index}>
               <label htmlFor={showbox}>{showbox}</label>
@@ -186,6 +189,7 @@ function App () {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          Toggle Updates
           <input type='checkbox' checked={toggleUpdates} onChange={() => setToggleUpdates(!toggleUpdates)}></input>
         </Offcanvas.Body>
       </Offcanvas>

@@ -6,6 +6,7 @@ import InventoryMenu from './InventoryMenu';
 import NotesMenu from './NotesMenu';
 import FeaturesMenu from './FeaturesMenu';
 import { ActionUpdateContext, PlayerCharacterContext } from './Contexts';
+import { getCharacterAttacks } from '../lib/attackactions';
 
 function CharacterInventoryArea({setRollResults}) {
   const playercharacterid = useContext(PlayerCharacterContext);
@@ -39,6 +40,7 @@ function CharacterInventoryArea({setRollResults}) {
     },
   ]); 
   const [bonusactions, setBonusActions] = useState([
+    /*
     {
       name: "Mace",
       range: "5 ft",
@@ -48,10 +50,16 @@ function CharacterInventoryArea({setRollResults}) {
       effectbonus: 3,
       notes: "Simple",
     },
+    */
   ]);
 
   const updateActions = () => {
-    
+    getCharacterAttacks()
+    .then((result) => {
+      
+    }).catch((error) => {
+      console.error("Error retrieving character attacks: " + error);
+    })
   }
 
   useEffect(() => {

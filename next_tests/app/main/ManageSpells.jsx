@@ -4,7 +4,7 @@ import { getSpellList, getPreparedSpells, setPreparedSpell, unsetPreparedSpell }
 import { PlayerCharacterContext } from './Contexts';
 
 
-function ManageSpells({addSpells, preparedspells, spelllist}) {
+function ManageSpells({addSpells, preparedspells, spelllist, prepSpell, unprepSpell}) {
 
   const [searchlistdropdownshidden, setSearchListDropdownsHidden] = useState([]);
   const [preparedlistdropdownshidden, setPreparedListDropdownsHidden] = useState([]);
@@ -63,7 +63,7 @@ function ManageSpells({addSpells, preparedspells, spelllist}) {
   
 
   return ( 
-      <div className='manageSpellsMenu frontElement'>
+      <div className='manageSpellsMenu manageMenu frontElement'>
         <input placeholder="Search.." onChange={(e) => filter(e)}></input>
         <div className='searchSpellList'>
           {spelllist && spelllist.length > 0 && (

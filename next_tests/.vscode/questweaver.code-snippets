@@ -54,6 +54,13 @@
 		"body": "((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Bard'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Sorcerer'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Warlock'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Wizard'), NULL, $2, $3),",
 		"description": "Creates a value row for spell list initial insert"
 	},
+
+	"divinelist": {
+		"scope": "sql",
+		"prefix": "divinelist",
+		"body": "((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Cleric'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Druid'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Paladin'), NULL, $2, $3),\n((SELECT spellid from spell WHERE name = '$1'), (SELECT classid FROM class WHERE name = 'Ranger'), NULL, $2, $3),",
+		"description": "Creates a value row for spell list initial insert"
+	},
 	
 	"spelldata": {
 		"scope": "sql",

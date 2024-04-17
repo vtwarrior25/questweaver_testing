@@ -45,7 +45,10 @@ function MonsterSheet({setRollResults}) {
             xpper: 50,
             xptotal: 100,
             ac: 13,
-            speed: 50
+            speed: 50,
+            skills: "Stealth +6; Darkvision 60",
+            ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+            notes: "",
           },
           abilities: {
             init: 2,
@@ -90,9 +93,6 @@ function MonsterSheet({setRollResults}) {
               damagetype: "Piercing",
             },
           ],
-          skills: "Stealth +6; Darkvision 60",
-          ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
-          notes: "",
           health: [0,0,0,0,0,0,0,0]
           },
         ]
@@ -115,7 +115,10 @@ function MonsterSheet({setRollResults}) {
               xpper: 50,
               xptotal: 100,
               ac: 13,
-              speed: 50
+              speed: 50,
+              skills: "Stealth +6; Darkvision 60",
+              ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+              notes: "",
             },
             abilities: {
               init: 2,
@@ -160,9 +163,6 @@ function MonsterSheet({setRollResults}) {
                 damagetype: "Piercing",
               },
             ],
-            skills: "Stealth +6; Darkvision 60",
-            ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
-            notes: "",
             health: [0,0,0,0,0,0,0,0]
             },
             {
@@ -180,7 +180,10 @@ function MonsterSheet({setRollResults}) {
                 xpper: 50,
                 xptotal: 100,
                 ac: 13,
-                speed: 50
+                speed: 50,
+                skills: "Stealth +6; Darkvision 60",
+                ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+                notes: "",
               },
               abilities: {
                 init: 2,
@@ -225,9 +228,6 @@ function MonsterSheet({setRollResults}) {
                   damagetype: "Piercing",
                 },
               ],
-              skills: "Stealth +6; Darkvision 60",
-              ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
-              notes: "",
               health: [0,0,0,0,0,0,0,0]
               }
           ]

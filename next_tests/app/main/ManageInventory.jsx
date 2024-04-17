@@ -2,15 +2,17 @@
 Reference: https://www.kindacode.com/article/how-to-create-a-filter-search-list-in-react/
 */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import { getAllItems } from '../lib/itemactions';
 
-function ManageInventory({addItem}) {
+function ManageInventory({addItem, setShowManageInventory}) {
 
   const [destination, setDestination] = useState("Equipment");
 
   const [itemquantity, setItemQuantity] = useState(0);
+
+  const manageinventoryref = useRef(null);
 
   const [itemlist, setItemList] = useState([
     /*
@@ -80,10 +82,29 @@ function ManageInventory({addItem}) {
     })
   }, [],
   );
+
+  
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (manageinventoryref.current && !manageinventoryref.current.contains(event.target)) {
+        setShowManageInventory(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [manageinventoryref]);
+  
   
 
   return (  
-    <div className="manageInventoryMenu">
+    <div ref={manageinventoryref} className="manageInventoryMenu manageMenu frontElement">
       <span>Destination</span>
       <select onChange={(e) => setDestination(e.target.value)} value={destination}>
         <option value='Equipment'>Equipment</option>

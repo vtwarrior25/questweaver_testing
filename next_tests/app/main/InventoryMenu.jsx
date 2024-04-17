@@ -9,11 +9,12 @@ function InventoryMenu() {
 
   const [totalweight, setTotalWeight] = useState(0);
   const [showmoneymenu, setShowMoneyMenu] = useState(false);
-  const [showmanageinventory, setShowManageInventory] = useState();
+  const [showmanageinventory, setShowManageInventory] = useState(false);
   const playercharacterid = useContext(PlayerCharacterContext);
 
   const moneytarget = useRef(null);
   const managetarget = useRef(null);
+  const moneymenuref = useRef(null);
 
   const [money, setMoney] = useState({
     cp: 0,
@@ -32,7 +33,39 @@ function InventoryMenu() {
       sectionname: "Backpack",
       sectionweight: 0,
     }
-  ]);
+  ]); 
+
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (moneymenuref.current && !moneymenuref.current.contains(event.target)) {
+        setShowMoneyMenu(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [moneymenuref]);
+
+
+  const toggleManageInventory = () => {
+    if (showmanageinventory === false) {
+      setShowManageInventory(true);
+      console.log('Show manage inventory');
+    }
+  }
+
+  const toggleMoneyMenu = () => {
+    if (showmoneymenu === false) {
+      setShowMoneyMenu(true);
+      console.log('Show money inventory');
+    }
+  }
 
   const setSectionWeight = (sectionname, weight) => {
     console.log("Before setting");
@@ -240,8 +273,8 @@ function InventoryMenu() {
       <div className="inventoryMenuHeader">
         <div className="weightSection">{totalweight} lb</div>
         <div className='inventoryHeaderButtonSection'>
-          <Button variant='secondary' size='sm' ref={moneytarget} onClick={() => setShowMoneyMenu(!showmoneymenu)}>Money</Button>
-          <Overlay target={moneytarget.current} show={showmoneymenu} placement="bottom">
+          <Button variant='secondary' size='sm' ref={moneytarget} onClick={() => toggleMoneyMenu()}>Money</Button>
+          <Overlay ref={moneymenuref} target={moneytarget.current} show={showmoneymenu} placement="bottom">
             <div className='moneyMenu'>
               <span>Money</span>
               <table>
@@ -273,10 +306,10 @@ function InventoryMenu() {
               </table>
             </div>
           </Overlay>
-          <Button variant='secondary' size='sm' ref={managetarget} onClick={() => setShowManageInventory(!showmanageinventory)}>Manage Inventory</Button>
+          <Button variant='secondary' size='sm' ref={managetarget} onClick={() => toggleManageInventory()}>Manage Inventory</Button>
           <Overlay target={managetarget.current} show={showmanageinventory} placement='bottom'>
             <div className='manageInventoryOverlay'>
-              <ManageInventory addItem={addItem}></ManageInventory>
+              <ManageInventory addItem={addItem} setShowManageInventory={setShowManageInventory} managetarget={managetarget}></ManageInventory>
             </div>
           </Overlay>
         </div>

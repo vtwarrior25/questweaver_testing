@@ -126,14 +126,14 @@ TODO
             </tr>
             )}
             <tr>
-              <td colSpan="4" rowSpan="2"><span name="skills">{monsterinfo.skills}</span></td>
+              <td colSpan="4" rowSpan="2"><span name="skills">{monsterinfo.basicinfo.skills}</span></td>
               <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
               <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
-              <td colSpan="4" rowSpan="2"><span name="ability">{monsterinfo.ability}</span></td>
+              <td colSpan="4" rowSpan="2"><span name="ability">{monsterinfo.basicinfo.ability}</span></td>
               <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
@@ -145,6 +145,7 @@ TODO
       <div className="monsterGroupNotesSection">
         <label htmlFor="monsterGroupNotesText">Notes</label>
         <textarea name="monsterGroupNotesText"></textarea>
+        <Button>Save</Button>
         <AvatarUpload type='monster'></AvatarUpload>
       </div>
     </div>

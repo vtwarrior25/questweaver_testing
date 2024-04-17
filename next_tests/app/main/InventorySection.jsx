@@ -46,8 +46,12 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     setSectionWeight(sectionname, weight);
   }
 
-  const toggleActiveAction = (weaponname, state) => {
-    
+  const toggleActiveAction = (item) => {
+    let matcheditems = items.filter((newitem) => {newitem.section === item.section && newitem.name === item.name});
+    let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== item.section || otheritem.name !== item.name});
+    if (matcheditems.length > 0) {
+      // Beansaction 
+    }
     updateActions();
   }
 
@@ -85,7 +89,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
           {items.map((item, index) => 
             <React.Fragment key={index}>
               <tr className='inventorySectionTableRow'>
-                  <td>{item.weaponinfo && <input type='checkbox'></input>}</td>
+                  <td>{item.weaponinfo && <input type='checkbox' value={item.weaponinfo.active} onChange={() => toggleActiveAction()}></input>}</td>
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
                 require using global context or some disgusting lifting of state.*/}
@@ -102,7 +106,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
                     <>
                       <div>Attack Type: {item.weaponinfo.weapontype} {item.weaponinfo.weaponrange}</div>
                       <div>Range: {item.weaponinfo.range}</div>
-                      <div>Damage: {item.weaponinfo.dietype}{item.weaponinfo.numdice} {item.weaponinfo.damagetype}</div>
+                      <div>Damage: {item.weaponinfo.numdice}{item.weaponinfo.dietype} {item.weaponinfo.damagetype}</div>
                       <div>Properties: {item.weaponinfo.properties}</div>
                     </>
                   }
