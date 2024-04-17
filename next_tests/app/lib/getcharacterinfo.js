@@ -805,18 +805,26 @@ const getracefeaturesquery = new PQ({
 
 export async function getFeatures(playercharacterid) {
   let result = featuresdefaultresult;
+  let rawresult = [];
+  let featurelist = [];
   await db.any(getcharacterfeaturesquery, [playercharacterid])
     .then ((dbinfo) => {
-      for (const feature of dbinfo) {
-        featuredata = getFeatureData(feature);
-      }
+      rawresult = [...dbinfo];
       console.log("got features!!"); 
       console.log(result);
       return result;
     }).catch (error => {
       console.error("Error retrieving character info " + error);
     });
-  return result;
+  for (const feature of rawresult) {
+    let featuredata = getFeatureData(feature);
+    featurelist = [...featurelist, featuredata];
+  }
+  if (featurelist.length > 0) {
+    return featurelist;
+  } else {
+    return result;
+  }
 }
 
 
@@ -846,11 +854,25 @@ function getFeatureData(feature) {
 }
 
 export async function getClassFeature(classname) {
-
+  let classfeatures = [];
+  await db.many(getclassfeaturesquery, [classname])
+  .then((result) => {
+    classfeatures = [...result];  
+  }).catch((error) => {
+    console.error('' + error);
+  });
+  return classfeatures;
 }
 
 export async function getRaceFeature(racename) {
-  
+  let racefeatures = [];
+  await db.many(getracefeaturesquery, [racename])
+  .then((result) => {
+    racefeatures = [...result];  
+  }).catch((error) => {
+    console.error('' + error);
+  });
+  return racefeatures;
 }
 
 
@@ -945,5 +967,4 @@ export async function addFeaturesToCharacter(playercharacterid) {
       console.error('Error adding feature' + feature.featureid + ' : ' + error);
     });
   }
-
 }
