@@ -670,6 +670,11 @@ function CharacterCreator() {
     });
   };
 
+  
+
+
+
+  
   return (
     <div className="characterCreator">
       <Tabs
@@ -853,11 +858,7 @@ function CharacterCreator() {
                 ></textarea>
               </div>
             ))}
-            <Button
-              onClick={() => {
-                createCharacter(charactercreatordata);
-              }}
-            >
+            <Button onClick={handleCreateCharacter}>
               Create Character
             </Button>
           </div>
