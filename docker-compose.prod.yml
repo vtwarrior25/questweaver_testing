@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  next-app:
+    container_name: next-app
+    build:
+      context: ./next-app
+      dockerfile: prod.Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - my_network
+  database: 
+    image: 'postgres:latest'
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database 
+    volumes:
+      - ./init.sql:
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  my_network:
+    external: true

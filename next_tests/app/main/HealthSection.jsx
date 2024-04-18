@@ -78,7 +78,7 @@ function HealthSection () {
     <div className="healthSection frontElement">
       <Stack className="leftHealthSection" direction="vertical" gap={2}>
         <Button variant='secondary' size='sm' onClick={() => updateHealth('heal')} >Heal</Button>
-        <input className="healthSectionInput" type='number' size="4" name="changehealth" onChange={(e) => handleChange(e)}></input>
+        <input className="healthSectionMainInput" type='number' name="changehealth" onChange={(e) => handleChange(e)}></input>
         <Button variant='secondary' size='sm' onClick={() => updateHealth('damage')} >Damage</Button>
       </Stack>
       <div className="rightHealthSection">

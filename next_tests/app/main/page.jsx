@@ -140,22 +140,20 @@ function App () {
     <div className="App">
       <Container fluid className="mainContainer">
         <Row>
-          <Col>
+          <Col xs={6}>
             <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
               {isDM && <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
               </Tab>}
               <Tab eventKey='jerome' title='Jerome'>
-                <div className='sheetAndMap'>
-                  <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
-                </div>
+                <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
               </Tab>
               <Tab eventKey="characterCreator" title="Character Creator">
                 <CharacterCreator></CharacterCreator>
               </Tab>
             </Tabs>
           </Col>
-          <Col>
+          <Col xs={6}>
             <MapSection showboxes={showboxes} setShowBoxes={setShowBoxes} rollresults={rollresults}></MapSection>
           </Col>
         </Row>

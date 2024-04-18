@@ -32,13 +32,30 @@ function MapSection({showboxes, setShowBoxes, rollresults}) {
     </div>
   );
   */
+  /*
   return (
-    <>
+    <div className="mapSectionFlex">
       {showboxes.showturnorderbox &&<TurnOrder/>}
       {showboxes.showmap && <PixiMap/>}
       {showboxes.showchat && <Chat/>}
       {showboxes.showrollresults && <RollResultsSection rollresults={rollresults}/>}
-    </>
+    </div>
+  );
+  */
+
+  return (
+    <div className="mapSectionFlexBetter">
+      <div className='mapSectionCol'>
+        {showboxes.showturnorderbox &&<TurnOrder/>}
+      </div>
+      <div className='mapSectionCol'>
+        {showboxes.showmap && <PixiMap/>}
+      </div>
+      <div className='mapSectionCol'>
+        {showboxes.showchat && <Chat/>}
+        {showboxes.showrollresults && <RollResultsSection rollresults={rollresults}/>}
+      </div>
+    </div>
   );
 }
 

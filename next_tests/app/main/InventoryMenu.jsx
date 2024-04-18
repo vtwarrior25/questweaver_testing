@@ -156,12 +156,9 @@ function InventoryMenu() {
     }).catch((error) => {
       console.error("Error getting character money: " + error);
     });
-  }, [],
+  }, [playercharacterid],
   );
 
-  useEffect(() => {
-  }, [],
-  );
 
   const [items, setItems] = useState([
     {/*
@@ -315,7 +312,7 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} sectionname={section.sectionname} name={section.sectionname} setItems={() => setItems()} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => {setSectionWeight}} removeItem={removeItem}></InventorySection>)}
+        {sections.map((section, index) => <InventorySection key={index} sectionname={section.sectionname} name={section.sectionname} setItems={setItems} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight()} removeItem={() => removeItem()}></InventorySection>)}
       </div>
     </div>
   );

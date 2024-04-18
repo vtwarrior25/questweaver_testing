@@ -858,7 +858,7 @@ function CharacterCreator() {
                 ></textarea>
               </div>
             ))}
-            <Button onClick={handleCreateCharacter}>
+            <Button>
               Create Character
             </Button>
           </div>

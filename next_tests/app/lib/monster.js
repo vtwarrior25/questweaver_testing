@@ -75,6 +75,7 @@ const linkmonsterattackquery = new PQ ({
 export async function addgroupfromform(formdata, encountername) {
   let encounternames = [];
   let newmonstergroupid = "";
+  console.log("We are running, oh YEAH!!");
   db.any(getencounternamequery)
   .then((result) => {
     encounternames = [...result];
@@ -82,7 +83,7 @@ export async function addgroupfromform(formdata, encountername) {
     for (ename of encounternames) {
       if (ename == encountername) {
         // add monster group to monstergroup table with encounterid attatched
-        db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.ability, formdata.basicinfo.notes])
+        db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, formdata.basicinfo.notes])
         .then((result) => {
           newmonstergroupid = result.monstergroupid;
         })
@@ -256,10 +257,19 @@ export async function getEncounters() {
         blankencounter.attacks = [...monsterattackresult];
       }).catch((error) => {
         console.log(error);
-        
       });
       blankencounter.monstergroups = [...blankencounter.monstergroups, blankmonstergroup]
     }
   }
   return encounters;
+}
+
+
+export async function setMonsterGroupNotes() {
+  
+}
+
+
+export async function setMonsterGroupHealth() {
+
 }

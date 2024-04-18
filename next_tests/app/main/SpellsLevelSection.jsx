@@ -46,6 +46,10 @@ function SpellsLevelSection({level, numspellslots, spellinfo, spells, setRollRes
     return slots;
   }
 
+  const updateSpellSlots = () => {
+    
+  }
+
 /*
   const modPos = (bonus) => {
     if (bonus > 0) {

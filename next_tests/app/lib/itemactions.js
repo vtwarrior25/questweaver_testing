@@ -245,7 +245,7 @@ export async function removeItemFromInventory(playercharacterid, item) {
 const getplayercharacterinventoryquery = new PQ({
   text: `
     SELECT i.itemid, c.characterinventorysection AS section, i.name, i.weight, 
-    i.value, i.currency, c.quantity FROM characterinventory c 
+    i.value, i.currency, c.quantity, c.active FROM characterinventory c 
       JOIN item i ON c.itemid = i.itemid 
     WHERE c.playercharacterid = $1;
   `

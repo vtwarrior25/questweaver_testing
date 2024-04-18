@@ -838,10 +838,10 @@ function getFeatureData(feature) {
       // Get info from proficiency, add to featuredata
       break;
     case 'Action':
-      // Get info from proficiency, add to featuredata
+      // Get info from actionfeature, add to featuredata
       break;
     case 'Speed':
-      // Get info from proficiency, add to featuredata
+      // Get info from speedfeature, add to featuredata
       break;
     case 'Ability Score':
       // Get info from proficiency, add to featuredata
@@ -916,7 +916,7 @@ const addcharacterfeaturequery = new PQ({
   text: `
     INSERT INTO characterfeature cf (playercharacterid, featureid) VALUES
     ($1, $2)
-    ON CONFLICT (characterfeature_playercharacterid_featureid_key) DO NOTHING;
+    ON CONFLICT (playercharacterid, featureid) DO NOTHING;
   `
 });
 

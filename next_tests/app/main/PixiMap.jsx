@@ -93,14 +93,14 @@ function PixiMap() {
         console.log("Not");
       }
       */
-      retrieveMapData(pauseupdate); 
+      retrieveMapData(); 
     }, 1500);
     }, []
   );
 
 
-  const retrieveMapData = (update) => {
-    if (update !== true) {
+  const retrieveMapData = () => {
+    if (pauseupdate !== true) {
       //console.log('Gaming');
       //console.log('Pauseupdate = ' + update);
       getMapData()
@@ -261,8 +261,8 @@ function PixiMap() {
 
   return ( 
     <div className="mapCanvasWrapper">
-    {/*
-    <div className='mapToolButtons'>
+      {/*
+      <div className='mapToolButtons'>
       <ToggleButtonGroup type="radio" name="maptoolbuttons">
         <ToggleButton variant="secondary" value={0} onClick={() => setSelectedTool("color")}>C</ToggleButton>
         <ToggleButton variant="secondary" value={1} onClick={() => setSelectedTool("select")}>S</ToggleButton>
@@ -271,8 +271,6 @@ function PixiMap() {
         <ToggleButton variant="secondary" value={4} onClick={() => setSelectedTool("ellipse")}>⬬</ToggleButton>
         <ToggleButton variant="secondary" value={5} onClick={() => setSelectedTool("text")}>T</ToggleButton>
       </ToggleButtonGroup>
-      */}
-      {/*
       <div className='updateMapToggle frontElement'>
         <span>Freeze Map </span>
         <input type='checkbox' value={pauseupdate} onChange={() => setPauseUpdate(!pauseupdate)}></input>
@@ -283,31 +281,31 @@ function PixiMap() {
         <Button onClick={() => scaleMap(mapsize.scale + 5)}>+</Button>
       </div>
       <Button variant="danger" onClick={() => handleClearCanvas()}>X</Button>
-    </div>
-    */}
-    <MapScaleContext.Provider value={mapsize.scale}>
-      <Stage
-        width={mapsize.width}
-        height={mapsize.height}
-        options={{backgroundColor: mapsize.backgroundcolor}}
-      >
-        {mapshapes.map((shape, index) => {
-          //console.log(shape);
-          if (shape.shape === "rectangle") {
-            return <MapRectangle key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapRectangle>
-          } else if (shape.shape === "circle") {
-            return <MapCircle key={index} shapeinfo={shape}></MapCircle>
-          } else if (shape.shape === "ellipse") {
-            return <MapEllipse key={index} shapeinfo={shape}></MapEllipse>
-          } else if (shape.shape === "text") {
-            return <MapText key={index} shapeinfo={shape}></MapText>
-          } else if (shape.shape === "sprite") {
-            return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
-          }
-        })}
-        <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
-      </Stage>
-    </MapScaleContext.Provider>
+      </div>
+      */}
+      <MapScaleContext.Provider value={mapsize.scale}>
+        <Stage
+          width={mapsize.width}
+          height={mapsize.height}
+          options={{backgroundColor: mapsize.backgroundcolor}}
+        >
+          {mapshapes.map((shape, index) => {
+            //console.log(shape);
+            if (shape.shape === "rectangle") {
+              return <MapRectangle key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapRectangle>
+            } else if (shape.shape === "circle") {
+              return <MapCircle key={index} shapeinfo={shape}></MapCircle>
+            } else if (shape.shape === "ellipse") {
+              return <MapEllipse key={index} shapeinfo={shape}></MapEllipse>
+            } else if (shape.shape === "text") {
+              return <MapText key={index} shapeinfo={shape}></MapText>
+            } else if (shape.shape === "sprite") {
+              return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
+            }
+          })}
+          <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
+        </Stage>
+      </MapScaleContext.Provider>
     </div>
   );
 }

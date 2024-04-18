@@ -27,6 +27,7 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
       {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
     */}
+    {/*
       <Row>
         <Col>
           {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
@@ -41,10 +42,10 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
       <Row>
         <Col xs={8}>
           <Row>
-            <Col xs={7}>
+            <Col>
               {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} collapse="yes"></StaticStatsBox>}
             </Col>
-            <Col xs={5}>
+            <Col>
               {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
             </Col>
           </Row>
@@ -56,7 +57,57 @@ function CharacterSheet({showboxes, setShowBoxes, setRollResults, rollresults}) 
           {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
         </Col>
       </Row>
+  */}
+  {/*
+      <div className='characterSheetRow'>
+        <div className='characterSheetCol'>
+          {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
+        </div>
+        <div className='characterSheetCol'>
+          {showboxes.showhealthsection && <HealthSection></HealthSection>}
+        </div>
+        <div className='characterSheetCol'>
+          {showboxes.showsavingthrowsection&& <SavingThrowSection></SavingThrowSection>}
+        </div>
+      </div>
+      <div className='characterSheetRow'>
+        <div className='characterSheetCol'>
+          <div className='characterSheetRow'>
+            <div className='characterSheetCol'>
+              {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} collapse="yes"></StaticStatsBox>}
+            </div>
+            <div className='characterSheetCol'>
+              {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
+            </div>
+          </div>
+          <div className='characterSheetRow'>
+            {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
+          </div>
+        </div>
+        <div className='characterSheetCol'>
+          {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
+        </div>
+      </div>
+      */}
+      <div className='characterSheetCol'>
+        <div className='characterSheetRow'>
+          {showboxes.showabilitysection && <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>}
+          {showboxes.showhealthsection && <HealthSection></HealthSection>}
+        </div>
+        <div className='characterSheetRow'>
+          {showboxes.showstaticstatsbox && <StaticStatsBox setRollResults={setRollResults} rollresults={rollresults} collapse="yes"></StaticStatsBox>}
+          {showboxes.showmanualdiceroller && <ManualDiceRoller setRollResults={setRollResults} vertical={true} nice={true}></ManualDiceRoller>}
+        </div>
+        {showboxes.showcharacterinventoryarea && <CharacterInventoryArea setRollResults={setRollResults}></CharacterInventoryArea>}
+      </div>
+      <div className='characterSheetCol'>
+        {showboxes.showsavingthrowsection&& <SavingThrowSection></SavingThrowSection>}
+        {showboxes.showskillsection && <SkillSection setRollResults={setRollResults} rollresults={rollresults}/>}
+      </div>
     </div>
+
+    
+  
   );
 }
 

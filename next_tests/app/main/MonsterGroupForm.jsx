@@ -43,7 +43,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
       ac: 13,
       speed: 50,
       skills: "Stealth +6; Darkvision 60",
-      ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+      features: "Nimble Escape (Disengage or Hide as Bonus Action)",
       notes: "",
     },
     abilities: {
@@ -177,12 +177,12 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
               <tbody>
                 <tr>
                   <th>Creature</th>
-                  <td><input className="monsterGroupFormNameInput" type="text" name="name" placeholder="Name" onChange={(e) => updateFormValue("basicinfo", e.target.name, e.target.value)} value={formdata.basicinfo.name}/></td>
+                  <td><input className="monsterGroupFormNameInput" type="text" maxLength="20" name="name" placeholder="Name" onChange={(e) => updateFormValue("basicinfo", e.target.name, e.target.value)} value={formdata.basicinfo.name}/></td>
                   <td><input className="monsterGroupFormQtyInput" type="number" name="quantity" placeholder="Qty" onChange={(e) => updateFormValue("basicinfo", e.target.name, Number(e.target.value))} value={formdata.basicinfo.quantity}/></td>
                 </tr>
                 <tr>
                   <th>Description</th>
-                  <td colSpan="2"><input className="monsterGroupFormDescriptionInput" type="text" name="description" onChange={(e) => updateFormValue("basicinfo", e.target.name, e.target.value)} value={formdata.basicinfo.description}/></td>
+                  <td colSpan="2"><input className="monsterGroupFormDescriptionInput" type="text" maxLength="100" name="description" onChange={(e) => updateFormValue("basicinfo", e.target.name, e.target.value)} value={formdata.basicinfo.description}/></td>
                 </tr>
                 <tr>
                   <th>HD/CR</th>
@@ -369,15 +369,15 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                 </tr>
                 <tr>
                   <td rowSpan="2"><label htmlFor="skills">Skills</label></td>
-                  <td colSpan="3" rowSpan="2"><textarea className="monsterGroupFormSkillAbilityBox" name="skills" onChange={(e) => updateFormValue("basicinfo", "skills", e.target.value)} value={formdata.basicinfo.skills}></textarea></td>
+                  <td colSpan="3" rowSpan="2"><textarea className="monsterGroupFormSkillAbilityBox" maxLength="500" name="skills" onChange={(e) => updateFormValue("basicinfo", "skills", e.target.value)} value={formdata.basicinfo.skills}></textarea></td>
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput5" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 4)} value={formdata.health[4]}/></td>
                 </tr>
                 <tr>
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput6" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 5)} value={formdata.health[5]}/></td>
                 </tr>
                 <tr>
-                  <td rowSpan="2"><label htmlFor="skills">Abilities</label></td>
-                  <td colSpan="3" rowSpan="2"><textarea className="monsterGroupFormSkillAbilityBox" name="ability" onChange={(e) => updateFormValue("basicinfo", "ability", e.target.value)} value={formdata.basicinfo.ability}></textarea></td>
+                  <td rowSpan="2"><label htmlFor="skills">Features</label></td>
+                  <td colSpan="3" rowSpan="2"><textarea className="monsterGroupFormSkillAbilityBox" maxLength="500" name="features" onChange={(e) => updateFormValue("basicinfo", "features", e.target.value)} value={formdata.basicinfo.features}></textarea></td>
                   <td className="monsterHealth"><input className="monsterHealthInput" type="number" name="monsterhealthinput7" onChange={(e) => updateFormValue("health", "", Number(e.target.value), 6)} value={formdata.health[6]}/></td>
                 </tr>
                 <tr>
@@ -389,7 +389,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
           <div className="monsterGroupNotesSection">
             <div className="monsterGroupNotes"></div>
               <label htmlFor="monsterGroupNotesText">Notes</label>
-              <textarea name="monsterGroupNotesText" onChange={(e) => updateFormValue("basicinfo", "notes", e.target.value)} value={formdata.basicinfo.notes}></textarea>
+              <textarea name="monsterGroupNotesText" onChange={(e) => updateFormValue("basicinfo", "notes", e.target.value)} maxLength="2000" value={formdata.basicinfo.notes}></textarea>
             <div className="monsterGroupEncounterSelector">
               <label htmlFor="monsterGroupEncounter">Encounter</label>
               <input type="text" name="monsterGroupEncounter" onChange={(e) => updateFormValue("basicinfo", "encounter", e.target.value)} value={formdata.basicinfo.encounter}/>

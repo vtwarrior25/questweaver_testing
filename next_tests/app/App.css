@@ -81,19 +81,33 @@ Character Sheet
 ----------------------------------------
 */
 
-/*
+
 .characterSheet {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.4rem;
+  padding: 0.3rem;
 }
-*/
 
+/*
 .characterSheetGrid {
   display: grid;
   grid-template-columns: 25% 15% 40% 30%;
   grid-template-rows: 10% 10% ;
+}
+*/
+
+.characterSheetRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+
+.characterSheetCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 
@@ -126,7 +140,6 @@ Ability Section
   max-height: 8rem;
 }
 
-
 .abilityBox {
   border-radius: 0.5rem;
   padding: 0.3rem;
@@ -151,7 +164,7 @@ Health Box
   flex-direction: row;
   gap: 1rem;
   padding: 0.5rem;
-  max-width: 18rem;
+  max-width: 16rem;
   max-height: 8rem;
 } 
 
@@ -165,6 +178,10 @@ Health Box
   max-width: 4rem;
 }
 
+.healthSectionMainInput {
+  max-width: 6rem;
+}
+
 /*
 ----------------------------------------
 Static Stats
@@ -176,8 +193,10 @@ Static Stats
   flex-direction: column;
   gap: 0.5rem;
   padding: 0.4rem;
+  margin: 0.2rem;
   /*max-width: 24rem;*/
-  max-width: 40rem;
+  min-width: 24rem;
+  max-width: 24rem;
   max-height: 13rem;
 }
 
@@ -205,6 +224,8 @@ Skills Section
   padding: 0.5rem;
   max-width: 16rem;
   overflow-y: auto;
+  align-self: flex-end;
+  margin: 0.5rem;
 }
 
 .skillsTable tbody tr:nth-child(even) {
@@ -226,7 +247,9 @@ Manual Dice Roll
 } 
 
 .verticalManualRollSection {
-  max-width: 14rem;
+  min-width: 14.5em;
+  min-height: 13rem;
+  max-width: 14.5rem;
   max-height: 13rem;
 }
 
@@ -262,7 +285,7 @@ Saving Throw
 .characterSavingThrowSectionBox {
   display: flex;
   flex-direction: column;
-  max-width: 18rem;
+  max-width: 17rem;
   max-height: 10rem;
 }
 
@@ -290,6 +313,7 @@ Saving Throw
 Defenses and Conditions
 ----------------------------------------
 */
+/*
 
 .defensesConditionsBox {
   display: flex;
@@ -316,6 +340,7 @@ Defenses and Conditions
   flex-direction: row;
   justify-content: space-evenly;
 }
+*/
 
 /*
 ----------------------------------------
@@ -326,7 +351,7 @@ Turn Order
 .turnOrderBox {
   padding: 0.1rem;
   margin: 0.1rem;
-  max-width: 17rem;
+  max-width: 15rem;
 }
 
 .turnOrderList {
@@ -376,6 +401,36 @@ Map Section
   gap: 1rem;
 }
 
+.mapSectionFlex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.mapSectionFlexBetter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.mapSectionRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.mapSectionRollResultsCol {
+  justify-content: space-between; 
+}
+
+.mapSectionCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
 .mapToolButtons {
   display: flex;
   flex-direction: row;
@@ -409,15 +464,16 @@ Chat Section
   flex-direction: column;
 } 
 
-.chatMessageArea {
+.chatLogInnerBox {
   display: flex;
   flex-direction: column;
   min-height: 14rem;
   max-height: 18rem;
   min-width: 13rem;
-  max-width: 17rem;
+  max-width: 19rem;
   overflow-y: scroll;
-} 
+}
+
 
 .chatMessage {
   border: var(--thinBorder);
@@ -433,15 +489,6 @@ Chat Section
   color: green;
 }
 
-.gameLogInnerBox {
-  display: flex;
-  flex-direction: column;
-  min-height: 14rem;
-  max-height: 18rem;
-  min-width: 13rem;
-  max-width: 17rem;
-  overflow-y: scroll;
-} 
 
 .gameLogMessage {
   border: var(--thinBorder);
@@ -461,6 +508,7 @@ Roll Results
 */
 
 .rollContainer {
+  min-width: 10rem;
   max-width: 15rem;
 }
 
@@ -490,6 +538,15 @@ Monster Sheet
 .monsterSheetTopBar {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.encounterSelectorSection {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
 }
 
 .monsterGroupDisplay {
@@ -500,10 +557,6 @@ Monster Sheet
   border: var(--thinBorder);
 }
 
-/*.monsterGroupDisplayBasicInfo {
-  
-}
-*/
 .monsterSheet input{
   padding: 0 !important;
   margin: 0 !important;
@@ -545,6 +598,10 @@ Monster Group Form
 ----------------------------------------
 */
 
+.monsterGroupForm {
+  overflow-x: scroll;
+  background-color: var(--innerBackgroundColor);
+}
 
 .monsterSheetAbilityInput {
   width: 3rem;
@@ -823,9 +880,15 @@ Character Inventory Area
 */
 
 .characterInventoryArea {
-  max-width: 40em;
+  max-width: 39.5rem;
+  max-height: 32rem;
 }
 
+.characterInventoryAreaSection {
+  max-height: 27rem;
+  overflow-y: scroll;
+  padding: 0.5rem;
+}
 
 /*
 ----------------------------------------
@@ -962,6 +1025,7 @@ Character Inventory Area Features Menu
 
 .featuresSection {
   border: var(--thinBorder);
+  padding: 0.3rem;
 }
 
 

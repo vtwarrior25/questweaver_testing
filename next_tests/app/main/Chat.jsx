@@ -88,7 +88,7 @@ function Chat() {
 */
   return ( 
     <div className="chatInnerBox">
-      <div className="chatMessageArea">
+      <div className="chatMessageArea chatLogInnerBox">
         {chatmessages && chatmessages.length > 0 && chatmessages.map((message, index) => <ChatMessage key={index} name={message.name} content={message.content} time={message.timeadded} gamelogtag={message.gamelogtag}/>)}
       </div>
       <div className="chatEntryArea">

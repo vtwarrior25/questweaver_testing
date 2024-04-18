@@ -2,9 +2,11 @@ import { setConfig } from 'next/config';
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { ActionUpdateContext, PlayerCharacterContext } from './Contexts';
+import { enableAttackForItem, disableAttackForItem } from '../lib/attackactions';
 
 function InventorySection({sectionname, name, items, setSectionWeight, removeItem, setItems}) {
   const updateActions = useContext(ActionUpdateContext);
+  const playercharacterid = useContext(PlayerCharacterContext);
   const [sectionweight, setInnerSectionWeight] = useState(0);
   const [dropdownshidden, setDropdownsHidden] = useState([]);
 
@@ -26,9 +28,8 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     let matcheditems = items.filter((newitem) => {newitem.section === section && newitem.name === item.name});
     let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.name !== item.name});
     if (matcheditems.length > 0) {
-      let matcheditem = matcheditems[0];
-      matcheditem.quantity = quantity;
-      setItems([...nonmatcheditems, matcheditem]);
+      matcheditems[0].quantity = quantity;
+      setItems([...nonmatcheditems,...matcheditems]);
     } else {
       console.log("Item not found");
     }
@@ -46,13 +47,51 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     setSectionWeight(sectionname, weight);
   }
 
-  const toggleActiveAction = (item) => {
-    let matcheditems = items.filter((newitem) => {newitem.section === item.section && newitem.name === item.name});
-    let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== item.section || otheritem.name !== item.name});
+  const toggleActiveAction = (itemid, section, status) => {
+    console.log(itemid  + " " + section);
+    let matcheditems = items.filter((newitem) => section === newitem.section && itemid === newitem.itemid);
+    let nonmatcheditems = items.filter((otheritem) => otheritem.section !== section || otheritem.itemid !== itemid);
+    console.log("matcheditems");
+    console.log(matcheditems);
+    console.log("nonmatcheditems");
+    console.log(nonmatcheditems);
     if (matcheditems.length > 0) {
-      // Beansaction 
+      matcheditems[0].active = !status;
+      console.log([...nonmatcheditems,...matcheditems]);
+      setItems([...nonmatcheditems,...matcheditems]);
+      console.log(status);
+      if (status === true) {
+        enableAttackForItem(playercharacterid, section, itemid)
+        .catch((error) => {
+          console.error('Error enabling attack for item: ' + error);
+        })
+        updateActions();
+      } else if (status === false) {
+        disableAttackForItem(playercharacterid, section, itemid)
+        .catch((error) => {
+          console.error('Error disabling attack for item: ' + error);
+        })
+        updateActions();
+      }
+    } else {
+      console.log("Item not found");
     }
-    updateActions();
+    /*
+    console.log(status);
+    if (status === true) {
+      enableAttackForItem(playercharacterid, section, itemid)
+      .catch((error) => {
+        console.error('Error enabling attack for item: ' + error);
+      })
+      updateActions();
+    } else if (status === false) {
+      disableAttackForItem(playercharacterid, section, itemid)
+      .catch((error) => {
+        console.error('Error disabling attack for item: ' + error);
+      })
+      updateActions();
+    }
+    */
   }
 
 /*
@@ -89,7 +128,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
           {items.map((item, index) => 
             <React.Fragment key={index}>
               <tr className='inventorySectionTableRow'>
-                  <td>{item.weaponinfo && <input type='checkbox' value={item.weaponinfo.active} onChange={() => toggleActiveAction()}></input>}</td>
+                  <td>{item.weaponinfo && <input type='checkbox' checked={item.active} onClick={(e) => toggleActiveAction(item.itemid, item.section, e.target.checked)}></input>}</td>
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
                 require using global context or some disgusting lifting of state.*/}

@@ -97,7 +97,7 @@ function TurnOrder() {
     });
   }
 
-  const clearTurnOrder = () => {
+  const clearTurnOrderClient = () => {
     setTurnOrder([]);
     clearTurnOrder()
     .catch((error) => {
@@ -105,12 +105,12 @@ function TurnOrder() {
     });
   }
   
+  /*
   if (isDM) {
     return ( 
       <div className="turnOrderBox frontElement">
         <div className="turnOrderList">
           {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={turn.currentturn}  removeItem={removeTurnOrderItem}/>)}
-        {/* currentturn={index === currentturn?true:false} */}
         </div>
         <div className="turnOrderButtons">
           <div className="turnOrderControlButtons">
@@ -130,6 +130,21 @@ function TurnOrder() {
       </div>
     );
   }
+  */
+  return ( 
+    <div className="turnOrderBox frontElement">
+      <div className="turnOrderList">
+        {turnorder && turnorder.map((turn, index) => <TurnOrderItem key={index} name={turn.name} initiative={turn.initiative} currentturn={turn.currentturn}  removeItem={removeTurnOrderItem}/>)}
+      </div>
+      <div className="turnOrderButtons">
+        <div className="turnOrderControlButtons">
+          <Button variant="secondary" size="sm" onClick={() => changeTurn("prev")}>Prev</Button>
+          <Button variant="secondary" size="sm" onClick={() => changeTurn("next")}>Next</Button>
+        </div>
+        <Button variant="secondary" size="sm" onClick={() => clearTurnOrderClient()}>Clear</Button>
+      </div>
+    </div>
+  );
 }
 
 export default TurnOrder;

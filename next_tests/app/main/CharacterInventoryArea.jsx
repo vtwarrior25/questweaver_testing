@@ -18,6 +18,7 @@ function CharacterInventoryArea({setRollResults}) {
       effectdie: 12,
       effectdienum: 1,
       effectbonus: 3,
+      effecttype: 'Bludgeoning',
       notes: "Simple",
     },
     {
@@ -27,6 +28,7 @@ function CharacterInventoryArea({setRollResults}) {
       effectdie: 4,
       effectdienum: 1,
       effectbonus: 3,
+      effecttype: 'Piercing',
       notes: "Simple, Light, Thrown",
     },
     {
@@ -36,6 +38,7 @@ function CharacterInventoryArea({setRollResults}) {
       effectdie: 0,
       effectdienum: 0,
       effectbonus: 4,
+      effecttype: 'Bludgeoning',
       notes: "",
     },
   ]); 
@@ -54,16 +57,16 @@ function CharacterInventoryArea({setRollResults}) {
   ]);
 
   const updateActions = () => {
-    getCharacterAttacks()
+    getCharacterAttacks(playercharacterid)
     .then((result) => {
-      
+      setActions([...result]);
     }).catch((error) => {
       console.error("Error retrieving character attacks: " + error);
     })
   }
 
   useEffect(() => {
-    
+    updateActions();
   }, [],
   );
   

@@ -475,8 +475,8 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	creaturesize								 	creaturesize NOT NULL,
 	monstertypeid									integer REFERENCES monstertype(monstertypeid) NOT NULL,
 	alignment											integer REFERENCES alignment(alignmentid) NOT NULL,
-	groupname											varchar(20),
-	description										varchar(2000),
+	groupname											varchar(50),
+	description										varchar(100),
 	hitdie												integer,
 	hitdienum											integer,
 	challengerating								integer,
@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	speed													integer,
 	initiative										integer,
 	skills												varchar(500),
-	features											varchar(500),
+	ability												varchar(500),
 	notes													varchar(2000)
 );
 
@@ -681,7 +681,8 @@ CREATE TABLE IF NOT EXISTS characterinventory (
 	playercharacterid						integer REFERENCES playercharacter(playercharacterid) NOT NULL,
 	characterinventorysection		characterinventorysection,
 	itemid											integer REFERENCES item(itemid) NOT NULL,
-	quantity										integer
+	quantity										integer,
+	active											boolean
 );
 
 /*
@@ -718,6 +719,7 @@ CREATE TABLE IF NOT EXISTS characterattack (
 	characterattackid					integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid					integer REFERENCES playercharacter(playercharacterid) NOT NULL,
 	attackid									integer REFERENCES attack(attackid) NOT NULL
+	UNIQUE (playercharacterid, attackid)
 );
 
 

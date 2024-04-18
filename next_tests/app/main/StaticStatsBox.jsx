@@ -116,7 +116,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
             <div><span className='staticStatsItemName'>Insight</span> - {staticstats.passiveinsight}</div>
           </div>
         </Tab>
-        <Tab eventKey="1" title="General Stats">
+        <Tab eventKey="1" title="Stats">
           <div className="statsContainer generalStats">
             <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
             <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>

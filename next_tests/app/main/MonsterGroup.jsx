@@ -5,13 +5,13 @@ import { ModPosContext } from './Contexts';
 import AvatarUpload from './AvatarUpload';
 
 function MonsterGroup({monsterinfo, encounter, setRollResults, removeMonsterGroup}) {
-
 /*
 TODO
 - Set onChange for HP boxes and notes box
 - Add functionality to "Remove From Encounter" button
 */
-
+  const [monsterGroupHealth, setMonsterGroupHealth] = useState([0,0,0,0,0,0,0,0]);
+  const [monsterGroupNotes, setMonsterGroupNotes] = useState("");
   const modPos = useContext(ModPosContext);
 
   const getModifier = (value) => {
@@ -133,7 +133,7 @@ TODO
               <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
-              <td colSpan="4" rowSpan="2"><span name="ability">{monsterinfo.basicinfo.ability}</span></td>
+              <td colSpan="4" rowSpan="2"><span name="features">{monsterinfo.basicinfo.features}</span></td>
               <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" defaultValue=""/></td>
             </tr>
             <tr>
@@ -144,7 +144,7 @@ TODO
       </div>
       <div className="monsterGroupNotesSection">
         <label htmlFor="monsterGroupNotesText">Notes</label>
-        <textarea name="monsterGroupNotesText"></textarea>
+        <textarea name="monsterGroupNotesText" value={monsterGroupNotes} onChange={(e) => setMonsterGroupNotes(e.target.value)}></textarea>
         <Button>Save</Button>
         <AvatarUpload type='monster'></AvatarUpload>
       </div>

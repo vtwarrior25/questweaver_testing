@@ -47,7 +47,7 @@ function GameLog() {
 
   
   return ( 
-    <div className="gameLogInnerBox">
+    <div className="gameLogInnerBox chatLogInnerBox">
       {logmessages && logmessages.length > 0 && logmessages.map((message, index) => 
       <GameLogMessage key={index} character={message.character} type={message.type} text={message.text} time={message.timeadded}/>
       )}

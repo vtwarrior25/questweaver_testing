@@ -47,7 +47,7 @@ function MonsterSheet({setRollResults}) {
             ac: 13,
             speed: 50,
             skills: "Stealth +6; Darkvision 60",
-            ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+            features: "Nimble Escape (Disengage or Hide as Bonus Action)",
             notes: "",
           },
           abilities: {
@@ -117,7 +117,7 @@ function MonsterSheet({setRollResults}) {
               ac: 13,
               speed: 50,
               skills: "Stealth +6; Darkvision 60",
-              ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+              features: "Nimble Escape (Disengage or Hide as Bonus Action)",
               notes: "",
             },
             abilities: {
@@ -182,7 +182,7 @@ function MonsterSheet({setRollResults}) {
                 ac: 13,
                 speed: 50,
                 skills: "Stealth +6; Darkvision 60",
-                ability: "Nimble Escape (Disengage or Hide as Bonus Action)",
+                features: "Nimble Escape (Disengage or Hide as Bonus Action)",
                 notes: "",
               },
               abilities: {
