@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getCharacterFeatures, getFeatures } from '../lib/getcharacterinfo';
 
 function FeaturesMenu() {
 
@@ -35,6 +36,16 @@ function FeaturesMenu() {
     },
   ])
 
+  useEffect(() => {
+    getCharacterFeatures()
+    .then((result) => {
+
+    }).catch((error) => {
+
+    })
+  }, [],
+  );
+  
 
   return ( 
     <div className="featuresMenu characterInventoryAreaSection">

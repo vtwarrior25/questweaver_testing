@@ -614,7 +614,7 @@ const getcharacterbasicdataquery = new PQ({
 
 const setturnorderquery = new PQ({
   text: `
-  
+
   `
 });
 
@@ -803,7 +803,7 @@ const getracefeaturesquery = new PQ({
 });
 
 
-export async function getFeatures(playercharacterid) {
+export async function getCharacterFeatures(playercharacterid) {
   let result = featuresdefaultresult;
   let rawresult = [];
   let featurelist = [];

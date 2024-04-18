@@ -181,6 +181,49 @@ function CharacterCreator() {
       },
     ],
   });
+
+  const [classEquipment, setClassEquipment] = useState({
+    Barbarian: [
+      {
+        id: 0,
+        type: 'radio',
+        options: [
+          {
+            name: 'Greataxe'
+          },
+          {
+            type: 'dropdown',
+            dropdowndata: 'martialMelee',
+            selected: '',
+          }
+        ],
+      },
+      {
+        id: 1,
+        type: 'radioset',
+        name: 'greatAxeOrMartialMelee',
+        options: [
+          {
+            type: 'radiobutton'
+            name: 'Two greataxes',
+          },
+          {
+            type: 'dropdown',
+            dropdowndata: 'simple',
+            selected: '',
+          }
+        ],
+      },
+      {
+        id: 2,
+        type: 'checkbox',
+        name: "Explorer's pack",
+        checked: false
+      }
+    ],
+  }); 
+
+
   // Fetch class data
   useEffect(() => {
     const fetchData = async () => {
@@ -545,6 +588,64 @@ function CharacterCreator() {
       );
     }
     return null;
+  };
+
+
+  const renderOption = (option) => {
+    if (option.type === 'dropdown') {
+      return (
+        <select className="dropdownContainer">
+
+        </select>
+      )
+    } else if (option.type === 'radioset') {
+      return (
+        <fieldset>
+          {option.options.map((radio, index) => (
+            <div key={index} className="characterCreatorRadioOption">
+              {renderOption(radio.type)}
+            </div>
+          ))}
+        </fieldset>
+      )
+    } else if (option.type === 'checkbox') {
+      return (
+        <label className="custom-checkbox">
+          <input
+            type="checkbox"
+            checked={isLeatherArmorSelected}
+            onChange={() =>
+              setIsLeatherArmorSelected(!isLeatherArmorSelected)
+            }
+          />
+          <span className="weaponLabel">leather armor and a dagger</span>
+        </label>
+      )        
+    } else if (option.type === 'radiobutton') {
+      return (
+        <div className="option">
+          <input type="radio" name=""></input>
+          <label>{option.name}</label>
+        </div>
+      )
+    }
+  }
+
+
+  const setItemChecked = () => {
+
+  }
+
+  const renderEquipmentTwo = () => {
+    //let equipmentdata = classEquipment[selectedClass];
+    let equipmentdata = classEquipment['Barbarian'];
+    return (
+      {equipmentdata.map((option, index) => (
+        <div key={index} className='optionBox'>
+          {renderOption(option)}
+        </div>
+      ))}
+    );
   };
 
   //ability tab
