@@ -827,6 +827,48 @@ export async function getCharacterFeatures(playercharacterid) {
   }
 }
 
+const proficiencyQuery = new PQ({
+  text: `
+  SELECT c.name, c.description, c.proficiencytype FROM proficiency c
+  JOIN proficiencyfeature p ON c.proficiencyid = p.proficiencyid
+  JOIN feature q ON p.featureid = q.featureid
+  WHERE q.name = $1;
+  `
+});
+
+const actionQuery = new PQ({
+  text: `
+  SELECT c.uses, c.usesperlevel, c.recovery FROM actionfeature c
+  JOIN feature p ON c.featureid = p.featureid
+  WHERE p.name = $1;
+  `
+});
+
+const speedQuery = new PQ({
+  text: `
+  SELECT c.speed FROM speedfeature c
+  JOIN feature p on c.featureid = p.featureid
+  WHERE p.name = $1;
+  `
+});
+
+const abilityScoreQuery = new PQ({
+  text: `
+  SELECT c.name, c.abbrev, c.description, p.scorebonus FROM ability
+  JOIN abilityscorefeature p ON c.abilityid = p.abilityid
+  JOIN feature q ON p.featureid = q.featureid
+  WHERE q.name = $1;
+  `
+});
+
+const abilityActionQuery = new PQ({
+  text: `
+  SELECT c.name, c.abbrev, c.description, p.uses FROM ability c
+  JOIN abilityactionfeature p ON c.abilityid = p.abilityid
+  JOIN feature q ON p.featureid = q.featureid
+  WHERE q.name = $1;
+  `
+});
 
 function getFeatureData(feature) {
   let featuredata = {};
@@ -836,18 +878,48 @@ function getFeatureData(feature) {
   switch (feature.featuretype) {
     case 'Proficiency':
       // Get info from proficiency, add to featuredata
+      db.any(proficiencyQuery, feature.name)
+      .then((dbinfo) => {
+        featuredata = [...dbinfo];
+      }).catch(error => {
+        console.error("Error getting proficiency data: " + error);
+      });
       break;
     case 'Action':
       // Get info from actionfeature, add to featuredata
+      db.any(actionQuery, feature.name)
+      .then((dbinfo) => {
+        featuredata = [...dbinfo];
+      }).catch(error => {
+        console.error("Error getting action data: " + error);
+      });
       break;
     case 'Speed':
       // Get info from speedfeature, add to featuredata
+      db.any(speedQuery, feature.name)
+      .then((dbinfo) => {
+        featuredata = [...dbinfo];
+      }).catch(error => {
+        console.error("Error getting speed data: " + error);
+      });
       break;
     case 'Ability Score':
       // Get info from proficiency, add to featuredata
+      db.any(abilityScoreQuery, feature.name)
+      .then((dbinfo) => {
+        featuredata = [...dbinfo];
+      }).catch(error => {
+        console.error("Error getting ability score data: " + error);
+      });
       break;
     case 'Ability Action':
       // Get info from proficiency, add to featuredata
+      db.any(abilityActionQuery, feature.name)
+      .then((dbinfo) => {
+        featuredata = [...dbinfo];
+      }).catch(error => {
+        console.error("Error getting ability action data: " + error);
+      });
       break;
   }
   return featuredata;
