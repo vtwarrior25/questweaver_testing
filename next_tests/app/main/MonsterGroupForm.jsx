@@ -1,17 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button, ButtonGroup, Table, Overlay } from 'react-bootstrap';
-import { getMonsterTypes } from '../lib/monster';
+import { addGroupFromForm, addgroupfromform, getMonsterTypes } from '../lib/monster';
 
 function MonsterGroupForm({encounters, addMonsterGroup}) {
   
   let [encounterscopy, setEncountersCopy] = useState([]); 
+  //let addGroupToDB = addGroupFromForm.bind();
+  
 
   const [duplicatemenudisplay, setDuplicateMenuDisplay] = useState(false);
   const duplicatetarget = useRef(null);
 
   const [duplicatemenustate, setDuplicateMenuState] = useState({
     encounter: "",
-    monster: "",
+    monster: 0,
   })
 
   const [abilitymodifiers, setAbilityModifiers] = useState({
@@ -132,7 +134,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     setFormData(formdatacopy);
   }
 
-  const duplicateMonsterGroup = (monstergroup) => {
+  const duplicateMonsterGroup = () => {
     setFormData({...monstergroup})
     //setFormData(monstergroup);
   }
@@ -255,7 +257,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                             <option key={index} value={monstergroup.basicinfo.id}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
                           )}
                         </select>
-                        <Button variant='secondary' size='sm' onClick={() => duplicateMonsterGroup}>Duplicate Monster Group</Button>
+                        <Button variant='secondary' size='sm' onClick={() => duplicateMonsterGroup()}>Duplicate Monster Group</Button>
                       </div>
                     </Overlay>
                   </td>

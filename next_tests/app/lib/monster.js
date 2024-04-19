@@ -42,8 +42,13 @@ const getencounternamequery = new PQ({
 
 const addnewmonstergroupquery = new PQ({
   text: `
-  INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, monstertypeid, alignment, groupname, description, hitdie, hitdienum, challengerating, xp, armorclass, speed, initiative, skills, features, notes)
-  VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+  INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, 
+    monstertypeid, alignment, groupname, description, quantity, hitdie, hitdienum, 
+    challengerating, xp, armorclass, speed, initiative, skills, features, 
+    notes, health)
+  VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
+    $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
+    $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
   RETURNING monstergroupid;`
 });
 
@@ -72,7 +77,7 @@ const linkmonsterattackquery = new PQ ({
   VALUES (DEFAULT, $1, $2);`
 })
 
-export async function addgroupfromform(formdata, encountername) {
+export async function addGroupFromForm(formdata, encountername) {
   let encounternames = [];
   let newmonstergroupid = "";
   console.log("We are running, oh YEAH!!");
@@ -83,7 +88,14 @@ export async function addgroupfromform(formdata, encountername) {
     for (ename of encounternames) {
       if (ename == encountername) {
         // add monster group to monstergroup table with encounterid attatched
-        db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, formdata.basicinfo.notes])
+        db.one(addnewmonstergroupquery, [encountername, 
+          formdata.basicinfo.size, formdata.basicinfo.type, 
+          formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
+          formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+          formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
+          formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
+          formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+          formdata.basicinfo.notes, formdata.health])
         .then((result) => {
           newmonstergroupid = result.monstergroupid;
         })
@@ -150,8 +162,9 @@ const getencountersquery = new PQ({
 const getmonstergroupquery = new PQ({
   text: `
   SELECT monstergroupid, encounterid, creaturesize AS size, mt.name AS type, 
-  alignment, groupname AS name, description, hitdie, hitdienum, challengerating, 
-  xp, armorclass, speed, initiative, skills, features, notes
+  alignment, groupname AS name, quantity, description, hitdie, hitdienum, 
+  challengerating, xpper, xptotal, armorclass, speed, initiative, 
+  skills, features, notes, health
   FROM monstergroup mg
     JOIN encounter e ON mg.encounterid = e.encounterid
     JOIN monstertype mt ON mg.monstertypeid = mt.monstertypeid
@@ -171,7 +184,8 @@ const getmonsterabilitiesquery = new PQ({
 
 const getmonsterattackquery = new PQ({
   text: `
-  SELECT a.name, a.range, amod.modifier, dmod.modifier, d.sides, a.numdamagedie, et.name, a.description
+  SELECT a.name, a.range, amod.modifier, dmod.modifier, 
+  d.sides, a.numdamagedie, et.name, a.description
   FROM monsterattack m
     JOIN attack a ON m.attackid = a.attackid;
     JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
@@ -265,11 +279,34 @@ export async function getEncounters() {
 }
 
 
-export async function setMonsterGroupNotes() {
-  
+const setmonstergroupnotesquery = new PQ({
+  text: `
+  UPDATE monstergroup
+  SET notes = $2
+  WHERE monstergroupid = $1;
+  `
+});
+
+const setmonstergrouphealthquery = new PQ({
+  text: `
+    UPDATE monstergroup
+    SET health = $2
+    WHERE monstergroupid = $1;
+  `
+});
+
+
+export async function setMonsterGroupNotesServer(monstergroupid, notes) {
+  db.none(setmonstergroupnotesquery, [monstergroupid, notes])
+  .catch((error) => {
+    console.error('Error setting monster group notes: ' + error);
+  });
 }
 
 
-export async function setMonsterGroupHealth() {
-
+export async function setMonsterGroupHealthServer(monstergroupid, health) {
+  db.none(setmonstergrouphealthquery, [monstergroupid, health])
+  .catch((error) => {
+    console.error('Error setting monster group health: ' + error);
+  });
 }

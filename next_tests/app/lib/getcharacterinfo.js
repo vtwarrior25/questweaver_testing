@@ -844,14 +844,36 @@ function getFeatureData(feature) {
       // Get info from speedfeature, add to featuredata
       break;
     case 'Ability Score':
-      // Get info from proficiency, add to featuredata
+      // Get info from ability score, add to featuredata
       break;
     case 'Ability Action':
-      // Get info from proficiency, add to featuredata
+      // Get info from ability action, add to featuredata
+      break;
+    case 'None':
+      // Just add to featuredata
+      break;
+    default: 
       break;
   }
   return featuredata;
 }
+
+/*
+Feature types where we can just render the name and description:
+- Speed
+- Spell
+- None
+- Defense
+- Condition
+- Proficiency
+- Ability Score
+
+Feature types to render differently
+- Ability action ()
+- Action ()
+- Attack ()
+- Class action ()
+*/
 
 export async function getClassFeature(classname) {
   let classfeatures = [];

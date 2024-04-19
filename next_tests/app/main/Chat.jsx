@@ -64,6 +64,7 @@ function Chat() {
       }
       setChatMessages([...chatmessages, newmessage]);
       addToGameLog(playercharacterid, "Chat", chattextbox);
+      setChatTextBox("");
     }
   }
 
@@ -76,6 +77,7 @@ function Chat() {
       }
       setChatMessages([...chatmessages, newmessage]);
       addToGameLog(playercharacterid, "Lore", chattextbox);
+      setChatTextBox("");
     }
   }
 
@@ -92,7 +94,7 @@ function Chat() {
         {chatmessages && chatmessages.length > 0 && chatmessages.map((message, index) => <ChatMessage key={index} name={message.name} content={message.content} time={message.timeadded} gamelogtag={message.gamelogtag}/>)}
       </div>
       <div className="chatEntryArea">
-        <textarea className='chatTextEntry' onChange={(e) => handleChange(e)}></textarea>
+        <textarea className='chatTextEntry' value={chattextbox} onChange={(e) => handleChange(e)}></textarea>
         <div className="chatButtons">
           <Button variant="secondary" size="sm" onClick={() => {sendChatMessage()}}>Chat</Button>
           <Button variant="secondary" size="sm" onClick={() => {sendLoreMessage()}}>Lore</Button>

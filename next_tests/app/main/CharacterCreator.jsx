@@ -183,7 +183,7 @@ function CharacterCreator() {
   });
 
   const [classEquipment, setClassEquipment] = useState({
-    Barbarian: [
+    barbarian: [
       {
         id: 0,
         type: 'radio',
@@ -204,8 +204,8 @@ function CharacterCreator() {
         name: 'greatAxeOrMartialMelee',
         options: [
           {
-            type: 'radiobutton'
-            name: 'Two greataxes',
+            type: 'radiobutton',
+            name: 'Two greataxes'
           },
           {
             type: 'dropdown',
@@ -595,7 +595,7 @@ function CharacterCreator() {
     if (option.type === 'dropdown') {
       return (
         <select className="dropdownContainer">
-
+          
         </select>
       )
     } else if (option.type === 'radioset') {
@@ -636,9 +636,10 @@ function CharacterCreator() {
 
   }
 
+  /*
   const renderEquipmentTwo = () => {
     //let equipmentdata = classEquipment[selectedClass];
-    let equipmentdata = classEquipment['Barbarian'];
+    let equipmentdata = classEquipment[selectedClass.toLowerCase()];
     return (
       {equipmentdata.map((option, index) => (
         <div key={index} className='optionBox'>
@@ -647,6 +648,7 @@ function CharacterCreator() {
       ))}
     );
   };
+  */
 
   //ability tab
 

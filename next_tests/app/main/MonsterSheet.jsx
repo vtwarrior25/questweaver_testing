@@ -320,16 +320,22 @@ function MonsterSheet({setRollResults}) {
   */
 
   const addMonsterGroup = (encounter, monstergroup) => {
+    console.log(encounter);
+    console.log(encounters);
     let encounterindex = encounters.findIndex((e) => {e.encountername === encounter}) ?? -1;
+    console.log(encounterindex);
+    console.log(monstergroup);
     //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];
     if (encounterindex >= 0) {
+      console.log("We are here!!");
       // If there are encounters with the name, add the new monster group to that encounter
       let newencounters = {...encounters}
-      newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, monstergroup];
+      newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}];
       setEncounters(newencounters);
       //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
     } else {
       // If there aren't encounters with the name add the monster group to a new encounter
+      console.log("We are here!!");
       let newencounter = {
         encountername: encounter,
         monstergroups: [

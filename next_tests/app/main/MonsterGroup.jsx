@@ -1,8 +1,9 @@
 import { Button, Table } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { ModPosContext } from './Contexts';
 import AvatarUpload from './AvatarUpload';
+import { setMonsterGroupHealthServer, setMonsterGroupNotesServer } from '../lib/monster';
 
 function MonsterGroup({monsterinfo, encounter, setRollResults, removeMonsterGroup}) {
 /*
@@ -10,13 +11,36 @@ TODO
 - Set onChange for HP boxes and notes box
 - Add functionality to "Remove From Encounter" button
 */
-  const [monsterGroupHealth, setMonsterGroupHealth] = useState([0,0,0,0,0,0,0,0]);
-  const [monsterGroupNotes, setMonsterGroupNotes] = useState("");
+  const [monstergrouphealth, setMonsterGroupHealth] = useState([0,0,0,0,0,0,0,0]);
+  const [monstergroupnotes, setMonsterGroupNotes] = useState("");
   const modPos = useContext(ModPosContext);
 
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
   }
+
+  useEffect(() => {
+    setMonsterGroupHealth(monsterinfo.health);
+  }, [monsterinfo],
+  );
+
+  const updateMonsterGroupHealth = (position, value) => {
+    let newmonstergrouphealth = [...monstergrouphealth];
+    newmonstergrouphealth[position] = Number(value);
+    setMonsterGroupHealth([...newmonstergrouphealth]);
+    setMonsterGroupHealthServer(monsterinfo.basicinfo.monstergroupid, [...newmonstergrouphealth])
+    .catch((error) => {
+      console.error('Error setting monster group health: ' + error);
+    });
+  }
+
+  const sendMonsterGroupNotesToServer = () => {
+    setMonsterGroupNotesServer(monsterinfo.basicinfo.monstergroupid, monstergroupnotes)
+    .catch((error) => {
+      console.error('Error setting monster group notes: ' + error);
+    });
+  }
+  
 
   return ( 
     <div className="monsterGroupDisplay frontElement">
@@ -122,30 +146,30 @@ TODO
               <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Attack" die={20} num={1} mod={attack.hit} text={modPos(attack.hit)} advantage={true}></DiceRollButton></td>
               <td><DiceRollButton name={`${monsterinfo.basicinfo.name}-${attack.name}`} rolltype="Monster Damage" die={attack.dietype} num={attack.numdice} mod={attack.damagemod} text={`${attack.numdice}d${attack.dietype} ${modPos(attack.damagemod, true)}`} advantage={true}></DiceRollButton></td>
               <td><span name={`damagetype${index}`}>Slashing</span></td>
-              <td className="monsterHealth"><input name={`monsterhealthinput${index}`} className="monsterHealthInput" type="number" defaultValue="0"/></td>
+              <td className="monsterHealth"><input name={`monsterhealthinput${index}`} className="monsterHealthInput" type="number" defaultValue={monsterinfo.health[index]} onChange={(e) => updateMonsterGroupHealth(index, e.target.value)}/></td>
             </tr>
             )}
             <tr>
               <td colSpan="4" rowSpan="2"><span name="skills">{monsterinfo.basicinfo.skills}</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" defaultValue=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput5" className="monsterHealthInput" type="number" defaultValue={monsterinfo.health[4]} onChange={(e) => updateMonsterGroupHealth(5, e.target.value)}/></td>
             </tr>
             <tr>
-              <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" defaultValue=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput6" className="monsterHealthInput" type="number" defaultValue={monsterinfo.health[5]} onChange={(e) => updateMonsterGroupHealth(6, e.target.value)}/></td>
             </tr>
             <tr>
               <td colSpan="4" rowSpan="2"><span name="features">{monsterinfo.basicinfo.features}</span></td>
-              <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" defaultValue=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput7" className="monsterHealthInput" type="number" defaultValue={monsterinfo.health[6]} onChange={(e) => updateMonsterGroupHealth(7, e.target.value)}/></td>
             </tr>
             <tr>
-              <td className="monsterHealth"><input name="monsterhealthinput8" className="monsterHealthInput" type="text" defaultValue=""/></td>
+              <td className="monsterHealth"><input name="monsterhealthinput8" className="monsterHealthInput" type="number" defaultValue={monsterinfo.health[7]} onChange={(e) => updateMonsterGroupHealth(8, e.target.value)}/></td>
             </tr>
           </tbody>
         </Table>
       </div>
       <div className="monsterGroupNotesSection">
         <label htmlFor="monsterGroupNotesText">Notes</label>
-        <textarea name="monsterGroupNotesText" value={monsterGroupNotes} onChange={(e) => setMonsterGroupNotes(e.target.value)}></textarea>
-        <Button>Save</Button>
+        <textarea name="monsterGroupNotesText" value={monstergroupnotes} onChange={(e) => setMonsterGroupNotes(e.target.value)}></textarea>
+        <Button onClick={() => sendMonsterGroupNotesToServer()}>Save</Button>
         <AvatarUpload type='monster'></AvatarUpload>
       </div>
     </div>

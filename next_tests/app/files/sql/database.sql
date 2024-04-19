@@ -476,6 +476,7 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	monstertypeid									integer REFERENCES monstertype(monstertypeid) NOT NULL,
 	alignment											integer REFERENCES alignment(alignmentid) NOT NULL,
 	groupname											varchar(50),
+	quantity 											integer,
 	description										varchar(100),
 	hitdie												integer,
 	hitdienum											integer,
@@ -487,7 +488,8 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	initiative										integer,
 	skills												varchar(500),
 	ability												varchar(500),
-	notes													varchar(2000)
+	notes													varchar(2000),
+	health												integer[8]
 );
 
 CREATE TABLE IF NOT EXISTS monsterinstance (

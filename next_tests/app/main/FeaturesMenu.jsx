@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCharacterFeatures, getFeatures } from '../lib/getcharacterinfo';
+import { render } from 'react-dom';
 
 function FeaturesMenu() {
 
@@ -47,6 +48,12 @@ function FeaturesMenu() {
   );
   
 
+  const renderFeature = (feature) => {
+    if (feature.featuretype === 'Action') {
+      
+    }
+  }
+
   return ( 
     <div className="featuresMenu characterInventoryAreaSection">
       {featuressections.map((section, index) => 
@@ -54,8 +61,11 @@ function FeaturesMenu() {
           <span className='characterSheetSectionTitle'>{section.sectionname}</span>
           {section.sectionfeatures.map((sectionfeature, index) => 
             <div key={index} className="featuresSectionFeature">
-              <b>{sectionfeature.featuretitle}</b>
-              <p>{sectionfeature.featuretext}</p>
+              {/*
+                <b>{sectionfeature.featuretitle}</b>
+                <p>{sectionfeature.featuretext}</p>
+              */}
+              {renderFeature(sectionfeature)}
             </div>
           )}
         </div>
