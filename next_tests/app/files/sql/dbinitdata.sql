@@ -32,6 +32,7 @@ Tables that need some initial data:
 */
 
 INSERT INTO ability (name, abbrev, description) VALUES
+('None', 'Non', '')
 ('Strength', 'Str', ''),
 ('Dexterity', 'Dex', ''),
 ('Constitution', 'Con', ''),
@@ -206,6 +207,7 @@ INSERT INTO subrace (name, raceid) VALUES
 
 
 INSERT INTO effecttype (name, description) VALUES
+('None', ''),
 ('Fire', ''),
 ('Acid', ''),
 ('Bludgeoning', ''),
