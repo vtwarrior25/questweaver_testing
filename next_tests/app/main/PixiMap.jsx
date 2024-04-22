@@ -247,8 +247,11 @@ function PixiMap() {
   };
 
   const updateState = (id, x, y) => {
-    let statetoupdate = mapshapes.filter((mapshape) => mapshape.id == id);
-    let statenottoupdate = mapshapes.filter((mapshape) => mapshape.id !== id);
+    let statetoupdate = mapshapes.filter((mapshape) => mapshape.mapdataid === id);
+    let statenottoupdate = mapshapes.filter((mapshape) => mapshape.mapdataid !== id);
+    console.log('statetoupdate');
+    console.log(statetoupdate);
+    console.log(statenottoupdate);
     if (statetoupdate.length > 0) {
       let objecttoupdate = statetoupdate[0];
       objecttoupdate.x = x;

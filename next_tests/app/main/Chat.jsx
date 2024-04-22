@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import ChatMessage from './ChatMessage';
 import { getAllChatMessages, addToGameLog } from '../lib/chatandlog';
-import { PlayerNameContext, PlayerCharacterContext } from './Contexts';
+import {PlayerCharacterContext, CharacterInfoContext } from './Contexts';
 
 
 function Chat() {
-  const playername = useContext(PlayerNameContext);
+  const characterinfo = useContext(CharacterInfoContext);
   const playercharacterid = useContext(PlayerCharacterContext);
   const [chattextbox, setChatTextBox] = useState("");
 
@@ -58,7 +58,7 @@ function Chat() {
   const sendChatMessage = () => {
     if (chattextbox !== "") {
       var newmessage = {
-        name: playername,
+        name: characterinfo.name,
         gamelogtag: "Chat",
         content: chattextbox,
       }
@@ -71,7 +71,7 @@ function Chat() {
   const sendLoreMessage = () => {
     if (chattextbox !== "") {
       var newmessage = {
-        name: playername,
+        name: characterinfo.name,
         gamelogtag: "Lore",
         content: chattextbox,
       }

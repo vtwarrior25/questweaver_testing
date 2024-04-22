@@ -630,13 +630,13 @@ const [dropdownOptions, setDropdownOptions] = useState({
 
   }
 
-  /*
+  
   const renderEquipmentTwo = () => {
     //let equipmentdata = classEquipment[selectedClass];
     let equipmentdata = classEquipment['Barbarian'];
     return (
       <div>
-        {equipmentData.map((option, index) => (
+        {equipmentdata.map((option, index) => (
           <div key={index} className="optionBox">
             {renderOption(option)}
           </div>
@@ -644,7 +644,6 @@ const [dropdownOptions, setDropdownOptions] = useState({
       </div>
     );
   };
-  */
 
   //ability tab
 
