@@ -28,7 +28,7 @@ const getpreparedspellsquery = new PQ({
         JOIN dice d1 ON s.hitdcdie = d1.diceid
         JOIN dice d2 ON s.effectdicetype = d2.diceid
         JOIN effecttype e ON s.effecttypeid = e.effecttypeid
-      WHERE p.playercharacterid = $1;
+      WHERE p.playercharacterid = $1 AND sl.classid = (SELECT classid FROM class WHERE name = $2);
     `
 });
 
@@ -63,7 +63,7 @@ export async function getSpellList(playercharacterid) {
   return spelllist;
 }
 
-export async function getPreparedSpells (playercharacterid) {
+export async function getPreparedSpells (playercharacterid, classname) {
   let preparedspells = [];
   console.log('Player character id: ' + playercharacterid);
   await db.any(getpreparedspellsquery, [playercharacterid])

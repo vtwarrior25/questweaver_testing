@@ -32,7 +32,7 @@ Tables that need some initial data:
 */
 
 INSERT INTO ability (name, abbrev, description) VALUES
-('None', 'Non', '')
+('None', 'Non', ''),
 ('Strength', 'Str', ''),
 ('Dexterity', 'Dex', ''),
 ('Constitution', 'Con', ''),
@@ -98,7 +98,8 @@ INSERT INTO dice (name, sides) VALUES
 ('d10', 10),
 ('d8', 8),
 ('d6', 6),
-('d4', 4);
+('d4', 4),
+('None', 0);
 
 
 INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, description, spellcastingabilityid) VALUES

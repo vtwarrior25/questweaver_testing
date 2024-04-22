@@ -17,14 +17,19 @@ import { addToGameLog } from "../lib/chatandlog";
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, PlayerNameContext, DMContext, ToggleUpdatesContext, UpdateGameLogContext}  from "./Contexts";
+import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, CharacterInfoContext, DMContext, ToggleUpdatesContext, UpdateGameLogContext}  from "./Contexts";
 
 
 function App () {
   const searchParams = useSearchParams();
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
   const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 1);
-  const [playername, setPlayerName] = useState("");
+  const [characterinfo, setCharacterInfo] = useState({
+    name: 'None',
+    race: 'None',
+    class: 'None',
+    characterlevel: 0
+  });
   const [isDM, setIsDM] = useState(true);
   const [toggleUpdates, setToggleUpdates] = useState(true);
 
@@ -68,7 +73,7 @@ function App () {
   useEffect(() => {
     getBasicInfo(playercharacterid)
     .then((result) => {
-      setPlayerName(result.name);
+      setCharacterInfo({...result});
     }).catch((error) => {
       console.error("Error getting basic character info: " + error);
     })
@@ -130,7 +135,7 @@ function App () {
     <UpdateGameLogContext.Provider value={updateGameLog}>
     <ToggleUpdatesContext.Provider value={getToggleUpdates}>
     <DMContext.Provider value={isDM}>
-    <PlayerNameContext.Provider value={playername}>
+    <CharacterInfoContext.Provider value={characterinfo}>
     <PlayerCharacterContext.Provider value={playercharacterid}>
     <UserIDContext.Provider value={userid}>
     <ModPosContext.Provider value={modPos}>
@@ -149,7 +154,7 @@ function App () {
                 <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
               </Tab>
               <Tab eventKey="characterCreator" title="Character Creator">
-                <CharacterCreator></CharacterCreator>
+                {/*<CharacterCreator></CharacterCreator>*/}
               </Tab>
             </Tabs>
           </Col>
@@ -198,7 +203,7 @@ function App () {
     </ModPosContext.Provider>
     </UserIDContext.Provider>
     </PlayerCharacterContext.Provider>
-    </PlayerNameContext.Provider>
+    </CharacterInfoContext.Provider>
     </DMContext.Provider>
     </ToggleUpdatesContext.Provider>
     </UpdateGameLogContext.Provider>
