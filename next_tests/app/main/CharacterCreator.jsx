@@ -26,7 +26,7 @@ function CharacterCreator() {
   // const [selectedMartialWeapon, setSelectedMartialWeapon] = useState("");
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
-  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
+  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState(null);
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({
     subracesWithRaces: [],
@@ -586,57 +586,81 @@ const [dropdownOptions, setDropdownOptions] = useState({
 
 
   const renderOption = (option) => {
-    if (option.type === 'dropdown') {
-      return (
-        <select className="dropdownContainer">
-
-        </select>
-      )
-    } else if (option.type === 'radioset') {
-      return (
-        <fieldset>
-          {option.options.map((radio, index) => (
-            <div key={index} className="characterCreatorRadioOption">
-              {renderOption(radio.type)}
-            </div>
-          ))}
-        </fieldset>
-      )
-    } else if (option.type === 'checkbox') {
-      return (
-        <label className="custom-checkbox">
-          <input
-            type="checkbox"
-            checked={isLeatherArmorSelected}
-            onChange={() =>
-              setIsLeatherArmorSelected(!isLeatherArmorSelected)
-            }
-          />
-          <span className="weaponLabel">leather armor and a dagger</span>
-        </label>
-      )        
-    } else if (option.type === 'radiobutton') {
-      return (
-        <div className="option">
-          <input type="radio" name=""></input>
-          <label>{option.name}</label>
-        </div>
-      )
-    }
-  }
-
-
-  const setItemChecked = () => {
-
-  }
-
+    const handleRadioChange = (e) => {
+      const { name, value } = e.target;
+      setSelectedEquipmentClass(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
   
+    const handleDropdownChange = (e, optionType) => {
+      const { value } = e.target;
+      setSelectedEquipmentClass(prev => ({
+        ...prev,
+        [optionType]: value
+      }));
+    };
+  
+    switch (option.type) {
+      case 'dropdown':
+        return (
+          <select
+            className="dropdownContainer"
+            value={selectedEquipmentClass[option.dropdowndata] || ''}
+            onChange={(e) => handleDropdownChange(e, option.dropdowndata)}
+          >
+            {dropdownOptions[option.dropdowndata].map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        );
+  
+      case 'radioset':
+        return (
+          <fieldset>
+            {option.options.map((radio, index) => (
+              <label key={index} className="characterCreatorRadioOption">
+                <input
+                  type="radio"
+                  name={option.name}
+                  value={radio.name}
+                  checked={selectedEquipmentClass[option.name] === radio.name}
+                  onChange={handleRadioChange}
+                />
+                {radio.name}
+              </label>
+            ))}
+          </fieldset>
+        );
+  
+      case 'checkbox':
+        return (
+          <label className="custom-checkbox">
+            <input
+              type="checkbox"
+              checked={selectedEquipmentClass[option.name] || false}
+              onChange={(e) => handleRadioChange(e)}
+            />
+            <span className="weaponLabel">{option.name}</span>
+          </label>
+        );
+  
+      default:
+        return <div>Unsupported option type</div>;
+    }
+  };
+  
+
+
+
   const renderEquipmentTwo = () => {
-    //let equipmentdata = classEquipment[selectedClass];
-    let equipmentdata = classEquipment['Barbarian'];
+    const equipmentData = classEquipment[selectedClass] || [];
     return (
       <div>
-        {equipmentdata.map((option, index) => (
+        {equipmentData.map((option, index) => (
           <div key={index} className="optionBox">
             {renderOption(option)}
           </div>

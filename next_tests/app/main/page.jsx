@@ -154,7 +154,7 @@ function App () {
                 <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
               </Tab>
               <Tab eventKey="characterCreator" title="Character Creator">
-                {/*<CharacterCreator></CharacterCreator>*/}
+                {<CharacterCreator></CharacterCreator>}
               </Tab>
             </Tabs>
           </Col>
