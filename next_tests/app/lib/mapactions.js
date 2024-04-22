@@ -31,7 +31,6 @@ export async function getMapData () {
   return mapdata;
 }
 
-
 const updatemapdataquery = new PQ({
   text: `
     UPDATE mapdata
@@ -40,7 +39,6 @@ const updatemapdataquery = new PQ({
   `
 });
 
-
 export async function updateMapData(id, x, y) {
   db.none(updatemapdataquery, [id, x, y])
   .catch((error) => {
@@ -48,11 +46,9 @@ export async function updateMapData(id, x, y) {
   });
 }
 
-
 export async function addMapData() {
 
 }
-
 
 const toggledisplaymonsteravatarquery = new PQ({
   text: `
@@ -76,7 +72,6 @@ const toggledisplayplayeravatarquery = new PQ({
   `
 });
 
-
 export async function toggleDisplayAvatar(type, id, displayavatar, image) {
   if (type === 'monster') {
     db.none(updatemonsteravatarquery, [id, displayavatar])
@@ -92,7 +87,6 @@ export async function toggleDisplayAvatar(type, id, displayavatar, image) {
     return;
   }
 }
-
 
 const updatemonsteravatarquery = new PQ({
   text: `

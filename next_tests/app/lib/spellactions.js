@@ -13,7 +13,6 @@ const getspelllistquery = new PQ({
   `
 });
 
-
 // TODO: talk to Chapin about this query, specifically how to handle the nulls with the joins
 const getpreparedspellsquery = new PQ({
   text: 
