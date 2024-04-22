@@ -105,7 +105,6 @@ export async function createCharacter(formdata) {
   })
 }
 
-
 /*
 
 -- Inserting the ability, skill, saving throw, passive ability, defense, proficiency, and features
@@ -154,10 +153,6 @@ INSERT INTO charactersavingthrow (playercharacterid, savingthrowid, proficient, 
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Intelligence', false, 2)),
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Wisdom', false, 2)),
 (pcid, (SELECT savingthrowid FROM savingthrow WHERE name = 'Charisma', false, 2));
-
-
-
-
 
 
 SELECT * 

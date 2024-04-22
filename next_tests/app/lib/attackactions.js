@@ -3,7 +3,6 @@ const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from './dbconn'; 
 
-
 const getcharacterattackquery = new PQ({
   text: `
     SELECT a.name, a.range, amod.modifier AS hitdc, dmod.modifier AS effectbonus, d.sides AS effectdie, a.numdamagedie AS effectdienum, et.name AS effecttype, a.description AS notes FROM characterattack ca
@@ -57,7 +56,6 @@ const disableattackforitemquery = new PQ({
   `
 });
 
-
 export async function enableAttackForItem(playercharacterid, section, itemid) {
   // set characterinventory item to active
   await db.none(setcharacterinventoryitemactivequery, [playercharacterid, section, itemid, true])
@@ -72,7 +70,6 @@ export async function enableAttackForItem(playercharacterid, section, itemid) {
   
 }
 
-
 export async function disableAttackForItem(playercharacterid, section, itemid) {
   // set characterinventory item to not active
   await db.none(setcharacterinventoryitemactivequery, [playercharacterid, section, itemid, false])
@@ -85,4 +82,3 @@ export async function disableAttackForItem(playercharacterid, section, itemid) {
     console.error('Error disabling attack for item: ' + error);
   });
 }
-

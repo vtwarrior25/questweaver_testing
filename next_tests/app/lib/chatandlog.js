@@ -10,7 +10,6 @@ const addgamelogentry = new PQ({
   `
 });
 
-
 const getchatmessageswithlimitquery = new PQ({
   text: `
     SELECT g.gamelogtag, g.content, p.name, g.timeadded FROM gamelog g
@@ -18,7 +17,6 @@ const getchatmessageswithlimitquery = new PQ({
     WHERE gamelogtag = 'Chat' LIMIT $1;
   `
 });
-
 
 const getallchatmessagesquery = new PQ({
   text: `
@@ -34,14 +32,14 @@ const gettodaychatmessagesquery = new PQ({
   JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
 WHERE g.gamelogtag = 'Chat' AND date_trunc('day', g.timeadded) = date_trunc('day', CURRENT_TIMESTAMP);
   `
-})
+});
 
 const getcharacterchatmessagesquery = new PQ({
   text: `
     SELECT * FROM gamelog 
     WHERE playercharacterid = $1 AND gamelogtag = 'Chat';
   `
-})
+});
 
 const getallgamelogquery = new PQ({
   text: `
