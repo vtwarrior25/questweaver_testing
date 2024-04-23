@@ -32,8 +32,9 @@ const getpreparedspellsquery = new PQ({
   text:
     `
       SELECT sl.spelllevel, s.name, s.casttime AS timetocast, s.spellrange AS range,
-      a.abbrev AS saveability, d1.sides AS hitdcdie, s.hitdcdicenum, s.hitdcmod, d2.sides AS effectdicetype,
-      s.effectdicenum, s.effectmod, s.levelmod, s.levelmodtype, e.name AS effect 
+      s.duration, s.components, a.abbrev AS saveability, d1.sides AS hitdcdie, s.hitdcdicenum, 
+      s.hitdcmod, d2.sides AS effectdicetype, s.effectdicenum, s.effectmod, s.levelmod, 
+      s.levelmodtype, e.name AS effect 
       FROM preparedlist p
         JOIN spell s ON p.spellid = s.spellid 
         JOIN spelllist sl ON p.spellid = sl.spellid
@@ -41,7 +42,7 @@ const getpreparedspellsquery = new PQ({
         JOIN dice d1 ON s.hitdcdie = d1.diceid
         JOIN dice d2 ON s.effectdicetype = d2.diceid
         JOIN effecttype e ON s.effecttypeid = e.effecttypeid
-      WHERE p.playercharacterid = $1 AND sl.classid = (SELECT classid FROM class WHERE name = $2);
+      WHERE p.playercharacterid = $1 AND sl.classid = (SELECT pc.class FROM playercharacter pc WHERE pc.playercharacterid = $1);
     `
 });
 
@@ -92,11 +93,10 @@ export async function getPreparedList(playercharacterid) {
 }
 
 
-export async function getPreparedSpells (playercharacterid, classname) {
+export async function getPreparedSpells (playercharacterid) {
   let preparedspells = [];
   console.log('Player character id: ' + playercharacterid);
-  console.log(classname);
-  await db.any(getpreparedspellsquery, [playercharacterid, classname])
+  await db.any(getpreparedspellsquery, [playercharacterid])
   .then (dbinfo => {
     console.log(dbinfo);
     preparedspells = [...dbinfo];
