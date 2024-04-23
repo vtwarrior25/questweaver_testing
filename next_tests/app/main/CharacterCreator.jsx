@@ -25,9 +25,10 @@ function CharacterCreator() {
   const [greataxeSelected, setGreataxeSelected] = useState(false);
   const [martialWeaponSelected, setMartialWeaponSelected] = useState(false);
   const [selectedMartialWeapon, setSelectedMartialWeapon] = useState("");
+  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
-  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState(null);
+  const [selectedClassEquipment, setSelectedClassEquipment] = useState(null);
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({
     subracesWithRaces: [],
@@ -187,15 +188,16 @@ function CharacterCreator() {
       {
         id: 0,
         type: 'radio',
+        name: 'Weapon Choice',
         options: [
           {
-            name: 'Greataxe'
+            type: 'radio',
+            name: 'Greataxe',
           },
           {
-            type: 'dropdown',
-            dropdowndata: 'martialMelee',
-            selected: '',
-          }
+            type: 'radio',
+            name: 'Martial Melee',
+          },
         ],
       },
       {
@@ -205,7 +207,7 @@ function CharacterCreator() {
         options: [
           {
             type: 'radiobutton',
-            name: 'Two greataxes',
+            name: 'Two Handaxes',
           },
           {
             type: 'dropdown',
@@ -221,7 +223,18 @@ function CharacterCreator() {
         checked: false
       }
     ],
+    // Add a separate entry for martial melee dropdown
+    MartialMeleeDropdown: [
+      {
+        id: 0,
+        type: 'dropdown',
+        dropdowndata: 'martialMelee',
+        selected: '',
+      }
+    ]
   }); 
+
+  
 
 
   // Fetch class data
@@ -250,7 +263,7 @@ function CharacterCreator() {
   // This function is called when a class is selected
   const handleChooseClass = (classItem) => {
     setSelectedClass(classItem.name);
-    setSelectedEquipmentClass(classItem);
+    setSelectedClassEquipment(classEquipment[classItem.name]);
   };
 
   //equipment
@@ -294,64 +307,114 @@ const [dropdownOptions, setDropdownOptions] = useState({
   martialMelee: martialWeapons,
   simple: simpleWeapons
 });
+const handleRadioChange = (e) => {
+  const { name, value } = e.target;
+  setSelectedEquipmentClass((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
 
-  const renderOption = (option) => {
-    if (option.type === 'dropdown') {
-      return (
-        <select className="dropdownContainer">
 
-        </select>
-      )
-    } else if (option.type === 'radioset') {
-      return (
-        <fieldset>
-          {option.options.map((radio, index) => (
-            <div key={index} className="characterCreatorRadioOption">
-              {renderOption(radio.type)}
+const renderEquipmentOptions = () => {
+  if (!selectedClassEquipment) return null;
+
+  return selectedClassEquipment.map((optionGroup, groupIndex) => (
+    <div key={groupIndex} className="optionGroup">
+      {optionGroup && optionGroup.options && optionGroup.options.map((option, optionIndex) => (
+        <div key={optionIndex} className="optionBox">
+          {option && option.type === 'radio' && (
+            <label className="characterCreatorRadioOption">
+              <input
+                type="radio"
+                name={optionGroup.name}
+                value={option.name}
+                checked={
+                  selectedEquipmentClass[optionGroup.name] === option.name
+                }
+                onChange={(e) => handleRadioChange(e, optionGroup)}
+              />
+              {option.name}
+            </label>
+          )}
+          {option && option.type === 'dropdown' && (
+            <div>
+              {selectedEquipmentClass[optionGroup.name] === 'Martial Melee' && (
+                <select
+                  className="dropdownContainer"
+                  value={selectedEquipmentClass[option.dropdowndata] || ''}
+                  onChange={(e) =>
+                    handleDropdownChange(e, option.dropdowndata)
+                  }
+                >
+                  {martialWeapons.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
+          )}
+        </div>
+      ))}
+    </div>
+  ));
+};
+
+
+
+
+const renderOption = (option) => {
+  switch (option.type) {
+    case "radio":
+      return (
+        <label className="characterCreatorRadioOption">
+          <input
+            type="radio"
+            name={option.name}
+            value={option.name}
+            checked={selectedEquipmentClass[option.name] === option.name}
+            onChange={handleRadioChange}
+          />
+          {option.name}
+        </label>
+      );
+    case "dropdown":
+      return (
+        <select
+          className="dropdownContainer"
+          value={selectedEquipmentClass[option.dropdowndata] || ""}
+          onChange={(e) => handleDropdownChange(e, option.dropdowndata)}
+        >
+          {dropdownOptions[option.dropdowndata].map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
           ))}
-        </fieldset>
-      )
-    } else if (option.type === 'checkbox') {
+        </select>
+      );
+    case "checkbox":
       return (
         <label className="custom-checkbox">
           <input
             type="checkbox"
-            checked={isLeatherArmorSelected}
-            onChange={() =>
-              setIsLeatherArmorSelected(!isLeatherArmorSelected)
-            }
+            checked={selectedEquipmentClass[option.name] || false}
+            onChange={(e) => handleCheckboxChange(e, option)}
           />
-          <span className="weaponLabel">leather armor and a dagger</span>
+          <span className="weaponLabel">{option.name}</span>
         </label>
-      )        
-    } else if (option.type === 'radiobutton') {
-      return (
-        <div className="option">
-          <input type="radio" name=""></input>
-          <label>{option.name}</label>
-        </div>
-      )
-    }
+      );
+    default:
+      return null;
   }
+};
 
 
-  const setItemChecked = () => {
 
-  }
 
-  const renderEquipmentTwo = () => {
-    //let equipmentdata = classEquipment[selectedClass];
-    let equipmentdata = classEquipment['Barbarian'];
-    return (
-      equipmentdata.map((option, index) => (
-        <div key={index} className='optionBox'>
-          {renderOption(option)}
-        </div>
-      ))
-    );
-  };
+
   
 
   //ability tab
@@ -649,8 +712,8 @@ const [dropdownOptions, setDropdownOptions] = useState({
           </div>
         </Tab>
         <Tab eventKey="equipment" title="Equipment">
-          {renderEquipmentTwo()}
-          <Button onClick={addEquipmentToInventory}>Add Equipment to Inventory</Button>
+        {renderEquipmentOptions()}
+  <Button onClick={addEquipmentToInventory}>Add Equipment to Inventory</Button>
         </Tab>
         <Tab eventKey="description" title="Description">
           <div className="notesMenu frontElement">
