@@ -29,7 +29,7 @@ function SpellsMenu({setRollResults}) {
 
   const [spells, setSpells] = useState([
     {
-      level: 0,
+      spelllevel: 0,
       name: "Guidance",
       timetocast: "1A",
       range: "Touch",
@@ -44,7 +44,7 @@ function SpellsMenu({setRollResults}) {
       notes: "D: 1m, V/S",
     },
     {
-      level: 0,
+      spelllevel: 0,
       name: "Light",
       timetocast: "1A",
       range: "Touch",
@@ -59,7 +59,7 @@ function SpellsMenu({setRollResults}) {
       notes: "D: 1m, V/S",
     },
     {
-      level: 0,
+      spelllevel: 0,
       name: "Sacred Flame",
       timetocast: "1A",
       range: "60 ft",
@@ -74,7 +74,7 @@ function SpellsMenu({setRollResults}) {
       notes: "D: 1m, V/S",
     },
     {
-      level: 1,
+      spelllevel: 1,
       name: "Bless",
       timetocast: "1A",
       range: "30 ft",
@@ -89,7 +89,7 @@ function SpellsMenu({setRollResults}) {
       notes: "D: 1m, V/S/M",
     },
     {
-      level: 1,
+      spelllevel: 1,
       name: "Cure Wounds",
       timetocast: "1A",
       range: "30 ft",
@@ -106,7 +106,7 @@ function SpellsMenu({setRollResults}) {
   ]);
 
 
-  const [spelllist, setSpellList] = useState([
+  const [spelllist, setSpellList] = useState([/*
     {
       name: "Guidance",
       description: "It shows you the way, man",
@@ -127,7 +127,7 @@ function SpellsMenu({setRollResults}) {
       name: "Cure Wounds",
       description: "Like a hospital.",
     },
-  ]);
+  */]);
 
   const [preparedlist, setPreparedList] = useState([]);
 
@@ -142,11 +142,12 @@ function SpellsMenu({setRollResults}) {
   // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
-    console.log(characterinfo);
-    getPreparedSpells(playercharacterid, characterinfo.class)
+    //console.log(characterinfo);
+    getPreparedSpells(playercharacterid)
     .then((result) => {
-      setSpells([...result]);
+      console.log("We are here brothers!!");
       console.log([...result]);
+      setSpells([...result]);
     })
     .catch((error) => {
       console.error("Error retreiving prepared spells: " +  error);
@@ -155,8 +156,8 @@ function SpellsMenu({setRollResults}) {
 
   const getLevels = () => {
     spells.forEach((spell) => {
-      if (!spelllevels.includes(spell.level)) {
-        setSpellLevels([...spelllevels, spell.level]);
+      if (!spelllevels.includes(spell.spelllevel)) {
+        setSpellLevels([...spelllevels, spell.spelllevel]);
       }});
     console.log('spelllevels');
     console.log(spelllevels);
@@ -164,21 +165,23 @@ function SpellsMenu({setRollResults}) {
   }
 
   const retrieveSpellList = () => {
-    getSpellList(playercharacterid)
-    .then((result) => {
-      setSpellList([...result].sort((a, b) => {a.name.localeCompare(b.name)}));
-    })
-    .catch((error) => {
-      console.error("Error retreiving list of spells: " +  error);
-    })
-
+    console.log("running get prepared list");
     getPreparedList(playercharacterid)
     .then((result) => {
       setPreparedList([...result].sort((a, b) => {a.name.localeCompare(b.name)}));
     })
     .catch((error) => {
       console.error("Error retreiving list of prepared spells: " +  error);
+    });
+    console.log("running get spell list");
+    getSpellList(playercharacterid)
+    .then((result) => {
+      console.log(result);
+      setSpellList([...result].sort((a, b) => {a.name.localeCompare(b.name)}));
     })
+    .catch((error) => {
+      console.error("Error retreiving list of spells: " +  error);
+    });
   }
 
   const addSpells = () => {
@@ -247,7 +250,7 @@ function SpellsMenu({setRollResults}) {
         </div>
       </div>
       <div className="spellsSection">
-        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} spellinfo={spellinfo} spells={spells.filter((spell) => (spell.level === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
+        {spelllevels && spelllevels.map((spelllevel, index) => <SpellsLevelSection  key={index} level={spelllevel} numspellslots={spellinfo.spellslots[`${spelllevel}`]} spellinfo={spellinfo} spells={spells.filter((spell) => (spell.spelllevel === spelllevel))} setRollResults={setRollResults} unprepSpell={unprepSpell}></SpellsLevelSection>)}
       </div>
     </div>
     
