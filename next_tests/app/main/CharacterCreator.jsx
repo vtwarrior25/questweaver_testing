@@ -12,18 +12,19 @@ import {
 } from "../lib/getcharactercreatorinfo";
 
 function CharacterCreator() {
-  // const [selectedWeapon, setSelectedWeapon] = useState("");
+  const [selectedBardWeapon, setSelectedBardWeapon] = useState("");
+  const [selectedWeapon, setSelectedWeapon] = useState("");
   const [equipmentIdMapping, setEquipmentIdMapping] = useState({});
-  // const [selectedPack, setSelectedPack] = useState("");
-  // const [selectedInstrument, setSelectedInstrument] = useState("");
-  // const [isLeatherArmorSelected, setIsLeatherArmorSelected] = useState(true);
-  // const [twoHandaxesSelected, setTwoHandaxesSelected] = useState(false);
-  // const [simpleWeaponSelected, setSimpleWeaponSelected] = useState(false);
-  // const [selectedSimpleWeapon, setSelectedSimpleWeapon] = useState("");
-  // const [explorersPackSelected, setExplorersPackSelected] = useState(true);
+  const [selectedPack, setSelectedPack] = useState("");
+  const [selectedInstrument, setSelectedInstrument] = useState("");
+  const [isLeatherArmorSelected, setIsLeatherArmorSelected] = useState(true);
+  const [twoHandaxesSelected, setTwoHandaxesSelected] = useState(false);
+  const [simpleWeaponSelected, setSimpleWeaponSelected] = useState(false);
+  const [selectedSimpleWeapon, setSelectedSimpleWeapon] = useState("");
+  const [explorersPackSelected, setExplorersPackSelected] = useState(true);
   const [greataxeSelected, setGreataxeSelected] = useState(false);
-  // const [martialWeaponSelected, setMartialWeaponSelected] = useState(false);
-  // const [selectedMartialWeapon, setSelectedMartialWeapon] = useState("");
+  const [martialWeaponSelected, setMartialWeaponSelected] = useState(false);
+  const [selectedMartialWeapon, setSelectedMartialWeapon] = useState("");
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
   const [selectedEquipmentClass, setSelectedEquipmentClass] = useState(null);
@@ -183,34 +184,44 @@ function CharacterCreator() {
 
   const [classEquipment, setClassEquipment] = useState({
     Barbarian: [
-        {
-            id: 0,
-            type: 'radioset',
-            name: 'primaryWeaponChoice',
-            options: [
-                { name: 'Greataxe' },
-                { name: 'Martial Weapon', type: 'dropdown', dropdowndata: 'martialMelee' }
-            ]
-        },
-        {
-            id: 1,
-            type: 'radioset',
-            name: 'secondaryWeaponChoice',
-            options: [
-                { name: 'Two handaxes' },
-                { name: 'Any Simple Weapon', type: 'dropdown', dropdowndata: 'simple' }
-            ]
-        },
-        {
-            id: 2,
-            type: 'checkbox',
-            name: "Explorer's pack",
-            label: "An explorer’s pack and four javelins"
-        }
+      {
+        id: 0,
+        type: 'radio',
+        options: [
+          {
+            name: 'Greataxe'
+          },
+          {
+            type: 'dropdown',
+            dropdowndata: 'martialMelee',
+            selected: '',
+          }
+        ],
+      },
+      {
+        id: 1,
+        type: 'radioset',
+        name: 'greatAxeOrMartialMelee',
+        options: [
+          {
+            type: 'radiobutton',
+            name: 'Two greataxes',
+          },
+          {
+            type: 'dropdown',
+            dropdowndata: 'simple',
+            selected: '',
+          }
+        ],
+      },
+      {
+        id: 2,
+        type: 'checkbox',
+        name: "Explorer's pack",
+        checked: false
+      }
     ],
-});
-
-
+  }); 
 
 
   // Fetch class data
@@ -243,96 +254,6 @@ function CharacterCreator() {
   };
 
   //equipment
-  // const handleGreataxeChange = () => {
-  //   setGreataxeSelected(!greataxeSelected); // Toggle the greataxe selected state
-  //   if (greataxeSelected || martialWeaponSelected) {
-  //     setMartialWeaponSelected(false); // Ensure only one can be true at a time
-  //     setSelectedMartialWeapon(""); // Reset the martial weapon selection
-  //   }
-  // };
-
-  // const handleMartialWeaponChange = () => {
-  //   setMartialWeaponSelected(!martialWeaponSelected); // Toggle the martial weapon selected state
-  //   if (martialWeaponSelected || greataxeSelected) {
-  //     setGreataxeSelected(false); // Ensure only one can be true at a time
-  //   }
-  // };
-
-  // const handleTwoHandaxesChange = (e) => {
-  //   const isChecked = e.target.checked;
-  //   setTwoHandaxesSelected(isChecked);
-  //   if (isChecked) {
-  //     setSimpleWeaponSelected(false);
-  //     setSelectedSimpleWeapon("");
-  //     // Also reset the greataxe and martial weapon selections
-  //     setGreataxeSelected(false);
-  //     setMartialWeaponSelected(false);
-  //     setSelectedMartialWeapon("");
-  //   }
-  // };
-
-  // const handleSimpleWeaponChange = (e) => {
-  //   const isChecked = e.target.checked;
-  //   setSimpleWeaponSelected(isChecked);
-  //   if (isChecked) {
-  //     setTwoHandaxesSelected(false);
-  //     // Also reset the greataxe and martial weapon selections
-  //     setGreataxeSelected(false);
-  //     setMartialWeaponSelected(false);
-  //     setSelectedMartialWeapon("");
-  //   }
-  // };
-
-  // // Handle changes for greataxe and martial weapon
-  // const handleWeaponChange = (weaponType) => {
-  //   if (weaponType === "greataxe") {
-  //     setGreataxeSelected(!greataxeSelected);
-  //     if (martialWeaponSelected) {
-  //       setMartialWeaponSelected(false);
-  //     }
-  //   } else if (weaponType === "martialWeapon") {
-  //     setMartialWeaponSelected(!martialWeaponSelected);
-  //     if (greataxeSelected) {
-  //       setGreataxeSelected(false);
-  //     }
-  //   }
-
-  //   // Reset the selections for the other group
-  //   setTwoHandaxesSelected(false);
-  //   setSimpleWeaponSelected(false);
-  //   setSelectedSimpleWeapon("");
-  // };
-
-  // // Handle changes for two handaxes and simple weapon
-  // const handleSimpleWeaponGroupChange = (weaponType) => {
-  //   if (weaponType === "twoHandaxes") {
-  //     setTwoHandaxesSelected(!twoHandaxesSelected);
-  //     setSimpleWeaponSelected(false);
-  //   } else if (weaponType === "simpleWeapon") {
-  //     setSimpleWeaponSelected(!simpleWeaponSelected);
-  //     setTwoHandaxesSelected(false);
-  //   }
-
-  //   // Reset the selections for the other group
-  //   setGreataxeSelected(false);
-  //   setMartialWeaponSelected(false);
-  //   setSelectedMartialWeapon("");
-  // };
-  // const handlePackChange = (packType) => {
-  //   setSelectedPack(packType);
-  // };
-
-  // const handleInstrumentChange = (instrumentType) => {
-  //   setSelectedInstrument(instrumentType);
-  // };
-  // const handleBardWeaponChange = (weaponType) => {
-  //   if (selectedBardWeapon === weaponType) {
-  //     setSelectedBardWeapon("");
-  //   } else {
-  //     setSelectedBardWeapon(weaponType);
-  //   }
-  // };
-
   useEffect(() => {
     const fetchEquipmentIds = async () => {
       try {
@@ -368,216 +289,6 @@ function CharacterCreator() {
 
   
 
-//   const renderEquipment = () => {
-//     if (selectedClass === "Barbarian") {
-//       return (
-//         <div className="equipmentContainer">
-//           <div className="equipmentBox">
-//             <h3>Barbarian Starting Equipment</h3>
-//             {/* Greataxe and Martial Weapon Section */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={greataxeSelected}
-//                   onChange={handleGreataxeChange}
-//                 />
-//                 <span className="weaponLabel">a greataxe</span>
-//               </label>
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={martialWeaponSelected}
-//                   onChange={handleMartialWeaponChange}
-//                 />
-//                 <span className="weaponLabel">any martial melee weapon</span>
-//                 {martialWeaponSelected && (
-//                   <div className="dropdownContainer">
-//                     <select
-//                       value={selectedMartialWeapon}
-//                       onChange={(e) => setSelectedMartialWeapon(e.target.value)}
-//                     >
-//                       <option value="">Select Martial Weapon</option>
-//                       {martialWeapons.map((weapon, index) => (
-//                         <option key={index} value={weapon}>
-//                           {weapon}
-//                         </option>
-//                       ))}
-//                     </select>
-//                   </div>
-//                 )}
-//               </label>
-//             </div>
-
-//             {/* Two Handaxes and Simple Weapon Section */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={twoHandaxesSelected}
-//                   onChange={handleTwoHandaxesChange}
-//                 />
-//                 <span className="weaponLabel">two handaxes</span>
-//               </label>
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={simpleWeaponSelected}
-//                   onChange={handleSimpleWeaponChange}
-//                 />
-//                 <span className="weaponLabel">any simple weapon</span>
-//                 {simpleWeaponSelected && (
-//                   <div className="dropdownContainer">
-//                     <select
-//                       value={selectedSimpleWeapon}
-//                       onChange={(e) => setSelectedSimpleWeapon(e.target.value)}
-//                     >
-//                       <option value="">Select Simple Weapon</option>
-//                       {simpleWeapons.map((weapon, index) => (
-//                         <option key={index} value={weapon}>
-//                           {weapon}
-//                         </option>
-//                       ))}
-//                     </select>
-//                   </div>
-//                 )}
-//               </label>
-//             </div>
-
-//             {/* Explorer's Pack Section */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={explorersPackSelected}
-//                   onChange={() =>
-//                     setExplorersPackSelected(!explorersPackSelected)
-//                   }
-//                 />
-//                 <span className="weaponLabel">
-//                   An explorer’s pack and four javelins
-//                 </span>
-//               </label>
-//             </div>
-
-//             {/* Description for the Explorer's Pack */}
-//             {explorersPackSelected && (
-//               <div className="explorersPackDescription">
-//                 Includes a backpack, a bedroll, a mess kit, a tinderbox, 10
-//                 torches, 10 days of rations, and a waterskin. The pack also has
-//                 50 feet of hempen rope strapped to the side of it.
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       );
-//     } else if (selectedClass === "Bard") {
-//       return (
-//         <div className="equipmentContainer">
-//           <div className="equipmentBox">
-//             <h3>Bard Starting Equipment</h3>
-//             <div className="optionBox">
-//               {/* Weapon selection */}
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedBardWeapon === "rapier"}
-//                   onChange={() => handleBardWeaponChange("rapier")}
-//                 />
-//                 <span className="weaponLabel">a rapier</span>
-//               </label>
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedBardWeapon === "longsword"}
-//                   onChange={() => handleBardWeaponChange("longsword")}
-//                 />
-//                 <span className="weaponLabel">a longsword</span>
-//               </label>
-//               <label className="custom-checkbox">
-//   <input
-//     type="checkbox"
-//     checked={selectedBardWeapon === "simpleWeapon"}
-//     onChange={() => handleBardWeaponChange("simpleWeapon")}
-//   />
-//   <span className="weaponLabel">any simple weapon</span>
-// </label>
-// {selectedBardWeapon === "simpleWeapon" && (
-//   <div className="dropdownContainer">
-//     <select
-//       value={selectedSimpleWeapon}
-//       onChange={(e) => setSelectedSimpleWeapon(e.target.value)}
-//     >
-//       <option value="">Select Simple Weapon</option>
-//       {simpleWeapons.map((weapon, index) => (
-//         <option key={index} value={weapon}>{weapon}</option>
-//       ))}
-//     </select>
-//   </div>
-// )}
-//             </div>
-
-//             {/* Pack selection */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedPack === "diplomat"}
-//                   onChange={() => handlePackChange("diplomat")}
-//                 />
-//                 <span className="weaponLabel">a diplomat's pack</span>
-//               </label>
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedPack === "entertainer"}
-//                   onChange={() => handlePackChange("entertainer")}
-//                 />
-//                 <span className="weaponLabel">an entertainer's pack</span>
-//               </label>
-//             </div>
-
-//             {/* Instrument selection */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedInstrument === "lute"}
-//                   onChange={() => handleInstrumentChange("lute")}
-//                 />
-//                 <span className="weaponLabel">a lute</span>
-//               </label>
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={selectedInstrument === "otherInstrument"}
-//                   onChange={() => handleInstrumentChange("otherInstrument")}
-//                 />
-//                 <span className="weaponLabel">
-//                   any other musical instrument
-//                 </span>
-//               </label>
-//             </div>
-
-//             {/* Leather armor selection */}
-//             <div className="optionBox">
-//               <label className="custom-checkbox">
-//                 <input
-//                   type="checkbox"
-//                   checked={isLeatherArmorSelected}
-//                   onChange={() =>
-//                     setIsLeatherArmorSelected(!isLeatherArmorSelected)
-//                   }
-//                 />
-//                 <span className="weaponLabel">leather armor and a dagger</span>
-//               </label>
-//             </div>
-//           </div>
-//         </div>
-//       );
-//     }
-//     return null;
-//   };
 
 const [dropdownOptions, setDropdownOptions] = useState({
   martialMelee: martialWeapons,
@@ -586,88 +297,62 @@ const [dropdownOptions, setDropdownOptions] = useState({
 
 
   const renderOption = (option) => {
-    const handleRadioChange = (e) => {
-      const { name, value } = e.target;
-      setSelectedEquipmentClass(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    };
-  
-    const handleDropdownChange = (e, optionType) => {
-      const { value } = e.target;
-      setSelectedEquipmentClass(prev => ({
-        ...prev,
-        [optionType]: value
-      }));
-    };
-  
-    switch (option.type) {
-      case 'dropdown':
-        return (
-          <select
-            className="dropdownContainer"
-            value={selectedEquipmentClass[option.dropdowndata] || ''}
-            onChange={(e) => handleDropdownChange(e, option.dropdowndata)}
-          >
-            {dropdownOptions[option.dropdowndata].map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        );
-  
-      case 'radioset':
-        return (
-          <fieldset>
-            {option.options.map((radio, index) => (
-              <label key={index} className="characterCreatorRadioOption">
-                <input
-                  type="radio"
-                  name={option.name}
-                  value={radio.name}
-                  checked={selectedEquipmentClass[option.name] === radio.name}
-                  onChange={handleRadioChange}
-                />
-                {radio.name}
-              </label>
-            ))}
-          </fieldset>
-        );
-  
-      case 'checkbox':
-        return (
-          <label className="custom-checkbox">
-            <input
-              type="checkbox"
-              checked={selectedEquipmentClass[option.name] || false}
-              onChange={(e) => handleRadioChange(e)}
-            />
-            <span className="weaponLabel">{option.name}</span>
-          </label>
-        );
-  
-      default:
-        return <div>Unsupported option type</div>;
+    if (option.type === 'dropdown') {
+      return (
+        <select className="dropdownContainer">
+
+        </select>
+      )
+    } else if (option.type === 'radioset') {
+      return (
+        <fieldset>
+          {option.options.map((radio, index) => (
+            <div key={index} className="characterCreatorRadioOption">
+              {renderOption(radio.type)}
+            </div>
+          ))}
+        </fieldset>
+      )
+    } else if (option.type === 'checkbox') {
+      return (
+        <label className="custom-checkbox">
+          <input
+            type="checkbox"
+            checked={isLeatherArmorSelected}
+            onChange={() =>
+              setIsLeatherArmorSelected(!isLeatherArmorSelected)
+            }
+          />
+          <span className="weaponLabel">leather armor and a dagger</span>
+        </label>
+      )        
+    } else if (option.type === 'radiobutton') {
+      return (
+        <div className="option">
+          <input type="radio" name=""></input>
+          <label>{option.name}</label>
+        </div>
+      )
     }
-  };
-  
+  }
 
 
+  const setItemChecked = () => {
+
+  }
 
   const renderEquipmentTwo = () => {
-    const equipmentData = classEquipment[selectedClass] || [];
+    //let equipmentdata = classEquipment[selectedClass];
+    let equipmentdata = classEquipment['Barbarian'];
     return (
-      <div>
-        {equipmentData.map((option, index) => (
-          <div key={index} className="optionBox">
-            {renderOption(option)}
-          </div>
-        ))}
-      </div>
+      equipmentdata.map((option, index) => (
+        <div key={index} className='optionBox'>
+          {renderOption(option)}
+        </div>
+      ))
     );
   };
+  
 
   //ability tab
 
@@ -964,8 +649,8 @@ const [dropdownOptions, setDropdownOptions] = useState({
           </div>
         </Tab>
         <Tab eventKey="equipment" title="Equipment">
-            {renderEquipmentTwo()}
-              <Button onClick={addEquipmentToInventory}>Add Equipment to Inventory</Button>
+          {renderEquipmentTwo()}
+          <Button onClick={addEquipmentToInventory}>Add Equipment to Inventory</Button>
         </Tab>
         <Tab eventKey="description" title="Description">
           <div className="notesMenu frontElement">
