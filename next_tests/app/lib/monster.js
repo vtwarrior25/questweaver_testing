@@ -75,7 +75,7 @@ const linkmonsterattackquery = new PQ ({
   text: `
   INSERT INTO monsterattack (monsterattackid, monstergroupid, attackid)
   VALUES (DEFAULT, $1, $2);`
-})
+});
 
 export async function addGroupFromForm(formdata, encountername) {
   let encounternames = [];
@@ -195,6 +195,7 @@ const getmonsterattackquery = new PQ({
   WHERE monstergroupid = $1;
   `
 });
+
 /*
   SELECT a.name, a.range, amod.modifier, dmod.modifier, d.sides, a.numdamagedie, et.name, a.description FROM characterattack ca
       JOIN attack a ON ca.attackid = a.attackid
@@ -210,7 +211,6 @@ const getmonsterattackquery = new PQ({
 
 */
 
-
 /*
 const linkmonsterattackquery = new PQ ({
   text: `
@@ -218,8 +218,6 @@ const linkmonsterattackquery = new PQ ({
   VALUES (DEFAULT, $1, $2)`
 })
 */
-
-
 
 export async function getEncounters() {
   //let abilitylist = ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha']
@@ -278,7 +276,6 @@ export async function getEncounters() {
   return encounters;
 }
 
-
 const setmonstergroupnotesquery = new PQ({
   text: `
   UPDATE monstergroup
@@ -295,14 +292,12 @@ const setmonstergrouphealthquery = new PQ({
   `
 });
 
-
 export async function setMonsterGroupNotesServer(monstergroupid, notes) {
   db.none(setmonstergroupnotesquery, [monstergroupid, notes])
   .catch((error) => {
     console.error('Error setting monster group notes: ' + error);
   });
 }
-
 
 export async function setMonsterGroupHealthServer(monstergroupid, health) {
   db.none(setmonstergrouphealthquery, [monstergroupid, health])

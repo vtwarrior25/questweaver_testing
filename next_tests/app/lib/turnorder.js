@@ -3,7 +3,6 @@ import { db } from './dbconn';
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 
-
 const updateturnquery = new PQ({
   text: `
     UPDATE turnorder
@@ -46,13 +45,11 @@ export async function removeTurn(name) {
   return;
 }
 
-
 const clearturnorderquery = new PQ({
   text: `
     DELETE FROM turnorder;
   `
 });
-
 
 export async function clearTurnOrder() {
   db.none(clearturnorderquery, [])

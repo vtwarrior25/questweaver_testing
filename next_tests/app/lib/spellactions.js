@@ -26,7 +26,6 @@ const getpreparedlistquery = new PQ({
   `
 });
 
-
 // TODO: talk to Chapin about this query, specifically how to handle the nulls with the joins
 // I asked him, we resolved it in a boof manner
 const getpreparedspellsquery = new PQ({

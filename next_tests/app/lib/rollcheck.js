@@ -168,7 +168,6 @@ Dice Rolll API Testing URL
 http://localhost:9000/rollcheck?name=Strength&rolltype=Ability&die=20&num=1&mod=2
 */
 
-
 /*
     case "multi":
       //let rollstodo = [Number(d20num), Number(d12num), Number(d10num), Number(d8num), Number(d6num), Number(d4num)];

@@ -353,7 +353,6 @@ export async function getcharacterinfo(playercharacterid, infotype) {
 }
 */
 
-
 const staticstatsdefaultresult = {
   profbonus: 2,
   speed: 30,
@@ -403,8 +402,7 @@ const turnorderdefaultresult = [
     name: "Erica",
     initiative: 3,
   }
-]
-
+];
 
 const savingthrowdefaultresult = [
   {
@@ -600,8 +598,6 @@ const getcharacterstaticstatsquery = new PQ({
     `
 });
 
-
-
 const getcharacterbasicdataquery = new PQ({
   text: `
     SELECT c.name, r.name AS race, cl.name AS class, c.characterlevel
@@ -634,7 +630,6 @@ const charactergetsavingthrowquery = new PQ({
   `
 });
 
-
 const charactergetskillquery = new PQ({
   text: `
     SELECT s.name, a.abbrev AS mod, c.proficient AS prof, c.bonus FROM characterskill c
@@ -644,7 +639,6 @@ const charactergetskillquery = new PQ({
   `
 });
 
-
 const charactergetabilityquery = new PQ({
   text: `
     SELECT a.name AS abilityname, a.abbrev AS abilityabbrev, c.score AS abilityscore, c.modifier AS abilitybonus FROM characterability c
@@ -652,7 +646,6 @@ const charactergetabilityquery = new PQ({
     WHERE c.playercharacterid = $1;
   `
 });
-
 
 export async function getSkills (playercharacterid) {
   let result = skilldefaultresult;
@@ -666,7 +659,6 @@ export async function getSkills (playercharacterid) {
     });
   return result;
 }
-
 
 export async function getSavingThrows (playercharacterid) {
   let result = savingthrowdefaultresult;
@@ -695,7 +687,6 @@ export async function getAbilities (playercharacterid) {
     });
   return result;
 }
-
 
 export async function getTurnOrder () {
   let result = turnorderdefaultresult;
@@ -726,7 +717,6 @@ export async function getBasicInfo (playercharacterid) {
   return result;
 }
 
-
 export async function getStaticStats(playercharacterid) {
   let result = staticstatsdefaultresult;
   await db.any(getcharacterstaticstatsquery, [playercharacterid])
@@ -740,7 +730,6 @@ export async function getStaticStats(playercharacterid) {
     });
   return result;
 }
-
 
 const featuresdefaultresult = [
   {
@@ -775,7 +764,6 @@ const featuresdefaultresult = [
   },
 ];
 
-
 const getcharacterfeaturesquery = new PQ({
   text: `
     SELECT * FROM feature c
@@ -783,7 +771,6 @@ const getcharacterfeaturesquery = new PQ({
     WHERE p.playercharacterid = $1;
   `
 });
-
 
 const getclassfeaturesquery = new PQ({
   text: `
@@ -793,7 +780,6 @@ const getclassfeaturesquery = new PQ({
   `
 });
 
-
 const getracefeaturesquery = new PQ({
   text: `
     SELECT * FROM feature c
@@ -801,7 +787,6 @@ const getracefeaturesquery = new PQ({
     WHERE p.raceid = $1 (SELECT raceid FROM race WHERE name = $1);
   `
 });
-
 
 export async function getCharacterFeatures(playercharacterid) {
   let result = featuresdefaultresult;
@@ -964,7 +949,6 @@ export async function getRaceFeature(racename) {
   return racefeatures;
 }
 
-
 const getcharinfoforfeaturesquery = new PQ({
   text: `
     SELECT race, subrace, class, subclass, characterlevel FROM playercharacter
@@ -985,7 +969,6 @@ const getracefeaturesforcharquery = new PQ({
     WHERE raceid = $1;
   `
 });
-
 
 const getsubclassfeaturesquery = new PQ({
   text: `

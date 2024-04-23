@@ -4,7 +4,12 @@ const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
 
 function characterInventoryFromDB (playercharacterid) {
-    let dbquery = new PQ({text: 'SELECT * FROM characterinventory c JOIN playercharacter p ON c.playercharacterid = p.playercharacterid JOIN characterinventory ON c.characterinventoryid = s.characterinventoryid WHERE playercharacter;'});
+    let dbquery = new PQ({text: `
+    SELECT * FROM characterinventory c 
+    JOIN playercharacter p ON c.playercharacterid = p.playercharacterid 
+    JOIN characterinventory ON c.characterinventoryid = s.characterinventoryid 
+    WHERE playercharacter;
+    `});
     return dbquery;
 }
 
