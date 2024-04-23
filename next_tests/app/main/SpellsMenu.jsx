@@ -1,14 +1,15 @@
 import { Button, Table, Overlay } from "react-bootstrap";
 import { useState, useEffect, useRef, useContext} from "react";
-import { getPreparedSpells, setPreparedSpell, unsetPreparedSpell, getSpellList } from "../lib/spellactions";
+import { getPreparedSpells, setPreparedSpell, unsetPreparedSpell, getSpellList, getPreparedList } from "../lib/spellactions";
 import DiceRollButton from "./DiceRollButton";
 import SpellsLevelSection from "./SpellsLevelSection";
 import ManageSpells from "./ManageSpells";
-import { PlayerCharacterContext } from './Contexts';
+import { CharacterInfoContext, PlayerCharacterContext } from './Contexts';
 
 
 function SpellsMenu({setRollResults}) {
   const playercharacterid = useContext(PlayerCharacterContext);
+  const characterinfo = useContext(CharacterInfoContext);
 
   const [showmanagespells, setShowManageSpells] = useState(false);
   const target = useRef(null);
@@ -128,6 +129,8 @@ function SpellsMenu({setRollResults}) {
     },
   ]);
 
+  const [preparedlist, setPreparedList] = useState([]);
+
 
   useEffect(() => {
     getSpells();
@@ -139,9 +142,11 @@ function SpellsMenu({setRollResults}) {
   // Gets spells from the server
   const getSpells = () => {
     console.log("Getting spells!");
-    getPreparedSpells(playercharacterid)
+    console.log(characterinfo);
+    getPreparedSpells(playercharacterid, characterinfo.class)
     .then((result) => {
       setSpells([...result]);
+      console.log([...result]);
     })
     .catch((error) => {
       console.error("Error retreiving prepared spells: " +  error);
@@ -161,10 +166,18 @@ function SpellsMenu({setRollResults}) {
   const retrieveSpellList = () => {
     getSpellList(playercharacterid)
     .then((result) => {
-      setSpellList([...result]);
+      setSpellList([...result].sort((a, b) => {a.name.localeCompare(b.name)}));
     })
     .catch((error) => {
       console.error("Error retreiving list of spells: " +  error);
+    })
+
+    getPreparedList(playercharacterid)
+    .then((result) => {
+      setPreparedList([...result].sort((a, b) => {a.name.localeCompare(b.name)}));
+    })
+    .catch((error) => {
+      console.error("Error retreiving list of prepared spells: " +  error);
     })
   }
 
@@ -186,6 +199,7 @@ function SpellsMenu({setRollResults}) {
     .catch((error) => {
       console.error("Error retrieving prepared spells: " + error);
     });
+    retrieveSpellList();
   }
 
   const unprepSpell = (spellname) => {
@@ -202,6 +216,7 @@ function SpellsMenu({setRollResults}) {
     .catch((error) => {
       console.error("Error retrieving prepared spells: " + error);
     });
+    retrieveSpellList();
   }
 
   return ( 
@@ -226,7 +241,7 @@ function SpellsMenu({setRollResults}) {
           <Button variant='secondary' size='sm' ref={target} onClick={() => setShowManageSpells(!showmanagespells)}>Manage Spells</Button>
           <Overlay target={target.current} show={showmanagespells} placement='bottom'>
             <div className='manageInventoryOverlay'>
-              <ManageSpells addSpells={addSpells} preparedspells={spells} spelllist={spelllist} prepSpell={prepSpell} unprepSpell={unprepSpell}></ManageSpells>
+              <ManageSpells addSpells={addSpells} preparedspells={spells} spelllist={spelllist} preparedlist={preparedlist} prepSpell={prepSpell} unprepSpell={unprepSpell}></ManageSpells>
             </div>
           </Overlay>
         </div>

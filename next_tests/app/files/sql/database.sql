@@ -594,7 +594,8 @@ CREATE TABLE IF NOT EXISTS spelllist (
 
 CREATE TABLE IF NOT EXISTS preparedlist (
 	playercharacterid 		integer REFERENCES playercharacter(playercharacterid),
-	spellid								integer REFERENCES spell(spellid)
+	spellid								integer REFERENCES spell(spellid),
+	UNIQUE (playercharacterid, spellid)
 	-- Should this instead link to spelllist?
 );
 

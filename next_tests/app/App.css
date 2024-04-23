@@ -820,7 +820,7 @@ Manage Spells Menu (temporary)
   display: flex;
   flex-direction: column;
   max-width: 20rem;
-  max-height: 27rem;
+  max-height: 26rem;
 }
 
 .searchSpellList {
@@ -834,7 +834,7 @@ Manage Spells Menu (temporary)
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.2rem 0.5rem;
+  padding: 0rem 0.5rem;
 }
 
 .preparedSpellListItem {

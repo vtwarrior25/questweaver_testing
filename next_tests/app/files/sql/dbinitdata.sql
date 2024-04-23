@@ -228,7 +228,8 @@ INSERT INTO effecttype (name, description) VALUES
 ('Bane', ''),
 ('Charm', ''),
 ('Heal', ''),
-('Chromatic Orb', '');
+('Chromatic Orb', '')
+('Resize', '');
 
 INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Abyssal', 'Languages'),

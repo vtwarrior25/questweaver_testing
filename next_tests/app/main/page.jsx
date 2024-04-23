@@ -25,10 +25,10 @@ function App () {
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
   const [playercharacterid, setPlayerCharacterID] = useState(searchParams.get('playercharacterid') ?? 1);
   const [characterinfo, setCharacterInfo] = useState({
-    name: 'None',
-    race: 'None',
-    class: 'None',
-    characterlevel: 0
+    name: 'Jerome',
+    race: 'Human',
+    class: 'Wizard',
+    characterlevel: 1
   });
   const [isDM, setIsDM] = useState(true);
   const [toggleUpdates, setToggleUpdates] = useState(true);

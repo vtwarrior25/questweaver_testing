@@ -5,18 +5,32 @@ import { db } from './dbconn';
 
 const getspelllistquery = new PQ({
   text: `
-    SELECT sp.name FROM spell sp 
+    SELECT sp.name, sp.description FROM spell sp 
       JOIN spelllist sl ON sp.spellid = sl.spellid
     WHERE
       sl.classid = (SELECT class FROM playercharacter WHERE playercharacterid = $1) AND 
-      sl.classlevel = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $1);  
+      sl.classlevel = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $1)
+    EXCEPT
+      SELECT sp.name, sp.description from spell sp
+        JOIN preparedlist p ON sp.spellid = p.spellid
+      WHERE p.playercharacterid = $1;
+  `
+});
+
+
+const getpreparedlistquery = new PQ({
+  text: `
+    SELECT sp.name, sp.description from spell sp
+      JOIN preparedlist p ON sp.spellid = p.spellid
+    WHERE p.playercharacterid = $1;
   `
 });
 
 
 // TODO: talk to Chapin about this query, specifically how to handle the nulls with the joins
+// I asked him, we resolved it in a boof manner
 const getpreparedspellsquery = new PQ({
-  text: 
+  text:
     `
       SELECT sl.spelllevel, s.name, s.casttime AS timetocast, s.spellrange AS range,
       a.abbrev AS saveability, d1.sides AS hitdcdie, s.hitdcdicenum, s.hitdcmod, d2.sides AS effectdicetype,
@@ -42,7 +56,6 @@ const preparequery = new PQ({
 const unpreparequery = new PQ({
   text: `
   DELETE FROM preparedlist c 
-    JOIN spell p ON c.spellid = p.spellid 
   WHERE c.playercharacterid = $1 AND c.spellid = (SELECT spellid FROM spell WHERE name = $2);
   `
 });
@@ -63,10 +76,28 @@ export async function getSpellList(playercharacterid) {
   return spelllist;
 }
 
+export async function getPreparedList(playercharacterid) {
+  let preparedlist = [];
+  await db.any(getpreparedlistquery, [playercharacterid])
+  .then((result) => {
+    console.log('returning prepared list');
+    console.log(result);
+    preparedlist = [...result]; 
+  }).catch((error) => {
+    console.log(error);
+    console.log("prepared list not found");
+    return error;
+  });
+  console.log("We are already returning, because why not!!");
+  return preparedlist;
+}
+
+
 export async function getPreparedSpells (playercharacterid, classname) {
   let preparedspells = [];
   console.log('Player character id: ' + playercharacterid);
-  await db.any(getpreparedspellsquery, [playercharacterid])
+  console.log(classname);
+  await db.any(getpreparedspellsquery, [playercharacterid, classname])
   .then (dbinfo => {
     console.log(dbinfo);
     preparedspells = [...dbinfo];
@@ -84,6 +115,8 @@ export async function getPreparedSpells (playercharacterid, classname) {
 }
 
 export async function setPreparedSpell (playercharacterid, spellname) {
+  console.log(playercharacterid);
+  console.log(spellname);
   db.none(preparequery, [playercharacterid, spellname])
   .catch((error) => {
     console.log(error);

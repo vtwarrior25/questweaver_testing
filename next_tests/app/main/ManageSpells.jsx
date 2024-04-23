@@ -4,7 +4,7 @@ import { getSpellList, getPreparedSpells, setPreparedSpell, unsetPreparedSpell }
 import { PlayerCharacterContext } from './Contexts';
 
 
-function ManageSpells({addSpells, preparedspells, spelllist, prepSpell, unprepSpell}) {
+function ManageSpells({addSpells, preparedspells, spelllist, preparedlist, prepSpell, unprepSpell}) {
 
   const [searchlistdropdownshidden, setSearchListDropdownsHidden] = useState([]);
   const [preparedlistdropdownshidden, setPreparedListDropdownsHidden] = useState([]);
@@ -56,6 +56,11 @@ function ManageSpells({addSpells, preparedspells, spelllist, prepSpell, unprepSp
   );
 
   useEffect(() => {
+    preparedlist ?? preparedlist.forEach((spell, index) => setSearchListDropdownsHidden[index] = false);
+  }, [preparedlist],
+  );
+
+  useEffect(() => {
     preparedspells ?? preparedspells.forEach((spell, index) => setPreparedListDropdownsHidden[index] = false);
   }, [preparedspells],
   );
@@ -87,11 +92,11 @@ function ManageSpells({addSpells, preparedspells, spelllist, prepSpell, unprepSp
         <span>Prepared Spells</span>
         <div className='preparedSpellList'>
         {/* TODO see if we need to have entries in this list for each combination of spell and level*/}
-        {preparedspells && preparedspells.length > 0 && 
-          preparedspells.map((prepspell, index) => 
+        {preparedlist && preparedlist.length > 0 && 
+          preparedlist.map((prepspell, index) => 
           <div key={index}>
-            <div className="spellListItem" key={index} onClick={() => togglePreparedDropdown(index)}>
-              <span>{prepspell.name}</span>
+            <div className="spellListItem" key={index}>
+              <span onClick={() => togglePreparedDropdown(index)}>{prepspell.name}</span>
               <Button variant="secondary" size='sm' onClick={() => {unprepSpell(prepspell.name)}}>Unprepare</Button>
             </div>
             {preparedlistdropdownshidden[index] && 
