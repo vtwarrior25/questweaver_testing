@@ -95,18 +95,25 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     });
 
   useEffect(() => {
+    setEncountersCopy([...encounters]);
+    console.log("beans encounters");
+    console.log(encounters);
+    if (encounters && encounters.length > 0) {
+      setDuplicateMenuState({...duplicatemenustate, encounter: encounters[0].encountername})
+    }
+  }, [encounters],
+  );
+
+  useEffect(() => {
     getMonsterTypes()
     .then((result) => {
       console.log('getting monster types');
       console.log(result);
       setMonsterTypes([...result]);
     });
-    setEncountersCopy([...encounters]);
-    console.log("beans encounters");
-    console.log(encounters);
-    setDuplicateMenuState({...duplicatemenustate, encounter: encounters[0].encountername})
-  }, [encounters],
+  }, [],
   );
+  
   
   /*
   const addEncounter = () => {
@@ -247,7 +254,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                       <div className='monsterGroupDuplicateMenu frontElement'>
                         <label htmlFor="encounter">Encounter</label>
                         <select name="encounter" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, encounter: e.target.value})}>
-                          {encounters.map((encounter, index) => 
+                          {encounters && encounters.length > 0 && encounters.map((encounter, index) => 
                             <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
                           )}
                         </select>
@@ -394,7 +401,12 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
               <textarea name="monsterGroupNotesText" onChange={(e) => updateFormValue("basicinfo", "notes", e.target.value)} maxLength="2000" value={formdata.basicinfo.notes}></textarea>
             <div className="monsterGroupEncounterSelector">
               <label htmlFor="monsterGroupEncounter">Encounter</label>
-              <input type="text" name="monsterGroupEncounter" onChange={(e) => updateFormValue("basicinfo", "encounter", e.target.value)} value={formdata.basicinfo.encounter}/>
+              <input type="text" name="monsterGroupEncounter" list="encounternamelist" onChange={(e) => updateFormValue("basicinfo", "encounter", e.target.value)} value={formdata.basicinfo.encounter}/>
+              <datalist id="encounternamelist">
+                {encounters && encounters.length > 0 && encounters.map((encounter, index) => 
+                  <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
+                )}
+              </datalist>
               <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => {addMonsterGroup(formdata.basicinfo.encounter, formdata)}}>Add</Button>
             </div>
           </div>

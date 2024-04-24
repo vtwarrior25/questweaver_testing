@@ -128,7 +128,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
           {items.map((item, index) => 
             <React.Fragment key={index}>
               <tr className='inventorySectionTableRow'>
-                  <td>{item.weaponinfo && <input type='checkbox' checked={item.active} onClick={(e) => toggleActiveAction(item.itemid, item.section, e.target.checked)}></input>}</td>
+                  <td>{item.weaponinfo && <input type='checkbox' defaultChecked={item.active} onClick={(e) => toggleActiveAction(item.itemid, item.section, e.target.checked)}></input>}</td>
                 {/* TODO make this checkbox toggle if the item is active, 
                 which wil toggle it showing up in Actions, this might 
                 require using global context or some disgusting lifting of state.*/}

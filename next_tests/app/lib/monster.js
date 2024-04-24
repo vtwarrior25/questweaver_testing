@@ -155,6 +155,23 @@ export async function addGroupFromForm(formdata, encountername) {
 }
 
 
+const removemonstergroupquery = new PQ({
+  text: `
+    DELETE FROM monstergroup 
+    WHERE monstergroupid = $1;
+  `
+}); 
+
+
+
+export async function removeMonsterGroup(monstergroupid) {
+  db.none(removemonstergroupquery, [monstergroupid])
+  .catch((error) => {
+    console.error('Failed to remove monster group: ' + error);
+  });
+}
+
+
 const getencountersquery = new PQ({
   text: 'SELECT encounterid, name AS encountername FROM encounter;'
 });
@@ -231,9 +248,12 @@ export async function getEncounters() {
   }).catch((error) => {
     console.error("Error retrieving encounters" + error);
   });
+  if (encounterlisttemp.length <= 0) {
+    return encounters;
+  } 
   for (let result of encounterlisttemp) {
     let blankencounter = {};
-    blankencounter.encountername = encounter.encountername;
+    blankencounter.encountername = result.encountername;
     // For each encounterid, grab monstergroups.
     await db.many(getmonstergroupquery, [result.encounterid])
     .then((monstergroupresult) => {

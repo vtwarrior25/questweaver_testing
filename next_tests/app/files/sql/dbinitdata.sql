@@ -220,7 +220,7 @@ INSERT INTO effecttype (name, description) VALUES
 ('Piercing', ''),
 ('Necrotic', ''),
 ('Lightning', ''),
-('Trap Dammage', ''),
+('Trap Damage', ''),
 ('Cold', ''),
 ('Force', ''),
 ('Range Attacks', ''),
@@ -230,6 +230,7 @@ INSERT INTO effecttype (name, description) VALUES
 ('Heal', ''),
 ('Chromatic Orb', '')
 ('Resize', '');
+
 
 INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Abyssal', 'Languages'),

@@ -70,6 +70,7 @@ function InventoryMenu() {
   const setSectionWeight = (sectionname, weight) => {
     console.log("Before setting");
     console.log(sectionname);
+    console.log(weight);
     console.log(sections);
     let newsections = sections.filter((section) => section.sectionname === sectionname);
     let othersections = sections.filter((section) => section.sectionname !== sectionname)
@@ -312,7 +313,7 @@ function InventoryMenu() {
         </div>
       </div>
       <div className="inventoryTablesSection">
-        {sections.map((section, index) => <InventorySection key={index} sectionname={section.sectionname} name={section.sectionname} setItems={setItems} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={() => setSectionWeight()} removeItem={() => removeItem()}></InventorySection>)}
+        {sections.map((section, index) => <InventorySection key={index} sectionname={section.sectionname} name={section.sectionname} setItems={setItems} items={items.filter((item) => (item.section === section.sectionname))} setSectionWeight={setSectionWeight} removeItem={removeItem}></InventorySection>)}
       </div>
     </div>
   );

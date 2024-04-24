@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import MonsterGroup from "./MonsterGroup";
 import MonsterGroupForm from "./MonsterGroupForm";
 import ManualDiceRoller from './ManualDiceRoller';
+import { addGroupFromForm, getEncounters} from '../lib/monster';
 
 
 function MonsterSheet({setRollResults}) {
@@ -247,14 +248,22 @@ function MonsterSheet({setRollResults}) {
 
   useEffect(() => {
     // this will call the function to retrieve encounters from the server
-    //getEncounters();
+    getEncounters()
+    .then((result) => {
+      setEncounters([...result]);
+    })
+    .catch((error) => {
+      console.error("Error getting encounters from database: " + error);
+    })
   }, []
   );
 
 
   useEffect(() => {
     //console.log(encounters[0].encountername);
-    setEncounterSelected(encounters[0].encountername);
+    if (encounters.length > 0) {
+      setEncounterSelected(encounters[0].encountername);
+    }
   }, [encounters]
   );
 
@@ -267,23 +276,14 @@ function MonsterSheet({setRollResults}) {
   */
 
   const getMonsterGroups = (encountername) => {
-    //console.log(encounterselected);
-    //console.log(encounters[0].encountername);
-    //console.log(encountername);
+    let monstergroups;
     let encountertouse = encounters.filter((encounter) => encounter.encountername === encountername);
-    //console.log(encountertouse);
-    let monstergroups = encountertouse[0].monstergroups;
+    if (encountertouse !== null && encountertouse.length > 0) {
+      monstergroups = encountertouse[0].monstergroups;
+    }
     return monstergroups;
   }
 
-  /*
-  const getEncounters = () => {
-    let newencounterlist = [];
-    encounters.forEach((encounter) => newencounterlist.push(encounter.encountername));
-    setEncounterList([...newencounterlist]);
-    console.log(newencounterlist);
-  }
-  */
 
   const updateCurrentEncounter = (value) => {
     setEncounterSelected(value);
@@ -310,7 +310,12 @@ function MonsterSheet({setRollResults}) {
     // Set filtered array of monster groups to monstergroups in copied encounter
     theencounter.monstergroups = newmonstergroups;
     // Set encounters to all other encounters and modified encounter
-    setEncounters([otherencounters, theencounter]);
+    setEncounters([otherencounters, theencounter]); 
+    removeMonsterGroup()
+    .catch((error) => {
+      console.error("Failed to remove monster group: " + error);
+    });
+
   } 
 
   /*
@@ -321,29 +326,48 @@ function MonsterSheet({setRollResults}) {
 
   const addMonsterGroup = (encounter, monstergroup) => {
     console.log(encounter);
-    console.log(encounters);
-    let encounterindex = encounters.findIndex((e) => {e.encountername === encounter}) ?? -1;
-    console.log(encounterindex);
-    console.log(monstergroup);
-    //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];
-    if (encounterindex >= 0) {
-      console.log("We are here!!");
-      // If there are encounters with the name, add the new monster group to that encounter
-      let newencounters = {...encounters}
-      newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}];
-      setEncounters(newencounters);
-      //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
-    } else {
-      // If there aren't encounters with the name add the monster group to a new encounter
-      console.log("We are here!!");
-      let newencounter = {
-        encountername: encounter,
-        monstergroups: [
-          {...monstergroup}
-        ]
+    if (encounters.length >= 1) {
+      let encounterindex = encounters.findIndex((e) => {e.encountername.trim() === encounter.trim()});
+      console.log(encounterindex);
+      console.log(monstergroup);
+      //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];
+      if (encounterindex >= 0) {
+        console.log("We are here!!");
+        // If there are encounters with the name, add the new monster group to that encounter
+        let newencounters = {...encounters}
+        console.log(newencounters);
+        newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}];
+        console.log(newencounters);
+        setEncounters(newencounters);
+        //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
+      } else {
+        // If there aren't encounters with the name add the monster group to a new encounter
+        console.log(encounters);
+        console.log("We are here2!!");
+        let newencounter = {
+          encountername: encounter,
+          monstergroups: [
+            {...monstergroup}
+          ]
+        }
+        //console.log([...encounters, newencounter]);
+        console.log(encounters);
+        setEncounters([...encounters, newencounter]);
       }
-      setEncounters([...encounters, newencounter]);
+    } else {
+      console.log("We are here3!!");
+        let newencounter = {
+          encountername: encounter,
+          monstergroups: [
+            {...monstergroup}
+          ]
+        }
+        setEncounters([...encounters, newencounter]);
     }
+    addGroupFromForm(monstergroup, encounter)
+    .catch((error) => {
+      console.error("Error adding monster group to database: " + error);
+    })
   }
 
   return ( 
@@ -352,7 +376,7 @@ function MonsterSheet({setRollResults}) {
         <div className="encounterSelectorSection">
           <label htmlFor="encounterSelector">Encounter</label>
           <select className="encounterSelector" name="encounterSelector" value={encounterselected} onChange={((e) => updateCurrentEncounter(e.target.value))}>
-            {encounters.map((encounter, index) => 
+            {encounters && encounters.length > 0 && encounters.map((encounter, index) => 
               <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
             )}
           </select>
