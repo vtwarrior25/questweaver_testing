@@ -10,6 +10,7 @@ import {
   updateCharacterAbilityScores,
   addItemsToCharacterInventory,
 } from "../lib/getcharactercreatorinfo";
+import AvatarUpload from "./AvatarUpload";
 
 function CharacterCreator() {
   const [selectedBardWeapon, setSelectedBardWeapon] = useState("");
@@ -734,6 +735,11 @@ const renderOption = (option) => {
             <Button>
               Create Character
             </Button>
+          </div>
+        </Tab>
+        <Tab eventKey="avatar" title="Avatar">
+          <div className="characterAvatarMenu frontElement">
+            <AvatarUpload type="player" id={playercharacterid} upload={true}></AvatarUpload>
           </div>
         </Tab>
       </Tabs>

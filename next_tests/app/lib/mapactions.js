@@ -72,7 +72,7 @@ const toggledisplayplayeravatarquery = new PQ({
   `
 });
 
-export async function toggleDisplayAvatar(type, id, displayavatar, image) {
+export async function toggleDisplayAvatar(type, id, displayavatar) {
   if (type === 'monster') {
     db.none(updatemonsteravatarquery, [id, displayavatar])
     .catch((error) => {
@@ -120,14 +120,96 @@ export async function updateAvatar (type, id, newavatar) {
   }
 }
 
+const updatemonsteravatarscalequery = new PQ({
+  text: `
+    UPDATE mapdata
+    SET scale = $2
+    WHERE monstergroupid = $1;
+  `
+});
+
+const updateplayeravatarscalequery = new PQ({
+  text: `
+    UPDATE mapdata
+    SET scale = $2
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function updateAvatarScale (type, id, scale) {
+  if (type === 'monster') {
+    db.none(updatemonsteravatarscalequery, [id, scale])
+    .catch((error) => {
+      console.error('Error updating monster avatar scale: ' + error);
+    });
+  } else if (type === 'player') {
+    db.none(updateplayeravatarscalequery, [id, scale])
+    .catch((error) => {
+      console.error('Error updating player avatar scale: ' + error);
+    });
+  } else {
+    return;
+  }
+}
+
+
+const getmonsteravatarscalequery = new PQ({
+  text: `
+    SELECT scale, visible 
+    FROM mapdata
+    WHERE monstergroupid = $1;
+  `
+});
+
+const getplayeravatarscalequery = new PQ({
+  text: `
+    SELECT scale, visible
+    FROM mapdata
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function getAvatarInfo (type, id) {
+  let info = {
+    scale: 0.25,
+    visible: true
+  };
+  if (type === 'monster') {
+    await db.one(getmonsteravatarscalequery, [id])
+    .then((result) => {
+      info = {...result};
+    })
+    .catch((error) => {
+      console.error('Error getting monster avatar scale: ' + error);
+    });
+  } else if (type === 'player') {
+    await db.one(getplayeravatarscalequery, [id])
+    .then((result) => {
+      info = {...result};
+    })
+    .catch((error) => {
+      console.error('Error getting player avatar scale: ' + error);
+    });
+  } 
+  return info;
+}
+
+
+
+
 export async function getAvatars () {
-  let avatarlist = [];
   const dir = path.resolve('./public/avatars');
   const images = fs.readdirSync(dir);
   return images;
 }
 
-/*
+export async function getBackgrounds() {
+  const dir = path.resolve('./public/backgrounds');
+  const images = fs.readdirSync(dir);
+  return images;
+}
+
+
 export async function addNewAvatar (file, name) {
   const dir = path.resolve('./public/avatars');
   if (file instanceof File) {
@@ -137,7 +219,7 @@ export async function addNewAvatar (file, name) {
     console.log(oldpath);
   }
 }
-*/
+
 
 
 

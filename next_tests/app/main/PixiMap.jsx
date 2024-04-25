@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect, useCallback } from 'react';
 import { MapScaleContext, PlayerCharacterContext } from './Contexts';
 import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
-import { Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, Offcanvas, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
 import StaticGenerationSearchParamsBailoutProvider from 'next/dist/client/components/static-generation-searchparams-bailout-provider';
-import { getMapData, updateMapData, updateAvatar, addMapData } from '../lib/mapactions';
+import { getMapData, updateMapData, updateAvatar, addMapData, getBackgrounds } from '../lib/mapactions';
 
 function PixiMap() {
   //const [dragTarget, setDragTarget] = useState(null);
@@ -68,22 +68,33 @@ function PixiMap() {
   const [selectedtool, setSelectedTool] = useState("select");
   const [currentcolor, setCurrentColor] = useState();
   const [mapsize, setMapSize] = useState({
-    width: 0,
-    height: 0,
+    width: 500,
+    height: 500,
     scale: 100,
     backgroundcolor: 0xefd1ef
-  })
+  });
+
   const playercharacterid = useContext(PlayerCharacterContext);
   const [dragging, setDragging] = useState(false);
   const [pauseupdate, setPauseUpdate] = useState(false);
 
+  const [mapbackground, setMapBackground] = useState("wide_darkviperau_fucked.jpg");
+  const [mapbackgroundsize, setMapBackgroundSize] = useState( {
+    x: 500,
+    y: 500,
+    scale: 100,
+  });
+  const [mapbackgroundlist, setMapBackgroundList] = useState([]);
+  const [showmapsettings, setShowMapSettings] = useState(false);
+
   useEffect(() => {
-    setMapSize({width: 500, height: 500, scale: 100});
+    //setMapSize({width: 500, height: 500, scale: 100});
     }, []
   );
 
   useEffect(() => { 
     retrieveMapData(pauseupdate);
+    retrieveBackgroundList();
     setInterval(() => {
       /*
       if (dragging === false) {
@@ -98,6 +109,19 @@ function PixiMap() {
     }, []
   );
 
+
+  const retrieveBackgroundList = () => {
+    getBackgrounds()
+    .then((results) => {
+      console.log(results);
+      setMapBackgroundList([...results]);
+      if (results.length > 0) {
+        setMapBackground(results[0]);
+      }
+    }).catch((error) => {
+      console.error('Error retrieving map background list: ' + error);
+    })
+  }
 
   const retrieveMapData = () => {
     if (pauseupdate !== true) {
@@ -286,14 +310,81 @@ function PixiMap() {
       <Button variant="danger" onClick={() => handleClearCanvas()}>X</Button>
       </div>
       */}
+      <Offcanvas show={showmapsettings} onHide={() => setShowMapSettings(false)}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Map Settings</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body className='mapSettingsSection'>
+          <label for="mapbackgroundselector">Map Background</label>
+          <select name="mapbackgroundselector" onChange={(e) => {setMapBackground(e.target.value)}}>
+            {mapbackgroundlist.map((background, index) => 
+              <option key={index} value={background}>{background}</option>
+            )}
+          </select>
+          <div className='mapSettingsItem'>
+            <label for="mapscale">Map Scale</label>
+            <input name="mapscale" type="number" step="5" value={mapsize.scale} onChange={(e) => setMapSize({...mapsize, scale: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <label for="mapwidth">Map Width</label>
+            <input name="mapwidth" type="number" step="10" value={mapsize.width} onChange={(e) => setMapSize({...mapsize, width: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <label for="mapheight">Map Height</label>
+            <input name="mapheight" type="number" step="10" value={mapsize.height} onChange={(e) => setMapSize({...mapsize, height: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <label for="backgroundsize">Background X</label>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <label for="backgroundsize">Background Y</label>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.y} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, y: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <label for="backgroundsize">Background Scale</label>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)})}></input>
+          </div>
+          <div className='mapSettingsItem'>
+            <table>
+              <tr>
+                <td></td>
+                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y + 10})}>↑</Button></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x + 10})}>←</Button></td>
+                <td></td>
+                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x - 10})}>→</Button></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y - 10})}>↓</Button></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+      <div>
+        <Button onClick={() => setShowMapSettings(true)}></Button>
+      </div>
       <MapScaleContext.Provider value={mapsize.scale}>
         <Stage
           width={mapsize.width}
           height={mapsize.height}
           options={{backgroundColor: mapsize.backgroundcolor}}
         >
+          <Sprite
+            image={`/backgrounds/${mapbackground}`}
+            scale={{x: mapbackgroundsize.scale/100, y: mapbackgroundsize.scale/100}}
+            anchor={0.5}
+            x={mapbackgroundsize.x}
+            y={mapbackgroundsize.y}
+          />
           {mapshapes.map((shape, index) => {
             //console.log(shape);
+            /*
             if (shape.shape === "rectangle") {
               return <MapRectangle key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapRectangle>
             } else if (shape.shape === "circle") {
@@ -302,7 +393,8 @@ function PixiMap() {
               return <MapEllipse key={index} shapeinfo={shape}></MapEllipse>
             } else if (shape.shape === "text") {
               return <MapText key={index} shapeinfo={shape}></MapText>
-            } else if (shape.shape === "sprite") {
+              *
+            } else */ if (shape.shape === "sprite" && shape.visible === true) {
               return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
             }
           })}

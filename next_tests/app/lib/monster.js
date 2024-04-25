@@ -66,8 +66,8 @@ const addmonsterabilitiesquery = new PQ({
 
 const addmonsterattackquery = new PQ({
   text: `
-  INSERT INTO attack (attackid, name, range, attackmodifierid, damagemodifierid, diceid, numdamagedie, effecttypeid, description)
-  VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, (SELECT effecttypeid FROM effecttype WHERE name = $7), $8)
+  INSERT INTO attack (attackid, name, flatdamagemod, diceid, numdamagedie, effecttypeid)
+  VALUES (DEFAULT, $1, $2, (SELECT diceid FROM dice WHERE sides = $3), $4, (SELECT effecttypeid FROM effecttype WHERE name = $5))
   RETURNING attackid;`
 });
 
@@ -127,7 +127,7 @@ export async function addGroupFromForm(formdata, encountername) {
     }
     // add ability data from formdata into monsterability
     for (const ab of Object.keys(formdata.abilities)) {
-      db.one(addmonsterabilitiesquery, newmonstergroupid,ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab],scoreToMod(formdata.abilities[ab]))
+      db.one(addmonsterabilitiesquery, [newmonstergroupid,ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab],scoreToMod(formdata.abilities[ab])])
       .catch((error) => {
         console.log("Error inserting monster ability data: " + error);
       });
@@ -135,7 +135,7 @@ export async function addGroupFromForm(formdata, encountername) {
     // add attack data from formdata into attack
     for (const atk of formdata.attacks) {
       if (atk.name !== "") {
-        db.one(addmonsterattackquery, atk.name, null, null, atk.damagemod, null, atk.numdice, atk.damagetype, null)
+        db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
         .then ((result) => {
           // link attacks to monsterattack with attackid/monsterid
           db.one(linkmonsterattackquery, newmonstergroupid, result.attackid)

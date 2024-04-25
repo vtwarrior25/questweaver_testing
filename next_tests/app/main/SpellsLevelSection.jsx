@@ -77,7 +77,7 @@ function SpellsLevelSection({level, numspellslots, spellinfo, spells, setRollRes
         return "3rd Level";
         break;
       default:
-        return `${level}th Level`
+        return `${level}th Level`;
     }
   }
 

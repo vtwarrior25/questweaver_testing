@@ -1164,3 +1164,32 @@ Avatar Upload
   border: var(--thinBorder);
   padding: 0.5rem;
 }
+
+
+.avatarScaleControls {
+  display: flex; 
+  flex-direction: row;
+}
+
+/*
+----------------------------------------
+Map Things
+----------------------------------------
+*/
+
+.mapCanvasWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.mapSettingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mapSettingsItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

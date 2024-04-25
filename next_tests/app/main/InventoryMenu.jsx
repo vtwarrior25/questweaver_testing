@@ -24,7 +24,7 @@ function InventoryMenu() {
     pp: 0,
   });
 
-  const [sections, setSections] = useState([
+  const [sectionweights, setSectionWeights] = useState([
     {
       sectionname: "Equipment",
       sectionweight: 0,
@@ -33,7 +33,16 @@ function InventoryMenu() {
       sectionname: "Backpack",
       sectionweight: 0,
     }
-  ]); 
+  ]);
+
+  const [sections, setSections] = useState([
+    {
+      sectionname: "Equipment",
+    },
+    {
+      sectionname: "Backpack",
+    }
+  ]);
 
   useEffect(() => {
     /**
@@ -72,15 +81,15 @@ function InventoryMenu() {
     console.log(sectionname);
     console.log(weight);
     console.log(sections);
-    let newsections = sections.filter((section) => section.sectionname === sectionname);
-    let othersections = sections.filter((section) => section.sectionname !== sectionname)
+    let newsections = sectionweights.filter((section) => section.sectionname === sectionname);
+    let othersections = sectionweights.filter((section) => section.sectionname !== sectionname)
     if (newsections.length > 0) {
       let newsection = newsections[0];
       newsection.sectionweight = weight;
-      setSections([...othersections, newsection]);
+      setSectionWeights([...othersections, newsection]);
       updateTotalWeight();
       console.log("After setting");
-      console.log(sections); // This will show sections in console
+     //console.log(sections); // This will show sections in console
     } else {
       console.log("Unable to find provided section: " + sectionname);
     }
@@ -132,8 +141,9 @@ function InventoryMenu() {
 
   const updateTotalWeight = () => {
     let weightcount = 0;
-    sections.forEach((section) => weightcount += section.sectionweight);
+    sectionweights.forEach((section) => weightcount += section.sectionweight);
     setTotalWeight(weightcount);
+    console.log("updating total weight to " + weightcount);
   }
 
   useEffect(() => {

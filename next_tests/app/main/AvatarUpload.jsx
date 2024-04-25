@@ -2,20 +2,22 @@
 import { useState, useEffect } from "react";
 import { Button } from 'react-bootstrap';
 import Image from 'next/image'
-import { updateAvatar, getAvatars, addNewAvatar, toggleDisplayAvatar } from "../lib/mapactions";
+import { updateAvatar, getAvatars, getAvatarInfo, addNewAvatar, updateAvatarScale, toggleDisplayAvatar } from "../lib/mapactions";
 
 
-function AvatarUpload({type, id}) {
-  /*
+function AvatarUpload({type, id, upload}) {
+  
   const [newimagename, setNewImageName] = useState("");
   const [shownewimagesection, setShowNewImageSection] = useState(false);
   const [file, setFile] = useState(null);
-  */
-  const [displayavatar, setDisplayAvatar] = useState();
+  
+  const [displayavatar, setDisplayAvatar] = useState(true);
   const [selectedimage, setSelectedImage] = useState('bloke.jpg');
   const [avatarlist, setAvatarList] = useState([
     'bloke.jpg',
   ]);
+
+  const [avatarscale, setAvatarScale] = useState(0);
 
   const updateAvatarImage = () => {
     updateAvatar(type, id, selectedimage);
@@ -26,9 +28,27 @@ function AvatarUpload({type, id}) {
     .then((results) => {
       console.log(results);
       setAvatarList([...results]);
+      if (results.length > 0) {
+        setSelectedImage(results[0]);
+      }
     }).catch((error) => {
       console.error('Error retrieving avatar list: ' + error);
+    });
+    getAvatarInfo(type, id)
+    .then((result) => {
+      setAvatarScale(result.scale);
+      setDisplayAvatar(result.visible);
+    }).catch((error) => {
+      console.error("Error retrieving avatar scale: " + error)
     })
+  }
+
+  const modifyAvatarScale = (scale) => {
+    setAvatarScale(scale);
+    updateAvatarScale(type, id, scale)
+    .catch((error) => {
+      console.error("Error modifying avatar scale: " + error)
+    });
   }
 
   useEffect(() => {
@@ -38,7 +58,7 @@ function AvatarUpload({type, id}) {
 
   useEffect(() => {
     toggleDisplayAvatar(type, id, displayavatar);
-  }, [displayavatar]
+  }, [type, id, displayavatar]
   );
   
 
@@ -53,9 +73,17 @@ function AvatarUpload({type, id}) {
         </select>
         <Image src={`/avatars/${selectedimage}`} height={75} width={75} alt="Currently selected image"></Image>
         <Button onClick={() => updateAvatarImage()}>Update</Button>
-        <input type='checkbox'></input>
+        <label for="toggleavatarvisibility">Visible?</label>
+        <input name="toggleavatarvisibility" type='checkbox' checked={displayavatar} onChange={() => setDisplayAvatar(!displayavatar)}></input>
+        <label for="toggleavatarvisibility">Visible?</label>
+        <div className="avatarScaleControls">
+          <Button onClick={() => modifyAvatarScale(avatarscale - 0.05)}>-</Button>
+          <input type="number" step="0.05" value={avatarscale} onChange={(e) => modifyAvatarScale(Number(e.target.value))}></input>
+          <Button onClick={() => modifyAvatarScale(avatarscale + 0.05)}>+</Button>
+        </div>
+        
       </div>
-      {/*}
+      {upload === true && 
       <form className="avatarUploadForm">
         <Button variant='secondary' onClick={() => setShowNewImageSection(!shownewimagesection)}>New Image</Button>
         {shownewimagesection &&
@@ -67,7 +95,7 @@ function AvatarUpload({type, id}) {
         </>  
         }
       </form>
-      */}
+      }
     </div>
   );
 

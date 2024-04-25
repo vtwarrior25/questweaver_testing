@@ -170,7 +170,7 @@ TODO
         <label htmlFor="monsterGroupNotesText">Notes</label>
         <textarea name="monsterGroupNotesText" value={monstergroupnotes} onChange={(e) => setMonsterGroupNotes(e.target.value)}></textarea>
         <Button onClick={() => sendMonsterGroupNotesToServer()}>Save</Button>
-        <AvatarUpload type='monster'></AvatarUpload>
+        <AvatarUpload type='monster' id={monsterinfo.basicinfo.monstergroupid}></AvatarUpload>
       </div>
     </div>
   );

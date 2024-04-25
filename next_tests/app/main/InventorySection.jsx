@@ -44,7 +44,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     console.log(`This should print ${sectionname} ${weight}`);
     setInnerSectionWeight(weight);
     console.log(sectionname);
-    setSectionWeight(sectionname, weight);
+    //setSectionWeight(sectionname, weight);
   }
 
   const toggleActiveAction = (itemid, section, status) => {
