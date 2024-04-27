@@ -229,6 +229,8 @@ INSERT INTO effecttype (name, description) VALUES
 ('Charm', ''),
 ('Heal', ''),
 ('Defence', ''),
+('Enhance', ''),
+('Weaken', ''),
 ('Summon', ''),
 ('Chromatic Orb', ''),
 ('Resize', ''),
