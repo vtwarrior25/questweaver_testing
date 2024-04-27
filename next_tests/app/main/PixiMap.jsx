@@ -4,7 +4,7 @@ import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, Offcanvas, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
 import StaticGenerationSearchParamsBailoutProvider from 'next/dist/client/components/static-generation-searchparams-bailout-provider';
-import { getMapData, updateMapData, updateAvatar, addMapData, getBackgrounds } from '../lib/mapactions';
+import { getMapData, updateMapData, updateAvatar, addMapData, getMapStats, updateMapStats, getBackgrounds } from '../lib/mapactions';
 
 function PixiMap() {
   //const [dragTarget, setDragTarget] = useState(null);
@@ -93,7 +93,8 @@ function PixiMap() {
   );
 
   useEffect(() => { 
-    retrieveMapData(pauseupdate);
+    retrieveMapData();
+    retrieveMapStats();
     retrieveBackgroundList();
     setInterval(() => {
       /*
@@ -104,6 +105,7 @@ function PixiMap() {
         console.log("Not");
       }
       */
+      retrieveMapStats();
       retrieveMapData(); 
     }, 1500);
     }, []
@@ -136,13 +138,31 @@ function PixiMap() {
     }
   }
 
+  const retrieveMapStats = () => {
+    getMapStats()
+    .then((result) => {
+      setMapBackground(result.mapbackground);
+      setMapBackgroundSize({...result.mapbackgroundsize});
+      //setMapSize({...result.mapsize});
+    }).catch((error) => {
+      console.error("Error retrieving map data: " + error);
+    });
+  }
+
 
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
     //console.log(scale);
   }
 
- 
+
+  const modifyMapStats = () =>  {
+    updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, `/backgrounds/${mapbackground}`)
+    .catch((error) => {
+      console.error("Error updating map stats: " + error)
+    })
+  }
+
 
   /*
   const onDragMove = (e) => {
@@ -264,8 +284,25 @@ function PixiMap() {
       //console.log(newPosition);
       //console.log(sprite);
       //console.log(sprite.data);
-      sprite.x = newPosition.x;
-      sprite.y = newPosition.y;
+      
+      if (sprite.x > mapsize.width) {
+        sprite.x = mapsize.width;
+      } else if (sprite.x <  0){
+        sprite.x = 0;
+      } else {
+        sprite.x = newPosition.x;
+      }
+      if (sprite.y > mapsize.height) {
+        sprite.x = mapsize.height;
+      } else if (sprite.y <  0){
+        sprite.y = 0;
+      } else {
+        sprite.y = newPosition.y;
+      }
+      
+
+      //sprite.x = newPosition.x;
+      //sprite.y = newPosition.y;
       updateState(sprite.id, sprite.x, sprite.y);
     }
   };
@@ -321,18 +358,16 @@ function PixiMap() {
               <option key={index} value={background}>{background}</option>
             )}
           </select>
-          <div className='mapSettingsItem'>
-            <label for="mapscale">Map Scale</label>
-            <input name="mapscale" type="number" step="5" value={mapsize.scale} onChange={(e) => setMapSize({...mapsize, scale: Number(e.target.value)})}></input>
-          </div>
+          {/*
           <div className='mapSettingsItem'>
             <label for="mapwidth">Map Width</label>
-            <input name="mapwidth" type="number" step="10" value={mapsize.width} onChange={(e) => setMapSize({...mapsize, width: Number(e.target.value)})}></input>
+            <input name="mapwidth" type="number" step="10" value={mapsize.width} onChange={(e) => {setMapSize({...mapsize, width: Number(e.target.value)}); modifyMapStats()}}></input>
           </div>
           <div className='mapSettingsItem'>
             <label for="mapheight">Map Height</label>
-            <input name="mapheight" type="number" step="10" value={mapsize.height} onChange={(e) => setMapSize({...mapsize, height: Number(e.target.value)})}></input>
+            <input name="mapheight" type="number" step="10" value={mapsize.height} onChange={(e) => {setMapSize({...mapsize, height: Number(e.target.value)}); modifyMapStats()}}></input>
           </div>
+          */}
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background X</label>
             <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)})}></input>
@@ -346,6 +381,7 @@ function PixiMap() {
             <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)})}></input>
           </div>
           <div className='mapSettingsItem'>
+            <span>Move Background</span>
             <table>
               <tr>
                 <td></td>
@@ -398,7 +434,7 @@ function PixiMap() {
               return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
             }
           })}
-          <Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>
+          {/*<Text text="Beans" anchor={0.5} x={150} y={150} interactive={true} pointerdown={onDragStart} pointerup={onDragEnd} pointerupoutside={onDragEnd} pointermove={onDragMove}></Text>*/}
         </Stage>
       </MapScaleContext.Provider>
     </div>

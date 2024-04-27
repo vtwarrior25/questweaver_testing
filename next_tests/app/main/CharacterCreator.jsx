@@ -25,17 +25,18 @@ function CharacterCreator() {
   const [greataxeSelected, setGreataxeSelected] = useState(false);
   const [selectedSimpleWeapon, setSelectedSimpleWeapon] = useState("");
 
-  const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
+  //const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
-  const [selectedClassEquipment, setSelectedClassEquipment] = useState(null);
+  //const [selectedClassEquipment, setSelectedClassEquipment] = useState(null);
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({
     subracesWithRaces: [],
     racesWithoutSubraces: [],
   });
   const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedClass, setSelectedClass] = useState('Barbarian');
+  const [equipmentForCharacter, setEquipmentForCharacter] = useState([]);
   const [error, setError] = useState(null);
   const [abilityScores, setAbilityScores] = useState(initialScores);
   const [tempValues, setTempValues] = useState([0, 0, 0, 0, 0, 0]);
@@ -60,6 +61,10 @@ function CharacterCreator() {
     ];
   };
 
+  
+
+  
+  
   const martialWeapons = [
     "Glaive",
     "Longsword",
@@ -98,6 +103,10 @@ function CharacterCreator() {
     "Sling",
     "Boomerang",
     "Yklwa",
+  ];
+
+  const musicalInstruments = [
+    'Lute',
   ];
 
   const [abilities, setAbilities] = useState([
@@ -187,7 +196,7 @@ function CharacterCreator() {
     Barbarian: [
       {
         id: 0,
-        type: 'radio',
+        type: 'radioset',
         name: 'Weapon Choice',
         options: [
           {
@@ -195,8 +204,9 @@ function CharacterCreator() {
             name: 'Greataxe',
           },
           {
-            type: 'radio',
+            type: 'dropdown',
             name: 'Martial Melee',
+            dropdowndata: 'martialMelee',
           },
         ],
       },
@@ -206,13 +216,13 @@ function CharacterCreator() {
         name: 'greatAxeOrMartialMelee',
         options: [
           {
-            type: 'radiobutton',
+            type: 'radio',
             name: 'Two Handaxes',
           },
           {
             type: 'dropdown',
+            name: 'Simple Weapon',
             dropdowndata: 'simple',
-            selected: '',
           }
         ],
       },
@@ -220,9 +230,72 @@ function CharacterCreator() {
         id: 2,
         type: 'checkbox',
         name: "Explorer's pack",
-        checked: false
       }
     ],
+    Bard: [
+      {
+        id: 0,
+        type: 'radioset',
+        name: 'rapierLongSwordSimpleWeapon',
+        options: [
+          {
+            type: 'radio',
+            name: 'Rapier',
+          },
+          {
+            type: 'radio',
+            name: 'Longsword',
+          },
+          {
+            type: 'dropdown',
+            name: 'Simple Weapon',
+            dropdowndata: 'simple',
+          },
+        ],
+      },
+      {
+        id: 1,
+        type: 'radioset',
+        name: 'greatAxeOrMartialMelee',
+        options: [
+          {
+            type: 'radio',
+            name: "Diplomat's Pack",
+          },
+          {
+            type: 'radio',
+            name: "Entertainer's Pack",
+          }
+        ],
+      },
+      {
+        id: 2,
+        type: 'radioset',
+        name: "Musical Instrument",
+        options: [
+          {
+            type: 'radio',
+            name: "Lute",
+          },
+          {
+            type: 'dropdown',
+            name: 'Musical Instrument',
+            dropdowndata: 'musicalInstruments'
+          }
+        ]
+      },
+      {
+        id: 3,
+        type: 'checkbox',
+        name: "Leather Armor",
+      },
+      {
+        id: 4,
+        type: 'checkbox',
+        name: "Dagger",
+      }
+    ],
+    /*
     MartialMeleeDropdown: [
       {
         id: 0,
@@ -231,10 +304,21 @@ function CharacterCreator() {
         selected: '',
       }
     ]
-
-
+    */
   }); 
   
+
+  /*
+    How to handle holding data from equipment
+    Create empty array
+    Parse classEquipment for class,
+    Create object in array for each high level option in class equipment
+    Set 'name' in object to name of option
+    Create empty property 'value' in object
+    When we change what is selected within the high level option, it sets value to the value that is selected
+  */
+
+ 
 
 
   // Fetch class data
@@ -242,9 +326,10 @@ function CharacterCreator() {
     const fetchData = async () => {
       try {
         const data = await getCharacterClassInfo();
+        console.log(data);
         setClasses(data);
         if (data.length > 0) {
-          setSelectedClass(data[0]); // Set the default selected class
+          setSelectedClass(data[0].name); // Set the default selected class
         }
       } catch (error) {
         console.error("Failed to fetch class data:", error);
@@ -255,15 +340,16 @@ function CharacterCreator() {
   }, []);
 
   // Handle class selection
+  
   const handleSelectClass = (classItem) => {
     setSelectedClass(classItem);
-    setSelectedClassEquipment(classEquipment[classItem]); 
+    //setSelectedClassEquipment(classEquipment[classItem]); 
   };
 
   // Handle choosing class
   // This function is called when a class is selected
 
-
+/*
   //equipment
   useEffect(() => {
     const fetchEquipmentIds = async () => {
@@ -281,6 +367,7 @@ function CharacterCreator() {
 
     fetchEquipmentIds();
   }, []);
+  */
 
   const addEquipmentToInventory = async () => {
     const equipmentToAdd = [];
@@ -303,8 +390,11 @@ function CharacterCreator() {
 
 const [dropdownOptions, setDropdownOptions] = useState({
   martialMelee: martialWeapons,
-  simple: simpleWeapons
+  simple: simpleWeapons,
+  musicalInstruments: musicalInstruments,
 });
+
+/*
 const handleRadioChange = (e, optionGroup) => {
   const { name, value } = e.target;
   setSelectedEquipmentClass((prev) => ({
@@ -312,19 +402,38 @@ const handleRadioChange = (e, optionGroup) => {
     [optionGroup.name]: value,
   }));
 };
+*/
 
-const handleChooseClass = (classItem) => {
-  setSelectedClass(classItem.name);
-  setSelectedClassEquipment(classEquipment[classItem.name]); 
-  setSelectedEquipmentClass({}); 
+const handleChooseClass = (classitem) => {
+  setSelectedClass(classitem.name);
+  console.log(classEquipment['Barbarian']);
+  let equipmentarray = [];
+  for (let option in classEquipment[classitem.name]) {
+    equipmentarray.push({name: option.name, value: ''});
+  }
+  setEquipmentForCharacter();
+  //setSelectedClassEquipment(classEquipment[classitem.name]); 
+  //setSelectedEquipmentClass(classEquipment[classitem.name]); 
 };
 
 
+const updateEquipmentForCharacter = (optionname, value) => {
+  let matcheditems = equipmentarray.filter((option) => option.name === optionname);
+  let nonmatcheditems = equipmentarray.filter((option) => option.name !== optionname);
+  if (matcheditems.length !== 1) {
+    console.error("There is more than one character creator equipment option with the same name. Fix that!!");
+    return;
+  } else {
+    matcheditems[0].value = value;
+  }
 
+  setEquipmentForCharacter(...matcheditems, ...nonmatcheditems);
+}
+
+/*
 const renderEquipmentOptions = () => {
   if (!selectedClassEquipment) return null;
-
-  return selectedClassEquipment.map((optionGroup, groupIndex) => (
+  return classEquipment[selectedClass].map((optionGroup, groupIndex) => (
     <div key={groupIndex} className="optionGroup">
       {optionGroup && optionGroup.options && optionGroup.options.map((option, optionIndex) => (
         <div key={optionIndex} className="optionBox">
@@ -366,49 +475,88 @@ const renderEquipmentOptions = () => {
   ));
 };
 
+*/
+
+const renderEquipmentOptions = () => {
+  //if (!selectedClassEquipment) return null;
+  if (classEquipment[selectedClass] == undefined || classEquipment[selectedClass]  == null) return null;
+  return (
+    <div className="characterCreatorEquipmentSection">
+      {classEquipment[selectedClass].map((optionGroup, groupIndex) => (
+      <div key={groupIndex} className="optionGroup">
+        {renderOption(optionGroup)}
+      </div>
+    ))}
+    </div>
+    );
+};
 
 
 
 
-const renderOption = (option) => {
+
+const renderOption = (option, withinradio) => {
   switch (option.type) {
+    case "radioset":
+      return (
+        <div className="characterCreatorOptionGroup characterCreatorRadioSection">
+          {option.options.map((radio, index) => (
+            <div key={index} className="characterCreatorRadioOption">
+              <input
+                type="radio"
+                name={option.name}
+                value={option.name}
+                //checked={selectedEquipmentClass[option.name] === option.name}
+                //onChange={handleRadioChange}
+              />
+              {renderOption(radio, true)}
+            </div>
+          ))}
+        </div>
+      );
     case "radio":
       return (
-        <label className="characterCreatorRadioOption">
-          <input
+        <div>
+          {/*withinradio === false && <input
             type="radio"
             name={option.name}
             value={option.name}
             checked={selectedEquipmentClass[option.name] === option.name}
             onChange={handleRadioChange}
-          />
+      />*/}
           {option.name}
-        </label>
+        </div>
       );
     case "dropdown":
       return (
-        <select
-          className="dropdownContainer"
-          value={selectedEquipmentClass[option.dropdowndata] || ""}
-          onChange={(e) => handleDropdownChange(e, option.dropdowndata)}
-        >
-          {dropdownOptions[option.dropdowndata].map((item, index) => (
-            <option key={index} value={item}>
-              {item}
-            </option>
-          ))}
+        <div className="characterCreatorOption">
+          {option.name}
+          <select
+            className="dropdownContainer"
+            //value={selectedEquipmentClass[option.dropdowndata] || ""}
+            //onChange={(e) => handleDropdownChange(e, option.dropdowndata)}
+          >
+            {dropdownOptions[option.dropdowndata].map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
         </select>
+        
+        </div>
+        
       );
     case "checkbox":
       return (
-        <label className="custom-checkbox">
+        <div className="characterCreatorOptionGroup">
           <input
             type="checkbox"
-            checked={selectedEquipmentClass[option.name] || false}
-            onChange={(e) => handleCheckboxChange(e, option)}
+            //onChange={(e) => updateEquipmentForCharacter(option.name, e.target.checked)}
+            //checked={selectedEquipmentClass[option.name] || false}
+            //onChange={(e) => handleCheckboxChange(e, option)}
           />
           <span className="weaponLabel">{option.name}</span>
-        </label>
+        </div>
       );
     default:
       return null;

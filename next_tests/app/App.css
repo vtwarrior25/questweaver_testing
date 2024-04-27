@@ -672,6 +672,36 @@ Character Creation
   user-select: none;
 }
 
+.characterCreatorOptionGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.characterCreatorCheckbox {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+
+.characterCreatorRadioOption {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.characterCreatorEquipmentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 0.3rem;
+}
+
+.optionGroup {
+  padding: 0.2rem;
+}
+
 
 .custom-checkbox input {
   position: absolute;

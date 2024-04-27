@@ -766,7 +766,7 @@ const featuresdefaultresult = [
 
 const getcharacterfeaturesquery = new PQ({
   text: `
-    SELECT * FROM feature c
+    SELECT featureid, name, description, featuretype FROM feature c
     JOIN characterfeature p ON c.featureid = p.featureid
     WHERE p.playercharacterid = $1;
   `
@@ -774,7 +774,7 @@ const getcharacterfeaturesquery = new PQ({
 
 const getclassfeaturesquery = new PQ({
   text: `
-    SELECT * FROM feature c
+    SELECT featureid, name, description, featuretype FROM feature c
     JOIN classfeature p ON c.featureid = p.featureid
     WHERE p.classid = (SELECT classid FROM class WHERE name = $1);
   `
@@ -782,7 +782,7 @@ const getclassfeaturesquery = new PQ({
 
 const getracefeaturesquery = new PQ({
   text: `
-    SELECT * FROM feature c
+    SELECT featureid, name, description, featuretype FROM feature c
     JOIN racefeature p ON c.featureid = p.featureid
     WHERE p.raceid = $1 (SELECT raceid FROM race WHERE name = $1);
   `
@@ -801,10 +801,14 @@ export async function getCharacterFeatures(playercharacterid) {
     }).catch (error => {
       console.error("Error retrieving character info " + error);
     });
+    /*
   for (const feature of rawresult) {
     let featuredata = getFeatureData(feature);
     featurelist = [...featurelist, featuredata];
+    featurelist = 
   }
+  */
+  featurelist = [...rawresult];
   if (featurelist.length > 0) {
     return featurelist;
   } else {

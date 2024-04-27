@@ -272,9 +272,11 @@ Feature Tables
 
 CREATE TYPE featuretype AS ENUM ('None', 'Proficiency', 'Action', 'Speed', 'Ability Score', 'Ability Action', 'Defense', 'Condition');
 
+
 CREATE TABLE IF NOT EXISTS feature (
 	featureid						integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name								varchar(20) UNIQUE,
+	name								varchar(100) UNIQUE,
+	displayname					varchar(100),
 	description					varchar(2000),
 	featuretype					featuretype
 );
@@ -302,6 +304,7 @@ CREATE TABLE IF NOT EXISTS abilityscorefeature (
 	scorebonus						integer
 );
 
+
 CREATE TABLE IF NOT EXISTS abilityactionfeature (
 	featureid									integer REFERENCES feature(featureid) NOT NULL,
 	abilityid									integer REFERENCES ability(abilityid) NOT NULL,
@@ -324,7 +327,8 @@ CREATE TABLE IF NOT EXISTS manualfeature (
 
 CREATE TABLE IF NOT EXISTS defensefeature (
 	featureid							integer REFERENCES feature(featureid) NOT NULL,
-	defenseid							integer REFERENCES defense(defenseid) NOT NULL
+	defenseid							integer REFERENCES defense(defenseid) NOT NULL,
+	defensestatus 				defensestatus,
 );
 
 CREATE TABLE IF NOT EXISTS conditionfeature (
@@ -410,6 +414,7 @@ CREATE TABLE IF NOT EXISTS characterfeature (
 	characterfeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid					integer REFERENCES playercharacter(playercharacterid) NOT NULL,
 	featureid									integer REFERENCES feature(featureid) NOT NULL,
+	raceorclass								varchar(1);
 	UNIQUE (playercharacterid, featureid)
 );
 
@@ -766,7 +771,15 @@ CREATE TABLE IF NOT EXISTS mapdata (
 	visible							boolean DEFAULT false
 );
 
-
+CREATE TABLE IF NOT EXISTS mapstats (
+	mapstatsid					integer PRIMARY KEY,
+	mapwidth						integer,
+	mapheight						integer,
+	backgroundx					integer,
+	backgroundy					integer,
+	backgroundscale			integer,
+	backgroundimage			varchar(100)
+);
 
 
 

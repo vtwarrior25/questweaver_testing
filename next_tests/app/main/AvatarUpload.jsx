@@ -20,7 +20,7 @@ function AvatarUpload({type, id, upload}) {
   const [avatarscale, setAvatarScale] = useState(0);
 
   const updateAvatarImage = () => {
-    updateAvatar(type, id, selectedimage);
+    updateAvatar(type, id, `/avatars/${selectedimage}`);
   }
 
   const retrieveAvatarList = () => {
@@ -57,7 +57,7 @@ function AvatarUpload({type, id, upload}) {
   );
 
   useEffect(() => {
-    toggleDisplayAvatar(type, id, displayavatar);
+    toggleDisplayAvatar(type, id, displayavatar, selectedimage);
   }, [type, id, displayavatar]
   );
   
@@ -75,7 +75,7 @@ function AvatarUpload({type, id, upload}) {
         <Button onClick={() => updateAvatarImage()}>Update</Button>
         <label for="toggleavatarvisibility">Visible?</label>
         <input name="toggleavatarvisibility" type='checkbox' checked={displayavatar} onChange={() => setDisplayAvatar(!displayavatar)}></input>
-        <label for="toggleavatarvisibility">Visible?</label>
+        <label for="toggleavatarvisibility">Scale</label>
         <div className="avatarScaleControls">
           <Button onClick={() => modifyAvatarScale(avatarscale - 0.05)}>-</Button>
           <input type="number" step="0.05" value={avatarscale} onChange={(e) => modifyAvatarScale(Number(e.target.value))}></input>
