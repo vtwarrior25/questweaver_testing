@@ -1038,6 +1038,9 @@ export async function addFeaturesToCharacter(playercharacterid) {
 
   // Add features to characterfeatures
   for (const feature of features) {
+    // For each feature, check if we need to modify the character in another way
+    
+
     db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
     .catch((error) => {
       console.error('Error adding feature' + feature.featureid + ' : ' + error);

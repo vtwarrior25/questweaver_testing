@@ -272,7 +272,8 @@ function MonsterSheet({setRollResults}) {
 
   const getMonsterGroups = (encountername) => {
     let monstergroups;
-    let encountertouse = encounters.filter((encounter) => encounter.encountername === encountername);
+    console.log(encounters);
+    let encountertouse = encounters.filter((encounter) => encounter.encountername == encountername);
     if (encountertouse !== null && encountertouse.length > 0) {
       monstergroups = encountertouse[0].monstergroups;
     }
