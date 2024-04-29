@@ -2,6 +2,7 @@
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
+import { addFeaturesToCharacter } from './getcharacterinfo';
 import { abilities } from './resources';
 
 
@@ -91,21 +92,11 @@ export async function createCharacter(formdata) {
         // Need to provide a way of sending which skills the character is proficient in
         db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
       }
+    });
+    addFeaturesToCharacter(playercharacterid)
+    .catch((error) => {
+      console.error("Error adding features to character: " + error);
     })
-    // Get list of features (featureid) for class, subclass, race, subrace
-    // Put all of them in one list
-    // Go through the list, one by one
-    // There will be some checks in here for specific things, 
-    // such as ability score modifiers and speed, don't worry about that right now
-    // Insert them all into characterfeature
-    for (feature of features) {
-      db.many(playercharacterfeaturequery, [playercharacterid, feature.name])
-      .then((featureresult) => {
-
-      }).catch((error) => {
-        console.error("Error adding features to character: " + error);
-      })
-    }
   }).catch((error) => {
     return "Error inserting player character";
   })
