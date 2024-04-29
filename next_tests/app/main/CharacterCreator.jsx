@@ -189,7 +189,7 @@ function CharacterCreator() {
       {
         id: 0,
         type: 'radioset',
-        name: 'Weapon Choice',
+        name: 'greatAxeOrMartialMelee',
         options: [
           {
             type: 'radio',
@@ -205,7 +205,7 @@ function CharacterCreator() {
       {
         id: 1,
         type: 'radioset',
-        name: 'greatAxeOrMartialMelee',
+        name: 'twoHandaxesOrSimpleWeapon',
         options: [
           {
             type: 'radio',
@@ -401,9 +401,9 @@ const handleChooseClass = (classitem) => {
   console.log(classEquipment['Barbarian']);
   let equipmentarray = [];
   for (let option in classEquipment[classitem.name]) {
-    equipmentarray.push({name: option.name, value: ''});
+    equipmentarray.push({name: option, value: ''});
   }
-  setEquipmentForCharacter();
+  setEquipmentForCharacter([equipmentarray]);
   //setSelectedClassEquipment(classEquipment[classitem.name]); 
   //setSelectedEquipmentClass(classEquipment[classitem.name]); 
 };
@@ -453,7 +453,7 @@ const renderEquipmentOptions = () => {
 
 
 
-const renderOption = (option, withinradio) => {
+const renderOption = (option, superoptionname) => {
   switch (option.type) {
     case "radioset":
       return (
@@ -488,12 +488,25 @@ const renderOption = (option, withinradio) => {
     case "radio":
       return (
         <div>
+          <input
+            type="radio"
+            name={superoptionname}
+            value={option.name}
+            onChecked={() => updateEquipmentForCharacter(superoptionname, option.name)}
+            //onChange={handleRadioChange}
+          />
           {option.name}
         </div>
       );
     case "dropdown":
       return (
         <div className="characterCreatorOption">
+          <input
+            type="radio"
+            name={superoptionname}
+            value={option.name}
+            //onChange={handleRadioChange}
+          />
           {option.name}
           {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon') && (
             <select

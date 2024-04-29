@@ -327,7 +327,7 @@ function MonsterSheet({setRollResults}) {
   const addMonsterGroup = (encounter, monstergroup) => {
     console.log(encounter);
     if (encounters.length >= 1) {
-      let encounterindex = encounters.findIndex((e) => {e.encountername.trim() === encounter.trim()});
+      let encounterindex = encounters.findIndex((e) => {e.encountername.trim() === encounter.trim()}); // TODO this line is failing, for some reason it doesn't match strings correctly
       console.log(encounterindex);
       console.log(monstergroup);
       //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];

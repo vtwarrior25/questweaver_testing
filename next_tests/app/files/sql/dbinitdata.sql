@@ -268,6 +268,7 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Dulcimer', 'Tools'),
 ('Dwarvish', 'Languages'),
 ('Elvish', 'Languages'),
+('Extra Language', 'Languages'),
 ('Flail','Weapons'),
 ('Flute','Tools'),
 ('Forgery Kit','Tools'),

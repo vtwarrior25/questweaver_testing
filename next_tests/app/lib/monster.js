@@ -55,7 +55,8 @@ const addnewmonstergroupquery = new PQ({
 const addnewencounterquery = new PQ({
   text: `
   INSERT INTO encounter (encounterid, name)
-  VALUES (DEFAULT, $1);`
+  VALUES (DEFAULT, $1)
+  RETURNING encounterid;`
 });
 
 const addmonsterabilitiesquery = new PQ({

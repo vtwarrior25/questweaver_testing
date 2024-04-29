@@ -78,7 +78,7 @@ function PixiMap() {
   const [dragging, setDragging] = useState(false);
   const [pauseupdate, setPauseUpdate] = useState(false);
 
-  const [mapbackground, setMapBackground] = useState("wide_darkviperau_fucked.jpg");
+  const [mapbackground, setMapBackground] = useState("/backgrounds/wide_darkviperau_fucked.jpg");
   const [mapbackgroundsize, setMapBackgroundSize] = useState( {
     x: 500,
     y: 500,
@@ -157,7 +157,7 @@ function PixiMap() {
 
 
   const modifyMapStats = () =>  {
-    updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, `/backgrounds/${mapbackground}`)
+    updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
     .catch((error) => {
       console.error("Error updating map stats: " + error)
     })
@@ -353,7 +353,7 @@ function PixiMap() {
         </Offcanvas.Header>
         <Offcanvas.Body className='mapSettingsSection'>
           <label for="mapbackgroundselector">Map Background</label>
-          <select name="mapbackgroundselector" onChange={(e) => {setMapBackground(e.target.value)}}>
+          <select name="mapbackgroundselector" onChange={(e) => {setMapBackground(`/backgrounds/${e.target.value}`); modifyMapStats()}}>
             {mapbackgroundlist.map((background, index) => 
               <option key={index} value={background}>{background}</option>
             )}
@@ -370,32 +370,32 @@ function PixiMap() {
           */}
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background X</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)})}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)}); modifyMapStats()}}></input>
           </div>
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background Y</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.y} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, y: Number(e.target.value)})}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.y} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, y: Number(e.target.value)}); modifyMapStats()}}></input>
           </div>
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background Scale</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)})}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)}); modifyMapStats()}}></input>
           </div>
           <div className='mapSettingsItem'>
             <span>Move Background</span>
             <table>
               <tr>
                 <td></td>
-                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y + 10})}>↑</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y + 10}); modifyMapStats()}}>↑</Button></td>
                 <td></td>
               </tr>
               <tr>
-                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x + 10})}>←</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x + 10}); modifyMapStats()}}>←</Button></td>
                 <td></td>
-                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x - 10})}>→</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x - 10}); modifyMapStats()}}>→</Button></td>
               </tr>
               <tr>
                 <td></td>
-                <td><Button onClick={() => setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y - 10})}>↓</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y - 10}); modifyMapStats()}}>↓</Button></td>
                 <td></td>
               </tr>
             </table>
@@ -412,7 +412,7 @@ function PixiMap() {
           options={{backgroundColor: mapsize.backgroundcolor}}
         >
           <Sprite
-            image={`/backgrounds/${mapbackground}`}
+            image={mapbackground}
             scale={{x: mapbackgroundsize.scale/100, y: mapbackgroundsize.scale/100}}
             anchor={0.5}
             x={mapbackgroundsize.x}
@@ -430,7 +430,7 @@ function PixiMap() {
             } else if (shape.shape === "text") {
               return <MapText key={index} shapeinfo={shape}></MapText>
               *
-            } else */ if (shape.shape === "sprite" && shape.visible === true) {
+            } else */ if (shape.shape === "sprite") {
               return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
             }
           })}

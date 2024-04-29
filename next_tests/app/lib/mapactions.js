@@ -225,7 +225,7 @@ const updatemapstatsquery = new PQ({
     (1, $1, $2, $3, $4, $5, $6)
     ON CONFLICT (mapstatsid) DO UPDATE 
       SET mapwidth = $1, mapheight = $2, backgroundx = $3, backgroundy = $4, backgroundscale = $5, backgroundimage = $6
-    WHERE mapstatsid = 1;
+    WHERE mapstats.mapstatsid = 1;
   `
 });
 

@@ -73,9 +73,9 @@ function AvatarUpload({type, id, upload}) {
         </select>
         <Image src={`/avatars/${selectedimage}`} height={75} width={75} alt="Currently selected image"></Image>
         <Button onClick={() => updateAvatarImage()}>Update</Button>
-        <label for="toggleavatarvisibility">Visible?</label>
+        <label htmlFor="toggleavatarvisibility">Visible?</label>
         <input name="toggleavatarvisibility" type='checkbox' checked={displayavatar} onChange={() => setDisplayAvatar(!displayavatar)}></input>
-        <label for="toggleavatarvisibility">Scale</label>
+        <label htmlFor="toggleavatarvisibility">Scale</label>
         <div className="avatarScaleControls">
           <Button onClick={() => modifyAvatarScale(avatarscale - 0.05)}>-</Button>
           <input type="number" step="0.05" value={avatarscale} onChange={(e) => modifyAvatarScale(Number(e.target.value))}></input>
