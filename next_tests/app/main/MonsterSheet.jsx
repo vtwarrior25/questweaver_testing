@@ -323,20 +323,21 @@ function MonsterSheet({setRollResults}) {
   const addMonsterGroup = (encounter, monstergroup) => {
     console.log(encounter);
     if (encounters.length >= 1) {
-      console.log(encounters);
-      console.log(encounters[0].encountername);
-      console.log(encounters[0].encountername === "Cragmaw");
-      console.log(encounters.findIndex((e) => e.encountername.trim() == "Cragmaw"));
-      let encounterindex = encounters.findIndex((e) => e.encountername.trim() == encounter.trim()); // TODO this line is failing, for some reason it doesn't match strings correctly
+      //console.log(encounters);
+      //console.log(encounters[0].encountername);
+      //console.log(encounters[0].encountername === "Cragmaw");
+      //console.log(encounters.findIndex((e) => e.encountername.trim() == "Cragmaw"));
+      let encounterindex = encounters.findIndex((e) => e.encountername.trim() == encounter.trim());
       console.log(encounterindex);
       console.log(monstergroup);
       //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];
       if (encounterindex >= 0) {
         console.log("We are here!!");
         // If there are encounters with the name, add the new monster group to that encounter
-        let newencounters = {...encounters}
+        let newencounters = [...encounters];
         console.log(newencounters);
-        newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}];
+        console.log(newencou)
+        newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}]; // TODO This is the line causing the issue
         console.log(newencounters);
         setEncounters(newencounters);
         //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
