@@ -248,7 +248,7 @@ function CharacterCreator() {
       {
         id: 1,
         type: 'radioset',
-        name: 'greatAxeOrMartialMelee',
+        name: 'Diplomat/Entertainer pack',
         options: [
           {
             type: 'radio',
@@ -403,14 +403,14 @@ const handleChooseClass = (classitem) => {
   for (let option in classEquipment[classitem.name]) {
     equipmentarray.push({name: option, value: ''});
   }
-  setEquipmentForCharacter([equipmentarray]);
+  setEquipmentForCharacter(equipmentarray);
   //setSelectedClassEquipment(classEquipment[classitem.name]); 
   //setSelectedEquipmentClass(classEquipment[classitem.name]); 
 };
 
 const updateEquipmentForCharacter = (optionname, value) => {
-  let matcheditems = equipmentarray.filter((option) => option.name === optionname);
-  let nonmatcheditems = equipmentarray.filter((option) => option.name !== optionname);
+  let matcheditems = equipmentForCharacter.filter((option) => option.name === optionname);
+  let nonmatcheditems = equipmentForCharacter.filter((option) => option.name !== optionname);
   if (matcheditems.length !== 1) {
     console.error("There is more than one character creator equipment option with the same name. Fix that!!");
     return;
@@ -418,8 +418,9 @@ const updateEquipmentForCharacter = (optionname, value) => {
     matcheditems[0].value = value;
   }
 
-  setEquipmentForCharacter(...matcheditems, ...nonmatcheditems);
-}
+  setEquipmentForCharacter([...matcheditems, ...nonmatcheditems]);
+};
+
 
 const handleRadioChange = (groupName, value) => {
   setSelectedOptions((prevSelectedOptions) => ({
@@ -435,6 +436,7 @@ const handleDropdownChange = (groupName, value) => {
     [groupName]: value,
   }));
 };
+
 
 
 const renderEquipmentOptions = () => {
@@ -465,9 +467,15 @@ const renderOption = (option, superoptionname) => {
                 name={option.name}
                 value={radio.name}
                 checked={selectedOptions[option.name] === radio.name}
-                onChange={() => handleRadioChange(option.name, radio.name)}
+                onChange={() => {
+                  handleRadioChange(option.name, radio.name);
+                  updateEquipmentForCharacter(superoptionname, radio.name);
+                }}
+              
+               
               />
               {renderOption(radio, true)}
+            
               {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon') && selectedOptions[option.name] === radio.name && (
                 <select
                   className="dropdownContainer"
@@ -488,25 +496,12 @@ const renderOption = (option, superoptionname) => {
     case "radio":
       return (
         <div>
-          <input
-            type="radio"
-            name={superoptionname}
-            value={option.name}
-            onChecked={() => updateEquipmentForCharacter(superoptionname, option.name)}
-            //onChange={handleRadioChange}
-          />
           {option.name}
         </div>
       );
     case "dropdown":
       return (
         <div className="characterCreatorOption">
-          <input
-            type="radio"
-            name={superoptionname}
-            value={option.name}
-            //onChange={handleRadioChange}
-          />
           {option.name}
           {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon') && (
             <select
