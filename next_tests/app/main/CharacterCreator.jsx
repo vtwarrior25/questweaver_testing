@@ -287,16 +287,7 @@ function CharacterCreator() {
         name: "Dagger",
       }
     ],
-    /*
-    MartialMeleeDropdown: [
-      {
-        id: 0,
-        type: 'dropdown',
-        dropdowndata: 'martialMelee',
-        selected: '',
-      }
-    ]
-    */
+  
   }); 
   
 
@@ -386,15 +377,7 @@ const [dropdownOptions, setDropdownOptions] = useState({
   musicalInstruments: musicalInstruments,
 });
 
-/*
-const handleRadioChange = (e, optionGroup) => {
-  const { name, value } = e.target;
-  setSelectedEquipmentClass((prev) => ({
-    ...prev,
-    [optionGroup.name]: value,
-  }));
-};
-*/
+
 
 const handleChooseClass = (classitem) => {
   setSelectedClass(classitem.name);
@@ -403,7 +386,7 @@ const handleChooseClass = (classitem) => {
   console.log(classEquipment[classitem.name]);
   /*
   for (let option in classEquipment[classitem.name]) {
-    console.log(option);
+    console.log(option);  
     equipmentarray.push({name: option, value: ''});
   }
   */
@@ -522,6 +505,23 @@ const renderOption = (option, superoptionname) => {
           )}
         </div>
       );
+        case "checkbox":
+          return (
+          
+              <div className="characterCreatorOptionGroup">
+                <input
+                  type="checkbox"
+                 // checked={selectedEquipmentClass[option.name] || false}
+                  //onChange={(e) => handleCheckboxChange(e, option)}
+                  //onChange={(e) => updateEquipmentForCharacter(option.name, e.target.checked)}
+                  //checked={selectedEquipmentClass[option.name] || false}
+                  //onChange={(e) => handleCheckboxChange(e, option)}
+                />
+                <span className="weaponLabel">{option.name}</span>
+              
+              </div>
+      );
+      
     default:
       return null;
   }
