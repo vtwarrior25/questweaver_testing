@@ -321,7 +321,13 @@ function MonsterSheet({setRollResults}) {
   */
 
   const addMonsterGroup = (encounter, monstergroup) => {
+    console.log(encounters);
+    addGroupFromForm(monstergroup, encounter)
+    .catch((error) => {
+      console.error("Error adding monster group to database: " + error);
+    });
     console.log(encounter);
+    console.log(encounters);
     if (encounters.length >= 1) {
       //console.log(encounters);
       //console.log(encounters[0].encountername);
@@ -336,7 +342,7 @@ function MonsterSheet({setRollResults}) {
         // If there are encounters with the name, add the new monster group to that encounter
         let newencounters = [...encounters];
         console.log(newencounters);
-        console.log(newencou)
+        console.log(newencounters[encounterindex].monstergroups);
         newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}]; // TODO This is the line causing the issue
         console.log(newencounters);
         setEncounters(newencounters);
@@ -365,10 +371,6 @@ function MonsterSheet({setRollResults}) {
         }
         setEncounters([...encounters, newencounter]);
     }
-    addGroupFromForm(monstergroup, encounter)
-    .catch((error) => {
-      console.error("Error adding monster group to database: " + error);
-    })
   }
 
   return ( 

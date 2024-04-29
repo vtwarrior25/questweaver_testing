@@ -142,7 +142,9 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   }
 
   const duplicateMonsterGroup = () => {
-    setFormData({...monstergroup})
+    const encounter = encounters.filter((encounter) => encounter.encountername === duplicatemenustate.encounter)
+    const monstergroup = encounter[duplicatemenustate.monster];
+    setFormData({...monstergroup});
     //setFormData(monstergroup);
   }
 
@@ -407,7 +409,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                   <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
                 )}
               </datalist>
-              <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => {addMonsterGroup(formdata.basicinfo.encounter, formdata)}}>Add</Button>
+              <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => addMonsterGroup(formdata.basicinfo.encounter, formdata)}>Add</Button>
             </div>
           </div>
         </div>

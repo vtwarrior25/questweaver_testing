@@ -111,7 +111,7 @@ export async function addGroupFromForm(formdata, encountername) {
     if (ename != encountername) {
       // add new encounter to encounter table, and add monster group
       db.one(addnewencounterquery, encountername)
-      .then((result) => {
+      .then(() => {
         // add monster group to monstergroup table with encounterid attatched
         db.one(addnewmonstergroupquery, [encountername, 
           formdata.basicinfo.size, formdata.basicinfo.type, 
