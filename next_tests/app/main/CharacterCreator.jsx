@@ -408,10 +408,16 @@ const handleChooseClass = (classitem) => {
   setSelectedClass(classitem.name);
   console.log(classEquipment['Barbarian']);
   let equipmentarray = [];
+  console.log(classEquipment[classitem.name]);
+  /*
   for (let option in classEquipment[classitem.name]) {
+    console.log(option);
     equipmentarray.push({name: option, value: ''});
   }
-  setEquipmentForCharacter([equipmentarray]);
+  */
+  classEquipment[classitem.name].forEach((option) => {equipmentarray.push({name: option.name, value: ''})})
+  console.log(equipmentarray);
+  setEquipmentForCharacter([...equipmentarray]);
   //setSelectedClassEquipment(classEquipment[classitem.name]); 
   //setSelectedEquipmentClass(classEquipment[classitem.name]); 
 };
@@ -426,7 +432,6 @@ const updateEquipmentForCharacter = (optionname, value) => {
   } else {
     matcheditems[0].value = value;
   }
-
   setEquipmentForCharacter(...matcheditems, ...nonmatcheditems);
 }
 

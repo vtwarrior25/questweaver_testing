@@ -86,7 +86,8 @@ export async function addGroupFromForm(formdata, encountername) {
   .then((result) => {
     encounternames = [...result];
     let ename;
-    for (ename of encounternames) {
+    for (const ename of encounternames) {
+      console.log(ename);
       if (ename == encountername) {
         // add monster group to monstergroup table with encounterid attatched
         db.one(addnewmonstergroupquery, [encountername, 
@@ -112,7 +113,14 @@ export async function addGroupFromForm(formdata, encountername) {
       db.one(addnewencounterquery, encountername)
       .then((result) => {
         // add monster group to monstergroup table with encounterid attatched
-        db.one(addnewmonstergroupquery, [encountername, formdata.basicinfo.size, formdata.basicinfo.type, formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description, formdata.basicinfo.hitdicetype, formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.ability, formdata.basicinfo.notes])
+        db.one(addnewmonstergroupquery, [encountername, 
+          formdata.basicinfo.size, formdata.basicinfo.type, 
+          formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
+          formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+          formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
+          formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
+          formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+          formdata.basicinfo.notes, formdata.health])
         .then((result) => {
           newmonstergroupid = result.monstergroupid;
         })
@@ -164,9 +172,30 @@ const removemonstergroupquery = new PQ({
 }); 
 
 
+const removemonstergroupabilitiesquery = new PQ({
+  text: `
+    DELETE FROM monsterability
+    WHERE monstergroupid = $1;
+  `
+}); 
 
-export async function removeMonsterGroup(monstergroupid) {
+/*
+const removemonstergroupattacksquery = new PQ({
+  text: `
+    DELETE FROM attack
+    WHERE monstergroupid = $1;
+  `
+});
+*/ 
+
+
+
+export async function removeMonsterGroupFromDB(monstergroupid) {
   db.none(removemonstergroupquery, [monstergroupid])
+  .catch((error) => {
+    console.error('Failed to remove monster group: ' + error);
+  });
+  db.none(removemonstergroupabilitiesquery, [monstergroupid])
   .catch((error) => {
     console.error('Failed to remove monster group: ' + error);
   });
