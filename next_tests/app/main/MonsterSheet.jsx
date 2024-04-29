@@ -263,17 +263,12 @@ function MonsterSheet({setRollResults}) {
     //console.log(encounters[0].encountername);
     if (encounters.length > 0) {
       setEncounterSelected(encounters[0].encountername);
+      console.log(encounters[0].encountername);
     }
   }, [encounters]
   );
 
-  /*
-  const getEncounters = () => {
-    fetch(`http://localhost:9000/encounters`)
-        .then(res => res.json())
-        .then(res => setEncounters(res));
-  }
-  */
+  
 
   const getMonsterGroups = (encountername) => {
     let monstergroups;
@@ -311,7 +306,7 @@ function MonsterSheet({setRollResults}) {
     theencounter.monstergroups = newmonstergroups;
     // Set encounters to all other encounters and modified encounter
     setEncounters([otherencounters, theencounter]); 
-    removeMonsterGroup()
+    removeMonsterGroupFromDB()
     .catch((error) => {
       console.error("Failed to remove monster group: " + error);
     });
@@ -327,7 +322,11 @@ function MonsterSheet({setRollResults}) {
   const addMonsterGroup = (encounter, monstergroup) => {
     console.log(encounter);
     if (encounters.length >= 1) {
-      let encounterindex = encounters.findIndex((e) => {e.encountername.trim() === encounter.trim()}); // TODO this line is failing, for some reason it doesn't match strings correctly
+      console.log(encounters);
+      console.log(encounters[0].encountername);
+      console.log(encounters[0].encountername === "Cragmaw");
+      console.log(encounters.findIndex((e) => e.encountername.trim() == "Cragmaw"));
+      let encounterindex = encounters.findIndex((e) => e.encountername.trim() == encounter.trim()); // TODO this line is failing, for some reason it doesn't match strings correctly
       console.log(encounterindex);
       console.log(monstergroup);
       //let encounterlist = encounters.filter((e) => {e.encountername === encounter}) ?? [];

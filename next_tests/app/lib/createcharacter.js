@@ -46,13 +46,6 @@ const playercharacterpassiveabilityquery = new PQ({
   `
 });
 
-const playercharacterfeaturequery = new PQ({
-  text: `
-    INSERT INTO characterfeature (playercharacterid, featureid) VALUES
-    ($1, (SELECT featureid FROM feature WHERE name = $2));
-  `
-});
-
 const playercharacterproficiencyquery = new PQ({
   text: `
     INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
@@ -67,11 +60,18 @@ const playercharacterdefensequery = new PQ({
   `
 });
 
+const playercharacterfeaturequery = new PQ({
+  text: `
+    INSERT INTO characterfeature (playercharacterid, featureid) VALUES
+    ($1, (SELECT featureid FROM feature WHERE name = $2));
+  `
+});
+
 
 export async function createCharacter(formdata) {
   let playercharacterid;
   let playercharacterabilityscores = {
-    Strength: formdata.abilties.strength,
+    Strength: formdata.abilities.strength,
     Dexterity: formdata.abilities.dexterity,
     Constitution: formdata.abilities.constitution,
     Intelligence: formdata.abilities.intelligence,
@@ -92,6 +92,12 @@ export async function createCharacter(formdata) {
         db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
       }
     })
+    // Get list of features (featureid) for class, subclass, race, subrace
+    // Put all of them in one list
+    // Go through the list, one by one
+    // There will be some checks in here for specific things, 
+    // such as ability score modifiers and speed, don't worry about that right now
+    // Insert them all into characterfeature
     for (feature of features) {
       db.many(playercharacterfeaturequery, [playercharacterid, feature.name])
       .then((featureresult) => {
