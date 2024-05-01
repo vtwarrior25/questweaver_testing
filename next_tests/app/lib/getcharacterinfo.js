@@ -766,7 +766,7 @@ const featuresdefaultresult = [
 
 const getcharacterfeaturesquery = new PQ({
   text: `
-    SELECT featureid, name, description, featuretype FROM feature c
+    SELECT featureid, name AS featurename, description AS featuretext, featuretype FROM feature c
     JOIN characterfeature p ON c.featureid = p.featureid
     WHERE p.playercharacterid = $1;
   `
@@ -801,13 +801,10 @@ export async function getCharacterFeatures(playercharacterid) {
     }).catch (error => {
       console.error("Error retrieving character info " + error);
     });
-    /*
   for (const feature of rawresult) {
     let featuredata = getFeatureData(feature);
     featurelist = [...featurelist, featuredata];
-    featurelist = 
   }
-  */
   featurelist = [...rawresult];
   if (featurelist.length > 0) {
     return featurelist;
@@ -998,17 +995,36 @@ const addcharacterfeaturequery = new PQ({
 
 const getcharacterspeedquery = new PQ ({
   text: `
-  SELECT speed
-  FROM speedfeature
-  WHERE featureid = $1;`
+    SELECT speed
+    FROM speedfeature
+    WHERE featureid = $1;
+  `
+});
+
+const getproficiencyfeaturequery = new PQ ({
+  text: `
+    SELECT proficiencyid
+    FROM proficiencyfeature
+    WHERE featureid = $1;
+  `
 });
 
 const updatecharacterspeedquery = new PQ ({
   text: `
-  UPDATE playercharacter
-  SET speed = speed + $2
-  WHERE playercharacterid = $1;`
+    UPDATE playercharacter
+    SET speed = speed + $2
+    WHERE playercharacterid = $1;
+  `
 })
+
+const addproficiencytocharacterquery = new PQ({
+  text: `
+    INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
+    ($1, $2)
+    ON CONFLICT (playercharacterid, proficiencyid) DO NOTHING;
+  `
+});
+
 
 export async function addFeaturesToCharacter(playercharacterid) {
   let charinfo = {};
@@ -1024,14 +1040,22 @@ export async function addFeaturesToCharacter(playercharacterid) {
   // Get class features for class id and level
   await db.many(getclassfeaturesforcharquery, [charinfo.class, charinfo.characterlevel])
   .then((result) => {
-    features = [...features, ...result];
+    for (let feature of result) {
+      feature.source = "Class";
+      features.push(feature);
+    }
+    //features = [...features, ...result];
   }).catch((error) => {
     console.error('Error getting class features: ' + error);
   });
   // Get race features for raceid
   await db.many(getracefeaturesforcharquery, [charinfo.race])
   .then((result) => {
-    features = [...features, ...result];
+    for (let feature of result) {
+      feature.source = "Race";
+      features.push(feature);
+    }
+    //features = [...features, ...result];
   }).catch((error) => {
     console.error('Error getting race features: ' + error);
   });
@@ -1060,11 +1084,22 @@ export async function addFeaturesToCharacter(playercharacterid) {
       case 'None':
         break;
       case 'Proficiency':
+        // For each proficiency feature, get the proficiencyid from proficiencyfeature, and then 
+        // add the proficiency to characterproficiency
+        db.one(getproficiencyfeaturequery, [feature.featureid])
+        .then((result) => {
+          db.none(addproficiencytocharacterquery, [playercharacterid, result.proficiencyid])
+          .catch((error) => {
+            console.error('Failed to add proficiency to character: ' + error);
+          })
+        }).catch((error) => {
+          console.error('Error getting proficiencyid for proficiency feature: ' + error);
+        })
         break;
       case 'Action':
         break;
       case 'Speed':
-        db.one(getcharacterspeedquery, feature.featureid)
+        db.one(getcharacterspeedquery, [feature.featureid])
         .then((result) => {
           if (topCharSpeed < result) {
             topCharSpeed = result;
@@ -1084,10 +1119,11 @@ export async function addFeaturesToCharacter(playercharacterid) {
       case 'Skill':
         break;
       case 'Class Action':
+        // For each class action feature, 
         break;
     }
 
-    db.one(updatecharacterspeedquery, playercharacterid, topCharSpeed)
+    db.one(updatecharacterspeedquery, [playercharacterid, topCharSpeed])
     .catch((error) => {
       console.error('Error updating character speed from modifier: ' + error);
     });

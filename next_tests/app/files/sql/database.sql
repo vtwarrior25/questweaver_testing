@@ -409,12 +409,13 @@ CREATE TABLE IF NOT EXISTS characterproficiency (
 	proficiencyid									integer REFERENCES proficiency(proficiencyid) NOT NULL
 );
 
+CREATE TYPE featuresource AS ENUM ('Class', 'Race', 'Subclass', 'Subrace');
 
 CREATE TABLE IF NOT EXISTS characterfeature (
 	characterfeatureid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	playercharacterid					integer REFERENCES playercharacter(playercharacterid) NOT NULL,
 	featureid									integer REFERENCES feature(featureid) NOT NULL,
-	raceorclass								varchar(1);
+	source										featuresource;
 	UNIQUE (playercharacterid, featureid)
 );
 
