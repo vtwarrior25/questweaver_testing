@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getCharacterFeatures, getFeatures } from '../lib/getcharacterinfo';
-import { render } from 'react-dom';
 
 function FeaturesMenu() {
 

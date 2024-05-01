@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS class (
 	hitpoints1stlevel				integer,
 	hitpointshigherlevel		integer,
 	description							varchar(2000),
-	infotable								varchar(5000),
+	infotable								jsonb,
 	spellcastingabilityid		integer REFERENCES ability(abilityid)
 );
 

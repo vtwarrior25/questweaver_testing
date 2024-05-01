@@ -117,6 +117,7 @@ INSERT INTO class (name, hitdice, hitpoints1stlevel, hitpointshigherlevel, descr
 ('Wizard', (SELECT diceid FROM dice WHERE sides = 6), '6', (SELECT diceid FROM dice WHERE sides = 6), '', (SELECT abilityid FROM ability WHERE abbrev = 'Int'));
 
 
+
 INSERT INTO subclass (name, description, classid) VALUES
 ('Path of the Berserker','', (SELECT classid FROM class WHERE name = 'Barbarian')),
 ('College of Valor', '', (SELECT classid FROM class WHERE name = 'Bard')),
@@ -338,6 +339,8 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Sickle','Weapons'),
 ('Simple Weapons','Weapons'),
 ('Sleight of Hand','Skills'),
+('Choose Skill Proficiency 1', 'Skills'),
+('Choose Skill Proficiency 2', 'Skills'),
 ('Sling','Weapons'),
 ('Smiths Tools','Tools'),
 ('Spear','Weapons'),

@@ -83,8 +83,9 @@ export async function getCharacterClassInfo() {
   // Step 1: Fetch all classes
   try {
       const classes = await db.many(`
-          SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.spellcastingabilityid
-          FROM class c;
+          SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.infotable, c.spellcastingabilityid
+          FROM class c
+          ORDER BY c.name ASC;
       `);
 
       // Step 2: For each class, fetch its subclasses
