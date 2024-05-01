@@ -229,7 +229,7 @@ INSERT INTO effecttype (name, description) VALUES
 ('Bane', ''),
 ('Charm', ''),
 ('Heal', ''),
-('Defence', ''),
+('Defense', ''),
 ('Enhance', ''),
 ('Weaken', ''),
 ('Summon', ''),
