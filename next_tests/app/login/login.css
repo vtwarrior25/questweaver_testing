@@ -2,7 +2,7 @@ html {
   background-color: aliceblue;
 }
 
-.loginsection {
+.loginSection {
   display: flex;
   position: absolute;
   top: 0;
@@ -10,7 +10,7 @@ html {
   left: 0;
   right: 0;
   flex-direction: column;
-  max-height: 20rem;
+  max-height: 25rem;
   max-width: 22rem;
   margin: auto;
   align-self: center;

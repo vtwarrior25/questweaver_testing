@@ -311,7 +311,6 @@ function MonsterSheet({setRollResults}) {
     .catch((error) => {
       console.error("Failed to remove monster group: " + error);
     });
-
   } 
 
   /*
@@ -321,6 +320,8 @@ function MonsterSheet({setRollResults}) {
   */
 
   const addMonsterGroup = (encounter, monstergroup) => {
+    console.log(encounter);
+    console.log(monstergroup);
     console.log(encounters);
     addGroupFromForm(monstergroup, encounter)
     .catch((error) => {

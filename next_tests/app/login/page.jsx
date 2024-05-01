@@ -2,6 +2,7 @@
 
 import '@/app/App.css';
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation'
 import { auth2, authenticate, gotosignup } from '@/app/lib/actions'
 import { useFormState, useFormStatus } from 'react-dom'
 import './login.css';
@@ -12,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 
 export default function Page() {
   const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,7 +36,7 @@ export default function Page() {
   
 
   return (
-    <div className='loginsection'>
+    <div className='loginSection'>
       <h3>Questweaver D&D System</h3>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId='username'>
@@ -51,7 +53,9 @@ export default function Page() {
         */}
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
         <Button variant='primary' type='submit'>Submit</Button>
-        <Button variant='secondary' type='button' onClick={gotosignup}>Sign Up</Button>
+        <Button variant='secondary' type='button' onClick={() => router.push('../signup')}>
+          Sign Up
+        </Button>
       </Form>
     </div>
   )

@@ -1,8 +1,9 @@
 'use client'
 
 import '@/app/App.css';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import CharacterSelectEntry from './CharacterSelectEntry';
 import { goToCharacterCreator, getCharactersForPlayer } from '../lib/actions';
 import './characterselect.css';
@@ -14,7 +15,8 @@ export default function Page() {
 
   const router = useRouter();
 
-  const [userid, setUserID] = useState(10);
+  const searchParams = useSearchParams()
+  const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
 
   const [playercharacters, setPlayerCharacters] = useState([
     {
@@ -55,7 +57,11 @@ export default function Page() {
       {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
         <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
       )}
-      <Button variant='primary' className='characterCreatorButton' onClick={() => router.push('../charactercreator')}>Create New Character</Button>
+      <Button variant='primary' className='characterCreatorButton' onClick={() => router.push('../charactercreator')}>
+        <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
+          Create New Character
+        </Link>
+      </Button>
     </div>
   )
 }

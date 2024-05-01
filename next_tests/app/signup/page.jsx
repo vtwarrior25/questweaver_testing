@@ -3,6 +3,7 @@
 import '@/app/App.css';
 import '@/app/login/login.css'
 import { createuser} from '@/app/lib/actions'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useFormState, useFormStatus } from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
@@ -11,10 +12,11 @@ import Button from 'react-bootstrap/Button';
 export default function Page() {
   const [errorMessage, dispatch] = useFormState(createuser, undefined)
   const authenticatemode = createuser.bind(null);
+  const router = useRouter();
 
   return (
-    <div className='userAuthForm loginsection'>
-      <h3>Create Character</h3>
+    <div className='userAuthForm loginSection'>
+      <h3>Create User</h3>
       <Form action={authenticatemode}>
         <Form.Group controlId='username'>
           <Form.Label>Username</Form.Label>
@@ -30,6 +32,7 @@ export default function Page() {
         </Form.Group>
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
         <Button variant='primary' type='submit'>Submit</Button>
+        <Button onClick={() => router.push('../login')}>Back to Login</Button>
       </Form>
     </div>
   )

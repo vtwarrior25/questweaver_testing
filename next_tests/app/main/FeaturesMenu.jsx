@@ -60,10 +60,8 @@ function FeaturesMenu() {
           <span className='characterSheetSectionTitle'>{section.sectionname}</span>
           {section.sectionfeatures.map((sectionfeature, index) => 
             <div key={index} className="featuresSectionFeature">
-              {/*
                 <b>{sectionfeature.featuretitle}</b>
                 <p>{sectionfeature.featuretext}</p>
-              */}
               {renderFeature(sectionfeature)}
             </div>
           )}
