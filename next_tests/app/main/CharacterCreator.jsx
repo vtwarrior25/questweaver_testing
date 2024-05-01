@@ -144,15 +144,6 @@ function CharacterCreator() {
     race: "",
     subrace: "",
     class: "",
-    subclass: "",
-    abilities: {
-      strength: 10,
-      dexterity: 10,
-      constitution: 10,
-      intelligence: 10,
-      wisdom: 10,
-      charisma: 10,
-    },
     skillproficiencies: [],
     equipment: [],
     descriptions: [
@@ -290,6 +281,36 @@ function CharacterCreator() {
   
   }); 
   
+  const handleChooseRace = (raceName) => {
+    console.log("Selected race:", raceName);
+    updateCharacterData("race", raceName);
+  };
+  
+  const updateCharacterData = (key, value) => {
+    console.log("Updating character data for key:", key, "with value:", value);
+    const newData = {
+      ...charactercreatordata,
+      [key]: value,
+    };
+    console.log("Updated Character Data:", newData);
+    setCharacterCreatorData(newData);
+  };
+  // Function to update the description text
+  const updateDescription = (index, newText) => {
+    const newDescriptions = charactercreatordata.descriptions.map((desc, i) =>
+      i === index ? { ...desc, sectiontext: newText } : desc
+    );
+    const newData = {
+      ...charactercreatordata,
+      descriptions: newDescriptions,
+    };
+    console.log("Updated Character Data:", newData);
+    setCharacterCreatorData(newData);
+  };
+
+  // Function to handle choosing a class
+
+
 
   /*
     How to handle holding data from equipment
@@ -380,6 +401,7 @@ const [dropdownOptions, setDropdownOptions] = useState({
 
 
 const handleChooseClass = (classitem) => {
+  updateCharacterData("class", classitem.name);
   setSelectedClass(classitem.name);
   console.log(classEquipment['Barbarian']);
   let equipmentarray = [];
@@ -714,10 +736,13 @@ const renderOption = (option, superoptionname) => {
                             ))}
                         </ul>
                       </div>
+                      <Button onClick={() => handleChooseRace(item.subrace_name)}>Choose Race</Button>
                     </Tab.Pane>
                   ))}
               </Tab.Content>
             </Tab.Container>
+            
+
           </div>
         </Tab>
 
@@ -838,8 +863,7 @@ const renderOption = (option, superoptionname) => {
               <div key={index} className="notesSection">
                 <span>{notessection.sectionname}</span>
                 <textarea
-                  onChange={(e) =>
-                    updateTextArea(notessection.sectionname, e.target.value)
+                   onChange={(e) => updateDescription(index, e.target.value)
                   }
                   defaultValue={notessection.sectiontext}
                 ></textarea>
