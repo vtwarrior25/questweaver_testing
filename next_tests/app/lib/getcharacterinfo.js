@@ -996,6 +996,20 @@ const addcharacterfeaturequery = new PQ({
   `
 });
 
+const getcharacterspeedquery = new PQ ({
+  text: `
+  SELECT speed
+  FROM speedfeature
+  WHERE featureid = $1;`
+});
+
+const updatecharacterspeedquery = new PQ ({
+  text: `
+  UPDATE playercharacter
+  SET speed = speed + $2
+  WHERE playercharacterid = $1;`
+})
+
 export async function addFeaturesToCharacter(playercharacterid) {
   let charinfo = {};
   let features = [];
@@ -1036,9 +1050,12 @@ export async function addFeaturesToCharacter(playercharacterid) {
     console.error('Error getting subrace features: ' + error);
   });
 
+  let topCharSpeed = 0;
+
   // Add features to characterfeatures
   for (const feature of features) {
     // For each feature, check if we need to modify the character in another way
+    // Select from featuretype tables for extra info
     switch (feature.featuretype) {
       case 'None':
         break;
@@ -1047,6 +1064,14 @@ export async function addFeaturesToCharacter(playercharacterid) {
       case 'Action':
         break;
       case 'Speed':
+        db.one(getcharacterspeedquery, feature.featureid)
+        .then((result) => {
+          if (topCharSpeed < result) {
+            topCharSpeed = result;
+          }
+        }).catch((error) => {
+          console.error('Error getting character speed mod from feature: ' + error);
+        });
         break;
       case 'Ability Score':
         break;
@@ -1061,6 +1086,11 @@ export async function addFeaturesToCharacter(playercharacterid) {
       case 'Class Action':
         break;
     }
+
+    db.one(updatecharacterspeedquery, playercharacterid, topCharSpeed)
+    .catch((error) => {
+      console.error('Error updating character speed from modifier: ' + error);
+    });
 
     db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
     .catch((error) => {
