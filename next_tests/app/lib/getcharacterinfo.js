@@ -1039,7 +1039,28 @@ export async function addFeaturesToCharacter(playercharacterid) {
   // Add features to characterfeatures
   for (const feature of features) {
     // For each feature, check if we need to modify the character in another way
-    
+    switch (feature.featuretype) {
+      case 'None':
+        break;
+      case 'Proficiency':
+        break;
+      case 'Action':
+        break;
+      case 'Speed':
+        break;
+      case 'Ability Score':
+        break;
+      case 'Ability Action':
+        break;
+      case 'Defense':
+        break;
+      case 'Condition':
+        break;
+      case 'Skill':
+        break;
+      case 'Class Action':
+        break;
+    }
 
     db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
     .catch((error) => {
