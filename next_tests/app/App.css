@@ -533,6 +533,7 @@ Monster Sheet
 
 .monsterSheet {
   max-width: 75rem;
+  max-height: 70rem;
 }
 
 .monsterSheetTopBar {
@@ -878,9 +879,12 @@ Character Creation
 }
 
 .characterCreatorSection {
-  
+  max-width: 69rem;
+  max-height: 48rem;
   padding: 20px;
+  overflow-y: scroll;
 }
+
 
 .classNav .nav-link {
   text-align: left; 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+import { PlayerCharacterContext, UserIDContext, CharacterInfoContext } from "./Contexts";
 import AbilityBox from "./AbilityBox";
 import AbilitySection from "./AbilitySection";
 import { createCharacter } from "../lib/createcharacter";
@@ -20,6 +20,7 @@ function CharacterCreator() {
   //const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
   const userid = useContext(UserIDContext);
   const playercharacterid = useContext(PlayerCharacterContext);
+  const playercharacterinfo = useContext(CharacterInfoContext);
   //const [selectedClassEquipment, setSelectedClassEquipment] = useState(null);
   const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
   const [raceData, setRaceData] = useState({
@@ -312,6 +313,10 @@ function CharacterCreator() {
 
 
 
+  const [teststring, setTestString] = useState("In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.\n While raging, you gain the following benefits if you aren't wearing heavy armor:\nYou have advantage on Strength checks and Strength saving throws.\nWhen you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table.\nYou have resistance to bludgeoning, piercing, and slashing damage. \nIf you are able to cast spells, you can't cast them or concentrate on them while raging.\nYour rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action.\nOnce you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.");
+
+
+
   /*
     How to handle holding data from equipment
     Create empty array
@@ -481,7 +486,6 @@ const renderOption = (option, superoptionname) => {
                   updateEquipmentForCharacter(superoptionname, radio.name);
                 }}
               
-               
               />
               {renderOption(radio, true)}
             
@@ -757,15 +761,16 @@ const renderOption = (option, superoptionname) => {
                   <Nav
                     variant="pills"
                     className="flex-column"
-                    style={{ minWidth: "200px" }}
+                    style={{ minWidth: "10rem" }}
                   >
                     {classes.map((classItem, index) => (
-                      <Nav.Item key={index}>
+                      <Nav.Item key={classItem.name}>
                         <Nav.Link
                           eventKey={classItem.name
                             .toLowerCase()
                             .replace(/\s+/g, "")}
                           onClick={() => handleSelectClass(classItem)}
+                          
                         >
                           {classItem.name}
                         </Nav.Link>
@@ -786,6 +791,26 @@ const renderOption = (option, superoptionname) => {
                             <strong>Description:</strong>{" "}
                             {classItem.description}
                           </p>
+                          {classItem.infotable && 
+                          <Table size="sm">
+                            <thead>
+                              <tr>
+                              {classItem.infotable.cols.map((col, index) => (
+                                <th key={index}>{col}</th>
+                              ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {classItem.infotable.rows.map((row, index) => (
+                                <tr key={index}>
+                                  {row.map((col, index) => (
+                                    <td key={index}>{col}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                          } 
                           <p>
                             <strong>Hit Points at 1st Level:</strong>{" "}
                             {classItem.hitpoints1stlevel}
@@ -803,7 +828,7 @@ const renderOption = (option, superoptionname) => {
                                 </li>
                               ))}
                           </ul>
-
+                          <p></p>
                           <Button onClick={() => handleChooseClass(classItem)}>
                             Choose Class
                           </Button>
