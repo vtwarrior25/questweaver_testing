@@ -93,7 +93,7 @@ export async function createCharacter(formdata) {
         db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
       }
     });
-    addFeaturesToCharacter(playercharacterid)
+    addFeaturesToCharacter(playercharacterid, true)
     .catch((error) => {
       console.error("Error adding features to character: " + error);
     })

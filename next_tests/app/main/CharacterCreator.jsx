@@ -29,6 +29,7 @@
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState('Barbarian');
     const [equipmentForCharacter, setEquipmentForCharacter] = useState([]);
+    const [dropdownvalues, setDropdownValues] = useState({});
     const [error, setError] = useState(null);
     const [abilityScores, setAbilityScores] = useState(initialScores);
     const [tempValues, setTempValues] = useState([0, 0, 0, 0, 0, 0]);
@@ -413,6 +414,7 @@
     }
     */
     classEquipment[classitem.name].forEach((option) => {equipmentarray.push({name: option.name, value: ''})})
+    
     console.log(equipmentarray);
     setEquipmentForCharacter([...equipmentarray]);
     //setSelectedClassEquipment(classEquipment[classitem.name]); 
@@ -420,23 +422,32 @@
   };
 
   const updateEquipmentForCharacter = (optionname, value) => {
-    let matcheditems = equipmentForCharacter.filter((option) => option.name === optionname);
-    let nonmatcheditems = equipmentForCharacter.filter((option) => option.name !== optionname);
-    if (matcheditems.length !== 1) {
-      console.error("There is more than one character creator equipment option with the same name. Fix that!!");
-      return;
-    } else {
-      matcheditems[0].value = value;
+    console.log(equipmentForCharacter);
+    console.log(optionname);
+    console.log(value);
+    if (equipmentForCharacter.length > 0) {
+      let matcheditems = equipmentForCharacter.filter((option) => option.name === optionname);
+      console.log(matcheditems);
+      let nonmatcheditems = equipmentForCharacter.filter((option) => option.name !== optionname);
+      console.log(nonmatcheditems);
+      if (matcheditems.length !== 1) {
+        console.error("There is more than one character creator equipment option with the same name. Fix that!!");
+        return;
+      } else {
+        matcheditems[0].value = value;
+      }
+      setEquipmentForCharacter([...matcheditems, ...nonmatcheditems]);
+      console.log(equipmentForCharacter);
     }
-    setEquipmentForCharacter(...matcheditems, ...nonmatcheditems);
+    console.log(equipmentForCharacter);
   }
 
-  const handleRadioChange = (groupName, value, superoptionname) => {
+  const handleRadioChange = (groupName, value) => {
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
       [groupName]: value,
     }));
-    updateEquipmentForCharacter(superoptionname, value); 
+    updateEquipmentForCharacter(groupName, value); 
   };
 
 
@@ -445,6 +456,7 @@
       ...prevSelectedOptions,
       [groupName]: value,
     }));
+    updateEquipmentForCharacter(groupName, value); 
   };
 
   const printChosenEquipment = () => {
@@ -462,7 +474,7 @@
       <div className="characterCreatorEquipmentSection">
       {classEquipment[selectedClass].map((optionGroup, groupIndex) => (
         <div key={groupIndex} className="optionGroup">
-          {renderOption(optionGroup, updateEquipmentForCharacter)}
+          {renderOption(optionGroup)}
         </div>
       ))}
             <Button onClick={printEquipmentArray}>Print Equipment Array</Button>
@@ -491,13 +503,13 @@
                   value={radio.name}
                   checked={selectedOptions[option.name] === radio.name}
                   onChange={() => {
+                    console.log(option.name);
                     handleRadioChange(option.name, radio.name);
-
                   }}
                 
                 
                 />
-                  {renderOption(radio, updateEquipmentForCharacter)}            
+                  {renderOption(radio, option.name)}            
                 {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon') && selectedOptions[option.name] === radio.name && (
                   <select
                     className="dropdownContainer"

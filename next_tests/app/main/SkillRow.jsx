@@ -2,9 +2,17 @@ import React, { useContext } from "react";
 import DiceRollButton from "./DiceRollButton";
 import { ModPosContext } from "./Contexts";
 
-function SkillRow ({name, mod, prof, bonus, setRollResults}) {
+function SkillRow ({name, mod, prof, bonus, profbonus, setRollResults}) {
 
   const modPos = useContext(ModPosContext);
+
+  const calcBonus = () => {
+    if (prof === true) {
+      return bonus + profbonus;
+    } else {
+      return bonus;
+    }
+  }
 
   return (
   <tr>
@@ -12,7 +20,7 @@ function SkillRow ({name, mod, prof, bonus, setRollResults}) {
     <td className="skillMod">{mod}</td>
     <td className="skillName">{name}</td>
     <td className="skillBonus">
-      <DiceRollButton name={name} rolltype="Skill" die="20" num="1" mod={bonus} text={modPos(bonus, false)} advantage={true}/>
+      <DiceRollButton name={name} rolltype="Skill" die="20" num="1" mod={calcBonus()} text={modPos(calcBonus(), false)} advantage={true}/>
     </td>
   </tr>
   );

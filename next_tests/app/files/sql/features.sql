@@ -13,7 +13,7 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Dwarven Tool Proficiency', 'Tool Proficiency', 'You gain proficiency with the artisan''s tools of your choice: smith''s tools, brewer''s supplies, or mason''s tools.', 'Proficiency'), -- TODO
 ('Stonecutting', 'Stonecutting', 'Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.', 'Proficiency'),
 ('Hill Dwarf Ability Score Increase', 'Ability Score Increase', 'Your Wisdom score increases by 1.', 'Ability Score'),
-('Dwarven Toughness', 'Dwarven Toughness', 'Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.', 'None'), -- TODO
+('Dwarven Toughness', 'Dwarven Toughness', 'Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.', 'None'), -- 
 ('Mountain Dwarf Ability Score Increase', 'Ability Score Increase', 'Your Strength score increases by 2.', 'Ability Score'),
 ('Dwarven Armor Training', 'Dwarven Armor Training', 'You have proficiency with light and medium armor.', 'Proficiency'),
 ('Elf Ability Score Increase', 'Ability Score Increase', 'Your Dexterity score increases by 2.', 'Ability Score'),
@@ -75,8 +75,15 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Barbarian Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', 'None'),
 ('Extra Attack', 'Extra Attack', 'Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.', 'None'),
 ('Fast Movement', 'Fast Movement', 'Starting at 5th level, your speed increases by 10 feet while you aren''t wearing heavy armor.', 'None'),
-
-
+('Berserker Frenzy', 'Frenzy', 'Starting when you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.', 'None'), 
+('Spellcasting', '', '', ''),
+('Bardic Inspiration', 'Bardic Inspiration', 'You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. ;;Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. ;;You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ;;Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.', ''),
+('Jack of All Trades', 'Jack of All Trades', 'Starting at 2nd level, you can add half your proficiency bonus, rounded down, to any ability check you make that doesn''t already include your proficiency bonus. ', 'None'),
+('Song of Rest', 'Song of Rest', 'Beginning at 2nd level, you can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points. ;;The extra hit points increase when you reach certain levels in this class: to 1d8 at 9th level, to 1d10 at 13th level, and to 1d12 at 17th level. ', 'None'),
+('Bard College', 'Bard College', 'At 3rd level, you delve into the advanced techniques of a bard college of your choice: the College of Lore or the College of Valor, both detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th and 14th level. ', 'None'),
+('Bard Expertise', 'Expertise', '', ''),
+('Spellcasting', '', '', ''),
+('', '', '', '');
 
 
 
@@ -185,6 +192,9 @@ INSERT INTO proficiencyfeature (featureid, proficiencyid) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Simple Weapons')),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Martial Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Strength')),
+((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Constitution')),
+
 
 
 INSERT INTO speedfeature (featureid, speed) VALUES 
@@ -198,7 +208,7 @@ INSERT INTO speedfeature (featureid, speed) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Human Speed', 30)),
 
 
-INSERT INTO spellfeature (featureid, spellid) VALUES 
+INSERT INTO spellfeature (featureid, level, spellid) VALUES 
 (),
 
 
@@ -216,7 +226,11 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Ability Score Improvement'), 2),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 2),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
 
+
+INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES 
+((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
 
 
 INSERT INTO racefeature (raceid, featureid) VALUES 
@@ -256,13 +270,6 @@ INSERT INTO racefeature (raceid, featureid) VALUES
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Lucky')),
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Brave')),
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Halfing Nimbleness')),
-
-
-
-
-
-INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES 
-();
 
 
 INSERT INTO subracefeature (subraceid, featureid) VALUES 

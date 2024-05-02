@@ -587,6 +587,14 @@ const abilitydefaultresult = [
   },
 ]
 
+const getcharacterprofbonusquery = new PQ({
+  text: `
+    SELECT pc.proficiencybonus
+    FROM playercharacter pc
+    WHERE pc.playercharacterid = $1;
+  `
+});
+
 const getcharacterstaticstatsquery = new PQ({
   text: `
     SELECT c.proficiencybonus AS profbonus, c.speed, c.initiative, c.armorclass, p.passiveperception,
@@ -655,7 +663,7 @@ export async function getSkills (playercharacterid) {
       console.log(dbinfo);
       result = [...dbinfo];
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving character skills info: " + error);
     });
   return result;
 }
@@ -668,7 +676,7 @@ export async function getSavingThrows (playercharacterid) {
       console.log(dbinfo);
       result = [...dbinfo];
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving character saving throws info: " + error);
     })
   return result;
 }
@@ -683,7 +691,7 @@ export async function getAbilities (playercharacterid) {
       console.log(result);
       return result;
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving character ability info " + error);
     });
   return result;
 }
@@ -698,7 +706,7 @@ export async function getTurnOrder () {
       //console.log(result);
       return result;
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving turn order info " + error);
     });
   return result;
 }
@@ -712,7 +720,7 @@ export async function getBasicInfo (playercharacterid) {
       console.log(result);
       return result;
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving basic character info: " + error);
     });
   return result;
 }
@@ -726,10 +734,23 @@ export async function getStaticStats(playercharacterid) {
       console.log(result);
       return result;
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving static stats: " + error);
     });
   return result;
 }
+
+export async function getProfBonus(playercharacterid) {
+  let result = profbonusdefaultresult;
+  await db.one(getcharacterprofbonusquery, [playercharacterid])
+  .then((dbinfo) => {
+    result = dbinfo.proficiencybonus;
+  }).catch((error) => {
+    console.error("Error retrieving proficiency bonus: " + error);
+  })
+  return result;
+}
+
+const profbonusdefaultresult = 2;
 
 const featuresdefaultresult = [
   {
@@ -802,7 +823,7 @@ export async function getCharacterFeatures(playercharacterid) {
       console.error("Error retrieving character info " + error);
     });
   for (const feature of rawresult) {
-    let featuredata = getFeatureData(feature);
+    let featuredata = getFeatureData(feature, playercharacterid);
     featurelist = [...featurelist, featuredata];
   }
   featurelist = [...rawresult];
@@ -856,7 +877,15 @@ const abilityActionQuery = new PQ({
   `
 });
 
-function getFeatureData(feature) {
+const classActionQuery = new PQ({
+  text: `
+    SELECT c.level, c.uses, c.recovery
+    FROM classactionfeature c
+    WHERE c.featureid = $1 AND c.level = (SELECT characterlevel FROM playercharacter WHERE playercharacterid = $2);
+  `
+});
+
+function getFeatureData(feature, playercharacterid) {
   let featuredata = {};
   featuredata.name = feature.name;
   featuredata.description = feature.description;
@@ -864,47 +893,57 @@ function getFeatureData(feature) {
   switch (feature.featuretype) {
     case 'Proficiency':
       // Get info from proficiency, add to featuredata
-      db.any(proficiencyQuery, feature.name)
+      db.any(proficiencyQuery, [feature.name])
       .then((dbinfo) => {
-        featuredata = [...dbinfo];
+        featuredata.featureinfo = [...dbinfo];
       }).catch(error => {
         console.error("Error getting proficiency data: " + error);
       });
       break;
     case 'Action':
       // Get info from actionfeature, add to featuredata
-      db.any(actionQuery, feature.name)
+      db.any(actionQuery, [feature.name])
       .then((dbinfo) => {
-        featuredata = [...dbinfo];
+        featuredata.featureinfo = [...dbinfo];
       }).catch(error => {
         console.error("Error getting action data: " + error);
       });
       break;
     case 'Speed':
       // Get info from speedfeature, add to featuredata
-      db.any(speedQuery, feature.name)
+      db.any(speedQuery, [feature.name])
       .then((dbinfo) => {
-        featuredata = [...dbinfo];
+        featuredata.featureinfo = [...dbinfo];
       }).catch(error => {
         console.error("Error getting speed data: " + error);
       });
       break;
     case 'Ability Score':
       // Get info from proficiency, add to featuredata
-      db.any(abilityScoreQuery, feature.name)
+      db.any(abilityScoreQuery, [feature.name])
       .then((dbinfo) => {
-        featuredata = [...dbinfo];
+        featuredata.featureinfo = [...dbinfo];
       }).catch(error => {
         console.error("Error getting ability score data: " + error);
       });
       break;
     case 'Ability Action':
       // Get info from proficiency, add to featuredata
-      db.any(abilityActionQuery, feature.name)
+      db.any(abilityActionQuery, [feature.name])
       .then((dbinfo) => {
-        featuredata = [...dbinfo];
+        featuredata.featureinfo = [...dbinfo];
       }).catch(error => {
         console.error("Error getting ability action data: " + error);
+      });
+      break;
+    case 'Class Action': 
+      // Get classactionfeature row from featureid 
+      db.one(classActionQuery, [feature.featureid, playercharacterid])
+      .then((dbinfo) => {
+        featuredata.featureinfo = {...dbinfo};
+      }).catch((error) => {
+        console.error('' + error);
+        
       });
       break;
   }
@@ -1001,9 +1040,10 @@ const getcharacterspeedquery = new PQ ({
   `
 });
 
+
 const getproficiencyfeaturequery = new PQ ({
   text: `
-    SELECT proficiencyid
+    SELECT proficiencyid, name, proficiencytype
     FROM proficiencyfeature
     WHERE featureid = $1;
   `
@@ -1018,6 +1058,12 @@ const updatecharacterspeedquery = new PQ ({
 })
 
 const addproficiencytocharacterquery = new PQ({
+  /*text: `
+    INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
+    ($1, (SELECT proficiencyid FROM proficiencyfeature WHERE featureid = $2))
+    ON CONFLICT (playercharacterid, proficiencyid) DO NOTHING;
+  `
+  */
   text: `
     INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
     ($1, $2)
@@ -1026,7 +1072,41 @@ const addproficiencytocharacterquery = new PQ({
 });
 
 
-export async function addFeaturesToCharacter(playercharacterid) {
+const getabilityscorefeaturequery = new PQ({
+  text: `
+    SELECT a.abilityid, a.scorebonus
+    FROM abilityscorefeature a
+    WHERE featureid = $1;
+  `
+});
+
+
+const updatecharacterabilityscorequery = new PQ({
+  text: `
+    UPDATE characterability
+    SET score = score + $1
+    WHERE playercharacterid = $2 AND abilityid = $3;
+  `
+});
+
+const setskillproficientquery = new PQ({
+  text: `
+    UPDATE characterskill
+    SET proficient = true
+    WHERE playercharacterid = $1 AND skillid = (SELECT skillid FROM skill WHERE name = $2);
+  `
+});
+
+const setsavingthrowproficientquery = new PQ({
+  text: `
+    UPDATE charactersavingthrow
+    SET proficient = true
+    WHERE playercharacterid = $1 AND savingthrowid = (SELECT savingthrowid FROM savingthrow WHERE name = $2);
+  `
+});
+
+
+export async function addFeaturesToCharacter(playercharacterid, initialcreation) {
   let charinfo = {};
   let features = [];
   // Get characterlevel, class, race, subclass, subrace 
@@ -1048,31 +1128,36 @@ export async function addFeaturesToCharacter(playercharacterid) {
   }).catch((error) => {
     console.error('Error getting class features: ' + error);
   });
-  // Get race features for raceid
-  await db.many(getracefeaturesforcharquery, [charinfo.race])
-  .then((result) => {
-    for (let feature of result) {
-      feature.source = "Race";
-      features.push(feature);
-    }
-    //features = [...features, ...result];
-  }).catch((error) => {
-    console.error('Error getting race features: ' + error);
-  });
-  // Get subclass features for subclass id and level
+
+   // Get subclass features for subclass id and level
   await db.many(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
   .then((result) => {
     features = [...features, ...result];
   }).catch((error) => {
     console.error('Error getting subclass features: ' + error);
   });
-  // Get subrace features for subrace id and level
-  await db.many(getsubracefeaturesquery, [charinfo.subrace])
-  .then((result) => {
-    features = [...features, ...result];
-  }).catch((error) => {
-    console.error('Error getting subrace features: ' + error);
-  });
+
+
+  if (initialcreation == true) {
+    // Get race features for raceid
+    await db.many(getracefeaturesforcharquery, [charinfo.race])
+    .then((result) => {
+      for (let feature of result) {
+        feature.source = "Race";
+        features.push(feature);
+      }
+      //features = [...features, ...result];
+    }).catch((error) => {
+      console.error('Error getting race features: ' + error);
+    });
+    // Get subrace features for subrace id and level
+    await db.many(getsubracefeaturesquery, [charinfo.subrace])
+    .then((result) => {
+      features = [...features, ...result];
+    }).catch((error) => {
+      console.error('Error getting subrace features: ' + error);
+    });
+  }
 
   let topCharSpeed = 0;
 
@@ -1088,6 +1173,19 @@ export async function addFeaturesToCharacter(playercharacterid) {
         // add the proficiency to characterproficiency
         db.one(getproficiencyfeaturequery, [feature.featureid])
         .then((result) => {
+          if (result.proficiencytype === 'Skills') {
+            // Set the entry in characterskills to proficient
+            db.none(setskillproficientquery, [playercharacterid, result.name])
+            .catch((error) => {
+              console.error('Failed to set the skill to proficient: ' + error);
+            });
+          } else if (result.proficiencytype === 'Saving Throws') {
+            // Set the entry in charactersavingthrow to proficient
+            db.none(setsavingthrowproficientquery, [playercharacterid, result.name])
+            .catch((error) => {
+              console.error('Failed to set the saving throw to proficient: ' + error);
+            })
+          }
           db.none(addproficiencytocharacterquery, [playercharacterid, result.proficiencyid])
           .catch((error) => {
             console.error('Failed to add proficiency to character: ' + error);
@@ -1095,6 +1193,12 @@ export async function addFeaturesToCharacter(playercharacterid) {
         }).catch((error) => {
           console.error('Error getting proficiencyid for proficiency feature: ' + error);
         })
+        /*
+        db.none(addproficiencytocharacterquery, [playercharacterid, feature.featureid])
+        .catch((error) => {
+          console.error('Failed to add proficiency to character: ' + error);
+        });
+        */
         break;
       case 'Action':
         break;
@@ -1109,6 +1213,16 @@ export async function addFeaturesToCharacter(playercharacterid) {
         });
         break;
       case 'Ability Score':
+        db.one(getabilityscorefeaturequery, [feature.featureid])
+        .then((result) => {
+          db.none(updatecharacterabilityscorequery, [result.scorebonus, playercharacterid, result.abilityid])
+          .catch((error) => {
+            console.error('Error updating character ability scores: ' + error);
+          });
+        }).catch((error) => {
+          console.error('Error getting ability score feature information: ' + error);
+          
+        });
         break;
       case 'Ability Action':
         break;
@@ -1119,7 +1233,7 @@ export async function addFeaturesToCharacter(playercharacterid) {
       case 'Skill':
         break;
       case 'Class Action':
-        // For each class action feature, 
+        // For each class action feature, grab the row from classactionfeature by level
         break;
     }
 

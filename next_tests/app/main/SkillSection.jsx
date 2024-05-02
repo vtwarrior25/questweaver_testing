@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState} from "react";
 import SkillRow from './SkillRow'
-import { getSkills } from "../lib/getcharacterinfo";
+import { getSkills, getProfBonus } from "../lib/getcharacterinfo";
 import { PlayerCharacterContext } from "./Contexts";
 
 function SkillSection (setRollResults){
 
   const playercharacterid = useContext(PlayerCharacterContext);
     
+  const [profbonus, setProfBonus] = useState(0); 
+
   const[skills, setSkills] = useState([
     {
       name: "Acrobatics",
@@ -122,7 +124,17 @@ function SkillSection (setRollResults){
 
   useEffect(() => {
     getSkills(playercharacterid)
-    .then(results => setSkills([...results]));
+    .then((results) => {
+      setSkills([...results])
+    }).catch((error) => {
+      console.error("Error retrieving skills: " + error);
+    });
+    getProfBonus(playercharacterid)
+    .then((results) => {
+      setProfBonus(results);
+    }).catch((error) => {
+      console.error("Error retrieving skills: " + error);
+    });
   }, [playercharacterid]
   );
     
@@ -138,7 +150,7 @@ function SkillSection (setRollResults){
           </tr>
         </thead>
         <tbody>
-          {skills && skills.length > 0 && skills.map((skill, index) => <SkillRow key={index} name={skill.name} mod={skill.mod} prof={skill.prof} bonus={skill.bonus} setRollResults={setRollResults}/>)}
+          {skills && skills.length > 0 && skills.map((skill, index) => <SkillRow key={index} name={skill.name} mod={skill.mod} prof={skill.prof} bonus={skill.bonus} profbonus={profbonus} setRollResults={setRollResults}/>)}
           {alignments && alignments.length > 0 && alignments.map((alignment, index) => 
             <tr key={index}>
               <td>{alignment.alignment_name}</td>

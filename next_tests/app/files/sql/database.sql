@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS proficiencytype (
 Armor, Weapons, Tools, Languages 
 */
 
-CREATE TYPE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages', 'Skills');
+CREATE TYPE proficiencytype AS ENUM('Armor', 'Weapons', 'Tools', 'Languages', 'Skills', 'Saving Throws');
 
 
 CREATE TABLE IF NOT EXISTS proficiency (

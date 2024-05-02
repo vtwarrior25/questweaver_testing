@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCharacterFeatures, getFeatures } from '../lib/getcharacterinfo';
+import SequentialCheckboxes from './SequentialCheckboxes';
 
 function FeaturesMenu() {
 
@@ -80,8 +81,8 @@ function FeaturesMenu() {
   const renderFeature = (feature) => {
     if (feature.featuretype === 'Action') {
       
-    } else if (feature.featuretype === 'Class Action') {
-    
+    } else if (feature.featuretype === 'Class Action' || feature.featuretype === 'Ability Action') {
+      <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
     } else {
       return (
         <div className="singleFeature">
@@ -104,6 +105,7 @@ function FeaturesMenu() {
               {renderFeature(sectionfeature)}
             </div>
           )}
+          <SequentialCheckboxes normal={true} number={3}></SequentialCheckboxes>
         </div>
         <div className="featuresSection">
         <span className='characterSheetSectionTitle'>Race Features</span>

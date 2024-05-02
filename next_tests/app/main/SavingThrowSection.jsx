@@ -2,11 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Stack, Button } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton'
 import SavingThrow from './SavingThrow';
-import { getSavingThrows } from '../lib/getcharacterinfo';
+import { getProfBonus, getSavingThrows } from '../lib/getcharacterinfo';
 import { PlayerCharacterContext } from './Contexts';
 
 function SavingThrowSection ({setRollResults}) { 
   const playercharacterid = useContext(PlayerCharacterContext);
+  const [profbonus, setProfBonus] = useState(0);
 
   const [savingthrows, setSavingThrows] = useState([
     {
@@ -43,7 +44,18 @@ function SavingThrowSection ({setRollResults}) {
 
   useEffect(() => {  
     getSavingThrows(playercharacterid)
-      .then(results => setSavingThrows([...results]));
+    .then((results) => {
+      setSavingThrows([...results])
+    }).catch((error) => {
+      console.error("Error retrieving saving throws: " + error);
+    });
+    getProfBonus(playercharacterid)
+    .then((results) => {
+      console.log(results);
+      setProfBonus(results);
+    }).catch((error) => {
+      console.error("Error retrieving saving throws: " + error);
+    });
     }, [playercharacterid]
   )
 
@@ -72,7 +84,7 @@ function SavingThrowSection ({setRollResults}) {
     <div className="characterSavingThrowSectionBox frontElement">
       <span className='characterSheetSectionTitle'>Saving Throws</span>
       <div className="characterSavingThrowSection">
-        {savingthrows && savingthrows.length > 0 && savingthrows.map((savingthrow) => <SavingThrow key={savingthrow.name} name={savingthrow.name} prof={savingthrow.prof} val={savingthrow.val} setRollResults={setRollResults}/>)}
+        {savingthrows && savingthrows.length > 0 && savingthrows.map((savingthrow) => <SavingThrow key={savingthrow.name} name={savingthrow.name} prof={savingthrow.prof} val={savingthrow.val} profbonus={profbonus} setRollResults={setRollResults}/>)}
       </div>
     </div>
   );

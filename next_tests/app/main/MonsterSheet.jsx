@@ -346,7 +346,7 @@ function MonsterSheet({setRollResults}) {
         console.log(newencounters[encounterindex].monstergroups);
         newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}]; // TODO This is the line causing the issue
         console.log(newencounters);
-        setEncounters(newencounters);
+        setEncounters([...newencounters]);
         //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
       } else {
         // If there aren't encounters with the name add the monster group to a new encounter

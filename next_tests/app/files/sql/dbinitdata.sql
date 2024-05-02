@@ -359,7 +359,14 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Water Vehicles','Tools'),
 ('Weavers Tools','Tools'),
 ('Whip','Weapons'),
-('Woodcarvers Tools','Tools');
+('Woodcarvers Tools','Tools'),
+('Strength', 'Saving Throws'),
+('Dexterity', 'Saving Throws'),
+('Constitution', 'Saving Throws'),
+('Intelligence', 'Saving Throws'),
+('Wisdom', 'Saving Throws'),
+('Charisma', 'Saving Throws'),
+;
 
 
 INSERT INTO item (name, value, currency, description, weight, rarity) VALUES
