@@ -1055,7 +1055,7 @@ const updatecharacterspeedquery = new PQ ({
     SET speed = speed + $2
     WHERE playercharacterid = $1;
   `
-})
+});
 
 const addproficiencytocharacterquery = new PQ({
   /*text: `
@@ -1071,7 +1071,6 @@ const addproficiencytocharacterquery = new PQ({
   `
 });
 
-
 const getabilityscorefeaturequery = new PQ({
   text: `
     SELECT a.abilityid, a.scorebonus
@@ -1080,13 +1079,26 @@ const getabilityscorefeaturequery = new PQ({
   `
 });
 
-
 const updatecharacterabilityscorequery = new PQ({
   text: `
     UPDATE characterability
     SET score = score + $1
     WHERE playercharacterid = $2 AND abilityid = $3;
   `
+});
+
+const getdefensefeaturequery = new PQ ({
+  text: `
+  SELECT defenseid, defensestatus
+  FROM defensefeature
+  WHERE featureid = $1;`
+});
+
+const updatecharacterdefensequery = new PQ({
+  text: `
+  UPDATE characterdefense
+  SET defenseid = $2, defensestatus = $3
+  WHERE playercharacterid = $1;`
 });
 
 const setskillproficientquery = new PQ({
@@ -1201,6 +1213,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         */
         break;
       case 'Action':
+        // Already handled
         break;
       case 'Speed':
         db.one(getcharacterspeedquery, [feature.featureid])
@@ -1225,12 +1238,21 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         });
         break;
       case 'Ability Action':
+        // No extra inserts needed, already handled outside case statement
         break;
       case 'Defense':
+        db.one(getdefensefeaturequery, [feature.featureid])
+        .then((result) => {
+          db.none(updatecharacterdefensequery, [playercharacterid, result.defenseid, result.defensestatus])
+          .catch((error) => {
+            console.error('Error updating character defense feature: ' + error);
+          });
+        }).catch((error) => {
+          console.error('Error getting defense feature information: ' + error);
+        });
         break;
       case 'Condition':
-        break;
-      case 'Skill':
+        // Currently not being handled
         break;
       case 'Class Action':
         // For each class action feature, grab the row from classactionfeature by level
