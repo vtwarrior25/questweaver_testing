@@ -13,10 +13,11 @@
   import AvatarUpload from "./AvatarUpload";
 
   function CharacterCreator() {
-    const [equipmentIdMapping, setEquipmentIdMapping] = useState({});
-    const [greataxeSelected, setGreataxeSelected] = useState(false);
+    const [showConfirmTab, setShowConfirmTab] = useState(true);
+    const [characterConfirmed, setCharacterConfirmed] = useState(false); 
+    
     const [selectedOptions, setSelectedOptions] = useState({});
-
+    const [showLevelUpSection, setShowLevelUpSection] = useState(false);
     //const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
     const userid = useContext(UserIDContext);
     const playercharacterid = useContext(PlayerCharacterContext);
@@ -578,7 +579,18 @@
       }
     };
     */
-    
+  
+    const handleConfirmClick = () => {
+      setShowConfirmTab(false); 
+      setCharacterConfirmed(true); 
+    };
+  
+  
+  
+    const handleSwitchBack = () => {
+      setShowConfirmTab(true); // Show confirm tab
+      setCharacterConfirmed(false); // Mark character as not confirmed
+    };
 
 
   const [dropdownOptions, setDropdownOptions] = useState({
@@ -910,7 +922,7 @@
           className="characterCreatorTabs frontElement"
           defaultActiveKey="race"
         >
-          <Tab eventKey="race" title="Race">
+          <Tab eventKey="race" title="Race"  disabled={!showConfirmTab}>
             <div className="characterCreatorSection characterCreatorRace frontElement">
               <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
                 <Nav variant="pills" className="flex-column">
@@ -963,7 +975,7 @@
               </Tab.Container>
             </div>
           </Tab>
-          <Tab eventKey="class" title="Class">
+          <Tab eventKey="class" title="Class" disabled={!showConfirmTab} >
             <Tab.Container defaultActiveKey="barbarian">
               <div
                 className="characterCreatorSection characterCreatorClass frontElement"
@@ -1067,7 +1079,7 @@
             </Tab.Container>
           </Tab>
 
-          <Tab eventKey="abilities" title="Abilities">
+          <Tab eventKey="abilities" title="Abilities" disabled={!showConfirmTab}>
             <div className="characterCreator">
               <div className="abilityScoresDisplay">
                 {Object.entries(abilityScores).map(([ability, score], index) => (
@@ -1103,10 +1115,10 @@
               </div>
             </div>
           </Tab>
-          <Tab eventKey="equipment" title="Equipment">
+          <Tab eventKey="equipment" title="Equipment" disabled={!showConfirmTab}>
           {renderEquipmentOptions()}
           </Tab>
-          <Tab eventKey="description" title="Description">
+          <Tab eventKey="description" title="Description" disabled={!showConfirmTab}>
             <div className="notesMenu frontElement">
               {charactercreatordata.descriptions.map((notessection, index) => (
                 <div key={index} className="notesSection">
@@ -1118,24 +1130,32 @@
                   ></textarea>
                 </div>
               ))}
-              <Button onClick={updateAbilityScores}>
-                
-              </Button>
+              
             </div>
           </Tab>
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
-            <div className="confirmCharacterSection">
-              <div className="characterInfoDisplay">
-                <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
-                <p>Class: {charactercreatordata.class}</p>
-                <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+          <div className="confirmCharacterSection">
+            {characterConfirmed ? (
+              // Content to display after confirming character
+              <div className="levelUpSection">
+                <Button onClick={handleSwitchBack}>Change Character</Button>
               </div>
-              <Button>Confirm Character</Button>
-            </div>
-            <div className="levelUpSection">
+            ) : (
+              // Content to display before confirming character
+              <>
+                <div className="characterInfoDisplay">
+                  <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
+                  <p>Class: {charactercreatordata.class}</p>
+                  <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+                </div>
+                <Button onClick={handleConfirmClick}>Confirm Character</Button>
+              </>
+            )}
+          </div>
+        </Tab>
+        
+        
 
-            </div>
-          </Tab>
           <Tab eventKey="avatar" title="Avatar">
             <div className="characterAvatarMenu frontElement">
               <AvatarUpload type="player" id={playercharacterid} upload={true}></AvatarUpload>
