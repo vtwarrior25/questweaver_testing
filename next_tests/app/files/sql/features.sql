@@ -77,13 +77,19 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Fast Movement', 'Fast Movement', 'Starting at 5th level, your speed increases by 10 feet while you aren''t wearing heavy armor.', 'None'),
 ('Berserker Frenzy', 'Frenzy', 'Starting when you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.', 'None'), 
 ('Spellcasting', '', '', ''),
+('Bard Proficiencies', 'Proficiencies', 'Armor: Light armor;; Weapons: Simple weapons, hand crossbows, longswords, rapiers, shortswords;; Tools: Three musical instruments of your choice;; Saving Throws: Dexterity, Charisma;; Skills: Choose any three', 'Proficiency')
 ('Bardic Inspiration', 'Bardic Inspiration', 'You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. ;;Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. ;;You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ;;Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.', ''),
 ('Jack of All Trades', 'Jack of All Trades', 'Starting at 2nd level, you can add half your proficiency bonus, rounded down, to any ability check you make that doesn''t already include your proficiency bonus. ', 'None'),
 ('Song of Rest', 'Song of Rest', 'Beginning at 2nd level, you can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points. ;;The extra hit points increase when you reach certain levels in this class: to 1d8 at 9th level, to 1d10 at 13th level, and to 1d12 at 17th level. ', 'None'),
 ('Bard College', 'Bard College', 'At 3rd level, you delve into the advanced techniques of a bard college of your choice: the College of Lore or the College of Valor, both detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th and 14th level. ', 'None'),
-('Bard Expertise', 'Expertise', '', ''),
-('Spellcasting', '', '', ''),
-('', '', '', '');
+('Bard Expertise', 'Expertise', 'At 3rd level, choose two of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies. ;;At 10th level, you can choose another two skill proficiencies to gain this benefit. ', ''),
+('Bard Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature. ', 'None'),
+('Font of Inspiration', 'Font of Inspiration', 'Beginning when you reach 5th level, you regain all of your expended uses of Bardic Inspiration when you finish a short or long rest.', 'None'),
+('College of Valor Bonus Proficiencies', 'Bonus Proficiencies', 'When you join the College of Valor at 3rd level, you gain proficiency with medium armor, shields, and martial weapons.', 'Proficiency'),
+('Combat Inspiration', 'Combat Inspiration', 'Also at 3rd level, you learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to any weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses.', 'None'),
+('Cleric Proficiencies', '', '', ''),
+
+
 
 
 INSERT INTO abilityactionfeature (featureid, abilityid, uses) VALUES 
@@ -193,6 +199,17 @@ INSERT INTO proficiencyfeature (featureid, proficiencyid) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Martial Weapons')),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Strength')),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Constitution')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Light Armor')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Simple Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Hand Crossbow')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Longsword')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Rapier')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shortsword')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Dexterity')),
+((SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Charisma')),
+((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
+((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
+((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Martial Weapons')),
 
 
 
@@ -221,15 +238,24 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Unarmored Defense'), 1),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Reckless Attack'), 2),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Danger Sense'), 2),
-((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Primal Path'), 2),
-((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Ability Score Improvement'), 2),
-((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 2),
-((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
-((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = ''), 2),
+((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Primal Path'), 3),
+((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Ability Score Improvement'), 4),
+((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 5),
+((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 5),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Proficiencies'), 1),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bardic Inspiration'), 1),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Jack of All Trades'), 2),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Song of Rest'), 2),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard College'), 3),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Expertise'), 3),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Ability Score Improvement'), 4),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
 
 
 INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES 
-((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Berserker Frenzy'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Berserker Frenzy'), 3),
+((SELECT subclassid FROM subclass WHERE name = 'College of Valor'), (SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), 3),
+((SELECT subclassid FROM subclass WHERE name = 'College of Valor'), (SELECT featureid FROM feature WHERE name = 'Combat Inspiration'), 3),
 
 
 INSERT INTO racefeature (raceid, featureid) VALUES 

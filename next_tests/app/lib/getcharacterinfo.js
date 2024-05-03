@@ -1233,7 +1233,6 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
       case 'Skill':
         break;
       case 'Class Action':
-        // For each class action feature, grab the row from classactionfeature by level
         break;
     }
 

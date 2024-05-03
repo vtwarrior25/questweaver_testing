@@ -74,6 +74,7 @@
     }
     
     const martialWeapons = [
+      "- Choose -",
       "Glaive",
       "Longsword",
       "Battleaxe",
@@ -95,6 +96,7 @@
     ];
 
     const simpleWeapons = [
+      "- Choose -",
       "Dagger",
       "Club",
       "Greatclub",
@@ -457,13 +459,19 @@
     
     //TODO this for some reason is failing
     const handleChooseRace = (raceName, subraceName) => {
+      const newData = {
+        ...charactercreatordata,
+        race: raceName
+      };
       console.log("Selected race:", raceName);
       if (subraceName != undefined && subraceName != null) {
-        updateCharacterData("subrace", subraceName);
+        //updateCharacterData("subrace", subraceName);
+        newData.subrace = subraceName;
       } else {
-        updateCharacterData("subrace", "");
+        //updateCharacterData("subrace", "");
+        newData.subrace = "";
       }
-      updateCharacterData("race", raceName);
+      setCharacterCreatorData({...newData});
     };
     
     const updateCharacterData = (key, value) => {
@@ -596,8 +604,14 @@
     
     console.log(equipmentarray);
     setEquipmentForCharacter([...equipmentarray]);
-    updateCharacterData("skillproficiencies", selectedskills);
-    updateCharacterData("class", classitem.name);
+    const newData = {
+      ...charactercreatordata,
+      skillproficiencies: selectedskills,
+      class: classitem.name,
+    }
+    setCharacterCreatorData({...newData});
+    //updateCharacterData("skillproficiencies", selectedskills);
+    //updateCharacterData("class", classitem.name);
     //setSelectedClassEquipment(classEquipment[classitem.name]); 
     //setSelectedEquipmentClass(classEquipment[classitem.name]); 
   };
@@ -724,9 +738,8 @@
                 value={selectedOptions[option.dropdowndata]}
                 onChange={(e) => handleDropdownChange(option.dropdowndata, e.target.value)}
               >
-                <option>Beans</option>
                 {dropdownOptions[option.dropdowndata].map((item, index) => (
-                  <option key={index} value={item}>
+                  <option key={index} value={item} disabled={item == "- Choose -"}>
                     {item}
                   </option>
                 ))}
@@ -948,11 +961,8 @@
                     ))}
                 </Tab.Content>
               </Tab.Container>
-              
-
             </div>
           </Tab>
-
           <Tab eventKey="class" title="Class">
             <Tab.Container defaultActiveKey="barbarian">
               <div
@@ -965,7 +975,7 @@
                       variant="pills"
                       className="flex-column"
                       style={{ minWidth: "200px" }}
-                      onSelect={() => showClassTable(false)}
+                      onSelect={() => {showClassTable(false); setSelectedSkills([])}}
                     >
                       {classes.map((classItem, index) => (
                         <Nav.Item key={index}>
