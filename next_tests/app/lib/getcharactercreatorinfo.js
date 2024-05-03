@@ -77,8 +77,8 @@ export async function updateCharacterAbilityScores(playerCharacterId, abilities)
 }
 
 
-
-
+export async function fetchCharacterInfo(playercharacterid, level) {
+}
 
 
 
