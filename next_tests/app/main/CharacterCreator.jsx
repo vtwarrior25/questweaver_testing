@@ -1,6 +1,6 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { PlayerCharacterContext, UserIDContext, fetchCharacterInfo } from "./Contexts";
+  import { PlayerCharacterContext, UserIDContext } from "./Contexts";
   import AbilityBox from "./AbilityBox";
   import AbilitySection from "./AbilitySection";
   import { createCharacter } from "../lib/createcharacter";
@@ -9,9 +9,11 @@
     getCharacterCreatorInfo,
     updateCharacterAbilityScores,
     addItemsToCharacterInventory,
+    fetchCharacterInfo,
+    
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
-
+  
   function CharacterCreator() {
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const [characterConfirmed, setCharacterConfirmed] = useState(false); 
@@ -912,27 +914,49 @@
     };
 
     const renderCharacterLevelUpInfo = (characterInfo) => {
-      if (!characterInfo) {
-        return null; 
+      if (!characterInfo || characterInfo.length === 0) {
+        return <div>No character information available</div>;
       }
     
       return (
-        console.log('temp')
+        <div className="characterLevelUpInfo">
+          {characterInfo.map((classInfo) => (
+            <div key={classInfo.classid}>
+              <h4>{classInfo.name}</h4>
+              <p>
+                <strong>Description:</strong> {classInfo.description}
+              </p>
+              <p>
+                <strong>Hit Points at 1st Level:</strong> {classInfo.hitpoints1stlevel}
+              </p>
+              <p>
+                <strong>Hit Points at Higher Levels:</strong>{" "}
+                {classInfo.hitpointshigherlevel}
+              </p>
+              <h5>Subclasses:</h5>
+              <ul>
+                {classInfo.subclasses.map((subclass) => (
+                  <li key={subclass.subclassid}>
+                    <strong>{subclass.name}:</strong> {subclass.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       );
     };
+
+    const handleLevelSelect = async (level) => {
+      try {
+        const characterInfo = await fetchCharacterInfo(playercharacterid, level);
+        console.log("Character info for level", level, ":", characterInfo);
+        renderCharacterLevelUpInfo(characterInfo);
+      } catch (error) {
+        console.error("Error fetching character information:", error);
+      }
+    };
     
-
-  const handleLevelSelect = async (level) => {
-  try {
-    const characterInfo = await fetchCharacterInfo(playercharacterid, level);
-    // Update state or perform any action with the fetched character info
-  } catch (error) {
-    console.error("Error fetching character information:", error);
-  }
-};
-
-    
-
     
     return (
       <div className="characterCreator">
