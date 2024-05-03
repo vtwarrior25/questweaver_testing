@@ -455,8 +455,14 @@
     
     }); 
     
-    const handleChooseRace = (raceName) => {
+    //TODO this for some reason is failing
+    const handleChooseRace = (raceName, subraceName) => {
       console.log("Selected race:", raceName);
+      if (subraceName != undefined && subraceName != null) {
+        updateCharacterData("subrace", subraceName);
+      } else {
+        updateCharacterData("subrace", "");
+      }
       updateCharacterData("race", raceName);
     };
     
@@ -547,6 +553,7 @@
     }, []);
     */
 
+    /*
     const addEquipmentToInventory = async () => {
       const equipmentToAdd = [];
 
@@ -562,7 +569,7 @@
         console.error("Error adding equipment to inventory:", error);
       }
     };
-
+    */
     
 
 
@@ -575,7 +582,6 @@
 
 
   const handleChooseClass = (classitem) => {
-    updateCharacterData("class", classitem.name);
     setSelectedClass(classitem.name);
     console.log(classEquipment['Barbarian']);
     let equipmentarray = [];
@@ -590,6 +596,8 @@
     
     console.log(equipmentarray);
     setEquipmentForCharacter([...equipmentarray]);
+    updateCharacterData("skillproficiencies", selectedskills);
+    updateCharacterData("class", classitem.name);
     //setSelectedClassEquipment(classEquipment[classitem.name]); 
     //setSelectedEquipmentClass(classEquipment[classitem.name]); 
   };
@@ -907,9 +915,9 @@
                   {raceData.racesWithoutSubraces.map((race, index) => (
                     <Nav.Item key={index}>
                       <Nav.Link
-                        eventKey={race.name.toLowerCase().replace(/\s+/g, "")}
+                        eventKey={race.race_name.toLowerCase().replace(/\s+/g, "")}
                       >
-                        {race.name}
+                        {race.race_name}
                       </Nav.Link>
                     </Nav.Item>
                   ))}
@@ -920,12 +928,12 @@
                     .map((item, index) => (
                       <Tab.Pane
                         key={index}
-                        eventKey={(item.subrace_name || item.name)
+                        eventKey={(item.subrace_name || item.race_name)
                           .toLowerCase()
                           .replace(/\s+/g, "")}
                       >
                         <div className="characterCreatorTabContent">
-                          <h3>{item.subrace_name || item.name}</h3>
+                          <h3>{item.subrace_name || item.race_name}</h3>
                           <ul>
                             {item.features &&
                               item.features.map((feature, featureIndex) => (
@@ -935,7 +943,7 @@
                               ))}
                           </ul>
                         </div>
-                        <Button onClick={() => handleChooseRace(item.subrace_name)}>Choose Race</Button>
+                        <Button onClick={() => handleChooseRace(item.race_name, item.subrace_name)}>Choose Race</Button>
                       </Tab.Pane>
                     ))}
                 </Tab.Content>

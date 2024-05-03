@@ -325,6 +325,8 @@ CREATE TABLE IF NOT EXISTS manualfeature (
 ) INHERITS (feature);
 */
 
+CREATE TYPE defensestatus AS ENUM ('Resistant', 'Immune', 'Vulnerable');
+
 CREATE TABLE IF NOT EXISTS defensefeature (
 	featureid							integer REFERENCES feature(featureid) NOT NULL,
 	defenseid							integer REFERENCES defense(defenseid) NOT NULL,
@@ -386,7 +388,6 @@ CREATE TABLE IF NOT EXISTS characterpassiveability (
 TODO consider moving the contents of this table to the main playercharacter table
 */
 
-CREATE TYPE defensestatus AS ENUM ('Resistant', 'Immune', 'Vulnerable');
 
 CREATE TABLE IF NOT EXISTS characterdefense (
 	characterdefense				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
