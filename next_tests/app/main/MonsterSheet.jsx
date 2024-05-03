@@ -342,11 +342,17 @@ function MonsterSheet({setRollResults}) {
         console.log("We are here!!");
         // If there are encounters with the name, add the new monster group to that encounter
         let newencounters = [...encounters];
-        console.log(newencounters);
-        console.log(newencounters[encounterindex].monstergroups);
-        newencounters[encounterindex].monstergroups = [...newencounters[encounterindex].monstergroups, {...monstergroup}]; // TODO This is the line causing the issue
-        console.log(newencounters);
+        let newencounter = {...newencounters[encounterindex]};
+        newencounters[encounterindex] = newencounter;
+        let newmonstergroups = [...newencounters[encounterindex].monstergroups];
+        console.log(JSON.stringify(encounters, null, 4));
+        console.log(JSON.stringify(newencounters[encounterindex].monstergroups, null, 4));
+        newmonstergroups = [...newmonstergroups, {...monstergroup}]; // TODO This is the line causing the issue
+        console.log(JSON.stringify(newmonstergroups, null, 4));
+        console.log(JSON.stringify(newencounters, null, 4));
+        newencounter.monstergroups = [...newmonstergroups];
         setEncounters([...newencounters]);
+        return;
         //setEncounters(...encounters, encounters[encounterindex].monstergroups: [...encounters[encounterindex].monstergroups, monstergroup])
       } else {
         // If there aren't encounters with the name add the monster group to a new encounter
@@ -361,6 +367,7 @@ function MonsterSheet({setRollResults}) {
         //console.log([...encounters, newencounter]);
         console.log(encounters);
         setEncounters([...encounters, newencounter]);
+        return;
       }
     } else {
       console.log("We are here3!!");
@@ -371,6 +378,7 @@ function MonsterSheet({setRollResults}) {
           ]
         }
         setEncounters([...encounters, newencounter]);
+        return;
     }
   }
 

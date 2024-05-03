@@ -739,7 +739,7 @@
                 onChange={(e) => handleDropdownChange(option.dropdowndata, e.target.value)}
               >
                 {dropdownOptions[option.dropdowndata].map((item, index) => (
-                  <option key={index} value={item} disabled={item == "- Choose -"}>
+                  <option key={index} value={item} disabled={() => {return item.name === "- Choose -"}}>
                     {item}
                   </option>
                 ))}
@@ -1119,8 +1119,21 @@
                 </div>
               ))}
               <Button onClick={updateAbilityScores}>
-                Create Character 
+                
               </Button>
+            </div>
+          </Tab>
+          <Tab eventKey="confirmAndLevelUp" title="Confirm">
+            <div className="confirmCharacterSection">
+              <div className="characterInfoDisplay">
+                <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
+                <p>Class: {charactercreatordata.class}</p>
+                <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+              </div>
+              <Button>Confirm Character</Button>
+            </div>
+            <div className="levelUpSection">
+
             </div>
           </Tab>
           <Tab eventKey="avatar" title="Avatar">
