@@ -21,6 +21,8 @@ export async function getMonsterTypes() {
     console.log("getting monster types");
     console.log(result);
     monstertypes = [...result];
+    console.log("monstertypesagain");
+    console.log(monstertypes);
     return monstertypes;
   }).catch((error) => {
     console.error("Error getting monster types: " + error);
@@ -82,85 +84,88 @@ export async function addGroupFromForm(formdata, encountername) {
   let encounternames = [];
   let newmonstergroupid = "";
   console.log("We are running, oh YEAH!!");
-  db.any(getencounternamequery)
+  await db.any(getencounternamequery)
   .then((result) => {
     encounternames = [...result];
-    let ename;
-    for (const ename of encounternames) {
-      console.log(ename);
-      if (ename == encountername) {
-        // add monster group to monstergroup table with encounterid attatched
-        db.one(addnewmonstergroupquery, [encountername, 
-          formdata.basicinfo.size, formdata.basicinfo.type, 
-          formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
-          formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
-          formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
-          formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
-          formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
-          formdata.basicinfo.notes, formdata.health])
-        .then((result) => {
-          newmonstergroupid = result.monstergroupid;
-        })
-        .catch((error) => {
-          console.log("Error adding new monster group to encounter: " + error);
-          return;
-        });
-        break;
-      }
-    }
-    if (ename != encountername) {
-      // add new encounter to encounter table, and add monster group
-      db.one(addnewencounterquery, encountername)
-      .then(() => {
-        // add monster group to monstergroup table with encounterid attatched
-        db.one(addnewmonstergroupquery, [encountername, 
-          formdata.basicinfo.size, formdata.basicinfo.type, 
-          formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
-          formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
-          formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
-          formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
-          formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
-          formdata.basicinfo.notes, formdata.health])
-        .then((result) => {
-          newmonstergroupid = result.monstergroupid;
-        })
-        .catch((error) => {
-          console.log("Error adding new monster group to encounter: " + error);
-          return;
-        });
-      })
-      .catch((error) => {
-        console.log("Error adding new encounter: " + error);
-        return;
-      });
-    }
-    // add ability data from formdata into monsterability
-    for (const ab of Object.keys(formdata.abilities)) {
-      db.one(addmonsterabilitiesquery, [newmonstergroupid,ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab],scoreToMod(formdata.abilities[ab])])
-      .catch((error) => {
-        console.log("Error inserting monster ability data: " + error);
-      });
-    }
-    // add attack data from formdata into attack
-    for (const atk of formdata.attacks) {
-      if (atk.name !== "") {
-        db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
-        .then ((result) => {
-          // link attacks to monsterattack with attackid/monsterid
-          db.one(linkmonsterattackquery, newmonstergroupid, result.attackid)
-          .catch((error) => {
-            console.log("Error linking attack as monster attack: " + error)
-          });
-        })
-        .catch((error) => {
-          console.log("Error inserting monster attack data: " + error);
-        });
-      }
-    }
   }).catch((error) => {
     console.log("Error getting encounter names: " + error);
     return;
-  })
+  });
+  let ename;
+  for (const ename of encounternames) {
+    console.log(ename);
+    if (ename == encountername) {
+      // add monster group to monstergroup table with encounterid attatched
+      db.one(addnewmonstergroupquery, [encountername, 
+        formdata.basicinfo.size, formdata.basicinfo.type, 
+        formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
+        formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+        formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
+        formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
+        formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+        formdata.basicinfo.notes, formdata.health])
+      .then((result) => {
+        newmonstergroupid = result.monstergroupid;
+      })
+      .catch((error) => {
+        console.log("Error adding new monster group to encounter: " + error);
+        return;
+      });
+      break;
+    }
+  }
+  if (ename != encountername) {
+    // add new encounter to encounter table, and add monster group
+    db.one(addnewencounterquery, encountername)
+    .then(() => {
+      // add monster group to monstergroup table with encounterid attatched
+      db.one(addnewmonstergroupquery, [encountername, 
+        formdata.basicinfo.size, formdata.basicinfo.type, 
+        formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
+        formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+        formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
+        formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
+        formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+        formdata.basicinfo.notes, formdata.health])
+      .then((result) => {
+        newmonstergroupid = result.monstergroupid;
+      })
+      .catch((error) => {
+        console.log("Error adding new monster group to encounter: " + error);
+        return;
+      });
+    })
+    .catch((error) => {
+      console.log("Error adding new encounter: " + error);
+      return;
+    });
+  }
+  // add ability data from formdata into monsterability
+  for (const ab of Object.keys(formdata.abilities)) {
+    console.log(ab.charAt(0).toUpperCase + ab.slice(1));
+    console.log(formdata.abilities[ab]);
+    console.log(scoreToMod(formdata.abilities[ab]));
+    db.one(addmonsterabilitiesquery, [newmonstergroupid, ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab], scoreToMod(formdata.abilities[ab])])
+    .catch((error) => {
+      console.log("Error inserting monster ability data: " + error);
+    });
+  }
+  // add attack data from formdata into attack
+  for (const atk of formdata.attacks) {
+    if (atk.name !== "") {
+      db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
+      .then ((result) => {
+        // link attacks to monsterattack with attackid/monsterid
+        db.one(linkmonsterattackquery, newmonstergroupid, result.attackid)
+        .catch((error) => {
+          console.log("Error linking attack as monster attack: " + error)
+        });
+      })
+      .catch((error) => {
+        console.log("Error inserting monster attack data: " + error);
+      });
+    }
+  }
 }
 
 

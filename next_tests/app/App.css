@@ -85,7 +85,6 @@ Character Sheet
 .characterSheet {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   gap: 0.4rem;
   padding: 0.3rem;
 }
@@ -136,7 +135,7 @@ Ability Section
 }
 
 .characterAbilityContainer {
-  max-width: 28rem;
+  max-width: 26rem;
   max-height: 8rem;
 }
 
@@ -164,7 +163,7 @@ Health Box
   flex-direction: row;
   gap: 1rem;
   padding: 0.5rem;
-  max-width: 16rem;
+  max-width: 15rem;
   max-height: 8rem;
 } 
 
@@ -285,7 +284,7 @@ Saving Throw
 .characterSavingThrowSectionBox {
   display: flex;
   flex-direction: column;
-  max-width: 17rem;
+  max-width: 16rem;
   max-height: 10rem;
 }
 
@@ -548,6 +547,11 @@ Monster Sheet
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
+}
+
+.monsterGroupDisplaySection {
+  overflow-y: scroll;
+  max-height: 49rem; 
 }
 
 .monsterGroupDisplay {

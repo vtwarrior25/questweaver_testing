@@ -1133,7 +1133,7 @@
               <Button>Confirm Character</Button>
             </div>
             <div className="levelUpSection">
-
+            
             </div>
           </Tab>
           <Tab eventKey="avatar" title="Avatar">

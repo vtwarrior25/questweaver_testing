@@ -320,9 +320,9 @@ function MonsterSheet({setRollResults}) {
   */
 
   const addMonsterGroup = (encounter, monstergroup) => {
-    console.log(encounter);
-    console.log(monstergroup);
-    console.log(encounters);
+    //console.log(encounter);
+    //console.log(monstergroup);
+    //console.log(JSON.stringify(encounters, null, 4));
     addGroupFromForm(monstergroup, encounter)
     .catch((error) => {
       console.error("Error adding monster group to database: " + error);
@@ -345,11 +345,17 @@ function MonsterSheet({setRollResults}) {
         let newencounter = {...newencounters[encounterindex]};
         newencounters[encounterindex] = newencounter;
         let newmonstergroups = [...newencounters[encounterindex].monstergroups];
+        /*
         console.log(JSON.stringify(encounters, null, 4));
-        console.log(JSON.stringify(newencounters[encounterindex].monstergroups, null, 4));
-        newmonstergroups = [...newmonstergroups, {...monstergroup}]; // TODO This is the line causing the issue
-        console.log(JSON.stringify(newmonstergroups, null, 4));
+        console.log(JSON.stringify(newencounters[encounterindex].monstergroups, null, 4)); 
+        console.log(JSON.stringify(newmonstergroups, null, 4)); // it appears to be fine here (i'm pretty sure)
+        */
+        newmonstergroups = [...newmonstergroups, structuredClone(monstergroup)]; // TODO This is the line causing the issue
+        /*
+        console.log(JSON.stringify(newencounters[encounterindex].monstergroups, null, 4)); // this one looks fine??
+        console.log(JSON.stringify(newmonstergroups, null, 4)); // this one has problems, idk how or why??
         console.log(JSON.stringify(newencounters, null, 4));
+        */
         newencounter.monstergroups = [...newmonstergroups];
         setEncounters([...newencounters]);
         return;
@@ -361,7 +367,7 @@ function MonsterSheet({setRollResults}) {
         let newencounter = {
           encountername: encounter,
           monstergroups: [
-            {...monstergroup}
+            structuredClone(monstergroup)
           ]
         }
         //console.log([...encounters, newencounter]);
@@ -374,7 +380,7 @@ function MonsterSheet({setRollResults}) {
         let newencounter = {
           encountername: encounter,
           monstergroups: [
-            {...monstergroup}
+            structuredClone(monstergroup)
           ]
         }
         setEncounters([...encounters, newencounter]);

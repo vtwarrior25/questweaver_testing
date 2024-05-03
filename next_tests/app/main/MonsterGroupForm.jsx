@@ -26,7 +26,22 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     cha: 0,
   });
 
-  const [monstertypes, setMonsterTypes] = useState([]);
+  const [monstertypes, setMonsterTypes] = useState([
+    'Aberration',
+    'Animal',
+    'Beast',
+    'Construct',
+    'Dragon',
+    'Elemental',
+    'Fey',
+    'Fiend',
+    'Giant',
+    'Humanoid',
+    'Monstrosity',
+    'Ooze',
+    'Plant',
+    'Undead',
+  ]);
 
   const [formdata, setFormData] = useState({
     basicinfo: {
@@ -110,6 +125,8 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
       console.log('getting monster types');
       console.log(result);
       setMonsterTypes([...result]);
+    }).catch((error) => {
+      console.error("Error retrieving monster types: " + error);
     });
   }, [],
   );
@@ -124,6 +141,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
   }
+
 
   const updateFormValue = (section, field, value, attacknumber) => {
     let formdatacopy = {...formdata};
@@ -141,12 +159,17 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
     setFormData(formdatacopy);
   }
 
+
   const duplicateMonsterGroup = () => {
     const encounter = encounters.filter((encounter) => encounter.encountername === duplicatemenustate.encounter)
-    const monstergroup = encounter[duplicatemenustate.monster];
+    console.log(encounter);
+    console.log(duplicatemenustate.monster);
+    const monstergroup = structuredClone(encounter[0].monstergroups[duplicatemenustate.monster]);
+    console.log(monstergroup);
     setFormData({...monstergroup});
     //setFormData(monstergroup);
   }
+
 
   const monsterGroupsInSelectedEncounter = (selectedencountername) => {
     const errorencounter = {
@@ -214,9 +237,9 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                   </td>
                   <td>
                     <select name="type" onChange={(e) => updateFormValue("basicinfo", e.target.name, e.target.value)} value={formdata.basicinfo.type}>
-                      <option value=""></option>
-                      <option value="Aberrations">Aberrations</option>
-                      <option value="Monster">Monster</option>
+                      {monstertypes.map((type, index) => (
+                        <option key={index} value={type.name}>{type.name}</option>
+                      ))}
                     </select>
                   </td>
                 </tr>
@@ -255,15 +278,15 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                     <Overlay target={duplicatetarget.current} show={duplicatemenudisplay} placement='top'> 
                       <div className='monsterGroupDuplicateMenu frontElement'>
                         <label htmlFor="encounter">Encounter</label>
-                        <select name="encounter" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, encounter: e.target.value})}>
+                        <select name="encounter" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, encounter: e.target.value, monster: 0})}>
                           {encounters && encounters.length > 0 && encounters.map((encounter, index) => 
                             <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
                           )}
                         </select>
                         <label htmlFor="monster">Monster</label>
-                        <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: e.target.value})}>
+                        <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: Number(e.target.value)})}>
                           {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
-                            <option key={index} value={monstergroup.basicinfo.id}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
+                            <option key={index} value={index}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
                           )}
                         </select>
                         <Button variant='secondary' size='sm' onClick={() => duplicateMonsterGroup()}>Duplicate Monster Group</Button>
