@@ -1,6 +1,6 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { PlayerCharacterContext, UserIDContext, fetchCharacterInfo } from "./Contexts";
   import AbilityBox from "./AbilityBox";
   import AbilitySection from "./AbilitySection";
   import { createCharacter } from "../lib/createcharacter";
@@ -911,9 +911,27 @@
       });
     };
 
+    const renderCharacterLevelUpInfo = (characterInfo) => {
+      if (!characterInfo) {
+        return null; 
+      }
+    
+      return (
+        console.log('temp')
+      );
+    };
     
 
+  const handleLevelSelect = async (level) => {
+  try {
+    const characterInfo = await fetchCharacterInfo(playercharacterid, level);
+    // Update state or perform any action with the fetched character info
+  } catch (error) {
+    console.error("Error fetching character information:", error);
+  }
+};
 
+    
 
     
     return (
@@ -1134,25 +1152,33 @@
             </div>
           </Tab>
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
-          <div className="confirmCharacterSection">
-            {characterConfirmed ? (
-              // Content to display after confirming character
-              <div className="levelUpSection">
-                <Button onClick={handleSwitchBack}>Change Character</Button>
-              </div>
-            ) : (
-              // Content to display before confirming character
-              <>
-                <div className="characterInfoDisplay">
-                  <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
-                  <p>Class: {charactercreatordata.class}</p>
-                  <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
-                </div>
-                <Button onClick={handleConfirmClick}>Confirm Character</Button>
-              </>
-            )}
-          </div>
-        </Tab>
+  <div className="confirmCharacterSection">
+    {characterConfirmed ? (
+      // Content to display after confirming character
+      <div className="levelUpSection">
+        <select onChange={(e) => handleLevelSelect(e.target.value)}>
+          {Array.from({ length: 5 }, (_, i) => i + 1).map((level) => (
+            <option key={level} value={level}>
+              Level {level}
+            </option>
+          ))}
+        </select>
+        {renderCharacterLevelUpInfo()}
+        <Button onClick={handleSwitchBack}>Change Character</Button>
+      </div>
+    ) : (
+      // Content to display before confirming character
+      <>
+        <div className="characterInfoDisplay">
+          <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
+          <p>Class: {charactercreatordata.class}</p>
+          <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+        </div>  
+        <Button onClick={handleConfirmClick}>Confirm Character</Button>
+      </>
+    )}
+  </div>
+</Tab>
         
         
 

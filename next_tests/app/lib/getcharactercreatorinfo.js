@@ -77,6 +77,11 @@ export async function updateCharacterAbilityScores(playerCharacterId, abilities)
 }
 
 
+
+
+
+
+
 export async function getCharacterClassInfo() {
   let classesWithSubclasses = [];
 
