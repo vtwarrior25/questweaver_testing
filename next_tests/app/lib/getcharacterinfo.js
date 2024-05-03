@@ -1196,15 +1196,15 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
             db.none(setsavingthrowproficientquery, [playercharacterid, result.name])
             .catch((error) => {
               console.error('Failed to set the saving throw to proficient: ' + error);
-            })
+            });
           }
           db.none(addproficiencytocharacterquery, [playercharacterid, result.proficiencyid])
           .catch((error) => {
             console.error('Failed to add proficiency to character: ' + error);
-          })
+          });
         }).catch((error) => {
           console.error('Error getting proficiencyid for proficiency feature: ' + error);
-        })
+        });
         /*
         db.none(addproficiencytocharacterquery, [playercharacterid, feature.featureid])
         .catch((error) => {
@@ -1233,8 +1233,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
             console.error('Error updating character ability scores: ' + error);
           });
         }).catch((error) => {
-          console.error('Error getting ability score feature information: ' + error);
-          
+          console.error('Error getting ability score feature information: ' + error); 
         });
         break;
       case 'Ability Action':
