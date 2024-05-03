@@ -86,7 +86,6 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('', '', '', '');
 
 
-
 INSERT INTO abilityactionfeature (featureid, abilityid, uses) VALUES 
 (),
 
@@ -226,11 +225,11 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Ability Score Improvement'), 2),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 2),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
-((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
+((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = ''), 2),
 
 
 INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES 
-((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Fast Movement'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Berserker Frenzy'), 2),
 
 
 INSERT INTO racefeature (raceid, featureid) VALUES 

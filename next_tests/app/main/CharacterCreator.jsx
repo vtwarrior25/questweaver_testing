@@ -28,6 +28,7 @@
     });
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState('Barbarian');
+    const [showclasstable, showClassTable] = useState(false);
     const [equipmentForCharacter, setEquipmentForCharacter] = useState([]);
     const [dropdownvalues, setDropdownValues] = useState({});
     const [error, setError] = useState(null);
@@ -36,6 +37,7 @@
     const [selectedAbilities, setSelectedAbilities] = useState(
       Array(6).fill("-")
     );
+    const [selectedskills, setSelectedSkills] = useState([]);
 
     const handleSelectionChange = (index, value) => {
       const newSelections = [...selectedAbilities];
@@ -54,9 +56,22 @@
       ];
     };
 
-    
+    const handleSkillSelectionChange = (index, value) => {
+      const newSelections = [...selectedskills];
+      newSelections[index] = value;
+      setSelectedSkills(newSelections);
+    }
 
-    
+    const getSkillDropdownOptions = (classname, currentIndex) => {
+      return [
+        "-",
+        ...classSkills[classname].skills.filter(
+          (skill) => 
+            !selectedskills.includes(skill) ||
+          selectedskills[currentIndex] === skill
+        ),
+      ];
+    }
     
     const martialWeapons = [
       "Glaive",
@@ -174,6 +189,164 @@
           sectiontext: "Epic beans action to the maximum moments scenario",
         },
       ],
+    });
+
+    const [classSkills, setClassSkills] = useState({
+      Barbarian: {
+        numskills: [0, 1],
+        skills: [
+          "Animal Handling",
+          "Athletics",
+          "Intimidation",
+          "Nature",
+          "Perception",
+          "Survival"
+        ]
+      },
+      Bard: {
+        numskills: [0, 1, 2],
+        skills: [
+          'Acrobatics',
+          'Animal Handling',
+          'Arcana',
+          'Athletics',
+          'Deception',
+          'History',
+          'Insight',
+          'Intimidation',
+          'Investigation',
+          'Medicine',
+          'Nature',
+          'Perception',
+          'Performance',
+          'Persuasion',
+          'Religion',
+          'Sleight of Hand',
+          'Stealth',
+          'Survival'
+        ]
+      },
+      Cleric: {
+        numskills: [0, 1],
+        skills: [
+          "History",
+          "Insight",
+          "Medicine",
+          "Persuasion",
+          "Religion"
+        ]
+      },
+      Druid: {
+        numskills: [0, 1],
+        skills: [
+          "Arcana",
+          "Animal Handling",
+          "Insight",
+          "Medicine",
+          "Nature",
+          "Perception",
+          "Religion",
+          "Survival"
+        ]
+      },
+      Fighter: {
+        numskills: [0, 1],
+        skills: [
+          "Acrobatics",
+          "Animal Handling",
+          "Athletics",
+          "History",
+          "Insight",
+          "Intimidation",
+          "Perception",
+          "Survival"
+        ]
+      },
+      Monk: {
+        numskills: [0, 1],
+        skills: [
+          "Acrobatics",
+          "Athletics",
+          "History",
+          "Insight",
+          "Religion",
+          "Stealth",
+        ]
+      },
+      Paladin: {
+        numskills: [0, 1],
+        skills: [
+          "Athletics",
+          "Insight",
+          "Intimidation",
+          "Medicine",
+          "Persuasion",
+          "Religion",
+        ]
+      },
+      Ranger: {
+        numskills: [0, 1, 2],
+        skills: [
+          "Animal Handling",
+          "Athletics",
+          "Insight",
+          "Investigation",
+          "Nature",
+          "Perception",
+          "Stealth",
+          "Survival"
+        ]
+      },
+      Rogue: {
+        numskills: [0, 1, 2, 3],
+        skills: [
+          "Acrobatics",
+          "Athletics",
+          "Deception",
+          "Insight",
+          "Intimidation",
+          "Investigation",
+          "Perception",
+          "Performance",
+          "Persuasion",
+          "Sleight of Hand",
+          "Stealth",
+        ]
+      },
+      Sorcerer: {
+        numskills: [0, 1],
+        skills: [
+          "Arcana",
+          "Deception",
+          "Insight",
+          "Intimidation",
+          "Persuasion",
+          "Religion",
+        ]
+      },
+      Warlock: {
+        numskills: [0, 1],
+        skills: [
+          "Arcana",
+          "Deception",
+          "History",
+          "Intimidation",
+          "Investigation",
+          "Nature",
+          "Religion",
+        ]
+      },
+      Wizard: {
+        numskills: [0, 1],
+        skills: [
+          "Arcana",
+          "History",
+          "Insight",
+          "Investigation",
+          "Medicine",
+          "Religion",
+        ]
+      },
     });
 
     const [classEquipment, setClassEquipment] = useState({
@@ -543,6 +716,7 @@
                 value={selectedOptions[option.dropdowndata]}
                 onChange={(e) => handleDropdownChange(option.dropdowndata, e.target.value)}
               >
+                <option>Beans</option>
                 {dropdownOptions[option.dropdowndata].map((item, index) => (
                   <option key={index} value={item}>
                     {item}
@@ -783,6 +957,7 @@
                       variant="pills"
                       className="flex-column"
                       style={{ minWidth: "200px" }}
+                      onSelect={() => showClassTable(false)}
                     >
                       {classes.map((classItem, index) => (
                         <Nav.Item key={index}>
@@ -811,25 +986,28 @@
                               <strong>Description:</strong>{" "}
                               {classItem.description}
                             </p>
-                                  {classItem.infotable && 
-                            <Table size="sm">
-                              <thead>
-                                <tr>
-                                {classItem.infotable.cols.map((col, index) => (
-                                  <th key={index}>{col}</th>
-                                ))}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {classItem.infotable.rows.map((row, index) => (
-                                  <tr key={index}>
-                                    {row.map((col, index) => (
-                                      <td key={index}>{col}</td>
+                            {classItem.infotable && 
+                              <div>
+                                <Button variant="secondary" onClick={() => showClassTable(!showclasstable)}>Show Class Table</Button>
+                                {showclasstable && <Table size="sm">
+                                  <thead>
+                                    <tr>
+                                    {classItem.infotable.cols.map((col, index) => (
+                                      <th key={index}>{col}</th>
                                     ))}
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </Table>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {classItem.infotable.rows.map((row, index) => (
+                                      <tr key={index}>
+                                        {row.map((col, index) => (
+                                          <td key={index}>{col}</td>
+                                        ))}
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </Table>}
+                              </div>
                             } 
                             <p>
                               <strong>Hit Points at 1st Level:</strong>{" "}
@@ -848,6 +1026,15 @@
                                   </li>
                                 ))}
                             </ul>
+                            <div className="classAbilityDropdowns">
+                              {classItem.name && classSkills[classItem.name].numskills && classSkills[classItem.name].numskills.map((skillitem, index) => (
+                                <select key={index} onChange={(e) => handleSkillSelectionChange(index, e.target.value)}>
+                                  {classItem.name && classSkills[classItem.name].skills && getSkillDropdownOptions(classItem.name, index).map((skill, index2) => (
+                                    <option key={index2} value={skill}>{skill}</option>
+                                  ))}
+                                </select>
+                              ))}
+                            </div>
 
                             <Button onClick={() => handleChooseClass(classItem)}>
                               Choose Class
