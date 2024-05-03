@@ -1,6 +1,6 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { PlayerCharacterContext, UserIDContext, fetchCharacterInfo } from "./Contexts";
   import AbilityBox from "./AbilityBox";
   import AbilitySection from "./AbilitySection";
   import { createCharacter } from "../lib/createcharacter";
@@ -13,10 +13,11 @@
   import AvatarUpload from "./AvatarUpload";
 
   function CharacterCreator() {
-    const [equipmentIdMapping, setEquipmentIdMapping] = useState({});
-    const [greataxeSelected, setGreataxeSelected] = useState(false);
+    const [showConfirmTab, setShowConfirmTab] = useState(true);
+    const [characterConfirmed, setCharacterConfirmed] = useState(false); 
+    
     const [selectedOptions, setSelectedOptions] = useState({});
-
+    const [showLevelUpSection, setShowLevelUpSection] = useState(false);
     //const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
     const userid = useContext(UserIDContext);
     const playercharacterid = useContext(PlayerCharacterContext);
@@ -578,7 +579,18 @@
       }
     };
     */
-    
+  
+    const handleConfirmClick = () => {
+      setShowConfirmTab(false); 
+      setCharacterConfirmed(true); 
+    };
+  
+  
+  
+    const handleSwitchBack = () => {
+      setShowConfirmTab(true); // Show confirm tab
+      setCharacterConfirmed(false); // Mark character as not confirmed
+    };
 
 
   const [dropdownOptions, setDropdownOptions] = useState({
@@ -899,9 +911,27 @@
       });
     };
 
+    const renderCharacterLevelUpInfo = (characterInfo) => {
+      if (!characterInfo) {
+        return null; 
+      }
+    
+      return (
+        console.log('temp')
+      );
+    };
     
 
+  const handleLevelSelect = async (level) => {
+  try {
+    const characterInfo = await fetchCharacterInfo(playercharacterid, level);
+    // Update state or perform any action with the fetched character info
+  } catch (error) {
+    console.error("Error fetching character information:", error);
+  }
+};
 
+    
 
     
     return (
@@ -910,7 +940,7 @@
           className="characterCreatorTabs frontElement"
           defaultActiveKey="race"
         >
-          <Tab eventKey="race" title="Race">
+          <Tab eventKey="race" title="Race"  disabled={!showConfirmTab}>
             <div className="characterCreatorSection characterCreatorRace frontElement">
               <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
                 <Nav variant="pills" className="flex-column">
@@ -963,7 +993,7 @@
               </Tab.Container>
             </div>
           </Tab>
-          <Tab eventKey="class" title="Class">
+          <Tab eventKey="class" title="Class" disabled={!showConfirmTab} >
             <Tab.Container defaultActiveKey="barbarian">
               <div
                 className="characterCreatorSection characterCreatorClass frontElement"
@@ -1067,7 +1097,7 @@
             </Tab.Container>
           </Tab>
 
-          <Tab eventKey="abilities" title="Abilities">
+          <Tab eventKey="abilities" title="Abilities" disabled={!showConfirmTab}>
             <div className="characterCreator">
               <div className="abilityScoresDisplay">
                 {Object.entries(abilityScores).map(([ability, score], index) => (
@@ -1103,10 +1133,10 @@
               </div>
             </div>
           </Tab>
-          <Tab eventKey="equipment" title="Equipment">
+          <Tab eventKey="equipment" title="Equipment" disabled={!showConfirmTab}>
           {renderEquipmentOptions()}
           </Tab>
-          <Tab eventKey="description" title="Description">
+          <Tab eventKey="description" title="Description" disabled={!showConfirmTab}>
             <div className="notesMenu frontElement">
               {charactercreatordata.descriptions.map((notessection, index) => (
                 <div key={index} className="notesSection">
@@ -1118,9 +1148,7 @@
                   ></textarea>
                 </div>
               ))}
-              <Button onClick={updateAbilityScores}>
-                
-              </Button>
+              
             </div>
           </Tab>
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
@@ -1133,7 +1161,7 @@
               <Button>Confirm Character</Button>
             </div>
             <div className="levelUpSection">
-            
+
             </div>
           </Tab>
           <Tab eventKey="avatar" title="Avatar">
