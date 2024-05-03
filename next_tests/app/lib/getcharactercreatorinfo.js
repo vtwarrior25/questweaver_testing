@@ -118,7 +118,7 @@ export async function getCharacterCreatorInfo() {
   // Get list of subraces with their corresponding race
   try {
     subracesWithRaces = await db.many(`
-      SELECT s.subraceid, s.name AS subrace_name, r.raceid, r.name AS race_name
+      SELECT s.subraceid, s.name AS subrace_name, r.raceid, r.name AS race_name, r.creaturesize
       FROM subrace s
       JOIN race r ON s.raceid = r.raceid;
     `); 
@@ -150,7 +150,7 @@ export async function getCharacterCreatorInfo() {
   // Get list of races that don't have subraces
   try {
     racesWithoutSubraces = await db.many(`
-      SELECT r.*
+      SELECT r.raceid, r.name AS race_name, r.creaturesize
       FROM race r
       WHERE NOT EXISTS (
         SELECT 1
