@@ -10,7 +10,7 @@ function SequentialCheckboxes({number, sequential, normal}) {
         {Array.from(Array(number), (checkbox, index) => {
           return <input type="checkbox" value={index} key={index}/>
         })}
-        <Button type="reset"></Button>
+        <Button type="reset">Clear</Button>
       </form>
     )
   }
@@ -21,7 +21,7 @@ function SequentialCheckboxes({number, sequential, normal}) {
         {Array.from(Array(number), (checkbox, index) => {
           return <input type="checkbox" value={index} key={index} onChange={() => setBoxesChecked(index + 1)} checked={boxeschecked >= index + 1}/>
         })}
-        <Button type="reset"></Button>
+        <Button type="reset">Clear</Button>
       </form>
     );
   } else {
