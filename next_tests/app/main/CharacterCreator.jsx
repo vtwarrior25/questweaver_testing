@@ -10,7 +10,6 @@
     updateCharacterAbilityScores,
     addItemsToCharacterInventory,
     fetchCharacterInfo,
-    
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
   

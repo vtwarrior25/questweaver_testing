@@ -159,7 +159,7 @@ function PixiMap() {
   const modifyMapStats = () =>  {
     updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
     .catch((error) => {
-      console.error("Error updating map stats: " + error)
+      console.error("Error updating map stats: " + error);
     })
   }
 

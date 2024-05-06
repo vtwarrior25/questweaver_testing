@@ -2,6 +2,10 @@
 'None', 'Proficiency', 'Action', 'Speed', 'Ability Score', 'Ability Action', 'Defense', 'Condition', 'Skill', 'Class Action');
 */
 
+/*
+Most feature info grabbed from https://open5e.com
+*/
+
 -- Race and Subrace Features into feature
 INSERT INTO feature (name, displayname, description, featuretype) VALUES 
 ('Dwarf Ability Score Increase', 'Ability Score Increase', 'Your Constitution score increases by 2.', 'Ability Score'),

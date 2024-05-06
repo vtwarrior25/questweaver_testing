@@ -1028,14 +1028,14 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   // Get class features for classid and level
   await db.many(getclassfeaturesforlevelquery, [classid, characterlevel])
   .then((result) => {
-    levelupfeatures = [...levelupfeatures, result]
+    levelupfeatures = [...levelupfeatures, result];
   }).catch((error) => {
     console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
   });
   // Get subclass features for subclassid and level
   await db.many(getsubclassfeaturesforlevelquery, [subclassid, characterlevel])
   .then((result) => {
-    levelupfeatures = [...levelupfeatures, result]
+    levelupfeatures = [...levelupfeatures, result];
   }).catch((error) => {
     console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
   });
