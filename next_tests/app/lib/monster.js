@@ -197,14 +197,12 @@ export async function addGroupFromForm(formdata, encountername) {
   }
 }
 
-
 const removemonstergroupquery = new PQ({
   text: `
     DELETE FROM monstergroup 
     WHERE monstergroupid = $1;
   `
 }); 
-
 
 const removemonstergroupabilitiesquery = new PQ({
   text: `
@@ -222,8 +220,6 @@ const removemonstergroupattacksquery = new PQ({
 });
 */ 
 
-
-
 export async function removeMonsterGroupFromDB(monstergroupid) {
   db.none(removemonstergroupquery, [monstergroupid])
   .catch((error) => {
@@ -234,7 +230,6 @@ export async function removeMonsterGroupFromDB(monstergroupid) {
     console.error('Failed to remove monster group: ' + error);
   });
 }
-
 
 const getencountersquery = new PQ({
   text: `
@@ -254,7 +249,6 @@ const getmonstergroupquery = new PQ({
     WHERE mg.encounterid = $1;
   `
 });
-
 
 const getmonsterabilitiesquery = new PQ({
   text: `
