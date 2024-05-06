@@ -801,6 +801,23 @@ const getclassfeaturesquery = new PQ({
   `
 });
 
+const getclassfeaturesforlevelquery = new PQ({
+  text: `
+    SELECT featureid, name, description, featuretype FROM feature c
+    JOIN classfeature p ON c.featureid = p.featureid
+    WHERE p.classid = $1 AND p.characterlevel = $2;
+  `
+});
+
+const getsubclassfeaturesforlevelquery = new PQ({
+  text: `
+    SELECT featureid, name, description, featuretype FROM feature c
+    JOIN subclassfeature sc ON c.featureid = sc.featureid
+    WHERE sc.subclassid = $1 AND sc.characterlevel = $2;
+  `
+});
+
+
 const getracefeaturesquery = new PQ({
   text: `
     SELECT featureid, name, description, featuretype FROM feature c
@@ -988,6 +1005,43 @@ export async function getRaceFeature(racename) {
   });
   return racefeatures;
 }
+
+const getclassandsubclassforcharacterquery = new PQ({
+  text: `
+    SELECT classid, subclassid FROM playercharacter
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function levelUpFeatures(playercharacterid, characterlevel) {
+  let levelupfeatures = [];
+  let classid = 0;
+  let subclassid = 0;
+  // Get subclassid and classid
+  await db.one(getclassandsubclassforcharacterquery, [playercharacterid])
+  .then((result) => {
+    classid = result.classid;
+    subclassid = result.subclassid;
+  }).catch((error) => {
+    console.error("Error retrieving classid and subclassid for player: " + error);
+  });
+  // Get class features for classid and level
+  await db.many(getclassfeaturesforlevelquery, [classid, characterlevel])
+  .then((result) => {
+    levelupfeatures = [...levelupfeatures, result]
+  }).catch((error) => {
+    console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
+  });
+  // Get subclass features for subclassid and level
+  await db.many(getsubclassfeaturesforlevelquery, [subclassid, characterlevel])
+  .then((result) => {
+    levelupfeatures = [...levelupfeatures, result]
+  }).catch((error) => {
+    console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
+  });
+  return levelupfeatures;
+}
+
 
 const getcharinfoforfeaturesquery = new PQ({
   text: `

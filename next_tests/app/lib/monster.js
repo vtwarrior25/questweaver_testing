@@ -237,43 +237,45 @@ export async function removeMonsterGroupFromDB(monstergroupid) {
 
 
 const getencountersquery = new PQ({
-  text: 'SELECT encounterid, name AS encountername FROM encounter;'
+  text: `
+    SELECT encounterid, name AS encountername FROM encounter;
+  `
 });
 
 const getmonstergroupquery = new PQ({
   text: `
-  SELECT mg.monstergroupid, mg.encounterid, creaturesize AS size, mt.name AS type, 
-  alignment, groupname AS name, quantity, description, hitdie, hitdienum, 
-  challengerating, xpper, xptotal, armorclass, speed, initiative, 
-  skills, features, notes, health
-  FROM monstergroup mg
-    JOIN encounter e ON mg.encounterid = e.encounterid
-    JOIN monstertype mt ON mg.monstertypeid = mt.monstertypeid
-  WHERE mg.encounterid = $1;
+    SELECT mg.monstergroupid, mg.encounterid, creaturesize AS size, mt.name AS type, 
+    alignment, groupname AS name, quantity, description, hitdie, hitdienum, 
+    challengerating, xpper, xptotal, armorclass, speed, initiative, 
+    skills, features, notes, health
+    FROM monstergroup mg
+      JOIN encounter e ON mg.encounterid = e.encounterid
+      JOIN monstertype mt ON mg.monstertypeid = mt.monstertypeid
+    WHERE mg.encounterid = $1;
   `
 });
 
 
 const getmonsterabilitiesquery = new PQ({
   text: `
-  SELECT m.monstergroupid, a.abbrev, m.score 
-  FROM monsterability m
-    JOIN ability a ON m.abilityid = a.abilityid;
-  WHERE monstergroupid = $1;
+    SELECT m.monstergroupid, a.abbrev, m.score 
+    FROM monsterability m
+      JOIN ability a ON m.abilityid = a.abilityid;
+    WHERE monstergroupid = $1;
   `
 });
 
 const getmonsterattackquery = new PQ({
   text: `
-  SELECT a.name, a.range, amod.modifier, dmod.modifier, 
-  d.sides, a.numdamagedie, et.name, a.description
-  FROM monsterattack m
-    JOIN attack a ON m.attackid = a.attackid;
-    JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
-    JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
-    JOIN dice d ON a.diceid = d.diceid
-    JOIN effecttype et ON a.effecttypeid = et.effecttypeid
-  WHERE monstergroupid = $1;
+    SELECT a.name, a.range, amod.modifier, dmod.modifier, 
+    d.sides, a.numdamagedie, et.name, a.description
+    FROM monsterattack m
+      JOIN attack a ON m.attackid = a.attackid;
+      JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
+      JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
+      JOIN dice d ON a.diceid = d.diceid
+      JOIN effecttype et ON a.effecttypeid = et.effecttypeid
+    WHERE monstergroupid = $1;
   `
 });
 
@@ -329,7 +331,6 @@ export async function getEncounters() {
       let blankmonstergroup = {};
       blankmonstergroup.basicinfo = {...monstergroup};
       let abilityobject = {
-        init: 0,
         str: 0,
         dex: 0,
         con: 0,
@@ -337,7 +338,7 @@ export async function getEncounters() {
         wis: 0,
         cha: 0,
       }
-      db.many(getmonsterabilitiesquery, [monstergroupresult.monstergroupid, ability])
+      await db.many(getmonsterabilitiesquery, [monstergroup.monstergroupid])
       .then((monsterabilityresult) => {
         for (let ability of monsterabilityresult) {
           abilityobject[ability.abbrev.toLowerCase()] = ability.score;
@@ -348,13 +349,17 @@ export async function getEncounters() {
       });
       blankmonstergroup.abilities = {...abilityobject}; 
       // For each monstergroupid, get attacks from monsterattack
-      db.many(getmonsterattackquery)
+      await db.many(getmonsterattackquery, [monstergroup.monstergroupid])
       .then((monsterattackresult) => {
         blankencounter.attacks = [...monsterattackresult];
       }).catch((error) => {
         console.log(error);
       });
-      blankencounter.monstergroups = [...blankencounter.monstergroups, blankmonstergroup]
+      if (blankencounter.monstergroups === undefined) {
+        blankencounter.monstergroups = [blankmonstergroup];
+      } else {
+        blankencounter.monstergroups = [...blankencounter.monstergroups, blankmonstergroup]
+      }
     }
   }
   return encounters;
