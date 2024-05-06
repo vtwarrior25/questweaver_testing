@@ -57,7 +57,7 @@ const addnewmonstergroupquery = new PQ({
       notes, health)
     VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
       $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
-      $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      (SELECT alignmentid FROM alignment WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
     RETURNING monstergroupid;
   `
 });
@@ -135,6 +135,7 @@ export async function addGroupFromForm(formdata, encountername) {
     });
   }
 
+  console.log(formdata);
   // Adding most of the monster info to the database
   await db.one(addnewmonstergroupquery, [encountername, 
     formdata.basicinfo.size, formdata.basicinfo.type, 
@@ -269,7 +270,7 @@ const getmonsterattackquery = new PQ({
       JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
       JOIN dice d ON a.diceid = d.diceid
       JOIN effecttype et ON a.effecttypeid = et.effecttypeid
-    WHERE monstergroupid = $1;
+    WHERE m.monstergroupid = $1;
   `
 });
 

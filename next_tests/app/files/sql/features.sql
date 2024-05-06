@@ -80,7 +80,7 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Extra Attack', 'Extra Attack', 'Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.', 'None'),
 ('Fast Movement', 'Fast Movement', 'Starting at 5th level, your speed increases by 10 feet while you aren''t wearing heavy armor.', 'None'),
 ('Berserker Frenzy', 'Frenzy', 'Starting when you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.', 'None'), 
-('Spellcasting', '', '', ''),
+('Bard Spellcasting', 'Spellcasting', '', ''),
 ('Bard Proficiencies', 'Proficiencies', 'Armor: Light armor;;Weapons: Simple weapons, hand crossbows, longswords, rapiers, shortswords;;Tools: Three musical instruments of your choice;;Saving Throws: Dexterity, Charisma;;Skills: Choose any three', 'Proficiency')
 ('Bardic Inspiration', 'Bardic Inspiration', 'You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. ;;Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. ;;You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ;;Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.', ''),
 ('Jack of All Trades', 'Jack of All Trades', 'Starting at 2nd level, you can add half your proficiency bonus, rounded down, to any ability check you make that doesn''t already include your proficiency bonus. ', 'None'),
@@ -92,7 +92,8 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('College of Valor Bonus Proficiencies', 'Bonus Proficiencies', 'When you join the College of Valor at 3rd level, you gain proficiency with medium armor, shields, and martial weapons.', 'Proficiency'),
 ('Combat Inspiration', 'Combat Inspiration', 'Also at 3rd level, you learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to any weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses.', 'None'),
 ('Cleric Proficiencies', 'Proficiencies', 'Armor: Light armor, medium armor, shields;;Weapons: Simple weapons;;Tools: None;;Saving Throws: Wisdom, Charisma;;Skills: Choose two from History, Insight, Medicine, Persuasion, and Religion', 'Proficiency'),
-('Spellcasting', '', '', ''),
+('Cleric Spellcasting', 'Spellcasting', '', ''),
+('Cleric Divine Domain', 'Divine Domain', 'Domain Spells ;;Each domain has a list of spells-its domain spells- that you gain at the cleric levels noted in the domain description. Once you gain a domain spell, you always have it prepared, and it doesn''t count against the number of spells you can prepare each day. If you have a domain spell that doesn''t appear on the cleric spell list, the spell is nonetheless a cleric spell for you. ;;Domain Spells ;;Each domain has a list of spells-its domain spells- that you gain at the cleric levels noted in the domain description. Once you gain a domain spell, you always have it prepared, and it doesn''t count against the number of spells you can prepare each day. ;;If you have a domain spell that doesn''t appear on the cleric spell list, the spell is nonetheless a cleric spell for you. ', 'None')
 ('Channel Divinity', 'Channel Divinity', 'At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.;;When you use your Channel Divinity, you choose which effect to create. You must then finish a short or long rest to use your Channel Divinity again.;; Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your cleric spell save DC. ;;Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.', 'Class Action'),
 ('Channel Divinity Turn Undead', 'Channel Divinity: Turn Undead', 'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.;;A turned creature must spend its turns trying to move as far away from you as it can, and it can''t willingly move to a space within 30 feet of you. It also can''t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there''s nowhere to move, the creature can use the Dodge action. ', 'None'),
 ('Cleric Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature. ', 'None'),
@@ -100,10 +101,16 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Life Domain Bonus Proficiency', 'Bonus Proficiency', 'When you choose this domain at 1st level, you gain proficiency with heavy armor.', 'Proficiency'),
 ('Disciple of Life', 'Disciple of Life', 'Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell''s level. ', 'None'),
 ('Channel Divinity Preserve Life', 'Channel Divinity: Preserve Life', 'Starting at 2nd level, you can use your Channel Divinity to heal the badly injured. ;;As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can''t use this feature on an undead or a construct. ', 'None'),
-
-
-
-
+-- Druid
+('Druid Proficiencies', 'Proficiencies', 'Armor: Light armor, medium armor, shields (druids will not wear armor or use shields made of metal) ;;Weapons: Clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears ;;Tools: Herbalism kit ;;Saving Throws: Intelligence, Wisdom', 'Proficiency'),
+('Druid Spellcasting', 'Spellcasting', '', ''),
+('Druid Spellcasting Ability', 'Spellcasting Ability', '', 'None'),
+('Druid Ritual Casting', 'Ritual Casting', 'You can cast a druid spell as a ritual if that spell has the ritual tag and you have the spell prepared. ;;Spellcasting Focus ;;You can use a druidic focus (see chapter 5, “Equipment”) as a spellcasting focus for your druid spells. ', 'None'),
+('Wild Shape', 'Wild Shape', 'Starting at 2nd level, you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.;;Your druid level determines the beasts you can transform into, as shown in the Beast Shapes table. At 2nd level, for example, you can transform into any beast that has a challenge rating of 1/4 or lower that doesn''t have a flying or swimming speed. ', 'Action'),
+('Druid Circle', 'Druid Circle', 'At 2nd level, you choose to identify with a circle of druids: the Circle of the Land or the Circle of the Moon, both detailed at the end of the class description. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level. ', 'None'),
+('Druid Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature. ', 'None'),
+('Combat Wild Shape', 'Combat Wild Shape', 'When you choose this circle at 2nd level, you gain the ability to use Wild Shape on your turn as a bonus action, rather than as an action. ;;Additionally, while you are transformed by Wild Shape, you can use a bonus action to expend one spell slot to regain 1d8 hit points per level of the spell slot expended.', 'None')
+('Circle Forms', 'Circle Forms', 'The rites of your circle grant you the ability to transform into more dangerous animal forms. Starting at 2nd level, you can use your Wild Shape to transform into a beast with a challenge rating as high as 1 (you ignore the Max. CR column of the Beast Shapes table, but must abide by the other limitations there).;;Starting at 6th level, you can transform into a beast with a challenge rating as high as your druid level divided by 3, rounded down.', 'None')
 
 
 INSERT INTO abilityactionfeature (featureid, abilityid, uses) VALUES 
@@ -138,6 +145,7 @@ INSERT INTO abilityscorefeature (featureid, abilityid, scorebonus) VALUES
 -- Recovery of 1 means short rest, recovery of 2 means long rest
 INSERT INTO actionfeature (featureid, uses, usesperlevel, recovery) VALUES 
 ((SELECT featureid FROM feature WHERE name = 'Relentless Endurance'), 1, 0, 1),
+((SELECT featureid FROM feature WHERE name = 'Wild Shape'), 2, 0, 1),
 
 
 INSERT INTO attackfeature (featureid, attackid) VALUES 
@@ -231,8 +239,22 @@ INSERT INTO proficiencyfeature (featureid, proficiencyid) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Wisdom')),
 ((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Charisma')),
 ((SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), (SELECT proficiencyid FROM proficiency WHERE name = 'Heavy Armor')),
-
-
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Light Armor')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Club')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Dagger')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Dart')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Javelin')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Mace')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Quarterstaff')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Scimitar')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Sickle')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Sling')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Spear')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Herbalism Kit')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Intelligence')),
+((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Wisdom')),
 
 
 
@@ -274,7 +296,20 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Expertise'), 3),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Ability Score Improvement'), 4),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
-((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), 1),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Cleric Spellcasting'), 1),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity'), 2),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Turn Undead'), 2),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Cleric Ability Score Improvement'), 4),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Destroy Undead'), 5),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), 1),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Druid Spellcasting'), 1),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Spellcasting Ability'), 1),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Ritual Casting'), 1),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Wild Shape'), 2),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Circle'), 2),
+((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Druid Ability Score Improvement'), 4),
+
 
 
 
@@ -285,7 +320,8 @@ INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), 1),
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Disciple of Life'), 1),
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
-((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Circle of the Moon'), (SELECT featureid FROM feature WHERE name = 'Combat Wild Shape'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Circle of the Moon'), (SELECT featureid FROM feature WHERE name = 'Circle Forms'), 2),
 
 
 
