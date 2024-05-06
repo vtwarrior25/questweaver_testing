@@ -66,7 +66,7 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 
 -- Class and Subclass Features into feature
 INSERT INTO feature (name, displayname, description, featuretype) VALUES 
-('Barbarian Proficiencies', 'Proficiencies', '', 'Proficiency')
+('Barbarian Proficiencies', 'Proficiencies', 'Armor: Light armor, medium armor, shields;;Weapons: Simple weapons, martial weapons;;Tools: None;;Saving Throws: Strength, Constitution;;Skills: Choose two from Animal Handling, Athletics, Intimidation, Nature, Perception, and Survival', 'Proficiency')
 ('Barbarian Rage', 'Rage', 'In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. ;;While raging, you gain the following benefits if you aren''t wearing heavy armor: ;;You have advantage on Strength checks and Strength saving throws. ;;When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table. ;;You have resistance to bludgeoning, piercing, and slashing damage. ;;If you are able to cast spells, you can''t cast them or concentrate on them while raging. ;;Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven''t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action. ;;Once you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.', ''),
 ('Unarmored Defense', 'Unarmored Defense', 'While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit.', 'None'),
 ('Reckless Attack', 'Reckless Attack', 'Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn.', 'None'),
@@ -77,7 +77,7 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Fast Movement', 'Fast Movement', 'Starting at 5th level, your speed increases by 10 feet while you aren''t wearing heavy armor.', 'None'),
 ('Berserker Frenzy', 'Frenzy', 'Starting when you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.', 'None'), 
 ('Spellcasting', '', '', ''),
-('Bard Proficiencies', 'Proficiencies', 'Armor: Light armor;; Weapons: Simple weapons, hand crossbows, longswords, rapiers, shortswords;; Tools: Three musical instruments of your choice;; Saving Throws: Dexterity, Charisma;; Skills: Choose any three', 'Proficiency')
+('Bard Proficiencies', 'Proficiencies', 'Armor: Light armor;;Weapons: Simple weapons, hand crossbows, longswords, rapiers, shortswords;;Tools: Three musical instruments of your choice;;Saving Throws: Dexterity, Charisma;;Skills: Choose any three', 'Proficiency')
 ('Bardic Inspiration', 'Bardic Inspiration', 'You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. ;;Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time. ;;You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ;;Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.', ''),
 ('Jack of All Trades', 'Jack of All Trades', 'Starting at 2nd level, you can add half your proficiency bonus, rounded down, to any ability check you make that doesn''t already include your proficiency bonus. ', 'None'),
 ('Song of Rest', 'Song of Rest', 'Beginning at 2nd level, you can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points. ;;The extra hit points increase when you reach certain levels in this class: to 1d8 at 9th level, to 1d10 at 13th level, and to 1d12 at 17th level. ', 'None'),
@@ -87,7 +87,17 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Font of Inspiration', 'Font of Inspiration', 'Beginning when you reach 5th level, you regain all of your expended uses of Bardic Inspiration when you finish a short or long rest.', 'None'),
 ('College of Valor Bonus Proficiencies', 'Bonus Proficiencies', 'When you join the College of Valor at 3rd level, you gain proficiency with medium armor, shields, and martial weapons.', 'Proficiency'),
 ('Combat Inspiration', 'Combat Inspiration', 'Also at 3rd level, you learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to any weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses.', 'None'),
-('Cleric Proficiencies', '', '', ''),
+('Cleric Proficiencies', 'Proficiencies', 'Armor: Light armor, medium armor, shields;;Weapons: Simple weapons;;Tools: None;;Saving Throws: Wisdom, Charisma;;Skills: Choose two from History, Insight, Medicine, Persuasion, and Religion', 'Proficiency'),
+('Spellcasting', '', '', ''),
+('Channel Divinity', 'Channel Divinity', 'At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.;;When you use your Channel Divinity, you choose which effect to create. You must then finish a short or long rest to use your Channel Divinity again.;; Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your cleric spell save DC. ;;Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.', 'Class Action'),
+('Channel Divinity Turn Undead', 'Channel Divinity: Turn Undead', 'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.;;A turned creature must spend its turns trying to move as far away from you as it can, and it can''t willingly move to a space within 30 feet of you. It also can''t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there''s nowhere to move, the creature can use the Dodge action. ', 'None'),
+('Cleric Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature. ', 'None'),
+('Destroy Undead', 'Destroy Undead', 'Starting at 5th level, when an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below a certain threshold, as shown in the Destroy Undead table. ;;5th: 1/2 or lower ;;8th: 1 or lower ;;11th: 2 or lower ;;14th: 3 or lower ;;17th: 4 or lower', 'None'),
+('Life Domain Bonus Proficiency', 'Bonus Proficiency', 'When you choose this domain at 1st level, you gain proficiency with heavy armor.', 'Proficiency'),
+('Disciple of Life', 'Disciple of Life', 'Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell''s level. ', 'None'),
+('Channel Divinity Preserve Life', 'Channel Divinity: Preserve Life', 'Starting at 2nd level, you can use your Channel Divinity to heal the badly injured. ;;As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can''t use this feature on an undead or a construct. ', 'None'),
+
+
 
 
 
@@ -210,6 +220,16 @@ INSERT INTO proficiencyfeature (featureid, proficiencyid) VALUES
 ((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
 ((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
 ((SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Martial Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Light Armor')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Simple Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Wisdom')),
+((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Charisma')),
+((SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), (SELECT proficiencyid FROM proficiency WHERE name = 'Heavy Armor')),
+
+
+
 
 
 
@@ -250,12 +270,19 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Expertise'), 3),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Ability Score Improvement'), 4),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
+
 
 
 INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES 
 ((SELECT subclassid FROM subclass WHERE name = 'Path of the Berserker'), (SELECT featureid FROM feature WHERE name = 'Berserker Frenzy'), 3),
 ((SELECT subclassid FROM subclass WHERE name = 'College of Valor'), (SELECT featureid FROM feature WHERE name = 'College of Valor Bonus Proficiencies'), 3),
 ((SELECT subclassid FROM subclass WHERE name = 'College of Valor'), (SELECT featureid FROM feature WHERE name = 'Combat Inspiration'), 3),
+((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), 1),
+((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Disciple of Life'), 1),
+((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
+
 
 
 INSERT INTO racefeature (raceid, featureid) VALUES 

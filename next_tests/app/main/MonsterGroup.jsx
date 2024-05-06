@@ -92,7 +92,7 @@ TODO
             <tr>
               <th>Init</th>
               <td colSpan="2">
-                <DiceRollButton name={monsterinfo.basicinfo.name} rolltype="Initiative" die={20} num={1} mod={monsterinfo.abilities.init} text={modPos(monsterinfo.abilities.init)} setRollResults={setRollResults}></DiceRollButton>
+                <DiceRollButton name={monsterinfo.basicinfo.name} rolltype="Initiative" die={20} num={1} mod={getModifier(monsterinfo.abilities.dex)} text={modPos(getModifier(monsterinfo.abilities.dex))} setRollResults={setRollResults}></DiceRollButton>
               </td>
             </tr>
             <tr>

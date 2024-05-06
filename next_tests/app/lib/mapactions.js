@@ -17,17 +17,42 @@ const getmapdataquery = new PQ({
   `
 });
 
-export async function getMapData () {
+
+const getmapdataexcludingplayerquery = new PQ({
+  text: `
+    SELECT mapdataid, playercharacterid, monstergroupid, shape, image, scale, x, y, visible 
+    FROM mapdata;
+  `
+});
+
+
+const getmapdataasdmquery = new PQ({
+  text: `
+    SELECT mapdataid, playercharacterid, monstergroupid, shape, image, scale, x, y, visible 
+    FROM mapdata;
+  `
+});
+
+export async function getMapData (playerordm, id) {
   let mapdata = [];
+  /*
+  if (playerordm === "player" && id !== null && id !== undefined) {
+    
+  } else if (playerordm === "dm") {
+
+  } else {
+    
+  }
+  */
   await db.many(getmapdataquery)
-  .then((result) => {
-    //console.log(result);
-    //console.log('Got map data');
-    //console.log(`${new Date().toLocaleTimeString()}: ---------------`);
-    mapdata = [...result];
-  }).catch((error) => {
-    console.error('Error getting map data: ' + error);  
-  });
+    .then((result) => {
+      //console.log(result);
+      //console.log('Got map data');
+      //console.log(`${new Date().toLocaleTimeString()}: ---------------`);
+      mapdata = [...result];
+    }).catch((error) => {
+      console.error('Error getting map data: ' + error);  
+    });
   return mapdata;
 }
 

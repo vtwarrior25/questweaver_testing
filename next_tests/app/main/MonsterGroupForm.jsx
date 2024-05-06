@@ -17,7 +17,6 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   })
 
   const [abilitymodifiers, setAbilityModifiers] = useState({
-    init: 0,
     str: 0,
     dex: 0,
     con: 0,
@@ -64,7 +63,6 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
       notes: "",
     },
     abilities: {
-      init: 2,
       str: 8,
       dex: 14,
       con: 10,
@@ -302,7 +300,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
               <tbody>
                 <tr>
                   <th>Init</th>
-                  <td colSpan="2">+{getModifier(formdata.abilities.init)}</td>
+                  <td colSpan="2">+{getModifier(formdata.abilities.dex)}</td>
                 </tr>
                 <tr>
                   <th>Str</th>
@@ -311,7 +309,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                 </tr>
                 <tr>
                   <th>Dex</th>
-                  <td><input className="monsterSheetAbilityInput" type="number" name="dex" maxLength="2" size="3" onChange={(e) => {setAbilityModifiers({...abilitymodifiers, dex: e.target.value, init: e.target.value}); updateFormValue("abilities", e.target.name, Number(e.target.value)); updateFormValue("abilities", "init", Number(e.target.value))}} value={formdata.abilities.dex}/></td>
+                  <td><input className="monsterSheetAbilityInput" type="number" name="dex" maxLength="2" size="3" onChange={(e) => {setAbilityModifiers({...abilitymodifiers, dex: e.target.value}); updateFormValue("abilities", e.target.name, Number(e.target.value))}} value={formdata.abilities.dex}/></td>
                   <td><div className="monsterSheetAbilityMod">{getModifier(formdata.abilities.dex)}</div></td>
                 </tr>
                 <tr>

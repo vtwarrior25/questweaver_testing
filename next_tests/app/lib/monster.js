@@ -2,7 +2,7 @@
 const pgp = require('pg-promise')();
 const {ParameterizedQuery: PQ} = require('pg-promise');
 import { db } from '../lib/dbconn';
-import scoreToMod from '../lib/calcs.js';
+import { scoreToMod }  from '../lib/calcs.js';
 
 const getmonstertypesquery = new PQ({
   text: `
@@ -42,36 +42,55 @@ const getencounternamequery = new PQ({
   text: 'SELECT name FROM encounter;'
 });
 
+const getencounterfornamequery  = new PQ({
+  text: `
+    SELECT encounterid, name FROM encounter
+    WHERE name = $1;
+  `
+});
+
 const addnewmonstergroupquery = new PQ({
   text: `
-  INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, 
-    monstertypeid, alignment, groupname, description, quantity, hitdie, hitdienum, 
-    challengerating, xp, armorclass, speed, initiative, skills, features, 
-    notes, health)
-  VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
-    $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
-    $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
-  RETURNING monstergroupid;`
+    INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, 
+      monstertypeid, alignment, groupname, description, quantity, hitdie, hitdienum, 
+      challengerating, xpper, xptotal, armorclass, speed, initiative, skills, features, 
+      notes, health)
+    VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
+      $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
+      $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+    RETURNING monstergroupid;
+  `
 });
 
 const addnewencounterquery = new PQ({
   text: `
-  INSERT INTO encounter (encounterid, name)
-  VALUES (DEFAULT, $1)
-  RETURNING encounterid;`
+    INSERT INTO encounter (encounterid, name)
+    VALUES (DEFAULT, $1)
+    RETURNING encounterid;
+  `
 });
 
 const addmonsterabilitiesquery = new PQ({
   text: `
-  INSERT INTO monsterability (monsterabilityid, monstergroupid, abilityid, score, modifier)
-  VALUES (DEFAULT, $1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4);`
+    INSERT INTO monsterability (monsterabilityid, monstergroupid, abilityid, score, modifier)
+    VALUES (DEFAULT, $1, (SELECT abilityid FROM ability WHERE abbrev = $2), $3, $4);
+  `
+});
+
+const checkattackquery = new PQ({
+  text: `
+    SELECT a.attackid, a.name FROM attack a
+    WHERE a.name = $1;
+  `
 });
 
 const addmonsterattackquery = new PQ({
   text: `
-  INSERT INTO attack (attackid, name, flatdamagemod, diceid, numdamagedie, effecttypeid)
-  VALUES (DEFAULT, $1, $2, (SELECT diceid FROM dice WHERE sides = $3), $4, (SELECT effecttypeid FROM effecttype WHERE name = $5))
-  RETURNING attackid;`
+    INSERT INTO attack (attackid, name, flatdamagemod, diceid, numdamagedie, effecttypeid)
+    VALUES (DEFAULT, $1, $2, (SELECT diceid FROM dice WHERE sides = $3), $4, (SELECT effecttypeid FROM effecttype WHERE name = $5))
+    ON CONFLICT (name) DO NOTHING
+    RETURNING attackid;
+  `
 });
 
 const linkmonsterattackquery = new PQ ({
@@ -81,9 +100,12 @@ const linkmonsterattackquery = new PQ ({
 });
 
 export async function addGroupFromForm(formdata, encountername) {
-  let encounternames = [];
-  let newmonstergroupid = "";
+  //let encounternames = [];
+  let encounter = "";
+  let encounterid = -1;
+  let newmonstergroupid = 0;
   console.log("We are running, oh YEAH!!");
+  /*
   await db.any(getencounternamequery)
   .then((result) => {
     encounternames = [...result];
@@ -91,79 +113,86 @@ export async function addGroupFromForm(formdata, encountername) {
     console.log("Error getting encounter names: " + error);
     return;
   });
-  let ename;
-  for (const ename of encounternames) {
-    console.log(ename);
-    if (ename == encountername) {
-      // add monster group to monstergroup table with encounterid attatched
-      db.one(addnewmonstergroupquery, [encountername, 
-        formdata.basicinfo.size, formdata.basicinfo.type, 
-        formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
-        formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
-        formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
-        formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
-        formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
-        formdata.basicinfo.notes, formdata.health])
-      .then((result) => {
-        newmonstergroupid = result.monstergroupid;
-      })
-      .catch((error) => {
-        console.log("Error adding new monster group to encounter: " + error);
-        return;
-      });
-      break;
-    }
-  }
-  if (ename != encountername) {
-    // add new encounter to encounter table, and add monster group
-    db.one(addnewencounterquery, encountername)
-    .then(() => {
-      // add monster group to monstergroup table with encounterid attatched
-      db.one(addnewmonstergroupquery, [encountername, 
-        formdata.basicinfo.size, formdata.basicinfo.type, 
-        formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
-        formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
-        formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, 
-        formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
-        formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
-        formdata.basicinfo.notes, formdata.health])
-      .then((result) => {
-        newmonstergroupid = result.monstergroupid;
-      })
-      .catch((error) => {
-        console.log("Error adding new monster group to encounter: " + error);
-        return;
-      });
+  */
+  await db.one(getencounterfornamequery, [encountername])
+  .then((result) => {
+    encounter = result.name;
+    encounterid = result.id
+  }).catch((error) => {
+    console.log("Error getting encounter names: " + error);
+    return;
+  });
+
+  // Add a new encounter if we need to
+  if (encounter !== encountername) {
+    // We found an encounter that matches the provided name
+    await db.one(addnewencounterquery, [encountername])
+    .then((result) => {
+      encounterid = result.encounterid;
     })
     .catch((error) => {
-      console.log("Error adding new encounter: " + error);
-      return;
+      console.error('Error creating a new encounter with the provided name: ' + error);
     });
   }
+
+  // Adding most of the monster info to the database
+  await db.one(addnewmonstergroupquery, [encountername, 
+    formdata.basicinfo.size, formdata.basicinfo.type, 
+    formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
+    formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+    formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xpper,
+    formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
+    formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+    formdata.basicinfo.notes, formdata.health])
+  .then((result) => {
+    newmonstergroupid = result.monstergroupid;
+  })
+  .catch((error) => {
+    console.log("Error adding new monster group to encounter: " + error);
+    return;
+  });
+
   // add ability data from formdata into monsterability
   for (const ab of Object.keys(formdata.abilities)) {
-    console.log(ab.charAt(0).toUpperCase + ab.slice(1));
+    console.log(ab.charAt(0).toUpperCase() + ab.slice(1));
     console.log(formdata.abilities[ab]);
     console.log(scoreToMod(formdata.abilities[ab]));
-    db.one(addmonsterabilitiesquery, [newmonstergroupid, ab.charAt(0).toUpperCase + ab.slice(1), formdata.abilities[ab], scoreToMod(formdata.abilities[ab])])
+    await db.one(addmonsterabilitiesquery, [newmonstergroupid, ab.charAt(0).toUpperCase() + ab.slice(1), Number(formdata.abilities[ab]), Number(scoreToMod(formdata.abilities[ab]))])
     .catch((error) => {
       console.log("Error inserting monster ability data: " + error);
     });
   }
   // add attack data from formdata into attack
   for (const atk of formdata.attacks) {
+    let attackid = -1;
     if (atk.name !== "") {
-      db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
+      // Check if the attack exists already based on the name
+      await db.one(checkattackquery, [atk.name])
+      .then((result) => {
+        // Set attackid to the id of the existing attack with the name provided
+        attackid = result.attackid;
+      }).catch((error) => {
+        console.error('Error retrieving ' + error);
+      });
+    
+    // If an attack with the name doesn't already exist, add one
+    if (attackid === -1) {
+      await db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
       .then ((result) => {
-        // link attacks to monsterattack with attackid/monsterid
-        db.one(linkmonsterattackquery, newmonstergroupid, result.attackid)
-        .catch((error) => {
-          console.log("Error linking attack as monster attack: " + error)
-        });
+        // set attackid to the id of the added attack
+        attackid = result.attackid;
       })
       .catch((error) => {
         console.log("Error inserting monster attack data: " + error);
       });
+    }
+
+    // link attacks to monsterattack with attackid/monsterid
+    db.one(linkmonsterattackquery, [newmonstergroupid, attackid])
+    .catch((error) => {
+      console.log("Error linking attack as monster attack: " + error)
+    });
+
     }
   }
 }
@@ -213,14 +242,14 @@ const getencountersquery = new PQ({
 
 const getmonstergroupquery = new PQ({
   text: `
-  SELECT monstergroupid, encounterid, creaturesize AS size, mt.name AS type, 
+  SELECT mg.monstergroupid, mg.encounterid, creaturesize AS size, mt.name AS type, 
   alignment, groupname AS name, quantity, description, hitdie, hitdienum, 
   challengerating, xpper, xptotal, armorclass, speed, initiative, 
   skills, features, notes, health
   FROM monstergroup mg
     JOIN encounter e ON mg.encounterid = e.encounterid
     JOIN monstertype mt ON mg.monstertypeid = mt.monstertypeid
-  WHERE encounterid = $1;
+  WHERE mg.encounterid = $1;
   `
 });
 

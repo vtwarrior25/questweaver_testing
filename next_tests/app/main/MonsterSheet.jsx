@@ -187,7 +187,6 @@ function MonsterSheet({setRollResults}) {
                 notes: "",
               },
               abilities: {
-                init: 2,
                 str: 8,
                 dex: 14,
                 con: 10,
