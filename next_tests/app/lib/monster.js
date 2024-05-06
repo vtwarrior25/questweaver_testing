@@ -264,7 +264,7 @@ const getmonsterattackquery = new PQ({
     SELECT a.name, a.range, amod.modifier, dmod.modifier, 
     d.sides, a.numdamagedie, et.name, a.description
     FROM monsterattack m
-      JOIN attack a ON m.attackid = a.attackid;
+      JOIN attack a ON m.attackid = a.attackid
       JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
       JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
       JOIN dice d ON a.diceid = d.diceid
