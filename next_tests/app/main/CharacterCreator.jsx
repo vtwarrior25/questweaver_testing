@@ -13,11 +13,13 @@
     
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
+  import { levelUpFeatures } from "../lib/getcharacterinfo";
   
   function CharacterCreator() {
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const [characterConfirmed, setCharacterConfirmed] = useState(false); 
-    
+    const [levelUpInfo, setLevelUpInfo] = useState(null);
+
     const [selectedOptions, setSelectedOptions] = useState({});
     const [showLevelUpSection, setShowLevelUpSection] = useState(false);
     const userid = useContext(UserIDContext);
@@ -580,16 +582,27 @@
     };
     */
   
-    const handleConfirmClick = () => {
-      setShowConfirmTab(false); 
-      setCharacterConfirmed(true); 
-    };
-  
+   useEffect(() => {
+    if (characterConfirmed) {
+      levelUpFeatures(charactercreatordata.playercharacterid, charactercreatordata.characterlevel)
+        .then((features) => {
+          setLevelUpInfo(features);
+        })
+        .catch((error) => {
+          console.error("Error retrieving level up features: " + error);
+        });
+    }
+  }, [characterConfirmed, charactercreatordata.playercharacterid, charactercreatordata.characterlevel]);
+
+  const handleConfirmClick = () => {
+    setShowConfirmTab(false);
+    setCharacterConfirmed(true);
+  };
   
   
     const handleSwitchBack = () => {
-      setShowConfirmTab(true); // Show confirm tab
-      setCharacterConfirmed(false); // Mark character as not confirmed
+      setShowConfirmTab(true); 
+      setCharacterConfirmed(false);
     };
 
 
@@ -1178,6 +1191,25 @@
             {characterConfirmed ? (
               // Content to display after confirming character
               <div className="levelUpSection">
+                {levelUpInfo ? (
+                  <div>
+                    <h4>Level Up Features:</h4>
+                    <ul>
+                      {levelUpInfo.map((featureSet, index) => (
+                        <li key={index}>
+                          <h5>{featureSet[0].feature_type}</h5>
+                          <ul>
+                            {featureSet.map((feature, subIndex) => (
+                              <li key={subIndex}>{feature.feature_name}</li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>Loading level up features...</p>
+                )}
                 <Button onClick={handleSwitchBack}>Change Character</Button>
               </div>
             ) : (
