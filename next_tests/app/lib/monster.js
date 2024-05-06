@@ -260,7 +260,7 @@ const getmonsterabilitiesquery = new PQ({
   text: `
     SELECT m.monstergroupid, a.abbrev, m.score 
     FROM monsterability m
-      JOIN ability a ON m.abilityid = a.abilityid;
+      JOIN ability a ON m.abilityid = a.abilityid
     WHERE monstergroupid = $1;
   `
 });
