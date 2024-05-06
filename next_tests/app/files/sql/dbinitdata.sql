@@ -190,11 +190,11 @@ INSERT INTO race (name, creaturesize) VALUES
 ('Elf', 'Medium'),
 ('Halfling', 'Small'),
 ('Human', 'Medium'),
-('Dragonborn', 'Medium'),
+--('Dragonborn', 'Medium'),
 ('Gnome', 'Small'),
 ('Half-Elf', 'Medium'),
-('Half-Orc', 'Medium'),
-('Tiefling', 'Medium');
+('Half-Orc', 'Medium');
+--('Tiefling', 'Medium');
 
 
 INSERT INTO subrace (name, raceid) VALUES

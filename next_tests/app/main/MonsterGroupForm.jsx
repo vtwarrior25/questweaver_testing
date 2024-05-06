@@ -283,7 +283,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                         </select>
                         <label htmlFor="monster">Monster</label>
                         <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: Number(e.target.value)})}>
-                          {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
+                          {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter) !== undefined && monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
                             <option key={index} value={index}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
                           )}
                         </select>

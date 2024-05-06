@@ -21,7 +21,8 @@ const getmapdataquery = new PQ({
 const getmapdataexcludingplayerquery = new PQ({
   text: `
     SELECT mapdataid, playercharacterid, monstergroupid, shape, image, scale, x, y, visible 
-    FROM mapdata;
+    FROM mapdata
+    WHERE playercharacterid != $1;
   `
 });
 

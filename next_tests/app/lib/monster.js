@@ -57,7 +57,7 @@ const addnewmonstergroupquery = new PQ({
       notes, health)
     VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
       $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
-      $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      (SELECT alignmentid FROM alignment WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
     RETURNING monstergroupid;
   `
 });
@@ -135,6 +135,7 @@ export async function addGroupFromForm(formdata, encountername) {
     });
   }
 
+  console.log(formdata);
   // Adding most of the monster info to the database
   await db.one(addnewmonstergroupquery, [encountername, 
     formdata.basicinfo.size, formdata.basicinfo.type, 
@@ -197,14 +198,12 @@ export async function addGroupFromForm(formdata, encountername) {
   }
 }
 
-
 const removemonstergroupquery = new PQ({
   text: `
     DELETE FROM monstergroup 
     WHERE monstergroupid = $1;
   `
 }); 
-
 
 const removemonstergroupabilitiesquery = new PQ({
   text: `
@@ -222,8 +221,6 @@ const removemonstergroupattacksquery = new PQ({
 });
 */ 
 
-
-
 export async function removeMonsterGroupFromDB(monstergroupid) {
   db.none(removemonstergroupquery, [monstergroupid])
   .catch((error) => {
@@ -234,7 +231,6 @@ export async function removeMonsterGroupFromDB(monstergroupid) {
     console.error('Failed to remove monster group: ' + error);
   });
 }
-
 
 const getencountersquery = new PQ({
   text: `
@@ -255,12 +251,11 @@ const getmonstergroupquery = new PQ({
   `
 });
 
-
 const getmonsterabilitiesquery = new PQ({
   text: `
     SELECT m.monstergroupid, a.abbrev, m.score 
     FROM monsterability m
-      JOIN ability a ON m.abilityid = a.abilityid;
+      JOIN ability a ON m.abilityid = a.abilityid
     WHERE monstergroupid = $1;
   `
 });
@@ -270,12 +265,12 @@ const getmonsterattackquery = new PQ({
     SELECT a.name, a.range, amod.modifier, dmod.modifier, 
     d.sides, a.numdamagedie, et.name, a.description
     FROM monsterattack m
-      JOIN attack a ON m.attackid = a.attackid;
+      JOIN attack a ON m.attackid = a.attackid
       JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
       JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
       JOIN dice d ON a.diceid = d.diceid
       JOIN effecttype et ON a.effecttypeid = et.effecttypeid
-    WHERE monstergroupid = $1;
+    WHERE m.monstergroupid = $1;
   `
 });
 
