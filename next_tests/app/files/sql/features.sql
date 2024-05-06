@@ -101,6 +101,35 @@ INSERT INTO feature (name, displayname, description, featuretype) VALUES
 ('Life Domain Bonus Proficiency', 'Bonus Proficiency', 'When you choose this domain at 1st level, you gain proficiency with heavy armor.', 'Proficiency'),
 ('Disciple of Life', 'Disciple of Life', 'Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell''s level. ', 'None'),
 ('Channel Divinity Preserve Life', 'Channel Divinity: Preserve Life', 'Starting at 2nd level, you can use your Channel Divinity to heal the badly injured. ;;As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can''t use this feature on an undead or a construct. ', 'None'),
+
+INSERT INTO feature (name, displayname, description, featuretype) VALUES 
+--Fighter--
+('Fighter Proficiencies', 'Proficiencies', 'Armor: Light armor, Medium armor, Heavy armor, shields;;Weapons: Simple weapons, martial weapons;;Tools: None;;Saving Throws: Strength, Constitution;;Skills: Choose two from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival', 'Proficiency'),
+('Fighter Fighing Style', 'Fighting Style' 'Archery
+You gain a +2 bonus to attack rolls you make with ranged weapons.;;Defense While you are wearing armor, you gain a +1 bonus to AC.;;Dueling When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.;;Great Weapon Fighting When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.;;Protection When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.;;Two-Weapon Fighting When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.
+S', 'None'),
+('Second Wind', 'Second Wind', 'You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.', 'Action'),
+('Action Surge', 'Action Surge', 'Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action. Once you use this feature, you must finish a short or long rest before you can use it again.', 'Action'),
+('Martial Archetype', 'Martial Archetype', 'At 3rd level, you choose an archetype that you strive to emulate in your combat styles and techniques. Choose Champion, Battle Master, or Eldritch Knight, all detailed at the end of the class description. The archetype you choose grants you features at 3rd level.', 'None'),
+('Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', 'Ability Score'),
+('Extra Attack', 'Extra Attack', 'Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.', 'None'),
+('Improved Critical', 'Improved Crtical','Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20.','None'),
+--Monk-- 
+('Unarmored Defense', 'Unarmored Defense', 'Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.', 'Class Action'),
+('Martial Arts', 'Martial Arts', 'At 1st level, your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don\'t have the two-handed or heavy property. You gain the following benefits while you are unarmed or wielding only monk weapons and you aren\'t wearing armor or wielding a shield:;;- You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons.;;- You can roll a d4 in place of the normal damage of your unarmed strike or monk weapon. This die changes as you gain monk levels, as shown in the Martial Arts column of the Monk table.;;- When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action. For example, if you take the Attack action and attack with a quarterstaff, you can also make an unarmed strike as a bonus action, assuming you haven\'t already taken a bonus action this turn.;;Certain monasteries use specialized forms of the monk weapons. For example, you might use a club that is two lengths of wood connected by a short chain (called a nunchaku) or a sickle with a shorter, straighter blade (called a kama). Whatever name you use for a monk weapon, you can use the game statistics provided for the weapon.', 'Class Feature'),
+('Ki', 'Ki', 'Starting at 2nd level, your training allows you to harness the mystic energy of ki. Your access to this energy is represented by a number of ki points. Your monk level determines the number of points you have, as shown in the Ki Points column of the Monk table. You can spend these points to fuel various ki features. You start knowing three such features: Flurry of Blows, Patient Defense, and Step of the Wind. You learn more ki features as you gain levels in this class. When you spend a ki point, it is unavailable until you finish a short or long rest, at the end of which you draw all of your expended ki back into yourself. You must spend at least 30 minutes of the rest meditating to regain your ki points. Some of your ki features require your target to make a saving throw to resist the feature\'s effects. The saving throw DC is calculated as follows: Ki save DC = 8 + your proficiency bonus + your Wisdom modifier.;;Flurry of Blows Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action;;Patient Defense You can spend 1 ki point to take the Dodge action as a bonus action on your turn.;; Step of the Wind
+You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.', 'Class Action'),
+('Unarmored Movement', 'Unarmored Movement', 'Starting at 2nd level, your speed increases by 10 feet while you are not wearing armor or wielding a shield. This bonus increases when you reach certain monk levels, as shown in the Monk table. At 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move.', 'Class Action'),
+('Monastic Tradition', 'Monastic Tradition', 'When you reach 3rd level, you commit yourself to a monastic tradition: the Way of the Open Hand, the Way of Shadow, or the Way of the Four Elements, all detailed at the end of the class description. Your tradition grants you features at 3rd level and again at 6th, 11th, and 17th level.', 'Class Feature'),
+('Deflect Missiles', 'Deflect Missiles', 'Starting at 3rd level, you can use your reaction to deflect or catch the missile when you are hit by a ranged weapon attack. When you do so, the damage you take from the attack is reduced by 1d10 + your Dexterity modifier + your monk level. If you reduce the damage to 0, you can catch the missile if it is small enough for you to hold in one hand and you have at least one hand free. If you catch a missile in this way, you can spend 1 ki point to make a ranged attack with the weapon or piece of ammunition you just caught, as part of the same reaction. You make this attack with proficiency, regardless of your weapon proficiencies, and the missile counts as a monk weapon for the attack, which has a normal range of 20 feet and a long range of 60 feet.', 'Class Feature'),
+('Ability Score Improvement', 'Ability Score Improvement', 'When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can\'t increase an ability score above 20 using this feature.', 'Class Feature'),
+('Slow Fall', 'Slow Fall', 'Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level.', 'None'),
+('Extra Attack', 'Extra Attack', 'Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.', 'None'),
+('Stunning Strike', 'Stunning Strike', 'Starting at 5th level, you can interfere with the flow of ki in an opponent\'s body. When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.', 'Action');
+('Open Hand Technique', 'Open Hand Technique', 'Starting when you choose this tradition at 3rd level, you can manipulate your enemy''s ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target:
+It must succeed on a Dexterity saving throw or be knocked prone.
+It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.
+It can''t take reactions until the end of your next turn.', 'None');
 -- Druid
 ('Druid Proficiencies', 'Proficiencies', 'Armor: Light armor, medium armor, shields (druids will not wear armor or use shields made of metal) ;;Weapons: Clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears ;;Tools: Herbalism kit ;;Saving Throws: Intelligence, Wisdom', 'Proficiency'),
 ('Druid Spellcasting', 'Spellcasting', '', ''),
@@ -141,7 +170,6 @@ INSERT INTO abilityscorefeature (featureid, abilityid, scorebonus) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Human Ability Score Increase'), (SELECT abilityid FROM ability WHERE abbrev = 'Wis'), 1),
 ((SELECT featureid FROM feature WHERE name = 'Human Ability Score Increase'), (SELECT abilityid FROM ability WHERE abbrev = 'Cha'), 1),
 
-
 -- Recovery of 1 means short rest, recovery of 2 means long rest
 INSERT INTO actionfeature (featureid, uses, usesperlevel, recovery) VALUES 
 ((SELECT featureid FROM feature WHERE name = 'Relentless Endurance'), 1, 0, 1),
@@ -173,6 +201,19 @@ INSERT INTO classactionfeature (featureid, level, uses, recovery) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Rage'), 18, 6, 2),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Rage'), 19, 6, 2),
 ((SELECT featureid FROM feature WHERE name = 'Barbarian Rage'), 20, 0, 2),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 2, 2, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 3, 3, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 4, 4, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 5, 5, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 6, 6, 1)
+((SELECT featureid FROM feature WHERE name = 'Ki'), 7, 7, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 8, 8, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 9, 9, 1),
+((SELECT featureid FROM feature WHERE name = 'Ki'), 10, 10, 1),
+
+
+
+
 
 
 
@@ -239,6 +280,22 @@ INSERT INTO proficiencyfeature (featureid, proficiencyid) VALUES
 ((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Wisdom')),
 ((SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Charisma')),
 ((SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), (SELECT proficiencyid FROM proficiency WHERE name = 'Heavy Armor')),
+--Fighter--
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Light Armor')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Heavy Armor')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Simple Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Martial Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Strength')),
+((SELECT featureid FROM feature WHERE name = 'Fighter Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Constitution')),
+--Monk--
+((SELECT featureid FROM feature WHERE name = 'Monk'), (SELECT proficiencyid FROM proficiency WHERE name = 'Simple Weapons')),
+((SELECT featureid FROM feature WHERE name = 'Monk'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shortswords')),
+((SELECT featureid FROM feature WHERE name = 'Monk'), (SELECT proficiencyid FROM proficiency WHERE name = 'Strength')),
+((SELECT featureid FROM feature WHERE name = 'Monk'), (SELECT proficiencyid FROM proficiency WHERE name = 'Dexterity')),
+
+
 ((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Light Armor')),
 ((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Medium Armor')),
 ((SELECT featureid FROM feature WHERE name = 'Druid Proficiencies'), (SELECT proficiencyid FROM proficiency WHERE name = 'Shields')),
@@ -296,6 +353,29 @@ INSERT INTO classfeature (classid, featureid, characterlevel) VALUES
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Expertise'), 3),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Bard Ability Score Improvement'), 4),
 ((SELECT classid FROM class WHERE name = 'Bard'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
+((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Font of Inspiration'), 5),
+--Fighter--
+((SELECT classid FROM class WHERE name = 'Fighter'), (SELECT featureid FROM feature WHERE name = 'Second Wind'), 2),
+((SELECT classid FROM class WHERE name = 'Fighter'), (SELECT featureid FROM feature WHERE name = 'Action Surge'), 2),
+((SELECT classid FROM class WHERE name = 'Fighter'), (SELECT featureid FROM feature WHERE name = 'Fighter Ability Score Improvement'), 4),
+((SELECT classid FROM class WHERE name = 'Fighter'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 5),
+--Monk--
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Monk Unarmored Defense'), 1),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Martial Arts'), 1),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Ki'), 2),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Unarmored Movement'), 2),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Monastic Tradation'), 3),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Delect Missiles'), 3),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Monk Ability Score Improvement'), 4),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Slow Fall'), 4),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Extra Attack'), 5),
+((SELECT classid FROM class WHERE name = 'Monk'), (SELECT featureid FROM feature WHERE name = 'Stunning Strike'), 5),
+
+
+
+
+
+
 ((SELECT classid FROM class WHERE name = 'Druid'), (SELECT featureid FROM feature WHERE name = 'Cleric Proficiencies'), 1),
 ((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Cleric Spellcasting'), 1),
 ((SELECT classid FROM class WHERE name = 'Cleric'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity'), 2),
@@ -320,6 +400,8 @@ INSERT INTO subclassfeature (subclassid, featureid, characterlevel) VALUES
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Life Domain Bonus Proficiency'), 1),
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Disciple of Life'), 1),
 ((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
+((SELECT subclassid FROM subclass WHERE name = 'Life Domain'), (SELECT featureid FROM feature WHERE name = 'Channel Divinity Preserve Life'), 2),
+((SELECT classid FROM class WHERE name = 'Champion'), (SELECT featureid FROM feature WHERE name = 'Improved Critical'), 3);
 ((SELECT subclassid FROM subclass WHERE name = 'Circle of the Moon'), (SELECT featureid FROM feature WHERE name = 'Combat Wild Shape'), 2),
 ((SELECT subclassid FROM subclass WHERE name = 'Circle of the Moon'), (SELECT featureid FROM feature WHERE name = 'Circle Forms'), 2),
 
