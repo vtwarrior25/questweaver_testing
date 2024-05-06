@@ -20,10 +20,8 @@
     
     const [selectedOptions, setSelectedOptions] = useState({});
     const [showLevelUpSection, setShowLevelUpSection] = useState(false);
-    //const [selectedEquipmentClass, setSelectedEquipmentClass] = useState({});
     const userid = useContext(UserIDContext);
     const playercharacterid = useContext(PlayerCharacterContext);
-    //const [selectedClassEquipment, setSelectedClassEquipment] = useState(null);
     const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
     const [raceData, setRaceData] = useState({
       subracesWithRaces: [],
@@ -1176,23 +1174,25 @@
             </div>
           </Tab>
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
-            <div className="confirmCharacterSection">
-              <div className="characterInfoDisplay">
-                <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
-                <p>Class: {charactercreatordata.class}</p>
-                <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+          <div className="confirmCharacterSection">
+            {characterConfirmed ? (
+              // Content to display after confirming character
+              <div className="levelUpSection">
+                <Button onClick={handleSwitchBack}>Change Character</Button>
               </div>
-              <Button>Confirm Character</Button>
-            </div>
-            <div className="levelUpSection">
-
-            </div>
-          </Tab>
-          <Tab eventKey="avatar" title="Avatar">
-            <div className="characterAvatarMenu frontElement">
-              <AvatarUpload type="player" id={playercharacterid} upload={true}></AvatarUpload>
-            </div>
-          </Tab>
+            ) : (
+              // Content to display before confirming character
+              <>
+                <div className="characterInfoDisplay">
+                  <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
+                  <p>Class: {charactercreatordata.class}</p>
+                  <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+                </div>
+                <Button onClick={handleConfirmClick}>Confirm Character</Button>
+              </>
+            )}
+          </div>
+        </Tab>
         </Tabs>
       </div>
     );
