@@ -130,7 +130,7 @@ INSERT INTO subclass (name, description, classid) VALUES
 ('Thief', '', (SELECT classid FROM class WHERE name = 'Rogue')),
 ('Divine Soul', '', (SELECT classid FROM class WHERE name = 'Sorcerer')),
 ('The Undying', '', (SELECT classid FROM class WHERE name = 'Warlock')),
-('School of Illusions', '', (SELECT classid FROM class WHERE name = 'Wizard'));
+('School of Evocation', '', (SELECT classid FROM class WHERE name = 'Wizard'));
 
 
 INSERT INTO monstertype (name) VALUES 
