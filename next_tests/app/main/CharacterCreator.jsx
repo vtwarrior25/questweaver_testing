@@ -117,6 +117,12 @@
       "Yklwa",
     ];
 
+    const holySymbol = [
+
+
+
+
+    ]
     const musicalInstruments = [
       'Lute',
     ];
@@ -456,7 +462,86 @@
           name: "Dagger",
         }
       ],
-    
+      Cleric: [
+        {
+          id: 0,
+          type: 'radioset',
+          name: 'Mace/Warhammer',
+          options: [
+            {
+              type: 'radio',
+              name: 'Mace',
+            },
+            {
+              type: 'radio',
+              name: 'WarHammer',
+            },
+          ],
+        },
+        {
+          id: 1,
+          type: 'radioset',
+          name: 'LightCrossbow/SimpleWeapon',
+          options: [
+            {
+              type: 'radio',
+              name: 'A light Crossbow and 20 bolts',
+            },
+            {
+              type: 'dropdown',
+              name: 'Simple Weapon',
+              dropdowndata: 'simpleWeapons',
+            }
+          ],
+        },
+        {
+          id: 2,
+          type: 'radioset',
+          name: 'ArmorChoices',
+          options: [
+            {
+              type: 'radio',
+              name: 'scale mail',
+            },
+            {
+              type: 'radio',
+              name: 'leather armor',
+            },
+            {
+              type: 'radio',
+              name: 'chain mail',
+            }
+          ],
+        },
+        {
+          id: 3,
+          type: 'radioset',
+          name: "PriestPack/ExplorersPack",
+          options: [
+            {
+              type: 'radio',
+              name: "Priest Pack",
+            },
+            {
+              type: 'radio',
+              name: 'Explorers Pack',
+            }
+          ]
+        },
+        {
+          id: 3,
+          type: 'dropdown',
+          options: [
+            {
+              type: 'dropdown',
+              name: 'shield and a holy symbol',
+              dropdowndata: 'holySymbol',
+            }
+          ]
+
+        }
+        
+      ],
     }); 
     
     //TODO this for some reason is failing
