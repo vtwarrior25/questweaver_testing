@@ -45,19 +45,19 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
   const [formdata, setFormData] = useState({
     basicinfo: {
       encounter: "Cragmaw",
-      name: "Jeff",
+      name: "",
       quantity: 2,
       description: "Cragmaw",
       hitdicenum: 2,
       hitdicetype: 6,
       challengerating: 0.25,
       size: "Small",
-      type: "Monster",
+      type: "Humanoid",
       alignment: "Neutral Evil",
       xpper: 50,
       xptotal: 100,
       ac: 13,
-      speed: 50,
+      speed: 30,
       skills: "Stealth +6; Darkvision 60",
       features: "Nimble Escape (Disengage or Hide as Bonus Action)",
       notes: "",
@@ -138,6 +138,18 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
 
   const getModifier = (value) => {
     return Math.floor((value - 10) / 2);
+  }
+
+
+  const handleAddMonsterGroup = (encounter, monstergroup) => {
+    /*
+    if (monstergroup.basicinfo.name !== "") {
+      addMonsterGroup(encounter, monstergroup);
+    } else (
+      alert("Monster group requires a name")
+    )
+    */
+    addMonsterGroup(encounter, monstergroup);
   }
 
 
@@ -283,7 +295,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                         </select>
                         <label htmlFor="monster">Monster</label>
                         <select name="monster" onChange={(e) => setDuplicateMenuState({...duplicatemenustate, monster: Number(e.target.value)})}>
-                          {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter) !== undefined && monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
+                          {monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups !== undefined && monsterGroupsInSelectedEncounter(duplicatemenustate.encounter).monstergroups.map((monstergroup, index) => 
                             <option key={index} value={index}>{monstergroup.basicinfo.name} ({monstergroup.basicinfo.quantity}, {monstergroup.basicinfo.description})</option>
                           )}
                         </select>
@@ -430,7 +442,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                   <option key={index} value={encounter.encountername}>{encounter.encountername}</option>
                 )}
               </datalist>
-              <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => addMonsterGroup(formdata.basicinfo.encounter, formdata)}>Add</Button>
+              <Button type="button" variant="secondary" size="sm" value="Add" onClick={() => handleAddMonsterGroup(formdata.basicinfo.encounter, formdata)}>Add</Button>
             </div>
           </div>
         </div>

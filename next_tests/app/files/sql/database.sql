@@ -487,7 +487,7 @@ CREATE TABLE IF NOT EXISTS monstergroup (
 	description										varchar(100),
 	hitdie												integer,
 	hitdienum											integer,
-	challengerating								integer,
+	challengerating								real,
 	xpper													integer,
 	xptotal												integer,
 	armorclass										integer,
@@ -707,6 +707,7 @@ CREATE TABLE IF NOT EXISTS attack (
 	range								varchar(40), -- Maybe make this a varchar??
 	attackmodifierid		integer REFERENCES ability(abilityid),
 	damagemodifierid		integer REFERENCES ability(abilityid),
+	flatattackmod				integer,
 	flatdamagemod				integer,
 	diceid							integer REFERENCES dice(diceid) NOT NULL,
 	numdamagedie				integer,

@@ -16,13 +16,13 @@ export async function createMonsterGroup(formdata) {
 
 export async function getMonsterTypes() {
   let monstertypes = [];
-  db.any(getmonstertypesquery)
+  await db.many(getmonstertypesquery)
   .then((result) => {
-    console.log("getting monster types");
-    console.log(result);
+    //console.log("getting monster types");
+    //console.log(result);
     monstertypes = [...result];
-    console.log("monstertypesagain");
-    console.log(monstertypes);
+    //console.log("monstertypesagain");
+    //console.log(monstertypes);
     return monstertypes;
   }).catch((error) => {
     console.error("Error getting monster types: " + error);
@@ -53,11 +53,11 @@ const addnewmonstergroupquery = new PQ({
   text: `
     INSERT INTO monstergroup (monstergroupid, encounterid, creaturesize, 
       monstertypeid, alignment, groupname, description, quantity, hitdie, hitdienum, 
-      challengerating, xpper, xptotal, armorclass, speed, initiative, skills, features, 
+      challengerating, xpper, xptotal, armorclass, speed, skills, features, 
       notes, health)
     VALUES (DEFAULT, (SELECT encounterid FROM encounter WHERE name = $1), 
       $2, (SELECT monstertypeid FROM monstertype WHERE name = $3), 
-      (SELECT alignmentid FROM alignment WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
+      (SELECT alignmentid FROM alignment WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
     RETURNING monstergroupid;
   `
 });
@@ -86,8 +86,8 @@ const checkattackquery = new PQ({
 
 const addmonsterattackquery = new PQ({
   text: `
-    INSERT INTO attack (attackid, name, flatdamagemod, diceid, numdamagedie, effecttypeid)
-    VALUES (DEFAULT, $1, $2, (SELECT diceid FROM dice WHERE sides = $3), $4, (SELECT effecttypeid FROM effecttype WHERE name = $5))
+    INSERT INTO attack (attackid, name, flatattackmod, flatdamagemod, diceid, numdamagedie, effecttypeid)
+    VALUES (DEFAULT, $1, $2, $3, (SELECT diceid FROM dice WHERE sides = $4), $5, (SELECT effecttypeid FROM effecttype WHERE name = $6))
     ON CONFLICT (name) DO NOTHING
     RETURNING attackid;
   `
@@ -139,11 +139,11 @@ export async function addGroupFromForm(formdata, encountername) {
   // Adding most of the monster info to the database
   await db.one(addnewmonstergroupquery, [encountername, 
     formdata.basicinfo.size, formdata.basicinfo.type, 
-    formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.quantity,
-    formdata.basicinfo.description, formdata.basicinfo.hitdicetype, 
+    formdata.basicinfo.alignment, formdata.basicinfo.name, formdata.basicinfo.description,
+    formdata.basicinfo.quantity,formdata.basicinfo.hitdicetype, 
     formdata.basicinfo.hitdicenum, formdata.basicinfo.challengerating, formdata.basicinfo.xpper,
     formdata.basicinfo.xptotal, formdata.basicinfo.ac, formdata.basicinfo.speed, 
-    formdata.abilities.init, formdata.basicinfo.skills, formdata.basicinfo.features, 
+    formdata.basicinfo.skills, formdata.basicinfo.features, 
     formdata.basicinfo.notes, formdata.health])
   .then((result) => {
     newmonstergroupid = result.monstergroupid;
@@ -158,7 +158,7 @@ export async function addGroupFromForm(formdata, encountername) {
     console.log(ab.charAt(0).toUpperCase() + ab.slice(1));
     console.log(formdata.abilities[ab]);
     console.log(scoreToMod(formdata.abilities[ab]));
-    await db.one(addmonsterabilitiesquery, [newmonstergroupid, ab.charAt(0).toUpperCase() + ab.slice(1), Number(formdata.abilities[ab]), Number(scoreToMod(formdata.abilities[ab]))])
+    await db.none(addmonsterabilitiesquery, [newmonstergroupid, ab.charAt(0).toUpperCase() + ab.slice(1), Number(formdata.abilities[ab]), Number(scoreToMod(formdata.abilities[ab]))])
     .catch((error) => {
       console.log("Error inserting monster ability data: " + error);
     });
@@ -178,7 +178,7 @@ export async function addGroupFromForm(formdata, encountername) {
     
     // If an attack with the name doesn't already exist, add one
     if (attackid === -1) {
-      await db.one(addmonsterattackquery, [atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
+      await db.one(addmonsterattackquery, [atk.name, atk.hit, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype])
       .then ((result) => {
         // set attackid to the id of the added attack
         attackid = result.attackid;
@@ -189,7 +189,7 @@ export async function addGroupFromForm(formdata, encountername) {
     }
 
     // link attacks to monsterattack with attackid/monsterid
-    db.one(linkmonsterattackquery, [newmonstergroupid, attackid])
+    db.none(linkmonsterattackquery, [newmonstergroupid, attackid])
     .catch((error) => {
       console.log("Error linking attack as monster attack: " + error)
     });
@@ -212,24 +212,77 @@ const removemonstergroupabilitiesquery = new PQ({
   `
 }); 
 
-/*
 const removemonstergroupattacksquery = new PQ({
   text: `
-    DELETE FROM attack
+    DELETE FROM monsterattack
     WHERE monstergroupid = $1;
   `
 });
-*/ 
+
+const getencounterformonstergroupquery = new PQ({
+  text: `
+    SELECT encounterid
+    FROM monstergroup
+    WHERE monstergroupid = $1;
+  `
+});
+
+const countmonstergroupsforencounterquery  = new PQ({
+  text: `
+    SELECT COUNT(*)
+    FROM monstergroup
+    WHERE encounterid = $1;
+  `
+});
+
+const removeemptyencounterquery = new PQ({
+  text: `
+    DELETE FROM encounter
+    WHERE encounterid = $1;
+  `
+});
 
 export async function removeMonsterGroupFromDB(monstergroupid) {
-  db.none(removemonstergroupquery, [monstergroupid])
+  let encounterid = 0;
+  let monstergroupsinencounter = 10;
+  console.log("Removing monster group from DB");
+  // Remove all of the attacks associated with the monstergroup
+  await db.none(removemonstergroupattacksquery, [monstergroupid])
+  .catch((error) => {
+    console.error('Failed to remove monster group attacks: ' + error);
+  });
+  // Remove all of the monsterabilities associated with the monstergroup
+  await db.none(removemonstergroupabilitiesquery, [monstergroupid])
+  .catch((error) => {
+    console.error('Failed to remove monster group abilities: ' + error);
+  });
+  // Get the encounterid from monstergroup
+  await db.one(getencounterformonstergroupquery, [monstergroupid])
+  .then((result) => {
+    encounterid = result.encounterid;
+  })
+  .catch((error) => {
+    console.error("Failed to get encounterid from monstergroup: " + error);
+  })
+  // Remove the actual monster group
+  await db.none(removemonstergroupquery, [monstergroupid])
   .catch((error) => {
     console.error('Failed to remove monster group: ' + error);
   });
-  db.none(removemonstergroupabilitiesquery, [monstergroupid])
-  .catch((error) => {
-    console.error('Failed to remove monster group: ' + error);
+  // Check if there are any other monster groups associated with the encounterid after we removed monstergroup
+  await db.one(countmonstergroupsforencounterquery, [encounterid])
+  .then((result) => {
+    monstergroupsinencounter = result.count; 
+  }).catch((error) => {
+    console.error('Error getting count of monster groups in encounter: ' + error);
   });
+  // If the encounter has no monster groups (monstergroupsinencounter == 0), remove the encounter
+  if (monstergroupsinencounter === 0) {
+    await db.none(removeemptyencounterquery, [encounterid])
+    .catch((error) => {
+      console.error('Failed to remove empty encounter: ' + error);
+    });
+  }
 }
 
 const getencountersquery = new PQ({
@@ -240,16 +293,19 @@ const getencountersquery = new PQ({
 
 const getmonstergroupquery = new PQ({
   text: `
-    SELECT mg.monstergroupid, mg.encounterid, creaturesize AS size, mt.name AS type, 
-    alignment, groupname AS name, quantity, description, hitdie, hitdienum, 
-    challengerating, xpper, xptotal, armorclass, speed, initiative, 
-    skills, features, notes, health
+    SELECT mg.monstergroupid, mg.encounterid, mg.creaturesize AS size, mt.name AS type, 
+    a.name AS alignment, mg.groupname AS name, mg.quantity, mg.description, mg.hitdie AS hitdicetype, mg.hitdienum AS hitdicenum, 
+    mg.challengerating, mg.xpper, mg.xptotal, mg.armorclass AS ac, mg.speed,
+    mg.skills, mg.features, mg.notes, mg.health
     FROM monstergroup mg
       JOIN encounter e ON mg.encounterid = e.encounterid
       JOIN monstertype mt ON mg.monstertypeid = mt.monstertypeid
+      JOIN alignment a ON mg.alignment = a.alignmentid
     WHERE mg.encounterid = $1;
   `
 });
+
+
 
 const getmonsterabilitiesquery = new PQ({
   text: `
@@ -262,17 +318,22 @@ const getmonsterabilitiesquery = new PQ({
 
 const getmonsterattackquery = new PQ({
   text: `
-    SELECT a.name, a.range, amod.modifier, dmod.modifier, 
-    d.sides, a.numdamagedie, et.name, a.description
+    SELECT a.name, a.flatattackmod AS hit, a.flatdamagemod AS damagemod, d.sides AS dietype, a.numdamagedie AS numdice, et.name AS damagetype
     FROM monsterattack m
       JOIN attack a ON m.attackid = a.attackid
-      JOIN monsterability amod ON amod.monstergroupid = $1 AND a.attackmodifierid = amod.abilityid
-      JOIN monsterability dmod ON dmod.monstergroupid = $1 AND a.damagemodifierid = dmod.abilityid
       JOIN dice d ON a.diceid = d.diceid
       JOIN effecttype et ON a.effecttypeid = et.effecttypeid
     WHERE m.monstergroupid = $1;
   `
 });
+/*
+INSERT INTO attack (attackid, name, flatdamagemod, diceid, numdamagedie, effecttypeid)
+VALUES (DEFAULT, $1, $2, (SELECT diceid FROM dice WHERE sides = $3), $4, (SELECT effecttypeid FROM effecttype WHERE name = $5))
+ON CONFLICT (name) DO NOTHING
+RETURNING attackid; 
+
+atk.name, atk.damagemod, atk.dietype, atk.numdice, atk.damagetype
+*/
 
 /*
   SELECT a.name, a.range, amod.modifier, dmod.modifier, d.sides, a.numdamagedie, et.name, a.description FROM characterattack ca
@@ -299,6 +360,7 @@ const linkmonsterattackquery = new PQ ({
 
 export async function getEncounters() {
   //let abilitylist = ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha']
+  console.log("Getting encounters brothers!");
   let encounters = [];
   let encounterlisttemp = [];
   let monstergroupstemp = [];
@@ -323,8 +385,10 @@ export async function getEncounters() {
       console.error("Error retrieving encounters" + error);
     });
     for (const monstergroup of monstergroupstemp) {
+      console.log("For each monster group");
       let blankmonstergroup = {};
       blankmonstergroup.basicinfo = {...monstergroup};
+      blankmonstergroup.health = {...monstergroup.health}
       let abilityobject = {
         str: 0,
         dex: 0,
@@ -346,7 +410,7 @@ export async function getEncounters() {
       // For each monstergroupid, get attacks from monsterattack
       await db.many(getmonsterattackquery, [monstergroup.monstergroupid])
       .then((monsterattackresult) => {
-        blankencounter.attacks = [...monsterattackresult];
+        blankmonstergroup.attacks = [...monsterattackresult];
       }).catch((error) => {
         console.log(error);
       });
@@ -356,7 +420,9 @@ export async function getEncounters() {
         blankencounter.monstergroups = [...blankencounter.monstergroups, blankmonstergroup]
       }
     }
+    encounters.push(blankencounter);
   }
+  console.log(JSON.stringify(encounters, null, 4));
   return encounters;
 }
 

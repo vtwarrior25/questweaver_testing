@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import MonsterGroup from "./MonsterGroup";
 import MonsterGroupForm from "./MonsterGroupForm";
 import ManualDiceRoller from './ManualDiceRoller';
-import { addGroupFromForm, getEncounters} from '../lib/monster';
+import { addGroupFromForm, getEncounters, removeMonsterGroupFromDB} from '../lib/monster';
 
 
 function MonsterSheet({setRollResults}) {
@@ -301,11 +301,16 @@ function MonsterSheet({setRollResults}) {
     // Grab all other encounters
     let otherencounters = encounters.filter((encounter) => !encounter.encountername === encountername)
     // Grab all monster groups in the encounter except for the one we want to remove
-    let newmonstergroups = theencounter.monstergroups.filter((monstergroup) => monstergroup === monsterinfo);
+    let newmonstergroups = theencounter.monstergroups.filter((monstergroup) => monstergroup !== monsterinfo);
     // Set filtered array of monster groups to monstergroups in copied encounter
     theencounter.monstergroups = newmonstergroups;
     // Set encounters to all other encounters and modified encounter
-    setEncounters([otherencounters, theencounter]); 
+    if (otherencounters.size > 0){
+      setEncounters([otherencounters, theencounter]); 
+    } else {
+      setEncounters([theencounter]); 
+    }
+    console.log(encounters);
     removeMonsterGroupFromDB()
     .catch((error) => {
       console.error("Failed to remove monster group: " + error);
