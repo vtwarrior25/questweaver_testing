@@ -118,9 +118,21 @@
     ];
 
     const holySymbol = [
+      "- Choose -",
+      "Amulet",
+      "Emblem",
+      "Reqiquary",
+      "Holy Symbols",
+    ]
 
 
-
+    const druidicFocus = [
+      "- Choose -",
+      "Sprig of Mistletoe",
+      "Totem",
+      "wooden Staff",
+      "Yew Wand",
+      "Druidic Focus",
 
     ]
     const musicalInstruments = [
@@ -462,86 +474,189 @@
           name: "Dagger",
         }
       ],
-      Cleric: [
+       Cleric: [
+    {
+      id: 0,
+      type: 'radioset',
+      name: 'Mace/Warhammer',
+      options: [
         {
-          id: 0,
-          type: 'radioset',
-          name: 'Mace/Warhammer',
-          options: [
-            {
-              type: 'radio',
-              name: 'Mace',
-            },
-            {
-              type: 'radio',
-              name: 'WarHammer',
-            },
-          ],
+          type: 'radio',
+          name: 'Mace',
         },
         {
-          id: 1,
-          type: 'radioset',
-          name: 'LightCrossbow/SimpleWeapon',
-          options: [
-            {
-              type: 'radio',
-              name: 'A light Crossbow and 20 bolts',
-            },
-            {
-              type: 'dropdown',
-              name: 'Simple Weapon',
-              dropdowndata: 'simpleWeapons',
-            }
-          ],
+          type: 'radio',
+          name: 'WarHammer',
         },
-        {
-          id: 2,
-          type: 'radioset',
-          name: 'ArmorChoices',
-          options: [
-            {
-              type: 'radio',
-              name: 'scale mail',
-            },
-            {
-              type: 'radio',
-              name: 'leather armor',
-            },
-            {
-              type: 'radio',
-              name: 'chain mail',
-            }
-          ],
-        },
-        {
-          id: 3,
-          type: 'radioset',
-          name: "PriestPack/ExplorersPack",
-          options: [
-            {
-              type: 'radio',
-              name: "Priest Pack",
-            },
-            {
-              type: 'radio',
-              name: 'Explorers Pack',
-            }
-          ]
-        },
-        {
-          id: 3,
-          type: 'dropdown',
-          options: [
-            {
-              type: 'dropdown',
-              name: 'shield and a holy symbol',
-              dropdowndata: 'holySymbol',
-            }
-          ]
-
-        }
-        
       ],
+    },
+    {
+      id: 1,
+      type: 'radioset',
+      name: 'LightCrossbow/SimpleWeapon',
+      options: [
+        {
+          type: 'radio',
+          name: 'A light Crossbow and 20 bolts',
+        },
+        {
+          type: 'dropdown',
+          name: 'Simple Weapon',
+          dropdowndata: 'simple',
+        }
+      ],
+    },
+    {
+      id: 2,
+      type: 'radioset',
+      name: 'ArmorChoices',
+      options: [
+        {
+          type: 'radio',
+          name: 'scale mail',
+        },
+        {
+          type: 'radio',
+          name: 'leather armor',
+        },
+        {
+          type: 'radio',
+          name: 'chain mail',
+        }
+      ],
+    },
+    {
+      id: 3,
+      type: 'radioset',
+      name: "PriestPack/ExplorersPack",
+      options: [
+        {
+          type: 'radio',
+          name: "Priest Pack",
+        },
+        {
+          type: 'radio',
+          name: 'Explorers Pack',
+        }
+      ]
+    },
+    {
+      id: 4,
+      type: 'dropdown',
+      name: 'Shield and a Holy Symbol',
+      dropdowndata: 'holySymbol',
+    }
+  ],
+  Druid: [
+    {
+      id: 0,
+      type: 'radioset',
+      name: 'Shield and Simple Weapon',
+      options: [
+        {
+          type: 'radio',
+          name: 'Wooden Shield',
+        },
+        {
+          type: 'dropdown',
+          name: 'Simple Weapon',
+          dropdowndata: 'simple',
+        }
+      ],
+    },
+    {
+      id: 1,
+      type: 'radioset',
+      name: 'Scimitar and Simple Melee Weapon',
+      options: [
+        {
+          type: 'radio',
+          name: 'Scimitar',
+        },
+        {
+          type: 'dropdown',
+              name: 'Simple Weapon',
+              dropdowndata: 'simple',
+        }
+      ],
+    },
+    {
+      id: 2,
+      type: 'checkbox',
+      name: 'Leather Armor, Explorer’s Pack, and Druidic Focus',
+      checked: false,
+      
+      type: 'dropdown',
+      name: 'Druidic Focus',
+      dropdowndata: 'focuses',
+    }
+  ],
+  Fighter: [
+    {
+      id: 0,
+      type: 'radioset',
+      name: 'Armor',
+      options: [
+        {
+          type: 'radio',
+          name: 'Chain Mail',
+        },
+        {
+          type: 'radio',
+          name: 'Leather Armor, Longbow, and 20 Arrows',
+        },
+      ],
+    },
+    {
+      id: 1,
+      type: 'radioset',
+      name: 'Weapon and Shield',
+      options: [
+        {
+          
+          type: 'dropdown',
+          name: 'Martial Melee and a shield',
+          dropdowndata: 'martialMelee',
+        
+        },
+        {
+          type: 'dropdown',
+          name: 'Two Martial Weapons',
+          dropdowndata: 'twoMartialMelee'
+        },
+      ],
+    },
+    {
+      id: 2,
+      type: 'radioset',
+      name: 'Ranged Weapons',
+      options: [
+        {
+          type: 'radio',
+          name: 'A Light Crossbow and 20 Bolts',
+        },
+        {
+          type: 'radio',
+          name: 'Two Handaxes',
+        },
+      ],
+    },
+    {
+      id: 3,
+      type: 'radioset',
+      name: 'Packs',
+      options: [
+        {
+          type: 'radio',
+          name: "Dungeoneer's Pack",
+        },
+        {
+          type: 'radio',
+          name: "Explorer's Pack",
+        },
+      ],
+    },
+  ],
     }); 
     
     //TODO this for some reason is failing
@@ -583,23 +698,6 @@
       setCharacterCreatorData(newData);
     };
 
-    // Function to handle choosing a class
-
-
-
-    /*
-      How to handle holding data from equipment
-      Create empty array
-      Parse classEquipment for class,
-      Create object in array for each high level option in class equipment
-      Set 'name' in object to name of option
-      Create empty property 'value' in object
-      When we change what is selected within the high level option, it sets value to the value that is selected
-    */
-
-  
-
-
     // Fetch class data
     useEffect(() => {
       const fetchData = async () => {
@@ -625,46 +723,7 @@
       //setSelectedClassEquipment(classEquipment[classItem]); 
     };
 
-    // Handle choosing class
-    // This function is called when a class is selected
 
-  /*
-    //equipment
-    useEffect(() => {
-      const fetchEquipmentIds = async () => {
-        try {
-          const result = await db.many('SELECT itemid, name FROM item;');
-          const mapping = result.reduce((acc, item) => {
-            acc[item.name.toLowerCase()] = item.itemid;
-            return acc;
-          }, {});
-          setEquipmentIdMapping(mapping);
-        } catch (error) {
-          console.error("Error fetching equipment IDs:", error);
-        }
-      };
-
-      fetchEquipmentIds();
-    }, []);
-    */
-
-    /*
-    const addEquipmentToInventory = async () => {
-      const equipmentToAdd = [];
-
-
-      if (greataxeSelected) {
-        equipmentToAdd.push({ itemId: equipmentIdMapping['greataxe'], quantity: 1 });
-      }
-      try {
-      
-        await addItemsToCharacterInventory(playercharacterid, equipmentToAdd);
-        alert('Equipment added to inventory!');
-      } catch (error) {
-        console.error("Error adding equipment to inventory:", error);
-      }
-    };
-    */
   
    useEffect(() => {
     if (characterConfirmed) {
@@ -811,10 +870,10 @@
                     handleRadioChange(option.name, radio.name);
                   }}
                 
-                
+                 
                 />
                   {renderOption(radio, option.name)}            
-                {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon') && selectedOptions[option.name] === radio.name && (
+                {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon' || radio.name === 'Martial Melee and a shield' || radio.name === 'Two Martial Weapons') && selectedOptions[option.name] === radio.name && (
                   <select
                     className="dropdownContainer"
                     value={selectedOptions[radio.dropdowndata]}
@@ -841,7 +900,7 @@
         return (
           <div className="characterCreatorOption">
             {option.name}
-            {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon') && (
+            {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon' || selectedOptions[option.name] === 'Martial Melee and a shield' || selectedOptions[option.name] === 'Two Martial Weapons') && (
               <select
                 className="dropdownContainer"
                 value={selectedOptions[option.dropdowndata]}
