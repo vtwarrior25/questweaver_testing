@@ -1,6 +1,8 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
   import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { useRouter} from 'next/navigation'
+
   import AbilityBox from "./AbilityBox";
   import AbilitySection from "./AbilitySection";
   import { createCharacter } from "../lib/createcharacter";
@@ -16,11 +18,10 @@
   
   function CharacterCreator() {
     const [showConfirmTab, setShowConfirmTab] = useState(true);
-    const [characterConfirmed, setCharacterConfirmed] = useState(false); 
+    const router = useRouter();
     const [levelUpInfo, setLevelUpInfo] = useState(null);
-
+    const [characterConfirmed, setCharacterConfirmed] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState({});
-    const [showLevelUpSection, setShowLevelUpSection] = useState(false);
     const userid = useContext(UserIDContext);
     const playercharacterid = useContext(PlayerCharacterContext);
     const initialScores = { STR: 0, DEX: 0, CON: 0, INT: 0, WIS: 0, CHA: 0 };
@@ -1104,10 +1105,13 @@ Warlock: [
     }
   }, [characterConfirmed, charactercreatordata.playercharacterid, charactercreatordata.characterlevel]);
 
+
   const handleConfirmClick = () => {
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
-  };
+    createCharacter();
+
+};
   
   
     const handleSwitchBack = () => {
@@ -1434,6 +1438,7 @@ Warlock: [
       });
     };
 
+
     const renderCharacterLevelUpInfo = (characterInfo) => {
       if (!characterInfo || characterInfo.length === 0) {
         return <div>No character information available</div>;
@@ -1467,16 +1472,30 @@ Warlock: [
         </div>
       );
     };
-
+    
     const handleLevelSelect = async (level) => {
       try {
         const characterInfo = await fetchCharacterInfo(playercharacterid, level);
         console.log("Character info for level", level, ":", characterInfo);
-        renderCharacterLevelUpInfo(characterInfo);
+        return renderCharacterLevelUpInfo(characterInfo);
       } catch (error) {
         console.error("Error fetching character information:", error);
+        return <div>Error fetching character information. Please try again.</div>; 
       }
     };
+    
+    const CharacterLevelUpPage = () => {
+      return (
+        <div>
+          <h2>Select Character Level</h2>
+          <button onClick={() => handleLevelSelect(1)}>Level 1</button>
+          <button onClick={() => handleLevelSelect(2)}>Level 2</button>
+          {/* Render the character info */}
+          {handleLevelSelect(level)}
+        </div>
+      );
+    };
+    
     
     
     return (
@@ -1730,8 +1749,12 @@ Warlock: [
                   <p>Class: {charactercreatordata.class}</p>
                   <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
                 </div>
-                <Button onClick={handleConfirmClick}>Confirm Character</Button>
-              </>
+                <Button onClick={() => {
+                  handleConfirmClick();
+                  router.push('../main');
+                }}>Confirm Character</Button>
+
+              </>   
             )}
           </div>
         </Tab>
