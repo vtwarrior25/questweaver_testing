@@ -135,6 +135,16 @@
       "Druidic Focus",
 
     ]
+    const arcaneFocus = [
+    '- Choose -',
+    'Crystal',
+    'Orb',
+    'Rod',
+    'Staff',
+    'Wand',
+    'Arcane Focus'
+    ]
+
     const musicalInstruments = [
       'Lute',
     ];
@@ -621,8 +631,8 @@
         },
         {
           type: 'dropdown',
-          name: 'Two Martial Weapons',
-          dropdowndata: 'twoMartialMelee'
+          name: 'Martial Melee',
+          dropdowndata: 'martialMelee',
         },
       ],
     },
@@ -657,7 +667,364 @@
       ],
     },
   ],
-    }); 
+  Monk: [
+    {
+  id: 0,  
+  type: 'radioset',
+  name: 'Shortsword/SimpleWeapon',
+  options: [
+  {
+  type: 'radio', 
+  name: 'Shortsword',  
+  },
+  {
+   type: 'dropdown',
+   name: 'Simple Weapon',
+   dropdowndata: 'simple'
+  }
+  ]
+  },
+  {
+    id: 1,
+    type: 'radioset',
+    name: 'Packs',
+    options: [
+      {
+        type: 'radio',
+        name: "Dungeoneer's Pack",
+      },
+      {
+        type: 'radio',
+        name: "Explorer's Pack",
+      },
+    ],
+  },
+  {
+    id: 4,
+    type: 'checkbox',
+    name: "10 darts",
+  }
+],
+Paladin: [
+  {
+    id: 0,
+    type: 'radioset',
+    name: 'Weapon and Shield/Two Martial Weapons',
+    options: [
+      {
+        
+        type: 'dropdown',
+        name: 'Martial Melee and a shield',
+        dropdowndata: 'martialMelee',
+      
+      },
+      {
+        type: 'dropdown',
+        name: 'Martial Melee',
+        dropdowndata: 'martialMelee',
+      },
+    ],
+  },
+  {
+    id: 1,  
+    type: 'radioset',
+    name: 'Five Javalins/Simple Weapon',
+    options: [
+    {
+    type: 'radio', 
+    name: 'Five Javelins',  
+    },
+    {
+     type: 'dropdown',
+     name: 'Simple Weapon',
+     dropdowndata: 'simple'
+    }
+    ]
+    },
+    {
+      id: 1,
+      type: 'radioset',
+      name: 'Packs',
+      options: [
+        {
+          type: 'radio',
+          name: "Priest's Pack",
+        },
+        {
+          type: 'radio',
+          name: "Explorer's Pack",
+        },
+      ],
+    },
+],
+Ranger: [
+  {
+    id: 0,
+    type: 'radioset',
+    name: 'LightCrossbow/SimpleWeapon',
+    options: [
+      {
+        type: 'radio',
+        name: 'Shortsword',
+      },
+      {
+        type: 'dropdown',
+        name: 'Simple Weapon',
+        dropdowndata: 'simple',
+      }
+    ],
+  },
+  {
+    id: 1,
+    type: 'radioset',
+    name: 'ArmorChoices',
+    options: [
+      {
+        type: 'radio',
+        name: 'scale mail',
+      },
+      {
+        type: 'radio',
+        name: 'leather armor',
+      },
+    ],
+  },
+  {
+    id: 2,
+    type: 'radioset',
+    name: 'Packs',
+    options: [
+      {
+        type: 'radio',
+        name: "Priest's Pack",
+      },
+      {
+        type: 'radio',
+        name: "Explorer's Pack",
+      },
+    ],
+  },
+  {
+    id: 4,
+    type: 'checkbox',
+    name: "A longbow and a quiver of 20 arrows",
+  }
+],
+Rogue: [
+  {
+    id: 0,
+    type: 'radioset',
+    name: 'Rapier/Shortsword',
+    options: [
+      {
+        type: 'radio',
+        name: 'Rapier',
+      },
+      {
+        type: 'radio',
+        name: 'Shortsword',
+        
+      }
+    ],
+  },
+  {
+    id: 1,
+    type: 'radioset',
+    name: 'Shortbow/Shortsword',
+    options: [
+      {
+        type: 'radio',
+        name: 'Shortbow and Quiver of 20 arrows',
+      },
+      {
+        type: 'radio',
+        name: 'Shortsword',
+        
+      }
+    ],
+  },
+  {
+    id: 2,
+    type: 'radioset',
+    name: 'Packs',
+    options: [
+      {
+        type: 'radio',
+        name: "Burglar's Pack",
+      },
+      {
+        type: 'radio',
+        name: "Dungeoneer's Pack",
+      },
+      {
+      type: 'radio',
+      name: "Explorer's Pack",
+      }
+    ],
+  }
+],
+Sorcerer: [
+  {
+    id: 0,
+    type: 'radioset',
+    name: 'LightCrossbow/SimpleWeapon',
+    options: [
+      {
+        type: 'radio',
+        name: 'A light Crossbow and 20 bolts',
+      },
+      {
+        type: 'dropdown',
+        name: 'Simple Weapon',
+        dropdowndata: 'simple',
+      }
+    ],
+  },
+  {
+    id: 1,
+    type: 'radioset',
+    name: 'CompnentPouch/ArcaneFocus',
+    options: [
+      {
+        type: 'radio',
+        name: 'Component Pouch',
+      },
+      {
+        type: 'dropdown',
+        name: 'arcaneFocus',
+        dropdowndata: 'arcaneFocus',
+      }
+    ],
+  },
+  {
+    id: 2,
+    type: 'radioset',
+    name: 'Packs',
+    options: [
+      {
+        type: 'radio',
+        name: "Dungeoneer's Pack",
+      },
+      {
+      type: 'radio',
+      name: "Explorer's Pack",
+      }
+    ],
+  }
+],
+Warlock: [
+  {
+    id: 0,
+    type: 'radioset',
+    name: 'LightCrossbow/SimpleWeapon',
+    options: [
+      {
+        type: 'radio',
+        name: 'A light Crossbow and 20 bolts',
+      },
+      {
+        type: 'dropdown',
+        name: 'Simple Weapon',
+        dropdowndata: 'simple',
+      }
+    ],
+  },
+  {
+    id: 1,
+    type: 'radioset',
+    name: 'CompnentPouch/ArcaneFocus',
+    options: [
+      {
+        type: 'radio',
+        name: 'Component Pouch',
+      },
+      {
+        type: 'dropdown',
+        name: 'arcaneFocus',
+        dropdowndata: 'arcaneFocus',
+      }
+    ],
+  },
+  {
+    id: 2,
+    type: 'radioset',
+    name: 'Packs',
+    options: [
+      {
+        type: 'radio',
+        name: "Dungeoneer's Pack",
+      },
+      {
+      type: 'radio',
+      name: "Scholar's Pack",
+      }
+    ],
+  },
+  {
+    id: 3,
+    type: 'checkbox',
+    name: 'Leather Armor, Any Simple Weapon, and two Daggers',
+    checked: false,
+    
+    type: 'dropdown',
+    name: 'Simple Weapon',
+    dropdowndata: 'simple',
+  }
+  ],
+  Wizard: [
+    {
+      id: 0,
+      type: 'radioset',
+      name: 'Quarterstaff/Dagger',
+      options: [
+        {
+          type: 'radio',
+          name: 'Quarterstaff',
+        },
+        {
+          type: 'radio',
+          name: 'Dagger'
+        }
+      ],
+    },
+    {
+      id: 1,
+      type: 'radioset',
+      name: 'CompnentPouch/ArcaneFocus',
+      options: [
+        {
+          type: 'radio',
+          name: 'Component Pouch',
+        },
+        {
+          type: 'dropdown',
+          name: 'arcaneFocus',
+          dropdowndata: 'arcaneFocus',
+        }
+      ],
+    },
+    {
+      id: 2,
+      type: 'radioset',
+      name: 'Packs',
+      options: [
+        {
+          type: 'radio',
+          name: "Explorer's's Pack",
+        },
+        {
+        type: 'radio',
+        name: "Scholar's Pack",
+        }
+      ],
+    },
+    {
+      id: 3,
+      type: 'checkbox',
+      name: "10 darts",
+    }
+    ]
+  }); 
     
     //TODO this for some reason is failing
     const handleChooseRace = (raceName, subraceName) => {
@@ -873,7 +1240,7 @@
                  
                 />
                   {renderOption(radio, option.name)}            
-                {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon' || radio.name === 'Martial Melee and a shield' || radio.name === 'Two Martial Weapons') && selectedOptions[option.name] === radio.name && (
+                {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon' || radio.name === 'Martial Melee and a shield' || radio.name === 'Two Martial Weapons' || radio.name === 'arcaneFocus') && selectedOptions[option.name] === radio.name && (
                   <select
                     className="dropdownContainer"
                     value={selectedOptions[radio.dropdowndata]}
@@ -900,7 +1267,7 @@
         return (
           <div className="characterCreatorOption">
             {option.name}
-            {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon' || selectedOptions[option.name] === 'Martial Melee and a shield' || selectedOptions[option.name] === 'Two Martial Weapons') && (
+            {(selectedOptions[option.name] === 'Martial Melee' || selectedOptions[option.name] === 'Simple Weapon' || selectedOptions[option.name] === 'Martial Melee and a shield' || selectedOptions[option.name] === 'Two Martial Weapons' || selectedOptions[option.name] === 'arcaneFocus') && (
               <select
                 className="dropdownContainer"
                 value={selectedOptions[option.dropdowndata]}
