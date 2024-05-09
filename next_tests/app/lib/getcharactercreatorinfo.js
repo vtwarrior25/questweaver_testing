@@ -77,8 +77,6 @@ export async function updateCharacterAbilityScores(playerCharacterId, abilities)
 }
 
 
-export async function fetchCharacterInfo(playercharacterid, level) {
-}
 
 
 
@@ -104,7 +102,7 @@ export async function getCharacterClassInfo() {
           // Add subclasses to the class item
           classItem.subclasses = subclasses;
       }
-
+ 
       classesWithSubclasses = classes;
   } catch (error) {
       console.error("Error fetching character class information:", error);
