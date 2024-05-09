@@ -24,11 +24,11 @@ const skillsquery = new PQ({
 const playercharacteraddquery = new PQ({
   text: `
   WITH pcid AS (
-    INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, maxhealth, currenthealth, proficiencybonus, characterlevel, spellsavedc, spellattackmodifier, spellabilitymodifier, totalhitdice, numhitdice) VALUES
-    (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), (SELECT subraceid FROM subrace WHERE name = $3), (SELECT classid FROM class WHERE name = $4), (SELECT subclassid FROM subclass WHERE name = $5), (SELECT hitpoints1stlevel FROM class WHERE name = $4), (SELECT hitpoints1stlevel FROM class WHERE name = $4), 2, 1, $9, $10, $11, 1, 1) RETURNING playercharacterid
+    INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, maxhealth, currenthealth, proficiencybonus, characterlevel, totalhitdice, numhitdice) VALUES
+    (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), (SELECT subraceid FROM subrace WHERE name = $3), (SELECT classid FROM class WHERE name = $4), (SELECT subclassid FROM subclass WHERE name = $5), (SELECT hitpoints1stlevel FROM class WHERE name = $4), (SELECT hitpoints1stlevel FROM class WHERE name = $4), 2, 1, 1, 1) RETURNING playercharacterid
   ) 
   INSERT INTO playercharacternote (playercharacterid, alignmentid, organizations, allies, enemies, backstory, other) VALUES
-  ((SELECT * from pcid), (SELECT alignmentid FROM alignment WHERE name = $17), $18, $19, $20, $21, $22)
+  ((SELECT * from pcid), (SELECT alignmentid FROM alignment WHERE name = $6), $7, $8, $9, $10, $11)
   RETURNING playercharacterid;
   `
 });
@@ -125,7 +125,7 @@ export async function createCharacter(formdata, playerid) {
     return;
   }); 
   if (doescharacterexist) {
-    
+
   }
   let playercharacterid;
   let abilities = [];
@@ -138,7 +138,10 @@ export async function createCharacter(formdata, playerid) {
     Charisma: formdata.abilities.CHA,
   }
   // Create new character
-  await db.one(playercharacteraddquery, [formdata])
+  await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
+  formdata.subrace, formdata.class, formdata.subclass, 
+
+  ])
   .then((playerresult) => {
     playercharacterid = playerresult.pcid;
   }).catch((error) => {

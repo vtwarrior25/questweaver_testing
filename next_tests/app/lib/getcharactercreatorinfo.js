@@ -102,7 +102,11 @@ export async function getCharacterClassInfo() {
           // Add subclasses to the class item
           classItem.subclasses = subclasses;
       }
- 
+      
+
+    // Have carter add something to get classes and their features
+    
+
       classesWithSubclasses = classes;
   } catch (error) {
       console.error("Error fetching character class information:", error);
@@ -117,6 +121,7 @@ export async function getCharacterClassInfo() {
 export async function getCharacterCreatorInfo() {
   let subracesWithRaces = [];
   let racesWithoutSubraces = [];
+  let classes = [];
 
   // Get list of subraces with their corresponding race
   try {
@@ -175,6 +180,8 @@ export async function getCharacterCreatorInfo() {
   } catch (error) {
     console.error("Error fetching races without subraces and their features:", error);
   }
+
+
 
   // Combine and return the data
   return {

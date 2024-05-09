@@ -190,6 +190,8 @@
     ]);
 
     const [charactercreatordata, setCharacterCreatorData] = useState({
+      name: "",
+      alignment: "",
       race: "",
       subrace: "",
       class: "",
@@ -1746,6 +1748,18 @@ Warlock: [
             ) : (
               // Content to display before confirming character
               <>
+                <input type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
+                <select onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
+                  <option value="Lawful Good">Lawful Good</option>
+                  <option value="Neutral Good">Neutral Good</option>
+                  <option value="Chaotic Good">Chaotic Good</option>
+                  <option value="Lawful Neutral">Lawful Neutral</option>
+                  <option value="Neutral">Neutral</option>
+                  <option value="Chaotic Neutral">Chaotic Neutral</option>
+                  <option value="Lawful Evil">Lawful Evil</option>
+                  <option value="Neutral Evil">Neutral Evil</option>
+                  <option value="Chaotic Evil">Chaotic Evil</option>
+                </select>
                 <div className="characterInfoDisplay">
                   <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
                   <p>Class: {charactercreatordata.class}</p>
