@@ -79,7 +79,6 @@ export async function updateCharacterAbilityScores(playerCharacterId, abilities)
 
 
 
-
 export async function getCharacterClassInfo() {
   let classesWithSubclasses = [];
 
@@ -100,6 +99,13 @@ export async function getCharacterClassInfo() {
     `);
 
     // Step 3: Organize features by class
+    const featuresByClass = {};
+    for (const feature of features) {
+      if (!featuresByClass[feature.classid]) {
+        featuresByClass[feature.classid] = [];
+      }
+      featuresByClass[feature.classid].push(feature);
+    }
 
     // Step 4: For each class, fetch its subclasses
     for (const classItem of classes) {
@@ -126,11 +132,10 @@ export async function getCharacterClassInfo() {
 }
 
 
-
-
 export async function getCharacterCreatorInfo() {
   let subracesWithRaces = [];
   let racesWithoutSubraces = [];
+  let classes = [];
 
   // Get list of subraces with their corresponding race
   try {
@@ -189,6 +194,8 @@ export async function getCharacterCreatorInfo() {
   } catch (error) {
     console.error("Error fetching races without subraces and their features:", error);
   }
+
+
 
   // Combine and return the data
   return {
