@@ -1,6 +1,6 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { CharacterInfoContext, PlayerCharacterContext, UserIDContext } from "./Contexts";
   import { useRouter} from 'next/navigation'
 
   import AbilityBox from "./AbilityBox";
@@ -17,7 +17,7 @@
   
   function CharacterCreator() {
     const [classInfo, setClassInfo] = useState([]);
-
+    const CharacterLevel = useContext(CharacterInfoContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const router = useRouter();
     const [selectedLevel, setSelectedLevel] = useState(1);
@@ -1443,21 +1443,26 @@ Warlock: [
       });
     };
 
-
-    useEffect(() => {
-      if (characterConfirmed) {
-        fetchClassInfo(selectedLevel); 
-      }
-    }, [characterConfirmed, selectedLevel]);
-  
-    const fetchClassInfo = async (level) => {
+    const fetchLevelUpInfo = async () => {
       try {
-        const classFeature = await getFeatureData(feature, playercharacterid); 
-        setClassInfo(classFeature.featureinfo); 
+        // Use levelUpFeatures to fetch level up features
+        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, CharacterLevel);
+        // Set the level up features data in state
+        setClassInfo(levelUpFeaturesData);
       } catch (error) {
-        console.error('Error fetching class information:', error);
+        console.error('Error fetching level up features:', error);
       }
     };
+  
+    useEffect(() => {
+      fetchLevelUpInfo(); // Fetch level up features when component mounts or when selected level changes
+    }, [selectedLevel]);
+  
+    useEffect(() => {
+      // Sort classInfo whenever it changes
+      const sortedClassInfo = [...classInfo].sort((a, b) => a.feature_name.localeCompare(b.feature_name));
+      setClassInfo(sortedClassInfo);
+    }, [classInfo]);
     
     return (
       <div className="characterCreator">
