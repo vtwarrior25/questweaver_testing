@@ -11,7 +11,6 @@
     getCharacterCreatorInfo,
     updateCharacterAbilityScores,
     addItemsToCharacterInventory,
-    fetchCharacterInfo,
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
   import { levelUpFeatures } from "../lib/getcharacterinfo";
@@ -1475,29 +1474,6 @@ Warlock: [
       );
     };
     
-    const handleLevelSelect = async (level) => {
-      try {
-        const characterInfo = await fetchCharacterInfo(playercharacterid, level);
-        console.log("Character info for level", level, ":", characterInfo);
-        return renderCharacterLevelUpInfo(characterInfo);
-      } catch (error) {
-        console.error("Error fetching character information:", error);
-        return <div>Error fetching character information. Please try again.</div>; 
-      }
-    };
-    
-    const CharacterLevelUpPage = () => {
-      return (
-        <div>
-          <h2>Select Character Level</h2>
-          <button onClick={() => handleLevelSelect(1)}>Level 1</button>
-          <button onClick={() => handleLevelSelect(2)}>Level 2</button>
-          {/* Render the character info */}
-          {handleLevelSelect(level)}
-        </div>
-      );
-    };
-    
     
     
     return (
@@ -1559,109 +1535,89 @@ Warlock: [
               </Tab.Container>
             </div>
           </Tab>
-          <Tab eventKey="class" title="Class" disabled={!showConfirmTab} >
-            <Tab.Container defaultActiveKey="barbarian">
-              <div
-                className="characterCreatorSection characterCreatorClass frontElement"
-                style={{ display: "flex", flexDirection: "row" }}
-              >
-                <Tab.Container defaultActiveKey="firstClassKey">
-                  <div style={{ display: "flex", width: "100%" }}>
-                    <Nav
-                      variant="pills"
-                      className="flex-column"
-                      style={{ minWidth: "200px" }}
-                      onSelect={() => {showClassTable(false); setSelectedSkills([])}}
-                    >
-                      {classes.map((classItem, index) => (
-                        <Nav.Item key={index}>
-                          <Nav.Link
-                            eventKey={classItem.name
-                              .toLowerCase()
-                              .replace(/\s+/g, "")}
-                            onClick={() => handleSelectClass(classItem)}
-                          >
-                            {classItem.name}
-                          </Nav.Link>
-                        </Nav.Item>
-                      ))}
-                    </Nav>
-                    <Tab.Content style={{ flex: 1, paddingLeft: "20px" }}>
-                      {classes.map((classItem) => (
-                        <Tab.Pane
-                          key={classItem.classid}
-                          eventKey={classItem.name
-                            .toLowerCase()
-                            .replace(/\s+/g, "")}
-                        >
-                          <div className="characterCreatorTabContent">
-                            <h3>{classItem.name}</h3>
-                            <p>
-                              <strong>Description:</strong>{" "}
-                              {classItem.description}
-                            </p>
-                            {classItem.infotable && 
-                              <div>
-                                <Button variant="secondary" onClick={() => showClassTable(!showclasstable)}>Show Class Table</Button>
-                                {showclasstable && <Table size="sm">
-                                  <thead>
-                                    <tr>
-                                    {classItem.infotable.cols.map((col, index) => (
-                                      <th key={index}>{col}</th>
-                                    ))}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {classItem.infotable.rows.map((row, index) => (
-                                      <tr key={index}>
-                                        {row.map((col, index) => (
-                                          <td key={index}>{col}</td>
-                                        ))}
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </Table>}
-                              </div>
-                            } 
-                            <p>
-                              <strong>Hit Points at 1st Level:</strong>{" "}
-                              {classItem.hitpoints1stlevel}
-                            </p>
-                            <p>
-                              <strong>Hit Points at Higher Levels:</strong>{" "}
-                              {classItem.hitpointshigherlevel}
-                            </p>
-                            <h4>Subclasses:</h4>
-                            <ul>
-                              {classItem.subclasses &&
-                                classItem.subclasses.map((subclass) => (
-                                  <li key={subclass.subclassid}>
-                                    {subclass.name}: {subclass.description}
-                                  </li>
-                                ))}
-                            </ul>
-                            <div className="classAbilityDropdowns">
-                              {classItem.name && classSkills[classItem.name].numskills && classSkills[classItem.name].numskills.map((skillitem, index) => (
-                                <select key={index} onChange={(e) => handleSkillSelectionChange(index, e.target.value)}>
-                                  {classItem.name && classSkills[classItem.name].skills && getSkillDropdownOptions(classItem.name, index).map((skill, index2) => (
-                                    <option key={index2} value={skill}>{skill}</option>
-                                  ))}
-                                </select>
+          <Tab eventKey="class" title="Class" disabled={!showConfirmTab}>
+  <Tab.Container defaultActiveKey="firstClassKey">
+    <div className="characterCreatorSection characterCreatorClass frontElement" style={{ display: "flex", flexDirection: "row" }}>
+      <Tab.Container defaultActiveKey="firstClassKey">
+        <div style={{ display: "flex", width: "100%" }}>
+          <Nav variant="pills" className="flex-column" style={{ minWidth: "200px" }} onSelect={() => { showClassTable(false); setSelectedSkills([]) }}>
+            {classes.map((classItem, index) => (
+              <Nav.Item key={index}>
+                <Nav.Link eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")} onClick={() => handleSelectClass(classItem)}>
+                  {classItem.name}
+                </Nav.Link>
+              </Nav.Item>
+            ))}
+          </Nav>
+          <Tab.Content style={{ flex: 1, paddingLeft: "20px" }}>
+            {classes.map((classItem) => (
+              <Tab.Pane key={classItem.classid} eventKey={classItem.name.toLowerCase().replace(/\s+/g, "")}>
+                <div className="characterCreatorTabContent">
+                  <h3>{classItem.name}</h3>
+                  <p><strong>Description:</strong> {classItem.description}</p>
+                  {classItem.infotable && 
+                    <div>
+                      <Button variant="secondary" onClick={() => showClassTable(!showclasstable)}>Show Class Table</Button>
+                      {showclasstable && <Table size="sm">
+                        <thead>
+                          <tr>
+                            {classItem.infotable.cols.map((col, index) => (
+                              <th key={index}>{col}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {classItem.infotable.rows.map((row, index) => (
+                            <tr key={index}>
+                              {row.map((col, index) => (
+                                <td key={index}>{col}</td>
                               ))}
-                            </div>
-
-                            <Button onClick={() => handleChooseClass(classItem)}>
-                              Choose Class
-                            </Button>
-                          </div>
-                        </Tab.Pane>
-                      ))}
-                    </Tab.Content>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>}
+                    </div>
+                  } 
+                  <p><strong>Hit Points at 1st Level:</strong> {classItem.hitpoints1stlevel}</p>
+                  <p><strong>Hit Points at Higher Levels:</strong> {classItem.hitpointshigherlevel}</p>
+                  <h4>Subclasses:</h4>
+                  <ul>
+                    {classItem.subclasses && classItem.subclasses.map((subclass) => (
+                      <li key={subclass.subclassid}>
+                        {subclass.name}: {subclass.description}
+                      </li>
+                    ))}
+                  </ul>
+                  <h4>Features:</h4>
+                  <ul>
+                    {classItem.features && classItem.features.map((feature) => (
+                      <li key={feature.featureid}>
+                        <strong>{feature.name}</strong>: {feature.description}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="classAbilityDropdowns">
+                    {classItem.name && classSkills[classItem.name].numskills && classSkills[classItem.name].numskills.map((skillitem, index) => (
+                      <select key={index} onChange={(e) => handleSkillSelectionChange(index, e.target.value)}>
+                        {classItem.name && classSkills[classItem.name].skills && getSkillDropdownOptions(classItem.name, index).map((skill, index2) => (
+                          <option key={index2} value={skill}>{skill}</option>
+                        ))}
+                      </select>
+                    ))}
                   </div>
-                </Tab.Container>
-              </div>
-            </Tab.Container>
-          </Tab>
+                  <Button onClick={() => handleChooseClass(classItem)}>
+                    Choose Class
+                  </Button>
+                </div>
+              </Tab.Pane>
+            ))}
+          </Tab.Content>
+        </div>
+      </Tab.Container>
+    </div>
+  </Tab.Container>
+</Tab>
+
 
           <Tab eventKey="abilities" title="Abilities" disabled={!showConfirmTab}>
             <div className="characterCreator">

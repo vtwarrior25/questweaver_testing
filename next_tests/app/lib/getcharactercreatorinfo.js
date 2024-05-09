@@ -83,34 +83,48 @@ export async function updateCharacterAbilityScores(playerCharacterId, abilities)
 export async function getCharacterClassInfo() {
   let classesWithSubclasses = [];
 
-  // Step 1: Fetch all classes
   try {
-      const classes = await db.many(`
-          SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.infotable, c.spellcastingabilityid
-          FROM class c
-          ORDER BY c.name ASC;
-      `);
+    // Step 1: Fetch all classes
+    const classes = await db.many(`
+      SELECT c.classid, c.name, c.hitdice, c.hitpoints1stlevel, c.hitpointshigherlevel, c.description, c.infotable, c.spellcastingabilityid
+      FROM class c
+      ORDER BY c.name ASC;
+    `);
 
-      // Step 2: For each class, fetch its subclasses
-      for (const classItem of classes) {
-          const subclasses = await db.manyOrNone(`
-              SELECT s.subclassid, s.name, s.description, s.spellcastingabilityid
-              FROM subclass s
-              WHERE s.classid = $1;
-          `, [classItem.classid]);
+    // Step 2: Fetch features for all classes
+    const features = await db.many(`
+      SELECT f.featureid, f.name, f.description, f.featuretype, cf.classid AS classid
+      FROM feature f
+      JOIN classfeature cf ON f.featureid = cf.featureid
+      ORDER BY f.name ASC;
+    `);
 
-          // Add subclasses to the class item
-          classItem.subclasses = subclasses;
-      }
- 
-      classesWithSubclasses = classes;
+    // Step 3: Organize features by class
+
+    // Step 4: For each class, fetch its subclasses
+    for (const classItem of classes) {
+      // Fetch subclasses
+      const subclasses = await db.manyOrNone(`
+        SELECT s.subclassid, s.name, s.description, s.spellcastingabilityid
+        FROM subclass s
+        WHERE s.classid = $1;
+      `, [classItem.classid]);
+
+      // Add features to the class item
+      classItem.features = featuresByClass[classItem.classid] || [];
+      // Add subclasses to the class item
+      classItem.subclasses = subclasses;
+    }
+
+    classesWithSubclasses = classes;
   } catch (error) {
-      console.error("Error fetching character class information:", error);
-      throw error;
+    console.error("Error fetching character class information:", error);
+    throw error;
   }
 
   return classesWithSubclasses;
 }
+
 
 
 
