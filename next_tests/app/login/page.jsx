@@ -23,9 +23,11 @@ export default function Page() {
     try {
       const redirectUrl = await auth2(formData); // Ensure this function is designed to return a URL string
       if (redirectUrl) {
-        window.location.href = redirectUrl; // Direct redirection without useRouter
+        window.location.href = redirectUrl;
+        console.log("we are here") // Direct redirection without useRouter
       } else {
         setErrorMessage('Authentication failed. Please try again.');
+        console.log("we are here2")
       }
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');

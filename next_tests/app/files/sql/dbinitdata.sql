@@ -365,8 +365,7 @@ INSERT INTO proficiency (name, proficiencytype) VALUES
 ('Constitution', 'Saving Throws'),
 ('Intelligence', 'Saving Throws'),
 ('Wisdom', 'Saving Throws'),
-('Charisma', 'Saving Throws'),
-;
+('Charisma', 'Saving Throws');
 
 
 INSERT INTO item (name, value, currency, description, weight, rarity) VALUES

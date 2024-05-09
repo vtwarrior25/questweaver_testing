@@ -5,6 +5,13 @@ import { db } from '../lib/dbconn';
 import { addFeaturesToCharacter } from './getcharacterinfo';
 import { abilities } from './resources';
 
+const checkforplayerexistencequery = new PQ({
+  text: `
+    SELECT playercharacterid 
+    FROM playercharacter
+    WHERE playerid = $1 AND name = $2;
+  `
+});
 
 const skillsquery = new PQ({
   text: `
@@ -17,8 +24,8 @@ const skillsquery = new PQ({
 const playercharacteraddquery = new PQ({
   text: `
   WITH pcid AS (
-    INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, armorclass, maxhealth, currenthealth, speed, initiative, proficiencybonus, characterlevel, spellsavedc, spellattackmodifier, spellabilitymodifier, totalhitdice, numhitdice) VALUES
-    (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), $3, (SELECT classid FROM class WHERE name = $4), $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING playercharacterid
+    INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, maxhealth, currenthealth, proficiencybonus, characterlevel, spellsavedc, spellattackmodifier, spellabilitymodifier, totalhitdice, numhitdice) VALUES
+    (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), (SELECT subraceid FROM subrace WHERE name = $3), (SELECT classid FROM class WHERE name = $4), (SELECT subclassid FROM subclass WHERE name = $5), (SELECT hitpoints1stlevel FROM class WHERE name = $4), (SELECT hitpoints1stlevel FROM class WHERE name = $4), 2, 1, $9, $10, $11, 1, 1) RETURNING playercharacterid
   ) 
   INSERT INTO playercharacternote (playercharacterid, alignmentid, organizations, allies, enemies, backstory, other) VALUES
   ((SELECT * from pcid), (SELECT alignmentid FROM alignment WHERE name = $17), $18, $19, $20, $21, $22)
@@ -47,6 +54,7 @@ const playercharacterpassiveabilityquery = new PQ({
   `
 });
 
+/*
 const playercharacterproficiencyquery = new PQ({
   text: `
     INSERT INTO characterproficiency (playercharacterid, proficiencyid) VALUES
@@ -60,6 +68,7 @@ const playercharacterdefensequery = new PQ({
     ($1, (SELECT defenseid FROM defense WHERE name = $2), $3);
   `
 });
+*/
 
 const playercharacterfeaturequery = new PQ({
   text: `
@@ -68,38 +77,120 @@ const playercharacterfeaturequery = new PQ({
   `
 });
 
+const getspellcastingabilitymodquery = new PQ({
+  text: `
+    SELECT ca.modifier
+    FROM characterability ca
+    WHERE abilityid = (SELECT spellcastingabilityid FROM class WHERE name = $1);
+  `
+});
 
-export async function createCharacter(formdata) {
-  let playercharacterid;
-  let playercharacterabilityscores = {
-    Strength: formdata.abilities.strength,
-    Dexterity: formdata.abilities.dexterity,
-    Constitution: formdata.abilities.constitution,
-    Intelligence: formdata.abilities.intelligence,
-    Wisdom: formdata.abilities.wisdom,
-    Charisma: formdata.abilities.charisma,
+const setcharacterspellmodifiersquery = new PQ({
+  text: `
+    UPDATE playercharacter 
+    SET spellsavedc = $2, spellattackmodifier = $3, spellabilitymodifier = $4
+    WHERE playercharacterid = $1; 
+  `
+});
+
+const setcharacterpassiveabilityquery = new PQ({
+  text: `
+    INSERT INTO characterpasssiveability (playercharacterid, passiveperception, passiveinvestigation, passiveinsight) VALUES
+    ($1, $2, $3, $4);
+  `
+});
+
+
+export async function checkIfPlayerExists(playerid, name) {
+ // let data = {};
+  await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
+  .then((result) => {
+    console.log(result);
+  }).catch((error) => {
+    console.error('Error retrieving thing: ' + error);
+  }); 
+  //return data;
+}
+
+export async function createCharacter(formdata, playerid) {
+  // Check if they have a character already???
+  let doescharacterexist = false;
+  await db.one(checkforplayerexistencequery, [playerid, formdata.name])
+  .then((result) => {
+    if (result !== null) {
+      doescharacterexist = true;
+    }
+  }).catch((error) => {
+    console.error('Error running character existence query: ' + error);
+    return;
+  }); 
+  if (doescharacterexist) {
+    
   }
-  db.one(playercharacteraddquery, [formdata])
+  let playercharacterid;
+  let abilities = [];
+  let playercharacterabilityscores = {
+    Strength: formdata.abilities.STR,
+    Dexterity: formdata.abilities.DEX,
+    Constitution: formdata.abilities.CON,
+    Intelligence: formdata.abilities.INT,
+    Wisdom: formdata.abilities.WIS,
+    Charisma: formdata.abilities.CHA,
+  }
+  // Create new character
+  await db.one(playercharacteraddquery, [formdata])
   .then((playerresult) => {
     playercharacterid = playerresult.pcid;
-    for (ability of abilities) {
-      //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
-      db.none(playercharacterabilityquery, [playercharacterid, ability, playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2]);
-    }
-    db.many(skillsquery, [playercharacterid])
-    .then((skillresult) => {
-      for (skill of skillresult) {
-        // Need to provide a way of sending which skills the character is proficient in
-        db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
-      }
-    });
-    addFeaturesToCharacter(playercharacterid, true)
-    .catch((error) => {
-      console.error("Error adding features to character: " + error);
-    })
   }).catch((error) => {
     return "Error inserting player character";
+  });
+  // Add ability scores for character
+  for (ability of abilities) {
+    //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
+    await db.none(playercharacterabilityquery, [playercharacterid, ability, playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2]);
+  }
+  // Add skills for character
+  await db.many(skillsquery, [playercharacterid])
+  .then((skillresult) => {
+    for (skill of skillresult) {
+      // Need to provide a way of sending which skills the character is proficient in
+      db.none(playercharacterskillquery, [playercharacterid, skill.skillid, false, skill.modifier]);
+    }
+  });
+  let abilitymod = 0;
+  // Handle spellcasting ability things
+  await db.oneOrNone(getspellcastingabilitymodquery, [formdata.class])
+  .then((result) => {
+    abilitymod = result.modifier;
   })
+  .catch((error) => {
+    console.error("Error getting spellcasting ability mod" + error);
+  })
+  let spellsavedc = 8 + abilitymod + 2;
+  let spellattackmod = abilitymod + 2;
+  let spellabilitymod = abilitymod;
+  // Set spellsavedc and spellattackmod
+  await db.none(setcharacterspellmodifiersquery, [playercharacterid, spellsavedc, spellattackmod, spellabilitymod])
+  .catch((error) => {
+    console.error("Error setting character spell modifiers: " + error);
+  })
+  //
+  await db.none(setcharacterpassiveabilityquery, [playercharacterid, Number(formdata.abilities.WIS + 10), Number(formdata.abilities.INT + 10), Number(formdata.abiliites.WIS + 10)])
+  .catch((error) => {
+    console.error('Error adding passive abilities: ' + error);
+  });
+
+  // Add features to character
+  await addFeaturesToCharacter(playercharacterid, true)
+  .catch((error) => {
+    console.error("Error adding features to character: " + error);
+  });
+  
+}
+
+function levelUp(playercharacterid) {
+  // Get current characterlevel
+  
 }
 
 /*

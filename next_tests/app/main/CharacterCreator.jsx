@@ -182,8 +182,10 @@
       race: "",
       subrace: "",
       class: "",
+      subclass: "",
       skillproficiencies: [],
       equipment: [],
+      abilityscores: [],
       descriptions: [
         {
           order: 0,
@@ -725,7 +727,7 @@
 
 
   
-   useEffect(() => {
+  useEffect(() => {
     if (characterConfirmed) {
       levelUpFeatures(charactercreatordata.playercharacterid, charactercreatordata.characterlevel)
         .then((features) => {
@@ -776,6 +778,7 @@
       ...charactercreatordata,
       skillproficiencies: selectedskills,
       class: classitem.name,
+      subclass: classitem.subclasses[0].name
     }
     setCharacterCreatorData({...newData});
     //updateCharacterData("skillproficiencies", selectedskills);
@@ -869,8 +872,6 @@
                     console.log(option.name);
                     handleRadioChange(option.name, radio.name);
                   }}
-                
-                 
                 />
                   {renderOption(radio, option.name)}            
                 {(radio.name === 'Martial Melee' || radio.name === 'Simple Weapon' || radio.name === 'Martial Melee and a shield' || radio.name === 'Two Martial Weapons') && selectedOptions[option.name] === radio.name && (
@@ -967,6 +968,7 @@
       // Update local state
       setAbilityScores(newScores);
       setSelectedAbilities(Array(6).fill("-"));
+      setCharacterCreatorData({...charactercreatordata, abilityscores: {...newScores}});
 
       // Update database
       try {
@@ -1159,7 +1161,7 @@
                             {item.features &&
                               item.features.map((feature, featureIndex) => (
                                 <li key={featureIndex}>
-                                  {feature.name}: {feature.description}
+                                  <span className="featureTitle">{feature.name}:</span> {feature.description}
                                 </li>
                               ))}
                           </ul>

@@ -4,6 +4,7 @@ import InventorySection from "./InventorySection";
 import ManageInventory from './ManageInventory';
 import { PlayerCharacterContext } from './Contexts';
 import { getCharacterMoney, getInventory, setCharacterMoney, setCharacterInventory, addItemToInventory, updateItemInInventory, removeItemFromInventory } from '../lib/itemactions';
+import { checkIfPlayerExists } from '../lib/createcharacter';
 
 function InventoryMenu() {
 

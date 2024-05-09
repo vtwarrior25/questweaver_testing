@@ -79,19 +79,36 @@ function FeaturesMenu() {
   
 
   const renderFeature = (feature) => {
+    let featuretexttoprint = [];
+    let featurewithsubheadings = false;
+    if (feature.featuretext.includes("////")) {
+      featuretexttoprint = feature.featuretext.split(4).split(";;");
+      featurewithsubheadings = true;
+    } else {
+      featuretexttoprint = feature.featuretext.split(";;");
+      featurewithsubheadings = false;
+    }
+
     if (feature.featuretype === 'Action') {
       
     } else if (feature.featuretype === 'Class Action' || feature.featuretype === 'Ability Action') {
-      <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
+      return (
+        <div className="singleFeature">
+          <span className="featureTitle">{feature.featuretitle}</span>
+          {featuretexttoprint.map((featuretextpart, index) => (
+            <p key={index}>{featuretextpart}</p>
+            ))}
+          <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
+        </div>
+      )
     } else {
       return (
         <div className="singleFeature">
           <span className="featureTitle">{feature.featuretitle}</span>
-          {feature.featuretext.split(";;").map((featuretextpart, index) => (
+          {featuretexttoprint.map((featuretextpart, index) => (
             <p key={index}>{featuretextpart}</p>
             ))}
         </div>
-        
       )
     }
   }
@@ -105,7 +122,6 @@ function FeaturesMenu() {
               {renderFeature(sectionfeature)}
             </div>
           )}
-          <SequentialCheckboxes normal={true} number={3}></SequentialCheckboxes>
         </div>
         <div className="featuresSection">
         <span className='characterSheetSectionTitle'>Race Features</span>

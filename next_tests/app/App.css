@@ -1066,6 +1066,15 @@ Character Inventory Area Features Menu
   padding: 0.3rem;
 }
 
+.featureTitle {
+  font-weight: 700;
+}
+
+.featureSubHeading {
+  font-weight: 500;
+}
+
+
 
 /*
 ----------------------------------------

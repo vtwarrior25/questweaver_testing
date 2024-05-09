@@ -1322,3 +1322,52 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
     });
   }
 }
+
+const getcharacternotesquery = new PQ({
+  text: `
+    SELECT organizations, allies, enemies, backstory, other
+    FROM playercharacternote
+    WHERE playercharacterid = $1;
+  `
+});
+
+export async function getCharacterNotes(playercharacterid) {
+  let playernotes = {};
+  await db.one(getcharacternotesquery, [playercharacterid])
+  .then((result) => {
+    console.log(result);
+    playernotes = {...result};
+  }).catch((error) => {
+    console.error('Error retrieving player character notes: ' + error);
+  });
+  let notestemplate = [
+    {
+      order: 0,
+      sectionname: "Organizations",
+      sectiontext: playernotes.organizations
+    },
+    {
+      order: 1,
+      sectionname: "Allies",
+      sectiontext: playernotes.allies
+    },
+    {
+      order: 2,
+      sectionname: "Enemies",
+      sectiontext: playernotes.enemies
+    },
+    {
+      order: 3,
+      sectionname: "Backstory",
+      sectiontext: playernotes.backstory
+    },
+    {
+      order: 4,
+      sectionname: "Other",
+      sectiontext: playernotes.other
+    },
+  ];
+  console.log("Notes mode");
+  console.log(notestemplate);
+  return notestemplate;
+}

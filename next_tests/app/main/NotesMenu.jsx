@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { PlayerCharacterContext } from './Contexts';
 import { setCharacterNotes } from '../lib/setcharacterinfo';
+import { getCharacterNotes } from '../lib/getcharacterinfo';
 
 function NotesMenu() {
   const playercharacterid = useContext(PlayerCharacterContext);
@@ -35,16 +36,31 @@ function NotesMenu() {
   ])
 
   useEffect(() => {
-    getNotes();
-  }, []
+    console.log("Getting character notes!");
+    getCharacterNotes(playercharacterid)
+    .then((result) => {
+      console.log(result);
+      setNotesSections([...result]);
+    })
+    .catch((error) => {
+      console.error("Error retrieving notes from server: " + error);
+    })
+  }, [playercharacterid]
   );
 
+  
+  /*
   useEffect(() => {
-    console.log("Setting notes!");
+    console.log("Setting notes on server!");
     console.log(notessections);
-    setCharacterNotes(playercharacterid, notessections);
-  }, [notessections, playercharacterid]
+    setCharacterNotes(playercharacterid, notessections)
+    .catch((error) => {
+      console.error("Error setting notes on server: " + error);
+    });
+  }, [notessections]
   );
+  */
+  
 
 
   const updateTextArea = (sectionname, text) => {
@@ -56,19 +72,20 @@ function NotesMenu() {
       sectiontext: text,
     }
     setNotesSections([...sections, modsection].sort((a,b) => {return a.order - b.order}));
+    // Set notes on server
+    setCharacterNotes(playercharacterid, notessections)
+    .catch((error) => {
+      console.error("Error setting notes on server: " + error);
+    });
   }
 
-  // Gets spells from the server
-  const getNotes = () => {
-    console.log("Getting spells!");
-  }
 
   return ( 
     <div className="notesMenu characterInventoryAreaSection">
       {notessections.map((notessection, index) =>
       <div key={index} className="notesSection">
         <span>{notessection.sectionname}</span>
-        <textarea onChange={(e) => updateTextArea(notessection.sectionname, e.target.value)} defaultValue={notessection.sectiontext}></textarea>
+        <textarea onChange={(e) => updateTextArea(notessection.sectionname, e.target.value)} value={notessection.sectiontext}></textarea>
       </div>
       )}
     </div>

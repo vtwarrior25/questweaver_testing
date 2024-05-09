@@ -26,8 +26,23 @@ Look at [Next Instructions](./next.md) for installation help.
 - Foreign key columns are named the same as the primary key they are referencing. For example, a FK column would be called `defenseid` if it contains references to the PK `defenseid` of the table `defense` 
 - All other columns are named after what they contain without the table name. For example, the name column of the table defense is called `name`, not `defensename`.
 
+
+## Building Database:
+All of the files to build the database can be found in /app/sql.
+The database to be used is PostgreSQL 14
+The order to execute them is as follows:
+- database.sql
+- dbinitdata.sql
+- spell.sql
+- spelllist.sql
+- features.sql
+
+The database will be built automatically when using the Docker compose install method.
+
+
+
 ## Issues
-- [] Monster Group Form: It creates a copy of the same encounter, and replaces all monster groups with the form data for some reason.
+- [x] Monster Group Form: It creates a copy of the same encounter, and replaces all monster groups with the form data for some reason.
 - [] Manage Spells Menu: Prepared spells list doesn't update when a spell is prepared, but prepared spells is updated
 - [] Inventory/ActionsMenu: Active checkbox for weapons in inventory works to toggle active attacks, but the state of the checkbox isn't updated correctly when page is reloaded and data is gathered from server
 - [] Map: Moving a character on the map can lead to jittering.
