@@ -1521,6 +1521,7 @@ Warlock: [
                       >
                         <div className="characterCreatorTabContent">
                           <h3>{item.subrace_name || item.race_name}</h3>
+                          <h4>Features:</h4>
                           <ul>
                             {item.features &&
                               item.features.map((feature, featureIndex) => (
@@ -1598,7 +1599,8 @@ Warlock: [
                       </li>
                     ))}
                   </ul>
-                  <div className="classAbilityDropdowns">
+                  <div className="classSkillDropdowns">
+                    Skill Dropdowns: 
                     {classItem.name && classSkills[classItem.name].numskills && classSkills[classItem.name].numskills.map((skillitem, index) => (
                       <select key={index} onChange={(e) => handleSkillSelectionChange(index, e.target.value)}>
                         {classItem.name && classSkills[classItem.name].skills && getSkillDropdownOptions(classItem.name, index).map((skill, index2) => (
@@ -1704,8 +1706,10 @@ Warlock: [
             ) : (
               // Content to display before confirming character
               <>
-                <input type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
-                <select onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
+                <label htmlFor="name">Character Name:</label>
+                <input name="name" type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
+                <label htmlFor="alignment">Alignment:</label>
+                <select name="alignment" onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
                   <option value="Lawful Good">Lawful Good</option>
                   <option value="Neutral Good">Neutral Good</option>
                   <option value="Chaotic Good">Chaotic Good</option>
