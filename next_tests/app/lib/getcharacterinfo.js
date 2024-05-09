@@ -787,7 +787,7 @@ const featuresdefaultresult = [
 
 const getcharacterfeaturesquery = new PQ({
   text: `
-    SELECT featureid, name AS featurename, description AS featuretext, featuretype FROM feature c
+    SELECT c.featureid, c.name AS featurename, c.description AS featuretext, c.featuretype FROM feature c
     JOIN characterfeature p ON c.featureid = p.featureid
     WHERE p.playercharacterid = $1;
   `
@@ -795,7 +795,7 @@ const getcharacterfeaturesquery = new PQ({
 
 const getclassfeaturesquery = new PQ({
   text: `
-    SELECT featureid, name, description, featuretype FROM feature c
+    SELECT c.featureid, c.name, c.description, c.featuretype FROM feature c
     JOIN classfeature p ON c.featureid = p.featureid
     WHERE p.classid = (SELECT classid FROM class WHERE name = $1);
   `
@@ -803,7 +803,7 @@ const getclassfeaturesquery = new PQ({
 
 const getclassfeaturesforlevelquery = new PQ({
   text: `
-    SELECT featureid, name, description, featuretype FROM feature c
+    SELECT c.featureid, c.name, c.description, c.featuretype FROM feature c
     JOIN classfeature p ON c.featureid = p.featureid
     WHERE p.classid = $1 AND p.characterlevel = $2;
   `
@@ -811,7 +811,7 @@ const getclassfeaturesforlevelquery = new PQ({
 
 const getsubclassfeaturesforlevelquery = new PQ({
   text: `
-    SELECT featureid, name, description, featuretype FROM feature c
+    SELECT c.featureid, c.name, c.description, c.featuretype FROM feature c
     JOIN subclassfeature sc ON c.featureid = sc.featureid
     WHERE sc.subclassid = $1 AND sc.characterlevel = $2;
   `
@@ -820,7 +820,7 @@ const getsubclassfeaturesforlevelquery = new PQ({
 
 const getracefeaturesquery = new PQ({
   text: `
-    SELECT featureid, name, description, featuretype FROM feature c
+    SELECT c.featureid, c.name, c.description, c.featuretype FROM feature c
     JOIN racefeature p ON c.featureid = p.featureid
     WHERE p.raceid = $1 (SELECT raceid FROM race WHERE name = $1);
   `
@@ -1008,7 +1008,7 @@ export async function getRaceFeature(racename) {
 
 const getclassandsubclassforcharacterquery = new PQ({
   text: `
-    SELECT classid, subclassid FROM playercharacter
+    SELECT class, subclass FROM playercharacter
     WHERE playercharacterid = $1;
   `
 });
@@ -1037,7 +1037,7 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   .then((result) => {
     levelupfeatures = [...levelupfeatures, result];
   }).catch((error) => {
-    console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
+    console.error('Error retrieving subclass features for level ' + characterlevel + ": " + error);
   });
   return levelupfeatures;
 }

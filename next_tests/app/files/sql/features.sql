@@ -472,7 +472,10 @@ INSERT INTO racefeature (raceid, featureid) VALUES
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Halfling Languages')),
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Lucky')),
 ((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Brave')),
-((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Halfling Nimbleness'));
+((SELECT raceid FROM race WHERE name = 'Halfling'), (SELECT featureid FROM feature WHERE name = 'Halfling Nimbleness')),
+((SELECT raceid FROM race WHERE name = 'Human'), (SELECT featureid FROM feature WHERE name = 'Human Ability Score Increase')),
+((SELECT raceid FROM race WHERE name = 'Human'), (SELECT featureid FROM feature WHERE name = 'Human Languages')),
+((SELECT raceid FROM race WHERE name = 'Human'), (SELECT featureid FROM feature WHERE name = 'Human Speed'));
 
 
 INSERT INTO subracefeature (subraceid, featureid) VALUES 
