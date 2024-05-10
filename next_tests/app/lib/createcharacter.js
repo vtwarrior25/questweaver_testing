@@ -199,8 +199,16 @@ export async function createCharacter(formdata, playerid) {
   }
   // Add ability scores for character
   for (ability of abilities) {
-    //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
-    await db.none(playercharacterabilityquery, [playercharacterid, ability, playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2]);
+    if (doescharacterexist) {
+      //
+    } else {
+      //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
+      await db.none(playercharacterabilityquery, [playercharacterid, ability, 
+        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2])
+        .catch((error) => {
+          console.error("Error setting character abilities: " + error);
+        })
+    }
   }
   // Add skills for character
   await db.many(skillsquery, [playercharacterid])
