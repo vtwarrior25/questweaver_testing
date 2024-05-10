@@ -16,11 +16,11 @@ function CharacterSelectEntry({ userid, charid, charname, charclass, charsubclas
   };
 
   return (
-    <Button as="a" variant='secondary' className="characterSelectEntry">
-      <Link href={{ pathname: '../main', query: { userid: userid, playercharacterid: charid } }} passHref={true}>
+    <Link href={{ pathname: '../main', query: { userid: userid, playercharacterid: charid } }}>
+      <Button variant='secondary' className="characterSelectEntry">  
         {buildDisplayText()}
-      </Link>
-    </Button>
+      </Button>
+    </Link>
   );
 }
 

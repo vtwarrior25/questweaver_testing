@@ -57,11 +57,11 @@ export default function Page() {
       {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
         <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
       )}
-      <Button variant='primary' className='characterCreatorButton' onClick={() => router.push('../charactercreator')}>
-        <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
-          Create New Character
-        </Link>
-      </Button>
+      <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
+        <Button variant='primary' className="characterSelectEntry">  
+        Create New Character
+        </Button>
+      </Link>
     </div>
   )
 }

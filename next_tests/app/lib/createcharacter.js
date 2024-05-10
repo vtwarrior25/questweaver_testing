@@ -125,7 +125,7 @@ export async function createCharacter(formdata, playerid) {
     return;
   }); 
   if (doescharacterexist) {
-
+    
   }
   let playercharacterid;
   let abilities = [];

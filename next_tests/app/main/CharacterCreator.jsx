@@ -17,7 +17,7 @@
   
   function CharacterCreator() {
     const [classInfo, setClassInfo] = useState([]);
-    const CharacterLevel = useContext(CharacterInfoContext);
+    const characterinfo = useContext(CharacterInfoContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const router = useRouter();
     const [selectedLevel, setSelectedLevel] = useState(1);
@@ -1454,7 +1454,7 @@ Warlock: [
     const fetchLevelUpInfo = async () => {
       try {
         // Use levelUpFeatures to fetch level up features
-        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, CharacterLevel);
+        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, characterinfo.characterlevel);
         // Set the level up features data in state
         setClassInfo(levelUpFeaturesData);
       } catch (error) {
@@ -1579,8 +1579,8 @@ Warlock: [
                   <p><strong>Hit Points at Higher Levels:</strong> {classItem.hitpointshigherlevel}</p>
                   <h4>Subclasses:</h4>
                   <ul>
-                    {classItem.subclasses && classItem.subclasses.map((subclass) => (
-                      <li key={subclass.subclassid}>
+                    {classItem.subclasses && classItem.subclasses.map((subclass, index) => (
+                      <li key={index}>
                         {subclass.name}: {subclass.description}
                       </li>
                     ))}
@@ -1706,7 +1706,7 @@ Warlock: [
                 </select>
                 <div className="characterInfoDisplay">
                   <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
-                  <p>Class: {charactercreatordata.class}</p>
+                  <p>Class/Subclass: {charactercreatordata.class} - {charactercreatordata.subclass}</p>
                   <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
                 </div>
                 <Button onClick={() => testAddFeaturesToCharacter()}>Testing Add Features to Character</Button>

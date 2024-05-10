@@ -24,6 +24,8 @@ html {
 
 .characterSelectEntry {
   margin: 0.2rem 0.5rem;
+  text-decoration: none;
+  color: white;
 }
 
 .characterCreatorButton {
