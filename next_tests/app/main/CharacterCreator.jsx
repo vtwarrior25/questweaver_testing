@@ -1455,8 +1455,7 @@ Warlock: [
     
     useEffect(() => {
       fetchLevelUpInfo(); 
-    }, []);
-    
+    }, [selectedLevel]); 
     const fetchLevelUpInfo = async () => {
       try {
         const levelUpFeaturesData = await levelUpFeatures(playercharacterid, selectedLevel);
@@ -1677,6 +1676,12 @@ Warlock: [
           <div className="confirmCharacterSection">          
             {characterConfirmed ? (
            <div className="levelUpSection">
+             <label htmlFor="level">Select Level:</label>
+        <select name="level" value={selectedLevel} onChange={(e) => setSelectedLevel(parseInt(e.target.value))}>
+          {[1, 2, 3, 4, 5].map(level => (
+            <option key={level} value={level}>{level}</option>
+          ))}
+        </select>
            <h4>Class Information for Level {selectedLevel}</h4>
            <ul>
              {classInfo.map((classFeature, index) => (
@@ -1685,6 +1690,7 @@ Warlock: [
                </li>
              ))}
            </ul>
+           <button>Confirm Level Up</button>
            <Button onClick={handleSwitchBack}>Change Character</Button>
          </div>
        )  : (
