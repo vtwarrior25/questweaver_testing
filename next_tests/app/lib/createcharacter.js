@@ -117,8 +117,17 @@ const updateplayercharacterquery = new PQ({
 });
 
 const updateplayercharacterabilityquery = new PQ({
-  text: ``
+  text: `
+    UPDATE characterability
+    SET score = $3, modifier = $4
+    WHERE playercharacterid = $1 AND abilityid = (SELECT abilityid FROM ability WHERE name = $2)
+  `
 });
+
+/*
+INSERT INTO characterability (playercharacterid, abilityid, score, modifier) VALUES
+    ($1, (SELECT abilityid FROM ability WHERE name = $2), $3, $4);
+*/
 
 const updateplayercharacterskillquery = new PQ({
   text: `
@@ -156,14 +165,14 @@ export async function createCharacter(formdata, playerid) {
   // Check if they have a character already???
   let doescharacterexist = false;
   let playercharacterid;
-  let abilities = [];
+  let abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
   let playercharacterabilityscores = {
-    Strength: formdata.abilities.STR,
-    Dexterity: formdata.abilities.DEX,
-    Constitution: formdata.abilities.CON,
-    Intelligence: formdata.abilities.INT,
-    Wisdom: formdata.abilities.WIS,
-    Charisma: formdata.abilities.CHA,
+    Strength: formdata.abilityscores.STR,
+    Dexterity: formdata.abilityscores.DEX,
+    Constitution: formdata.abilityscores.CON,
+    Intelligence: formdata.abilityscores.INT,
+    Wisdom: formdata.abilityscores.WIS,
+    Charisma: formdata.abilityscores.CHA,
   }
   await db.one(checkforplayerexistencequery, [playerid, formdata.name])
   .then((result) => {
@@ -184,6 +193,7 @@ export async function createCharacter(formdata, playerid) {
 
     }).catch((error) => {
       console.error("Error updating existing player character: " + error);
+      return;
     });
   } else {
     // Create new character
@@ -200,11 +210,15 @@ export async function createCharacter(formdata, playerid) {
   // Add ability scores for character
   for (ability of abilities) {
     if (doescharacterexist) {
-      //
+      await db.none(updateplayercharacterabilityquery, [playercharacterid, ability, 
+        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability]))-10/2])
+      .catch((error) => {
+        console.error("Error updating character abilities: " + error);
+      })
     } else {
       //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
       await db.none(playercharacterabilityquery, [playercharacterid, ability, 
-        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2])
+        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability]))-10/2])
         .catch((error) => {
           console.error("Error setting character abilities: " + error);
         })
@@ -250,7 +264,7 @@ export async function createCharacter(formdata, playerid) {
   });
 
   // Add features to character
-  await addFeaturesToCharacter(playercharacterid, doescharacterexist)
+  await addFeaturesToCharacter(playercharacterid, !doescharacterexist)
   .catch((error) => {
     console.error("Error adding features to character: " + error);
   });

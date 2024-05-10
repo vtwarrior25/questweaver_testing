@@ -206,27 +206,27 @@
         {
           order: 0,
           sectionname: "Organizations",
-          sectiontext: "Epic beans action to the maximum moments scenario",
+          sectiontext: "",
         },
         {
           order: 1,
           sectionname: "Allies",
-          sectiontext: "Epic beans action to the maximum moments scenario",
+          sectiontext: "",
         },
         {
           order: 2,
           sectionname: "Enemies",
-          sectiontext: "Epic beans action to the maximum moments scenario",
+          sectiontext: "",
         },
         {
           order: 3,
           sectionname: "Backstory",
-          sectiontext: "Epic beans action to the maximum moments scenario",
+          sectiontext: "",
         },
         {
           order: 4,
           sectionname: "Other",
-          sectiontext: "Epic beans action to the maximum moments scenario",
+          sectiontext: "",
         },
       ],
     });
@@ -1117,7 +1117,6 @@ Warlock: [
   const handleConfirmClick = () => {
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
-
   };
   
   
@@ -1225,14 +1224,6 @@ Warlock: [
 
     </div>
       );
-  };
-
-
-  const testAddFeaturesToCharacter = () => {
-    addFeaturesToCharacter(playercharacterid, true)
-    .catch((error) => {
-      console.error("Error adding features to character:" + error);
-    })
   };
 
 
@@ -1356,6 +1347,7 @@ Warlock: [
       setCharacterCreatorData({...charactercreatordata, abilityscores: {...newScores}});  
       console.log("After update:", charactercreatordata);
       // Update database
+      /*
       try {
         await updateCharacterAbilityScores(playercharacterid, abilitiesToUpdate);
         console.log(abilitiesToUpdate);
@@ -1363,6 +1355,7 @@ Warlock: [
       } catch (error) {
         console.error("Error updating abilities in database:", error);
       }
+      */
     };
 
     const getAbilityId = (abilityName) => {
@@ -1676,25 +1669,25 @@ Warlock: [
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
           <div className="confirmCharacterSection">          
             {characterConfirmed ? (
-           <div className="levelUpSection">
-             <label htmlFor="level">Select Level:</label>
+          <div className="levelUpSection">
+            <label htmlFor="level">Select Level:</label>
         <select name="level" value={selectedLevel} onChange={(e) => setSelectedLevel(parseInt(e.target.value))}>
           {[1, 2, 3, 4, 5].map(level => (
             <option key={level} value={level}>{level}</option>
           ))}
         </select>
-           <h4>Class Information for Level {selectedLevel}</h4>
-           <ul>
-             {classInfo.map((classFeature, index) => (
-               <li key={index}>
-                 <strong>{classFeature.name}</strong>: {classFeature.description}
-               </li>
-             ))}
-           </ul>
-           <button>Confirm Level Up</button>
-           <Button onClick={handleSwitchBack}>Change Character</Button>
-         </div>
-       )  : (
+          <h4>Class Information for Level {selectedLevel}</h4>
+            <ul>
+              {classInfo.map((classFeature, index) => (
+                <li key={index}>
+                  <strong>{classFeature.name}</strong>: {classFeature.description}
+                </li>
+              ))}
+            </ul>
+            <button>Confirm Level Up</button>
+            <Button onClick={handleSwitchBack}>Change Character</Button>
+          </div>
+          )  : (
               // Content to display before confirming character
               <>
                 <label htmlFor="name">Character Name:</label>
@@ -1716,7 +1709,6 @@ Warlock: [
                   <p>Class/Subclass: {charactercreatordata.class} - {charactercreatordata.subclass}</p>
                   <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
                 </div>
-                <Button onClick={() => testAddFeaturesToCharacter()}>Testing Add Features to Character</Button>
                 <Button onClick={() => {
                   handleConfirmClick();
                   createCharacter(charactercreatordata, playercharacterid);
