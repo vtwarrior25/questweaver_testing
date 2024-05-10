@@ -1227,6 +1227,11 @@ Map Things
 .mapCanvasWrapper {
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
+}
+
+.mapSettingsButton {
+  max-width: 7rem;
 }
 
 .mapSettingsSection {

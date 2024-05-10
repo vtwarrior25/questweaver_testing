@@ -402,9 +402,7 @@ function PixiMap() {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
-      <div>
-        <Button onClick={() => setShowMapSettings(true)}></Button>
-      </div>
+      <Button className="mapSettingsButton" size="sm" onClick={() => setShowMapSettings(true)}>Map Settings</Button>
       <MapScaleContext.Provider value={mapsize.scale}>
         <Stage
           width={mapsize.width}
