@@ -179,7 +179,7 @@ INSERT INTO defense (name, description) VALUES
 ('Piercing', ''),
 ('Necrotic', ''),
 ('Lightning', ''),
-('Trap Dammage', ''),
+('Trap Damage', ''),
 ('Cold', ''),
 ('Force', ''),
 ('Range Attacks', ''),
@@ -205,7 +205,11 @@ INSERT INTO subrace (name, raceid) VALUES
 ('Stout', (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Lightfoot', (SELECT raceid FROM race WHERE name = 'Halfling')),
 ('Forest Gnome', (SELECT raceid FROM race WHERE name = 'Gnome')),
-('Rock Gnome', (SELECT raceid FROM race WHERE name = 'Gnome'));
+('Rock Gnome', (SELECT raceid FROM race WHERE name = 'Gnome')),
+('None', (SELECT raceid FROM race WHERE name = 'Human')),
+('None ', (SELECT raceid FROM race WHERE name = 'Half-Elf')),
+('None  ', (SELECT raceid FROM race WHERE name = 'Half-Orc'));
+;
 
 
 INSERT INTO effecttype (name, description) VALUES

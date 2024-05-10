@@ -1114,6 +1114,17 @@ Warlock: [
   }, [characterConfirmed, playercharacterid, characterinfo]);
 
 
+  useEffect(() => {
+    if (characterinfo !== null && characterinfo !== undefined) {
+      setCharacterCreatorData({...charactercreatordata, 
+      name: characterinfo.name, class: characterinfo.class, 
+      race: characterinfo.race, level: characterinfo.characterlevel,
+      subrace: characterinfo.subrace, subclass: characterinfo.subclass});
+    }
+  }, [characterinfo],
+  );
+  
+
   const handleConfirmClick = () => {
     console.log("We are here gamer");
     setShowConfirmTab(false);

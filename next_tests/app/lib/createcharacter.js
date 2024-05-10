@@ -176,7 +176,7 @@ export async function createCharacter(formdata, playerid) {
     Wisdom: formdata.abilityscores.WIS,
     Charisma: formdata.abilityscores.CHA,
   }
-  await db.one(checkforplayerexistencequery, [playerid, formdata.name])
+  await db.oneOrNone(checkforplayerexistencequery, [playerid, formdata.name])
   .then((result) => {
     if (result !== null) {
       playercharacterid = result;
