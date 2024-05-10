@@ -125,7 +125,7 @@ export async function createCharacter(formdata, playerid) {
     return;
   }); 
   if (doescharacterexist) {
-    
+
   }
   let playercharacterid;
   let abilities = [];
@@ -195,6 +195,23 @@ function levelUp(playercharacterid) {
   // Get current characterlevel
   
 }
+
+
+const addtempplayercharacterid = new PQ({
+  text: `
+    INSERT INTO playercharacter (playercharacterid) VALUES
+    (DEFAULT);
+  `
+});
+
+
+export async function addTempCharacterID () {
+
+}
+
+
+
+
 
 /*
 
