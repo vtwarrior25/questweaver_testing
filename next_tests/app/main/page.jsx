@@ -28,6 +28,8 @@ function App () {
     name: 'Jerome',
     race: 'Human',
     class: 'Wizard',
+    subrace: '',
+    subclass: '',
     characterlevel: 1
   });
   const [isDM, setIsDM] = useState(true);

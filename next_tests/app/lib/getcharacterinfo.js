@@ -608,10 +608,12 @@ const getcharacterstaticstatsquery = new PQ({
 
 const getcharacterbasicdataquery = new PQ({
   text: `
-    SELECT c.name, r.name AS race, cl.name AS class, c.characterlevel
+    SELECT c.name, r.name AS race, cl.name AS class, sr.name AS subrace, scl.name AS subclass, c.characterlevel
     FROM playercharacter c
       JOIN race r ON c.race = r.raceid
       JOIN class cl ON c.class = cl.classid
+      JOIN subrace sr ON c.subrace = sr.subraceid
+      JOIN subclass scl ON c.subclass = scl.subclassid
     WHERE playercharacterid = $1; 
   `
 });

@@ -6,11 +6,12 @@ import './charactercreator.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container } from 'react-bootstrap';
 import CharacterCreator from '../main/CharacterCreator';
+import { UserIDContext } from '../main/Contexts';
 
 
 export default function Page() {
 
-  const [userid, setUserID] = useState(0);
+  const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
 
   const [playercharacters, setPlayerCharacters] = useState([
     {
@@ -47,11 +48,13 @@ export default function Page() {
 
   return (
     <Container fluid>
-      <div className='charactercreatorpage'>
-        <div className="characterCreatorOnPage">
-          <CharacterCreator loginsection={true}></CharacterCreator>
+      <UserIDContext.Provider value={userid}>
+        <div className='charactercreatorpage'>
+          <div className="characterCreatorOnPage">
+            <CharacterCreator loginsection={true}></CharacterCreator>
+          </div>
         </div>
-      </div>
+      </UserIDContext.Provider>
     </Container>
     
   )
