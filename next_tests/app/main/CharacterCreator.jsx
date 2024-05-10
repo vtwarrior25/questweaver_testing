@@ -193,6 +193,7 @@
 
     const [charactercreatordata, setCharacterCreatorData] = useState({
       name: "",
+      level: 1,
       alignment: "",
       race: "",
       subrace: "",

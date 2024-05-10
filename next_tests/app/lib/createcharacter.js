@@ -108,12 +108,12 @@ const updateplayercharacterquery = new PQ({
   text: `
   WITH pcid AS (
     UPDATE playercharacter
-    SET name = $1, race = (SELECT raceid FROM race WHERE name = $2), subrace = (SELECT subraceid FROM subrace WHERE name = $3), class = (SELECT classid FROM class WHERE name = $4), subclass = (SELECT subclassid FROM subclass WHERE name = $5), maxhealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), currenthealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), proficiencybonus = 2, characterlevel = 1, totalhitdice = 1, numhitdice = 1
-    WHERE playercharacterid = $6
+    SET name = $1, race = (SELECT raceid FROM race WHERE name = $2), subrace = (SELECT subraceid FROM subrace WHERE name = $3), class = (SELECT classid FROM class WHERE name = $4), subclass = (SELECT subclassid FROM subclass WHERE name = $5), maxhealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), currenthealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), proficiencybonus = 2, characterlevel = $6, totalhitdice = 1, numhitdice = 1
+    WHERE playercharacterid = $7
   )
   UPDATE playercharacternote
-  SET alignmentid = (SELECT alignmentid FROM alignment WHERE name = $7), organizations = $8, allies = $9, enemies = $10, backstory = $11, other = $12
-  WHERE playercharacterid = $6;`
+  SET alignmentid = (SELECT alignmentid FROM alignment WHERE name = $8), organizations = $9, allies = $10, enemies = $11, backstory = $12, other = $13
+  WHERE playercharacterid = $7;`
 });
 
 const updateplayercharacterabilityquery = new PQ({
@@ -176,7 +176,10 @@ export async function createCharacter(formdata, playerid) {
     return;
   }); 
   if (doescharacterexist) { // Update character info if exists
-    await db.none(updateplayercharacterquery, [formdata.name, formdata.race, formdata.subrace, formdata.class, formdata.subclass, playercharacterid, formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
+    await db.none(updateplayercharacterquery, [formdata.name, formdata.race, 
+      formdata.subrace, formdata.class, formdata.subclass, formdata.level, playercharacterid, 
+      formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
+      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
     .then((playerresult) => {
 
     }).catch((error) => {
@@ -186,8 +189,8 @@ export async function createCharacter(formdata, playerid) {
     // Create new character
     await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass,
-      formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], formdata.descriptions[2],
-      formdata.descriptions[3], formdata.descriptions[4]])
+      formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
+      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
       .then((playerresult) => {
         playercharacterid = playerresult.pcid;
       }).catch((error) => {
