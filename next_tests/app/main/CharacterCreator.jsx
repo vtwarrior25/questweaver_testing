@@ -15,7 +15,7 @@
   import AvatarUpload from "./AvatarUpload";
   import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
   
-  function CharacterCreator() {
+  function CharacterCreator(loginsection) {
     const [classInfo, setClassInfo] = useState([]);
     const characterinfo = useContext(CharacterInfoContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
@@ -1098,18 +1098,19 @@ Warlock: [
     };
 
 
-  
   useEffect(() => {
-    if (characterConfirmed) {
-      levelUpFeatures(playercharacterid, characterinfo.characterlevel)
-        .then((features) => {
-          setLevelUpInfo(features);
-        })
-        .catch((error) => {
-          console.error("Error retrieving level up features: " + error);
-        });
+    if (playercharacterid !== null && playercharacterid !== undefined && characterinfo !== null && characterinfo !== undefined) {
+      if (characterConfirmed) {
+        levelUpFeatures(playercharacterid, characterinfo.characterlevel)
+          .then((features) => {
+            setLevelUpInfo(features);
+          })
+          .catch((error) => {
+            console.error("Error retrieving level up features: " + error);
+          });
+      }
     }
-  }, [characterConfirmed, playercharacterid, characterinfo.characterlevel]);
+  }, [characterConfirmed, playercharacterid, characterinfo]);
 
 
   const handleConfirmClick = () => {
