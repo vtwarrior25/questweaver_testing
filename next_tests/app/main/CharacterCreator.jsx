@@ -194,7 +194,7 @@
     const [charactercreatordata, setCharacterCreatorData] = useState({
       name: "",
       level: 1,
-      alignment: "",
+      alignment: "Lawful Good",
       race: "",
       subrace: "",
       class: "",
@@ -1117,6 +1117,10 @@ Warlock: [
   const handleConfirmClick = () => {
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
+    createCharacter(charactercreatordata, userid)
+    .catch((error) => {
+      console.error("Error creating character: " + error);
+    });
   };
   
   

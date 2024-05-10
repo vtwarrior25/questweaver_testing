@@ -1,3 +1,14 @@
 html {
   background-color: aliceblue;
 }
+
+.charactercreatorpage {
+  max-width: 70rem;
+  min-width: 60rem;
+  max-height: 60rem;
+  min-height: 20rem;
+}
+
+.characterCreatorOnPage {
+  
+}

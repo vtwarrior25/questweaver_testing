@@ -268,7 +268,6 @@ export async function createCharacter(formdata, playerid) {
   .catch((error) => {
     console.error("Error adding features to character: " + error);
   });
-  
 }
 
 function levelUp(playercharacterid) {

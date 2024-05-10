@@ -4,7 +4,7 @@ import '@/app/App.css';
 import { useState, useEffect } from 'react';
 import './charactercreator.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import CharacterCreator from '../main/CharacterCreator';
 
 
@@ -45,9 +45,14 @@ export default function Page() {
   );
   */
 
-  return (  
-    <div className='charactercreatorpage'>
-      <CharacterCreator loginsection={true}></CharacterCreator>
-    </div>
+  return (
+    <Container fluid>
+      <div className='charactercreatorpage'>
+        <div className="characterCreatorOnPage">
+          <CharacterCreator loginsection={true}></CharacterCreator>
+        </div>
+      </div>
+    </Container>
+    
   )
 }
