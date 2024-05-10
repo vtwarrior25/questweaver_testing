@@ -378,7 +378,7 @@ CREATE TABLE IF NOT EXISTS charactersavingthrow (
 
 CREATE TABLE IF NOT EXISTS characterpassiveability (
 	characterpassiveabilityid				integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	playercharacterid								integer REFERENCES playercharacter(playercharacterid) NOT NULL,
+	playercharacterid								integer REFERENCES playercharacter(playercharacterid) UNIQUE NOT NULL,
 	passiveperception								integer,
 	passiveinvestigation						integer,
 	passiveinsight									integer

@@ -364,6 +364,7 @@ INSERT INTO spellfeature (featureid, level, spellid) VALUES
 
 
 INSERT INTO classfeature (classid, featureid, characterlevel) VALUES 
+((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Proficiencies'), 1),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Rage'), 1),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Barbarian Unarmored Defense'), 1),
 ((SELECT classid FROM class WHERE name = 'Barbarian'), (SELECT featureid FROM feature WHERE name = 'Reckless Attack'), 2),

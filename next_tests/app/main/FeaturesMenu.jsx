@@ -68,7 +68,8 @@ function FeaturesMenu() {
     },
   ]);
   
-/*
+
+  /*
   useEffect(() => {
     getCharacterFeatures()
     .then((result) => {
@@ -85,6 +86,7 @@ function FeaturesMenu() {
   }, [],
   );
   */
+  
 
   const renderFeature = (feature) => {
     let featuretexttoprint = [];
@@ -147,6 +149,7 @@ function FeaturesMenu() {
   
   return ( 
     <div className="featuresMenu characterInventoryAreaSection">
+      {classfeatures && classfeatures.length > 0 &&
         <div className="featuresSection">
           <span className='characterSheetSectionTitle'>Class Features</span>
           {classfeatures && classfeatures.length > 0 && classfeatures.map((sectionfeature, index) => 
@@ -155,6 +158,8 @@ function FeaturesMenu() {
             </div>
           )}
         </div>
+      }
+      {racefeatures && racefeatures.length > 0 &&
         <div className="featuresSection">
         <span className='characterSheetSectionTitle'>Race Features</span>
         {racefeatures && racefeatures.length > 0 && racefeatures.map((sectionfeature, index) => 
@@ -163,6 +168,7 @@ function FeaturesMenu() {
           </div>
         )}
       </div>
+      }
     </div>
   );
   
