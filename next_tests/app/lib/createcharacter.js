@@ -108,8 +108,28 @@ const updateplayercharacterquery = new PQ({
     WHERE playercharacterid = $6
   )
   UPDATE playercharacternote
-  SET alignmentid = (SELECT alignmentid FROM alignment WHERE name = $6), organizations = $7, allies = $8, enemies = $9, backstory = $10, other = $11
+  SET alignmentid = (SELECT alignmentid FROM alignment WHERE name = $7), organizations = $8, allies = $9, enemies = $10, backstory = $11, other = $12
   WHERE playercharacterid = $6;`
+});
+
+const updateplayercharacterabilityquery = new PQ({
+  text: ``
+});
+
+const updateplayercharacterskillquery = new PQ({
+  text: ``
+});
+
+const updateplayercharacterfeaturequery = new PQ({
+  text: ``
+});
+
+const updatecharacterspellmodifierquery = new PQ({
+  text: ``
+});
+
+const updatecharacterpassiveabilityquery = new PQ({
+  text: ``
 });
 
 
@@ -139,13 +159,12 @@ export async function createCharacter(formdata, playerid) {
     return;
   }); 
   if (doescharacterexist) { // Update character info if exists
-    await db.one(updateplayercharacterquery, [formdata.name, formdata.race, 
-      formdata.subrace, formdata.class, formdata.subclass, playercharacterid])
-      .then((playerresult) => {
+    await db.none(updateplayercharacterquery, [formdata.name, formdata.race, formdata.subrace, formdata.class, formdata.subclass, playercharacterid, formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
+    .then((playerresult) => {
 
-      }).catch((error) => {
-        console.error("Error updating existing player character: " + error);
-      });
+    }).catch((error) => {
+      console.error("Error updating existing player character: " + error);
+    });
   }
   let abilities = [];
   let playercharacterabilityscores = {
