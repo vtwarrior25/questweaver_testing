@@ -1018,31 +1018,39 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   let levelupfeatures = [];
   let classid = 0;
   let subclassid = 0;
+  console.log("Level:", characterlevel);
+  console.log("ID:", playercharacterid);
   // Get subclassid and classid
   await db.one(getclassandsubclassforcharacterquery, [playercharacterid])
   .then((result) => {
-    console.log(result);
+    console.log("Class and Subclass Result:", result);
     classid = result.classid;
     subclassid = result.subclassid;
   }).catch((error) => {
     console.error("Error retrieving classid and subclassid for player: " + error);
   });
+
   // Get class features for classid and level
   await db.any(getclassfeaturesforlevelquery, [classid, characterlevel])
   .then((result) => {
+    console.log("Class Features Result:", result);
     levelupfeatures = [...levelupfeatures, result];
   }).catch((error) => {
     console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
   });
+
   // Get subclass features for subclassid and level
   await db.any(getsubclassfeaturesforlevelquery, [subclassid, characterlevel])
   .then((result) => {
+    console.log("Subclass Features Result:", result);
     levelupfeatures = [...levelupfeatures, result];
   }).catch((error) => {
     console.error('Error retrieving subclass features for level ' + characterlevel + ": " + error);
   });
+  console.log("Feature Data",levelupfeatures);
   return levelupfeatures;
 }
+
 
 
 const getcharinfoforfeaturesquery = new PQ({

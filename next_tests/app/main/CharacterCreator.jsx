@@ -1451,30 +1451,26 @@ Warlock: [
         }),
       });
     };
+    
 
+    useEffect(() => {
+      fetchLevelUpInfo(); 
+    }, []);
+  
     const fetchLevelUpInfo = async () => {
       try {
-        if (characterinfo !== null) {
-          // Use levelUpFeatures to fetch level up features
-          const levelUpFeaturesData = await levelUpFeatures(playercharacterid, characterinfo.characterlevel);
-          // Set the level up features data in state
-          setClassInfo(levelUpFeaturesData);
-        }
+        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, selectedLevel);
+        console.log("Level up features data:", levelUpFeaturesData); 
+        setClassInfo(levelUpFeaturesData.flat()); 
       } catch (error) {
         console.error('Error fetching level up features:', error);
       }
     };
   
-    useEffect(() => {
-      fetchLevelUpInfo(); // Fetch level up features when component mounts or when selected level changes
-    }, [selectedLevel]);
-  
-    useEffect(() => {
-      // Sort classInfo whenever it changes
-      const sortedClassInfo = [...classInfo].sort((a, b) => a.feature_name.localeCompare(b.feature_name));
-      setClassInfo(sortedClassInfo);
-    }, [classInfo]);
     
+    
+  
+
     return (
       <div className="characterCreator">
         <Tabs
@@ -1675,22 +1671,20 @@ Warlock: [
             </div>
           </Tab>
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
-          <div className="confirmCharacterSection">
+          <div className="confirmCharacterSection">          
             {characterConfirmed ? (
-              <div className="levelUpSection">
-                <div>
-                  <h4>Class Information for Level {selectedLevel}</h4>
-                  <ul>
-                    {classInfo.map((classFeature, index) => (
-                      <li key={index}>
-                        <strong>{classFeature.name}</strong>: {classFeature.description}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Button onClick={handleSwitchBack}>Change Character</Button>
-              </div>
-            ) : (
+           <div className="levelUpSection">
+           <h4>Class Information for Level {selectedLevel}</h4>
+           <ul>
+             {classInfo.map((classFeature, index) => (
+               <li key={index}>
+                 <strong>{classFeature.name}</strong>: {classFeature.description}
+               </li>
+             ))}
+           </ul>
+           <Button onClick={handleSwitchBack}>Change Character</Button>
+         </div>
+       )  : (
               // Content to display before confirming character
               <>
                 <label htmlFor="name">Character Name:</label>
