@@ -16,8 +16,11 @@
   import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
   
   function CharacterCreator() {
+    const [classInfo, setClassInfo] = useState([]);
+    const CharacterLevel = useContext(CharacterInfoContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const router = useRouter();
+    const [selectedLevel, setSelectedLevel] = useState(1);
     const [levelUpInfo, setLevelUpInfo] = useState(null);
     const [characterConfirmed, setCharacterConfirmed] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState({});
@@ -1112,7 +1115,6 @@ Warlock: [
   const handleConfirmClick = () => {
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
-    createCharacter();
 
   };
   
@@ -1449,42 +1451,26 @@ Warlock: [
       });
     };
 
-
-    const renderCharacterLevelUpInfo = (characterInfo) => {
-      if (!characterInfo || characterInfo.length === 0) {
-        return <div>No character information available</div>;
+    const fetchLevelUpInfo = async () => {
+      try {
+        // Use levelUpFeatures to fetch level up features
+        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, CharacterLevel);
+        // Set the level up features data in state
+        setClassInfo(levelUpFeaturesData);
+      } catch (error) {
+        console.error('Error fetching level up features:', error);
       }
-    
-      return (
-        <div className="characterLevelUpInfo">
-          {characterInfo.map((classInfo) => (
-            <div key={classInfo.classid}>
-              <h4>{classInfo.name}</h4>
-              <p>
-                <strong>Description:</strong> {classInfo.description}
-              </p>
-              <p>
-                <strong>Hit Points at 1st Level:</strong> {classInfo.hitpoints1stlevel}
-              </p>
-              <p>
-                <strong>Hit Points at Higher Levels:</strong>{" "}
-                {classInfo.hitpointshigherlevel}
-              </p>
-              <h5>Subclasses:</h5>
-              <ul>
-                {classInfo.subclasses.map((subclass) => (
-                  <li key={subclass.subclassid}>
-                    <strong>{subclass.name}:</strong> {subclass.description}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      );
     };
-    
-    
+  
+    useEffect(() => {
+      fetchLevelUpInfo(); // Fetch level up features when component mounts or when selected level changes
+    }, [selectedLevel]);
+  
+    useEffect(() => {
+      // Sort classInfo whenever it changes
+      const sortedClassInfo = [...classInfo].sort((a, b) => a.feature_name.localeCompare(b.feature_name));
+      setClassInfo(sortedClassInfo);
+    }, [classInfo]);
     
     return (
       <div className="characterCreator">
@@ -1688,27 +1674,17 @@ Warlock: [
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
           <div className="confirmCharacterSection">
             {characterConfirmed ? (
-              // Content to display after confirming character
               <div className="levelUpSection">
-                {levelUpInfo ? (
-                  <div>
-                    <h4>Level Up Features:</h4>
-                    <ul>
-                      {levelUpInfo.map((featureSet, index) => (
-                        <li key={index}>
-                          <h5>{featureSet[0].feature_type}</h5>
-                          <ul>
-                            {featureSet.map((feature, subIndex) => (
-                              <li key={subIndex}>{feature.feature_name}</li>
-                            ))}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p>Loading level up features...</p>
-                )}
+                <div>
+                  <h4>Class Information for Level {selectedLevel}</h4>
+                  <ul>
+                    {classInfo.map((classFeature, index) => (
+                      <li key={index}>
+                        <strong>{classFeature.name}</strong>: {classFeature.description}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Button onClick={handleSwitchBack}>Change Character</Button>
               </div>
             ) : (
@@ -1742,7 +1718,7 @@ Warlock: [
               </>   
             )}
           </div>
-        </Tab>
+        </Tab>    
         </Tabs>
       </div>
     );
