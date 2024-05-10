@@ -163,6 +163,8 @@ export async function checkIfPlayerExists(playerid, name) {
 
 export async function createCharacter(formdata, playerid) {
   // Check if they have a character already???
+  console.log("Creating a character!! Oh YEAH!!");
+  console.log("Character name: " + formdata.name);
   let doescharacterexist = false;
   let playercharacterid;
   let abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
@@ -208,7 +210,7 @@ export async function createCharacter(formdata, playerid) {
       });
   }
   // Add ability scores for character
-  for (ability of abilities) {
+  for (const ability of abilities) {
     if (doescharacterexist) {
       await db.none(updateplayercharacterabilityquery, [playercharacterid, ability, 
         playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability]))-10/2])
@@ -227,7 +229,7 @@ export async function createCharacter(formdata, playerid) {
   // Add skills for character
   await db.many(skillsquery, [playercharacterid])
   .then((skillresult) => {
-    for (skill of skillresult) {
+    for (const skill of skillresult) {
       let skillproficient = false;
       if (formdata.skillproficiencies.includes(skill.name)) {
         // If the current skill is listed as a proficiency, we will set it as proficient

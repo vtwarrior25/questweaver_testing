@@ -1115,6 +1115,7 @@ Warlock: [
 
 
   const handleConfirmClick = () => {
+    console.log("We are here gamer");
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
     createCharacter(charactercreatordata, userid)
