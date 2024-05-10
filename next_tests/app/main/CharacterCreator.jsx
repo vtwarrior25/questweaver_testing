@@ -1689,6 +1689,7 @@ Warlock: [
                </li>
              ))}
            </ul>
+           <button>Confirm Level Up</button>
            <Button onClick={handleSwitchBack}>Change Character</Button>
          </div>
        )  : (
