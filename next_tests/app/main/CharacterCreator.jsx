@@ -15,7 +15,7 @@
   import AvatarUpload from "./AvatarUpload";
   import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
   
-  function CharacterCreator() {
+  function CharacterCreator(loginsection) {
     const [classInfo, setClassInfo] = useState([]);
     const characterinfo = useContext(CharacterInfoContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
@@ -1098,18 +1098,19 @@ Warlock: [
     };
 
 
-  
   useEffect(() => {
-    if (characterConfirmed) {
-      levelUpFeatures(playercharacterid, characterinfo.characterlevel)
-        .then((features) => {
-          setLevelUpInfo(features);
-        })
-        .catch((error) => {
-          console.error("Error retrieving level up features: " + error);
-        });
+    if (playercharacterid !== null && playercharacterid !== undefined && characterinfo !== null && characterinfo !== undefined) {
+      if (characterConfirmed) {
+        levelUpFeatures(playercharacterid, characterinfo.characterlevel)
+          .then((features) => {
+            setLevelUpInfo(features);
+          })
+          .catch((error) => {
+            console.error("Error retrieving level up features: " + error);
+          });
+      }
     }
-  }, [characterConfirmed, playercharacterid, characterinfo.characterlevel]);
+  }, [characterConfirmed, playercharacterid, characterinfo]);
 
 
   const handleConfirmClick = () => {
@@ -1453,10 +1454,12 @@ Warlock: [
 
     const fetchLevelUpInfo = async () => {
       try {
-        // Use levelUpFeatures to fetch level up features
-        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, characterinfo.characterlevel);
-        // Set the level up features data in state
-        setClassInfo(levelUpFeaturesData);
+        if (characterinfo !== null) {
+          // Use levelUpFeatures to fetch level up features
+          const levelUpFeaturesData = await levelUpFeatures(playercharacterid, characterinfo.characterlevel);
+          // Set the level up features data in state
+          setClassInfo(levelUpFeaturesData);
+        }
       } catch (error) {
         console.error('Error fetching level up features:', error);
       }
@@ -1587,8 +1590,8 @@ Warlock: [
                   </ul>
                   <h4>Features:</h4>
                   <ul>
-                    {classItem.features && classItem.features.map((feature) => (
-                      <li key={feature.featureid}>
+                    {classItem.features && classItem.features.map((feature, index) => (
+                      <li key={index}>
                         <strong>{feature.name}</strong>: {feature.description}
                       </li>
                     ))}

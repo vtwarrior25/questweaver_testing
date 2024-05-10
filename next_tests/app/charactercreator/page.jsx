@@ -47,7 +47,7 @@ export default function Page() {
 
   return (  
     <div className='charactercreatorpage'>
-      <CharacterCreator></CharacterCreator>
+      <CharacterCreator loginsection={true}></CharacterCreator>
     </div>
   )
 }

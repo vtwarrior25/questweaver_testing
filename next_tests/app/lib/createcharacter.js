@@ -139,9 +139,9 @@ export async function createCharacter(formdata, playerid) {
   }
   // Create new character
   await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
-  formdata.subrace, formdata.class, formdata.subclass, 
-
-  ])
+  formdata.subrace, formdata.class, formdata.subclass,
+  formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], formdata.descriptions[2],
+  formdata.descriptions[3], formdata.descriptions[4]])
   .then((playerresult) => {
     playercharacterid = playerresult.pcid;
   }).catch((error) => {
