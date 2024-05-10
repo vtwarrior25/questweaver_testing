@@ -77,6 +77,7 @@ function PixiMap() {
   const playercharacterid = useContext(PlayerCharacterContext);
   const [dragging, setDragging] = useState(false);
   const [pauseupdate, setPauseUpdate] = useState(false);
+  const [storedtimerid, setTimerID] = useState(null);
 
   const [mapbackground, setMapBackground] = useState("/backgrounds/wide_darkviperau_fucked.jpg");
   const [mapbackgroundsize, setMapBackgroundSize] = useState( {
@@ -105,9 +106,11 @@ function PixiMap() {
         console.log("Not");
       }
       */
-      retrieveMapStats();
       retrieveMapData(); 
     }, 1500);
+    setInterval(() => {
+      retrieveMapStats();
+    }, 3000);
     }, []
   );
 
@@ -139,16 +142,25 @@ function PixiMap() {
   }
 
   const retrieveMapStats = () => {
-    getMapStats()
-    .then((result) => {
-      setMapBackground(result.mapbackground);
-      setMapBackgroundSize({...result.mapbackgroundsize});
-      //setMapSize({...result.mapsize});
-    }).catch((error) => {
-      console.error("Error retrieving map data: " + error);
-    });
+    if (pauseupdate !== true) {
+      getMapStats()
+      .then((result) => {
+        setMapBackground(result.mapbackground);
+        setMapBackgroundSize({...result.mapbackgroundsize});
+        //setMapSize({...result.mapsize});
+      }).catch((error) => {
+        console.error("Error retrieving map data: " + error);
+      });
+    }
   }
 
+
+  const pauseMapUpdates = () => {
+    clearTimeout(storedtimerid);
+    setPauseUpdate(true);
+    let timerid = setTimeout(setPauseUpdate(false), 1000);
+    setTimerID(timerid);
+  }
 
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
@@ -157,6 +169,7 @@ function PixiMap() {
 
 
   const modifyMapStats = () =>  {
+    pauseMapUpdates();
     updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
     .catch((error) => {
       console.error("Error updating map stats: " + error);
@@ -320,6 +333,7 @@ function PixiMap() {
       setMapShapes([...statetoupdate, ...statenottoupdate]);
       updateMapData(id, x, y);
     }
+    pauseMapUpdates();
   } 
 
 

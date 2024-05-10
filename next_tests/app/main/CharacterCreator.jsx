@@ -1725,6 +1725,7 @@ Warlock: [
                   <p>Class/Subclass: {charactercreatordata.class} - {charactercreatordata.subclass}</p>
                   <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
                 </div>
+                <AvatarUpload type="player" id={playercharacterid} upload={false}></AvatarUpload>
                 <Button onClick={() => {
                   handleConfirmClick();
                   router.push('../main');
