@@ -1024,8 +1024,8 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   await db.one(getclassandsubclassforcharacterquery, [playercharacterid])
   .then((result) => {
     console.log("Class and Subclass Result:", result);
-    classid = result.classid;
-    subclassid = result.subclassid;
+    classid = result.class;
+    subclassid = result.subclass;
   }).catch((error) => {
     console.error("Error retrieving classid and subclassid for player: " + error);
   });
@@ -1034,7 +1034,7 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   await db.any(getclassfeaturesforlevelquery, [classid, characterlevel])
   .then((result) => {
     console.log("Class Features Result:", result);
-    levelupfeatures = [...levelupfeatures, result];
+    levelupfeatures = [...levelupfeatures, ...result];
   }).catch((error) => {
     console.error('Error retrieving class features for level ' + characterlevel + ": " + error);
   });
@@ -1043,7 +1043,7 @@ export async function levelUpFeatures(playercharacterid, characterlevel) {
   await db.any(getsubclassfeaturesforlevelquery, [subclassid, characterlevel])
   .then((result) => {
     console.log("Subclass Features Result:", result);
-    levelupfeatures = [...levelupfeatures, result];
+    levelupfeatures = [...levelupfeatures, ...result];
   }).catch((error) => {
     console.error('Error retrieving subclass features for level ' + characterlevel + ": " + error);
   });
