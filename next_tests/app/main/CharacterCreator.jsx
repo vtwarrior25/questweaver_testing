@@ -1453,21 +1453,23 @@ Warlock: [
       });
     };
     
-
     useEffect(() => {
       fetchLevelUpInfo(); 
     }, []);
-  
+    
     const fetchLevelUpInfo = async () => {
       try {
         const levelUpFeaturesData = await levelUpFeatures(playercharacterid, selectedLevel);
         console.log("Level up features data:", levelUpFeaturesData); 
-        setClassInfo(levelUpFeaturesData.flat()); 
+        if (levelUpFeaturesData.length > 0) {
+          setClassInfo(levelUpFeaturesData.flat());
+        } else {
+          console.log("No level up features data found.");
+        }
       } catch (error) {
         console.error('Error fetching level up features:', error);
       }
     };
-  
     
     
   
