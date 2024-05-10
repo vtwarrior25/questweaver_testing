@@ -1101,7 +1101,7 @@ Warlock: [
   
   useEffect(() => {
     if (characterConfirmed) {
-      levelUpFeatures(charactercreatordata.playercharacterid, charactercreatordata.characterlevel)
+      levelUpFeatures(playercharacterid, characterinfo.characterlevel)
         .then((features) => {
           setLevelUpInfo(features);
         })
@@ -1109,7 +1109,7 @@ Warlock: [
           console.error("Error retrieving level up features: " + error);
         });
     }
-  }, [characterConfirmed, charactercreatordata.playercharacterid, charactercreatordata.characterlevel]);
+  }, [characterConfirmed, playercharacterid, characterinfo.characterlevel]);
 
 
   const handleConfirmClick = () => {
