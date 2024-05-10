@@ -1716,7 +1716,6 @@ Warlock: [
                 </div>
                 <Button onClick={() => {
                   handleConfirmClick();
-                  createCharacter(charactercreatordata, playercharacterid);
                   router.push('../main');
                 }}>Confirm Character</Button>
 
