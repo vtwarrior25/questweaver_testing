@@ -100,6 +100,18 @@ const setcharacterpassiveabilityquery = new PQ({
   `
 });
 
+const updateplayercharacterquery = new PQ({
+  text: `
+  WITH pcid AS (
+    UPDATE playercharacter
+    SET name = $1, race = (SELECT raceid FROM race WHERE name = $2), subrace = (SELECT subraceid FROM subrace WHERE name = $3), class = (SELECT classid FROM class WHERE name = $4), subclass = (SELECT subclassid FROM subclass WHERE name = $5), maxhealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), currenthealth = (SELECT hitpoints1stlevel FROM class WHERE name = $4), proficiencybonus = 2, characterlevel = 1, totalhitdice = 1, numhitdice = 1
+    WHERE playercharacterid = $6
+  )
+  UPDATE playercharacternote
+  SET alignmentid = (SELECT alignmentid FROM alignment WHERE name = $6), organizations = $7, allies = $8, enemies = $9, backstory = $10, other = $11
+  WHERE playercharacterid = $6;`
+});
+
 
 export async function checkIfPlayerExists(playerid, name) {
  // let data = {};
@@ -115,19 +127,26 @@ export async function checkIfPlayerExists(playerid, name) {
 export async function createCharacter(formdata, playerid) {
   // Check if they have a character already???
   let doescharacterexist = false;
+  let playercharacterid;
   await db.one(checkforplayerexistencequery, [playerid, formdata.name])
   .then((result) => {
     if (result !== null) {
+      playercharacterid = result;
       doescharacterexist = true;
     }
   }).catch((error) => {
     console.error('Error running character existence query: ' + error);
     return;
   }); 
-  if (doescharacterexist) {
-    
+  if (doescharacterexist) { // Update character info if exists
+    await db.one(updateplayercharacterquery, [formdata.name, formdata.race, 
+      formdata.subrace, formdata.class, formdata.subclass, playercharacterid])
+      .then((playerresult) => {
+
+      }).catch((error) => {
+        console.error("Error updating existing player character: " + error);
+      });
   }
-  let playercharacterid;
   let abilities = [];
   let playercharacterabilityscores = {
     Strength: formdata.abilities.STR,
@@ -139,9 +158,7 @@ export async function createCharacter(formdata, playerid) {
   }
   // Create new character
   await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
-  formdata.subrace, formdata.class, formdata.subclass, 
-
-  ])
+  formdata.subrace, formdata.class, formdata.subclass])
   .then((playerresult) => {
     playercharacterid = playerresult.pcid;
   }).catch((error) => {
