@@ -1328,7 +1328,7 @@ Warlock: [
 
     const updateAbilityScores = async () => {
       const calculateModifier = (score) => Math.floor((score - 10) / 2);
-
+      
       let newScores = { ...abilityScores };
       let abilitiesToUpdate = [];
 
@@ -1347,8 +1347,9 @@ Warlock: [
       // Update local state
       setAbilityScores(newScores);
       setSelectedAbilities(Array(6).fill("-"));
-      setCharacterCreatorData({...charactercreatordata, abilityscores: {...newScores}});
-
+      console.log("Before update:", charactercreatordata);
+      setCharacterCreatorData({...charactercreatordata, abilityscores: {...newScores}});  
+      console.log("After update:", charactercreatordata);
       // Update database
       /*
       try {
@@ -1714,6 +1715,7 @@ Warlock: [
                 </div>
                 <Button onClick={() => {
                   handleConfirmClick();
+                  createCharacter(charactercreatordata, playercharacterid);
                   router.push('../main');
                 }}>Confirm Character</Button>
 
