@@ -165,6 +165,7 @@ export async function createCharacter(formdata, playerid) {
   // Check if they have a character already???
   console.log("Creating a character!! Oh YEAH!!");
   console.log("Character name: " + formdata.name);
+  console.log("ME AND THE BOYS AT 3AM LOOKING FOR BEANS");
   let doescharacterexist = false;
   let playercharacterid;
   let abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];

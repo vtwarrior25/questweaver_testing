@@ -200,7 +200,7 @@
       class: "",
       subclass: "",
       skillproficiencies: [],
-      equipment: [],
+      equipment: [Greataxe, Dagger],
       abilityscores: [],
       descriptions: [
         {
@@ -1727,7 +1727,6 @@ Warlock: [
                 </div>
                 <Button onClick={() => {
                   handleConfirmClick();
-                  createCharacter(charactercreatordata, playercharacterid);
                   router.push('../main');
                 }}>Confirm Character</Button>
 
