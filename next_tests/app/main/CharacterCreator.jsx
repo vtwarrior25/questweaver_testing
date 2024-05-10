@@ -200,7 +200,7 @@
       class: "",
       subclass: "",
       skillproficiencies: [],
-      equipment: [],
+      equipment: [Greataxe, Dagger],
       abilityscores: [],
       descriptions: [
         {
