@@ -1,6 +1,6 @@
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { CharacterInfoContext, PlayerCharacterContext, UserIDContext } from "./Contexts";
   import { useRouter} from 'next/navigation'
 
   import AbilityBox from "./AbilityBox";
@@ -13,7 +13,7 @@
     addItemsToCharacterInventory,
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
-  import { levelUpFeatures } from "../lib/getcharacterinfo";
+  import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
   
   function CharacterCreator() {
     const [showConfirmTab, setShowConfirmTab] = useState(true);
@@ -1114,13 +1114,13 @@ Warlock: [
     setCharacterConfirmed(true);
     createCharacter();
 
-};
+  };
   
   
-    const handleSwitchBack = () => {
-      setShowConfirmTab(true); 
-      setCharacterConfirmed(false);
-    };
+  const handleSwitchBack = () => {
+    setShowConfirmTab(true); 
+    setCharacterConfirmed(false);
+  };
 
 
   const [dropdownOptions, setDropdownOptions] = useState({
@@ -1221,6 +1221,14 @@ Warlock: [
 
     </div>
       );
+  };
+
+
+  const testAddFeaturesToCharacter = () => {
+    addFeaturesToCharacter(playercharacterid, true)
+    .catch((error) => {
+      console.error("Error adding features to character:" + error);
+    })
   };
 
 
@@ -1725,6 +1733,7 @@ Warlock: [
                   <p>Class: {charactercreatordata.class}</p>
                   <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
                 </div>
+                <Button onClick={() => testAddFeaturesToCharacter()}>Testing Add Features to Character</Button>
                 <Button onClick={() => {
                   handleConfirmClick();
                   router.push('../main');

@@ -39,10 +39,13 @@ function FeaturesMenu() {
   ]);
   */
 
+  //const [features, setFeatures] = useState([]);
+
+  
   const [classfeatures, setClassFeatures] = useState([
     {
       featuretitle: "Rage",
-      featuretext: "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. ;;While raging, you gain the following benefits if you aren''t wearing heavy armor: ;;You have advantage on Strength checks and Strength saving throws. ;;When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table. ;;You have resistance to bludgeoning, piercing, and slashing damage. ;;If you are able to cast spells, you can''t cast them or concentrate on them while raging. ;;Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven''t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action. ;;Once you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.",
+      featuretext: "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. ;;While raging, you gain the following benefits if you aren't wearing heavy armor: ;;You have advantage on Strength checks and Strength saving throws. ;;When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table. ;;You have resistance to bludgeoning, piercing, and slashing damage. ;;If you are able to cast spells, you can''t cast them or concentrate on them while raging. ;;Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven''t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action. ;;Once you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.",
     },
     {
       featuretitle: "Unarmored Defense",
@@ -64,23 +67,29 @@ function FeaturesMenu() {
       featuretext: "Your base walking speed increases to 35 feet.",
     },
   ]);
-
+  
+/*
   useEffect(() => {
-    /*
     getCharacterFeatures()
     .then((result) => {
-      
+      for (let feature of result) {
+        if (feature.source === "Class") {
+          setClassFeatures([...classfeatures, feature]);
+        } else {
+          setRaceFeatures([...racefeatures, feature]);
+        }
+      }
     }).catch((error) => {
-
+      console.error("Error retrieving character features from server: " + error);
     })
-    */
   }, [],
   );
-  
+  */
 
   const renderFeature = (feature) => {
     let featuretexttoprint = [];
     let featurewithsubheadings = false;
+    /*
     if (feature.featuretext.includes("////")) {
       featuretexttoprint = feature.featuretext.split(4).split(";;");
       featurewithsubheadings = true;
@@ -88,6 +97,7 @@ function FeaturesMenu() {
       featuretexttoprint = feature.featuretext.split(";;");
       featurewithsubheadings = false;
     }
+    */
 
     if (feature.featuretype === 'Action') {
       
@@ -102,6 +112,7 @@ function FeaturesMenu() {
         </div>
       )
     } else {
+      /*
       return (
         <div className="singleFeature">
           <span className="featureTitle">{feature.featuretitle}</span>
@@ -110,14 +121,35 @@ function FeaturesMenu() {
             ))}
         </div>
       )
+      */
+      return (
+        <div className="singleFeature">
+          <span className="featureTitle">{feature.featuretitle}</span>
+            <p>{feature.featuretext.replace(";;", "")}</p>
+        </div>
+      )
     }
   }
 
+  /*
+  return ( 
+    <div className="featuresMenu characterInventoryAreaSection">
+        <div className="featuresSection">
+          {features && features.length > 0 && features.map((sectionfeature, index) => 
+            <div key={index} className="featuresSectionFeature">
+              {renderFeature(sectionfeature)}
+            </div>
+          )}
+        </div>
+    </div>
+  );
+  */
+  
   return ( 
     <div className="featuresMenu characterInventoryAreaSection">
         <div className="featuresSection">
           <span className='characterSheetSectionTitle'>Class Features</span>
-          {classfeatures.map((sectionfeature, index) => 
+          {classfeatures && classfeatures.length > 0 && classfeatures.map((sectionfeature, index) => 
             <div key={index} className="featuresSectionFeature">
               {renderFeature(sectionfeature)}
             </div>
@@ -125,7 +157,7 @@ function FeaturesMenu() {
         </div>
         <div className="featuresSection">
         <span className='characterSheetSectionTitle'>Race Features</span>
-        {racefeatures.map((sectionfeature, index) => 
+        {racefeatures && racefeatures.length > 0 && racefeatures.map((sectionfeature, index) => 
           <div key={index} className="featuresSectionFeature">
             {renderFeature(sectionfeature)}
           </div>
@@ -133,6 +165,7 @@ function FeaturesMenu() {
       </div>
     </div>
   );
+  
 }
 
 export default FeaturesMenu;

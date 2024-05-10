@@ -787,7 +787,8 @@ const featuresdefaultresult = [
 
 const getcharacterfeaturesquery = new PQ({
   text: `
-    SELECT c.featureid, c.name AS featurename, c.description AS featuretext, c.featuretype FROM feature c
+    SELECT c.featureid, c.name AS featurename, c.description AS featuretext, c.featuretype, p.source
+    FROM feature c
     JOIN characterfeature p ON c.featureid = p.featureid
     WHERE p.playercharacterid = $1;
   `
@@ -1080,7 +1081,7 @@ const getsubracefeaturesquery = new PQ({
 
 const addcharacterfeaturequery = new PQ({
   text: `
-    INSERT INTO characterfeature cf (playercharacterid, featureid) VALUES
+    INSERT INTO characterfeature (playercharacterid, featureid) VALUES
     ($1, $2)
     ON CONFLICT (playercharacterid, featureid) DO NOTHING;
   `
@@ -1106,7 +1107,7 @@ const getproficiencyfeaturequery = new PQ ({
 const updatecharacterspeedquery = new PQ ({
   text: `
     UPDATE playercharacter
-    SET speed = speed + $2
+    SET speed = $2
     WHERE playercharacterid = $1;
   `
 });
@@ -1178,7 +1179,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
   // Get characterlevel, class, race, subclass, subrace 
   await db.one(getcharinfoforfeaturesquery, [playercharacterid])
   .then((result) => {
-    charinfo = {...result[0]};
+    charinfo = {...result};
   }).catch((error) => {
     console.error('Error getting basic character info for features:' + error);
   });
@@ -1274,6 +1275,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         .then((result) => {
           if (topCharSpeed < result) {
             topCharSpeed = result;
+            console.log(topCharSpeed);
           }
         }).catch((error) => {
           console.error('Error getting character speed mod from feature: ' + error);
