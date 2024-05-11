@@ -24,8 +24,8 @@ const skillsquery = new PQ({
 const playercharacteraddquery = new PQ({
   text: `
   WITH pcid AS (
-    INSERT INTO playercharacter (playercharacterid, name, race, subrace, class, subclass, maxhealth, currenthealth, proficiencybonus, characterlevel, totalhitdice, numhitdice) VALUES
-    (DEFAULT, $1, (SELECT raceid FROM race WHERE name = $2), (SELECT subraceid FROM subrace WHERE name = $3), (SELECT classid FROM class WHERE name = $4), (SELECT subclassid FROM subclass WHERE name = $5), (SELECT hitpoints1stlevel FROM class WHERE name = $4), (SELECT hitpoints1stlevel FROM class WHERE name = $4), 2, 1, 1, 1) RETURNING playercharacterid
+    INSERT INTO playercharacter (playercharacterid, playerid, name, race, subrace, class, subclass, maxhealth, currenthealth, proficiencybonus, characterlevel, totalhitdice, numhitdice) VALUES
+    (DEFAULT, $12, $1, (SELECT raceid FROM race WHERE name = $2), (SELECT subraceid FROM subrace WHERE name = $3), (SELECT classid FROM class WHERE name = $4), (SELECT subclassid FROM subclass WHERE name = $5), (SELECT hitpoints1stlevel FROM class WHERE name = $4), (SELECT hitpoints1stlevel FROM class WHERE name = $4), 2, 1, 1, 1) RETURNING playercharacterid
   ) 
   INSERT INTO playercharacternote (playercharacterid, alignmentid, organizations, allies, enemies, backstory, other) VALUES
   ((SELECT * from pcid), (SELECT alignmentid FROM alignment WHERE name = $6), $7, $8, $9, $10, $11)
@@ -203,7 +203,7 @@ export async function createCharacter(formdata, playerid) {
     await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass,
       formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
-      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
+      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]], playerid)
       .then((playerresult) => {
         playercharacterid = playerresult.pcid;
       }).catch((error) => {
