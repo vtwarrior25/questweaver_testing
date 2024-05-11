@@ -10,7 +10,8 @@ import { UserIDContext } from '../main/Contexts';
 
 
 export default function Page() {
-
+  
+  const searchParams = useSearchParams();
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
 
   const [playercharacters, setPlayerCharacters] = useState([
