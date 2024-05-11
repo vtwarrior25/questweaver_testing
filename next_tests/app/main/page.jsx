@@ -148,11 +148,11 @@ function App () {
       <Container fluid className="mainContainer">
         <Row>
           <Col xs={6}>
-            <Tabs className="frontElement" defaultActiveKey='jerome' id="testingTabs">
+            <Tabs className="frontElement" defaultActiveKey='character1' id="testingTabs">
               {isDM && <Tab eventKey='monster' title='Monster'>
                 <MonsterSheet setRollResults={setRollResults}></MonsterSheet>
               </Tab>}
-              <Tab eventKey='jerome' title='Jerome'>
+              <Tab eventKey='character1' title={characterinfo.name}>
                 <CharacterSheet showboxes={showboxes} setShowBoxes={setShowBoxes} setRollResults={setRollResults} rollresults={rollresults}></CharacterSheet>
               </Tab>
               <Tab eventKey="characterCreator" title="Character Creator">
