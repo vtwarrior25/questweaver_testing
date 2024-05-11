@@ -1130,10 +1130,17 @@ Warlock: [
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
     console.log("userid = " + userid);
+    let newplayercharacterid = 0;
     createCharacter(charactercreatordata, userid)
+    .then((result) => {
+      newplayercharacterid = result.playercharacterid;
+    })
     .catch((error) => {
       console.error("Error creating character: " + error);
     });
+    if (loginsection === true) {
+      router.push({ pathname: '../main', query: { userid: userid, playercharacterid: newplayercharacterid }});
+    }
   };
   
   
@@ -1718,36 +1725,47 @@ Warlock: [
             <button>Confirm Level Up</button>
             <Button onClick={handleSwitchBack}>Change Character</Button>
           </div>
-          )  : (
+          ) : (
               // Content to display before confirming character
               <>
-                <label htmlFor="name">Character Name:</label>
-                <input name="name" type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
-                <label htmlFor="alignment">Alignment:</label>
-                <select name="alignment" onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
-                  <option value="Lawful Good">Lawful Good</option>
-                  <option value="Neutral Good">Neutral Good</option>
-                  <option value="Chaotic Good">Chaotic Good</option>
-                  <option value="Lawful Neutral">Lawful Neutral</option>
-                  <option value="Neutral">Neutral</option>
-                  <option value="Chaotic Neutral">Chaotic Neutral</option>
-                  <option value="Lawful Evil">Lawful Evil</option>
-                  <option value="Neutral Evil">Neutral Evil</option>
-                  <option value="Chaotic Evil">Chaotic Evil</option>
-                </select>
                 <div className="characterInfoDisplay">
-                  <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
-                  <p>Class/Subclass: {charactercreatordata.class} - {charactercreatordata.subclass}</p>
-                  <p>Abilities:</p>
-                  <p>Strength: {charactercreatordata.abilityscores.STR}</p>
-                  <p>Dexterity: {charactercreatordata.abilityscores.DEX}</p>
-                  <p>Constitution: {charactercreatordata.abilityscores.CON}</p>
-                  <p>Intelligence: {charactercreatordata.abilityscores.INT}</p>
-                  <p>Wisdom: {charactercreatordata.abilityscores.WIS}</p>
-                  <p>Charisma: {charactercreatordata.abilityscores.CHA}</p>
-                  <p>Skill Proficiencies: {printTextWithCommas(charactercreatordata.skillproficiencies)}</p>
+                  <div className="characterInfoDisplayColumn">
+                    <h5>Basic Info:</h5>
+                    <label htmlFor="name">Character Name:</label>
+                    <input name="name" type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
+                    <label htmlFor="alignment">Alignment:</label>
+                    <select name="alignment" onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
+                      <option value="Lawful Good">Lawful Good</option>
+                      <option value="Neutral Good">Neutral Good</option>
+                      <option value="Chaotic Good">Chaotic Good</option>
+                      <option value="Lawful Neutral">Lawful Neutral</option>
+                      <option value="Neutral">Neutral</option>
+                      <option value="Chaotic Neutral">Chaotic Neutral</option>
+                      <option value="Lawful Evil">Lawful Evil</option>
+                      <option value="Neutral Evil">Neutral Evil</option>
+                      <option value="Chaotic Evil">Chaotic Evil</option>
+                    </select>
+                    <p><span className="characterInfoDisplayItemName">Race:</span> {charactercreatordata.race}</p>
+                    <p><span className="characterInfoDisplayItemName">Subrace:</span> {charactercreatordata.subrace}</p>
+                    <p><span className="characterInfoDisplayItemName">Class:</span> {charactercreatordata.class}</p>
+                    <p><span className="characterInfoDisplayItemName">Subclass:</span> {charactercreatordata.subclass}</p>
+                  </div>
+                  <div className="characterInfoDisplayColumn">
+                    <h5>Abilities:</h5>
+                    <p><span className="characterInfoDisplayItemName">Strength:</span> {charactercreatordata.abilityscores.STR}</p>
+                    <p><span className="characterInfoDisplayItemName">Dexterity:</span> {charactercreatordata.abilityscores.DEX}</p>
+                    <p><span className="characterInfoDisplayItemName">Constitution:</span> {charactercreatordata.abilityscores.CON}</p>
+                    <p><span className="characterInfoDisplayItemName">Intelligence</span> {charactercreatordata.abilityscores.INT}</p>
+                    <p><span className="characterInfoDisplayItemName">Wisdom:</span> {charactercreatordata.abilityscores.WIS}</p>
+                    <p><span className="characterInfoDisplayItemName">Charisma:</span> {charactercreatordata.abilityscores.CHA}</p>
+                    <p><span className="characterInfoDisplayItemName">Skill Proficiencies:</span> {printTextWithCommas(charactercreatordata.skillproficiencies)}</p>
+                  </div>
+                  <div className="characterInfoDisplayColumn">
+                    <AvatarUpload type="player" id={playercharacterid} upload={false}></AvatarUpload>
+                  </div>
                 </div>
-                <AvatarUpload type="player" id={playercharacterid} upload={false}></AvatarUpload>
+                
+                
                 <Button onClick={() => {
                   handleConfirmClick();
                   //router.push('../main');

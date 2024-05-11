@@ -177,7 +177,7 @@ export async function createCharacter(formdata, playerid) {
   console.log("Character name: " + formdata.name);
   console.log("ME AND THE BOYS AT 3AM LOOKING FOR BEANS");
   let doescharacterexist = false;
-  let playercharacterid;
+  let playercharacterid = 0;
   let abilities = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
   let playercharacterabilityscores = {
     Strength: formdata.abilityscores.STR,
@@ -187,7 +187,20 @@ export async function createCharacter(formdata, playerid) {
     Wisdom: formdata.abilityscores.WIS,
     Charisma: formdata.abilityscores.CHA,
   }
-  
+  let playercharactermodifiers = {
+    Strength: Math.floor((Number(formdata.abilityscores.STR)-10)/2),
+    Dexterity: Math.floor((Number(formdata.abilityscores.DEX)-10)/2),
+    Constitution: Math.floor((Number(formdata.abilityscores.CON)-10)/2),
+    Intelligence: Math.floor((Number(formdata.abilityscores.INT)-10)/2),
+    Wisdom: Math.floor((Number(formdata.abilityscores.WIS)-10)/2),
+    Charisma: Math.floor((Number(formdata.abilityscores.CHA)-10)/2),
+  }
+  for (const score in playercharacterabilityscores) {
+    console.log(playercharacterabilityscores[score]);
+  }
+  for (const mod in playercharactermodifiers) {
+    console.log(playercharactermodifiers[mod]);
+  }
   console.log("We are in here brothers");
   await db.oneOrNone(checkforplayerexistencequery, [playerid, formdata.name])
   .then((result) => {
@@ -224,14 +237,15 @@ export async function createCharacter(formdata, playerid) {
         playercharacterid = Number(playerresult.playercharacterid);
         console.log("Playercharacterid: " + playercharacterid);
       }).catch((error) => {
-        console.error("Error inserting player character" + error);
+        console.error("Error inserting player character: " + error);
+        return;
       });
   }
   // Add ability scores for character
   for (const ability of abilities) {
     if (doescharacterexist) {
       await db.none(updateplayercharacterabilityquery, [playercharacterid, ability, 
-        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2])
+        playercharacterabilityscores[ability], playercharactermodifiers[ability]])
       .catch((error) => {
         console.error("Error updating character abilities: " + error);
       })
@@ -239,7 +253,7 @@ export async function createCharacter(formdata, playerid) {
       console.log("playercharacterid: " + playercharacterid);
       //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
       await db.none(playercharacterabilityquery, [playercharacterid, ability, 
-        playercharacterabilityscores[ability], Math.floor((Number(playercharacterabilityscores[ability])-10)/2)])
+        playercharacterabilityscores[ability], playercharactermodifiers[ability]])
         .catch((error) => {
           console.error("Error setting character abilities: " + error);
         })
@@ -283,7 +297,7 @@ export async function createCharacter(formdata, playerid) {
     });
   }
   // Set character passive abilities
-  await db.none(setcharacterpassiveabilityquery, [playercharacterid, Number(((formdata.abilityscores.WIS-10)/2) + 10), Number(((formdata.abilityscores.INT-10)/2) + 10), Number(((formdata.abilityscores.WIS-10)/2) + 10)])
+  await db.none(setcharacterpassiveabilityquery, [playercharacterid, Number(playercharactermodifiers.Wisdom + 10), Number(playercharactermodifiers.Intelligence + 10), Number(playercharactermodifiers.Wisdom + 10)])
   .catch((error) => {
     console.error('Error adding passive abilities: ' + error);
   });
@@ -291,7 +305,7 @@ export async function createCharacter(formdata, playerid) {
   // Set character initiative and armor class
   // Armor class: Number(((formdata.abilityscores.INT-10)/2) + 10)
   // Initiative: Number(((formdata.abilityscores.INT-10)/2)
-  await db.none(updateplayercharacterarmorclassinitiativequery, [playercharacterid, Number(((formdata.abilityscores.DEX-10)/2) + 10), Number(((formdata.abilityscores.DEX-10)/2))])
+  await db.none(updateplayercharacterarmorclassinitiativequery, [playercharacterid, Number(playercharactermodifiers.DEX + 10), Number(playercharactermodifiers.Dexterity + 10)])
   .catch((error) => {
     console.error('Error setting armor class and intiative: ' + error);
   });
@@ -301,6 +315,8 @@ export async function createCharacter(formdata, playerid) {
   .catch((error) => {
     console.error("Error adding features to character: " + error);
   });
+
+  return playercharacterid;
 }
 
 function levelUp(playercharacterid) {
