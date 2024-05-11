@@ -107,7 +107,7 @@ function PixiMap() {
       }
       */
       retrieveMapData(); 
-    }, 1500);
+    }, 3000);
     setInterval(() => {
       retrieveMapStats();
     }, 3000);
@@ -156,9 +156,10 @@ function PixiMap() {
 
 
   const pauseMapUpdates = () => {
+    console.log("map updates should be pausing, beans");
     clearTimeout(storedtimerid);
     setPauseUpdate(true);
-    let timerid = setTimeout(setPauseUpdate(false), 1000);
+    let timerid = setTimeout(() => {setPauseUpdate(false); console.log("Setting the thing brothers beans")}, 2000);
     setTimerID(timerid);
   }
 
@@ -169,7 +170,7 @@ function PixiMap() {
 
 
   const modifyMapStats = () =>  {
-    pauseMapUpdates();
+    pauseMapUpdates();    
     updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
     .catch((error) => {
       console.error("Error updating map stats: " + error);
@@ -332,8 +333,8 @@ function PixiMap() {
       objecttoupdate.y = y;
       setMapShapes([...statetoupdate, ...statenottoupdate]);
       updateMapData(id, x, y);
+      pauseMapUpdates();
     }
-    pauseMapUpdates();
   } 
 
 
