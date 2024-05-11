@@ -201,10 +201,17 @@ Static Stats
 
 .statsContainer {
   display: flex;
-  flex-direction: column;
-  border: 0.1rem black solid;
-  text-align: left;
+  flex-direction: row;
   padding: 0.2rem;
+  justify-content: space-evenly;
+}
+
+.statsInnerContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 0.1rem black solid;
+  padding: 0.1rem 0.4rem;
 }
 
 .staticStatsItemName {
@@ -910,6 +917,12 @@ Character Creation
 .subclassesSection ul li {
   list-style-type: disc; 
 }
+
+
+.characterInfoDisplay {
+  
+}
+
 
 /*
 ----------------------------------------

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Stack, Button, Accordion, Tab, Tabs } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
-import { URLContext, PlayerCharacterContext } from './Contexts';
+import { URLContext, PlayerCharacterContext, CharacterInfoContext } from './Contexts';
 import { useCol } from 'react-bootstrap/esm/Col';
 import { getStaticStats } from '../lib/getcharacterinfo';
 
@@ -9,6 +9,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
 
   const url = useContext(URLContext);
   const playercharacterid = useContext(PlayerCharacterContext);
+  const characterinfo = useContext(CharacterInfoContext);
 
   const [staticstats, setStaticStats] = useState({
       profbonus: 2,
@@ -109,24 +110,33 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
   return (
     <div className="staticStatsBox frontElement">
       <Tabs defaultActiveKey="0">
-        <Tab eventKey="0" title="Senses">
-          <div className="statsContainer senses">
-            <div><span className='staticStatsItemName'>Perception</span> - {staticstats.passiveperception}</div>
-            <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.passiveinvestigation}</div>
-            <div><span className='staticStatsItemName'>Insight</span> - {staticstats.passiveinsight}</div>
-          </div>
+        <Tab eventKey="0" title="Info">
+            <div className="statsInnerContainer">
+              <div><span className='staticStatsItemName'>Name</span> - {characterinfo.name}</div>
+              <div><span className='staticStatsItemName'>Race/Subrace</span> - {characterinfo.race}/{characterinfo.subrace}</div>
+              <div><span className='staticStatsItemName'>Class/Subclass</span> - {characterinfo.class}/{characterinfo.subclass}</div>
+              <div><span className='staticStatsItemName'>Level</span> - {characterinfo.characterlevel}</div>
+              <div><span className='staticStatsItemName'>Alignment</span> - {staticstats.alignment}</div>
+            </div>
         </Tab>
         <Tab eventKey="1" title="Stats">
           <div className="statsContainer generalStats">
-            <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
-            <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
-            <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults} advantage={false} initiative={true}>{staticstats.initiative}</DiceRollButton></div>
-            <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
-            <div><span className='staticStatsItemName'>Alignment</span> - {staticstats.alignment}</div>
+            <div className='statsInnerContainer'>
+              <div><span className='staticStatsItemName'>Proficiency Bonus</span> - {staticstats.profbonus}</div>
+              <div><span className='staticStatsItemName'>Speed</span> - {staticstats.speed}</div>
+              <div><span className='staticStatsItemName'>Initiative</span> - <DiceRollButton name="Initiative" rolltype="Stat" die="20" num="1" mod={staticstats.initiative} text={staticstats.initiative} setRollResults={setRollResults} advantage={false} initiative={true}>{staticstats.initiative}</DiceRollButton></div>
+              <div><span className='staticStatsItemName'>Armor Class</span> - {staticstats.armorclass}</div>
+            </div>
+            <div className="statsInnerContainer">
+              <div><span className="staticStatsItemName">Senses</span></div>
+              <div><span className='staticStatsItemName'>Perception</span> - {staticstats.passiveperception}</div>
+              <div><span className='staticStatsItemName'>Investigation</span> - {staticstats.passiveinvestigation}</div>
+              <div><span className='staticStatsItemName'>Insight</span> - {staticstats.passiveinsight}</div>
+            </div>
           </div>
         </Tab>
         <Tab eventKey="2" title="Proficiencies">
-          <div className="statsContainer proficiencies">
+          <div className="statsInnerContainer">
             <div><span className='staticStatsItemName'>Armor</span> - {staticstats.armor}</div>
             <div><span className='staticStatsItemName'>Weapons</span> - {staticstats.weapons}</div>
             <div><span className='staticStatsItemName'>Tools</span> - {staticstats.tools}</div>
@@ -134,7 +144,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
           </div>
         </Tab>
         <Tab eventKey="3" title="Defenses">
-          <div className='statsContainer defensesConditions'>
+          <div className='statsInnerContainer'>
             <div><span className='staticStatsItemName'>Defenses</span> - {staticstats.defenses}</div>
             <div><span className='staticStatsItemName'>Conditions</span> - {staticstats.conditions}</div>          
           </div>
