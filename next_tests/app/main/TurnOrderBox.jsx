@@ -73,11 +73,13 @@ function TurnOrder() {
   useEffect(() => {  
     getTurnOrderClient();
     setInterval(() => {
+      /*
       if (getToggleUpdates() === false) {
         console.log(getToggleUpdates());
-        getTurnOrderClient(); 
         console.log("Getting turn order");
       }
+      */
+      getTurnOrderClient();
     }, 1500);
     }, []
   );
@@ -85,8 +87,12 @@ function TurnOrder() {
 
   const getTurnOrderClient = () => {
     getTurnOrder(playercharacterid)
-    .then(result => setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative})))
-    .catch(error => console.error("Error setting turn order " + error));
+    .then((result) => {
+      setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative}))
+    })
+    .catch((error) => {
+      console.error("Error setting turn order " + error)
+    });
   }
 
   const removeTurnOrderItem = (nametoremove, initiative) => {

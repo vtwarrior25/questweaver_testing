@@ -201,7 +201,7 @@
       subclass: "",
       skillproficiencies: [],
       equipment: ["Greataxe", "Dagger"],
-      abilityscores: [],
+      abilityscores: {},
       descriptions: [
         {
           order: 0,
@@ -1129,6 +1129,7 @@ Warlock: [
     console.log("We are here gamer");
     setShowConfirmTab(false);
     setCharacterConfirmed(true);
+    console.log("userid = " + userid);
     createCharacter(charactercreatordata, userid)
     .catch((error) => {
       console.error("Error creating character: " + error);
@@ -1442,6 +1443,20 @@ Warlock: [
       console.log(a);
     };
 
+    const printTextWithCommas = (textlist) => {
+      let first = true;
+      let returntext = "";
+      for (const text of textlist) {
+        if (first == true) {
+          returntext = returntext + text;
+          first = false;
+        } else {
+          returntext = returntext + ", " + text; 
+        }
+      }
+      return returntext;
+    }
+
     const updateTextArea = (sectionname, text) => {
       let sections = charactercreatordata.descriptions.filter(
         (section) => section.sectionname !== sectionname
@@ -1723,12 +1738,19 @@ Warlock: [
                 <div className="characterInfoDisplay">
                   <p>Race/Subrace: {charactercreatordata.race} - {charactercreatordata.subrace}</p>
                   <p>Class/Subclass: {charactercreatordata.class} - {charactercreatordata.subclass}</p>
-                  <p>Skill Proficiencies: {charactercreatordata.skillproficiencies.map((skill, index) => (<span key={index}>{skill} </span>))}</p>
+                  <p>Abilities:</p>
+                  <p>Strength: {charactercreatordata.abilityscores.STR}</p>
+                  <p>Dexterity: {charactercreatordata.abilityscores.DEX}</p>
+                  <p>Constitution: {charactercreatordata.abilityscores.CON}</p>
+                  <p>Intelligence: {charactercreatordata.abilityscores.INT}</p>
+                  <p>Wisdom: {charactercreatordata.abilityscores.WIS}</p>
+                  <p>Charisma: {charactercreatordata.abilityscores.CHA}</p>
+                  <p>Skill Proficiencies: {printTextWithCommas(charactercreatordata.skillproficiencies)}</p>
                 </div>
                 <AvatarUpload type="player" id={playercharacterid} upload={false}></AvatarUpload>
                 <Button onClick={() => {
                   handleConfirmClick();
-                  router.push('../main');
+                  //router.push('../main');
                 }}>Confirm Character</Button>
 
               </>   

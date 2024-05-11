@@ -702,7 +702,7 @@ export async function getTurnOrder () {
   let result = turnorderdefaultresult;
   await db.any(getturnorderquery)
     .then ((dbinfo) => {
-      console.log("got turn order data");
+      //console.log("got turn order data");
       //console.log(dbinfo);
       result = [...dbinfo];
       //console.log(result);
@@ -1086,7 +1086,7 @@ const getsubclassfeaturesquery = new PQ({
 const getsubracefeaturesquery = new PQ({
   text: `
     SELECT featureid FROM subracefeature
-    WHERE subrace = $1;
+    WHERE subraceid = $1;
   `
 });
 
@@ -1208,7 +1208,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
   });
 
    // Get subclass features for subclass id and level
-  await db.many(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
+  await db.any(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
   .then((result) => {
     features = [...features, ...result];
   }).catch((error) => {
@@ -1324,16 +1324,15 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         break;
     }
 
-    db.one(updatecharacterspeedquery, [playercharacterid, topCharSpeed])
-    .catch((error) => {
-      console.error('Error updating character speed from modifier: ' + error);
-    });
-
     db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
     .catch((error) => {
       console.error('Error adding feature' + feature.featureid + ' : ' + error);
     });
   }
+    db.none(updatecharacterspeedquery, [playercharacterid, topCharSpeed])
+    .catch((error) => {
+      console.error('Error updating character speed from modifier: ' + error);
+    });
 }
 
 const getcharacternotesquery = new PQ({

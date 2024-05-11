@@ -43,7 +43,7 @@ const playercharacterabilityquery = new PQ({
 const playercharacterskillquery = new PQ({
   text: `
     INSERT INTO characterskill (playercharacterid, skillid, proficient, bonus) VALUES
-    ($1, (SELECT skillid FROM skill WHERE name = $2), $3, $4);
+    ($1, $2, $3, $4);
   `
 }); 
 
@@ -55,6 +55,14 @@ const playercharacterpassiveabilityquery = new PQ({
   `
 });
 
+
+const updateplayercharacterarmorclassinitiativequery = new PQ({
+  text: `
+    UPDATE playercharacter
+    SET armorclass = $2, initiative = $3
+    WHERE playercharacterid = $1;
+  `
+});
 /*
 const playercharacterproficiencyquery = new PQ({
   text: `
@@ -179,8 +187,11 @@ export async function createCharacter(formdata, playerid) {
     Wisdom: formdata.abilityscores.WIS,
     Charisma: formdata.abilityscores.CHA,
   }
+  
+  console.log("We are in here brothers");
   await db.oneOrNone(checkforplayerexistencequery, [playerid, formdata.name])
   .then((result) => {
+    console.log(result);
     if (result !== null) {
       playercharacterid = result;
       console.log("Playercharacterid: " + playercharacterid);
@@ -190,41 +201,45 @@ export async function createCharacter(formdata, playerid) {
     console.error('Error running character existence query: ' + error);
     return;
   }); 
+  
   if (doescharacterexist) { // Update character info if exists
+    console.log("We are in update character part");
     await db.none(updateplayercharacterquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass, formdata.level, playercharacterid, 
       formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
       formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
-    .then((playerresult) => {
-
-    }).catch((error) => {
+    .catch((error) => {
       console.error("Error updating existing player character: " + error);
       return;
     });
   } else {
+    console.log("We are in create new character part");
+    console.log(playerid);
     // Create new character
     await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass,
       formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
-      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]], playerid)
+      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4], playerid])
       .then((playerresult) => {
-        playercharacterid = playerresult.pcid;
+        playercharacterid = Number(playerresult.playercharacterid);
+        console.log("Playercharacterid: " + playercharacterid);
       }).catch((error) => {
-        return "Error inserting player character";
+        console.error("Error inserting player character" + error);
       });
   }
   // Add ability scores for character
   for (const ability of abilities) {
     if (doescharacterexist) {
       await db.none(updateplayercharacterabilityquery, [playercharacterid, ability, 
-        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability]))-10/2])
+        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability])-10)/2])
       .catch((error) => {
         console.error("Error updating character abilities: " + error);
       })
     } else {
+      console.log("playercharacterid: " + playercharacterid);
       //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
       await db.none(playercharacterabilityquery, [playercharacterid, ability, 
-        playercharacterabilityscores[ability], (Number(playercharacterabilityscores[ability]))-10/2])
+        playercharacterabilityscores[ability], Math.floor((Number(playercharacterabilityscores[ability])-10)/2)])
         .catch((error) => {
           console.error("Error setting character abilities: " + error);
         })
@@ -250,23 +265,35 @@ export async function createCharacter(formdata, playerid) {
   // Handle spellcasting ability things
   await db.oneOrNone(getspellcastingabilitymodquery, [formdata.class])
   .then((result) => {
-    abilitymod = result.modifier;
+    if (result != null) {
+      abilitymod = result.modifier;
+    }
   })
   .catch((error) => {
-    console.error("Error getting spellcasting ability mod" + error);
+    console.error("Error getting spellcasting ability mod: " + error);
   })
   let spellsavedc = 8 + abilitymod + 2;
   let spellattackmod = abilitymod + 2;
   let spellabilitymod = abilitymod;
   // Set spellsavedc and spellattackmod
-  await db.none(setcharacterspellmodifiersquery, [playercharacterid, spellsavedc, spellattackmod, spellabilitymod])
-  .catch((error) => {
-    console.error("Error setting character spell modifiers: " + error);
-  })
-  //
-  await db.none(setcharacterpassiveabilityquery, [playercharacterid, Number(formdata.abilities.WIS + 10), Number(formdata.abilities.INT + 10), Number(formdata.abiliites.WIS + 10)])
+  if (abilitymod > 0) {
+    await db.none(setcharacterspellmodifiersquery, [playercharacterid, spellsavedc, spellattackmod, spellabilitymod])
+    .catch((error) => {
+      console.error("Error setting character spell modifiers: " + error);
+    });
+  }
+  // Set character passive abilities
+  await db.none(setcharacterpassiveabilityquery, [playercharacterid, Number(((formdata.abilityscores.WIS-10)/2) + 10), Number(((formdata.abilityscores.INT-10)/2) + 10), Number(((formdata.abilityscores.WIS-10)/2) + 10)])
   .catch((error) => {
     console.error('Error adding passive abilities: ' + error);
+  });
+
+  // Set character initiative and armor class
+  // Armor class: Number(((formdata.abilityscores.INT-10)/2) + 10)
+  // Initiative: Number(((formdata.abilityscores.INT-10)/2)
+  await db.none(updateplayercharacterarmorclassinitiativequery, [playercharacterid, Number(((formdata.abilityscores.DEX-10)/2) + 10), Number(((formdata.abilityscores.DEX-10)/2))])
+  .catch((error) => {
+    console.error('Error setting armor class and intiative: ' + error);
   });
 
   // Add features to character
