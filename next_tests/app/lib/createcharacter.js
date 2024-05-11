@@ -154,7 +154,9 @@ export async function checkIfPlayerExists(playerid, name) {
  // let data = {};
   await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
   .then((result) => {
-    console.log(result);
+    if (result == null) {
+      console.log("No player currently exists with the name "+name+" for playerid "+playerid);
+    }
   }).catch((error) => {
     console.error('Error retrieving thing: ' + error);
   }); 
@@ -181,6 +183,7 @@ export async function createCharacter(formdata, playerid) {
   .then((result) => {
     if (result !== null) {
       playercharacterid = result;
+      console.log("Playercharacterid: " + playercharacterid);
       doescharacterexist = true;
     }
   }).catch((error) => {

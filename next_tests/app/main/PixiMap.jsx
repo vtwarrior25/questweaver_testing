@@ -3,7 +3,6 @@ import { MapScaleContext, PlayerCharacterContext } from './Contexts';
 import { Stage, Container, Sprite, Graphics, Text} from '@pixi/react';
 import { Button, Offcanvas, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { MapRectangle, MapCircle, MapEllipse, MapText, MapSprite} from './Shapes'; 
-import StaticGenerationSearchParamsBailoutProvider from 'next/dist/client/components/static-generation-searchparams-bailout-provider';
 import { getMapData, updateMapData, updateAvatar, addMapData, getMapStats, updateMapStats, getBackgrounds } from '../lib/mapactions';
 
 function PixiMap() {
@@ -66,7 +65,7 @@ function PixiMap() {
     }
   ]);
   const [selectedtool, setSelectedTool] = useState("select");
-  const [currentcolor, setCurrentColor] = useState();
+  //const [currentcolor, setCurrentColor] = useState();
   const [mapsize, setMapSize] = useState({
     width: 500,
     height: 500,
