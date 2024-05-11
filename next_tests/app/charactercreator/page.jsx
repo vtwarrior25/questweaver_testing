@@ -2,6 +2,7 @@
 
 import '@/app/App.css';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from "next/navigation";
 import './charactercreator.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import { UserIDContext } from '../main/Contexts';
 
 
 export default function Page() {
-  
+
   const searchParams = useSearchParams();
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
 
