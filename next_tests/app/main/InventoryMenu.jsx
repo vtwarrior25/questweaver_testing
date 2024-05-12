@@ -147,11 +147,15 @@ function InventoryMenu() {
     console.log("updating total weight to " + weightcount);
   }
 
+  /*
   useEffect(() => {
     console.log("In the useeffect");
     updateTotalWeight();
-  }, [sections]
+  }, [sectionweights]
   )
+  */
+
+
 
   useEffect(() => {
     getInventory(playercharacterid)

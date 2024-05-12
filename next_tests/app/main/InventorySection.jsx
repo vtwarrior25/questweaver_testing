@@ -9,12 +9,33 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
   const playercharacterid = useContext(PlayerCharacterContext);
   const [sectionweight, setInnerSectionWeight] = useState(0);
   const [dropdownshidden, setDropdownsHidden] = useState([]);
+  const [tempitemquantities, setTempItemQuantities] = useState([]);
 
 
   useEffect(() => {
-    calculateWeight();
-    items.forEach((item, index) => setDropdownsHidden[index] = false);
-  }, [items],
+    console.log("we are in the inventorysection useeffect");
+    let weight = 0;
+    const tempitems = [...items];
+    let quantities = [];
+    tempitems.forEach((item) => {
+      let itemweight = (Number(item.weight)*Number(item.quantity));
+      quantities = [...quantities, item.quantity];
+      weight += itemweight;
+    });
+    setTempItemQuantities([...quantities]);
+    console.log(`This should print ${sectionname} ${weight}`);
+    setInnerSectionWeight(weight);
+    console.log(sectionname);
+    //setSectionWeight(sectionname, weight);
+    /*
+    let dropdowns = [];
+    let quantities = [];
+    items.forEach((item, index) => dropdowns[index] = false);
+    items.forEach((item, index) => setTempItemQuantities[index] = item.weight);
+    setDropdownsHidden([...dropdowns]);
+    setTempItemQuantities([...quantities]);
+    */
+  }, [items, sectionname, setSectionWeight],
   );
 
 
@@ -24,28 +45,23 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     setDropdownsHidden(newdropdowns);
   }
 
-  const setItemQuantity = (section, item, quantity) => {
+  const setItemQuantity = (section, item, index, quantity) => {
+    let itemquantities = [...tempitemquantities];
+    itemquantities[index] = quantity;
+    setTempItemQuantities([...itemquantities]);
+    console.log(section);
+    console.log(item.name);
     let matcheditems = items.filter((newitem) => {newitem.section === section && newitem.name === item.name});
     let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.name !== item.name});
     if (matcheditems.length > 0) {
       matcheditems[0].quantity = quantity;
+      console.log("we should be in here");
       setItems([...nonmatcheditems,...matcheditems]);
     } else {
       console.log("Item not found");
     }
   }
 
-  const calculateWeight = () => {
-    let weight = 0;
-    items.forEach((item) => {
-      let itemweight = (Number(item.weight)*Number(item.quantity));
-      weight += itemweight;
-    });
-    console.log(`This should print ${sectionname} ${weight}`);
-    setInnerSectionWeight(weight);
-    console.log(sectionname);
-    //setSectionWeight(sectionname, weight);
-  }
 
   const toggleActiveAction = (itemid, section, status) => {
     console.log(itemid  + " " + section);
@@ -149,7 +165,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
                       <div>Properties: {item.weaponinfo.properties}</div>
                     </>
                   }
-                  <input type="number" placeholder='Qty' value={item.quantity} onChange={(e) => setItemQuantity(sectionname, item, e.target.value)}></input>
+                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(sectionname, item, index, Number(e.target.value))}></input>
                   <Button variant="secondary" size='sm' onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
                 </td>}
               </tr>

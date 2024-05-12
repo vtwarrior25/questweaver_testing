@@ -150,6 +150,14 @@ const skillsquery = new PQ({
   `
 });
 
+const savingthrowsquery = new PQ({
+  text: `
+    SELECT s.savingthrowid, s.name, c.modifier FROM savingthrow s
+    JOIN characterability c ON s.abilityid = c.abilityid
+    WHERE c.playercharacterid = $1; 
+  `
+});
+
 const playercharacteraddquery = new PQ({
   text: `
   WITH pcid AS (
@@ -172,6 +180,13 @@ const playercharacterabilityquery = new PQ({
 const playercharacterskillquery = new PQ({
   text: `
     INSERT INTO characterskill (playercharacterid, skillid, proficient, bonus) VALUES
+    ($1, $2, $3, $4);
+  `
+}); 
+
+const playercharactersavingthrowquery = new PQ({
+  text: `
+    INSERT INTO charactersavingthrow (playercharacterid, savingthrowid, proficient, bonus) VALUES
     ($1, $2, $3, $4);
   `
 }); 
@@ -271,6 +286,15 @@ const updateplayercharacterskillquery = new PQ({
     UPDATE characterskill 
     SET proficient = $3, bonus = $4
     WHERE playercharacterid = $1 AND skillid = (SELECT skillid FROM skill WHERE name = $2);
+  `
+});
+
+
+const updateplayercharactersavingthrowquery = new PQ({
+  text: `
+    UPDATE charactersavingthrow 
+    SET proficient = $3, bonus = $4
+    WHERE playercharacterid = $1 AND savingthrowid = (SELECT savingthrowid FROM savingthrow WHERE name = $2);
   `
 });
 
@@ -405,6 +429,19 @@ export async function createCharacter(formdata, playerid) {
     }
   });
 
+
+  // Add savingthrows for character
+  await db.many(savingthrowsquery, [playercharacterid])
+  .then((savingthrowresult) => {
+    for (const savingthrow of savingthrowresult) {
+      let savingthrowproficient = false;
+      if (doescharacterexist) {
+        db.none(updateplayercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier]);
+      } else {
+        db.none(playercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier]);
+      }
+    }
+  });
   
 
   
