@@ -5,6 +5,135 @@ import { db } from '../lib/dbconn';
 import { addFeaturesToCharacter } from './getcharacterinfo';
 import { abilities } from './resources';
 
+
+
+
+
+export async function deleteCharacter(playercharacterid) {
+  try {
+    // Delete dependent entities
+    await deleteCharacterFeature(playercharacterid);
+    await deletePlayerCharacterNote(playercharacterid);
+    await deleteCharacterSkill(playercharacterid);
+    await deleteCharacterAbility(playercharacterid);
+    await deleteCharacterSavingThrow(playercharacterid);
+
+    // Delete main character entity
+    await deletePlayerCharacter(playercharacterid);
+
+    // Delete independent entities
+    await deleteCharacterProficiency(playercharacterid);
+    await deleteCharacterPassiveAbility(playercharacterid);
+    await deleteCharacterInventory(playercharacterid);
+    await deleteCharacterDefense(playercharacterid);
+    await deleteCharacterAttack(playercharacterid);
+  } catch (error) {
+    console.error('Error deleting character:', error);
+    throw new Error('Failed to delete character: ' + error.message);
+  }
+};
+
+async function deletePlayerCharacter(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterpassiveability WHERE playercharacterid = $1', [playercharacterid]);
+    await db.none('DELETE FROM playercharacter WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting player character:', error);
+    throw new Error('Failed to delete player character: ' + error.message);
+  }
+}
+
+async function deleteCharacterFeature(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterfeature WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character feature:', error);
+    throw new Error('Failed to delete character feature: ' + error.message);
+  }
+}
+
+async function deletePlayerCharacterNote(playercharacterid) {
+  try {
+    await db.none('DELETE FROM playercharacternote WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting player character note:', error);
+    throw new Error('Failed to delete player character note: ' + error.message);
+  }
+}
+
+async function deleteCharacterSkill(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterskill WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character skill:', error);
+    throw new Error('Failed to delete character skill: ' + error.message);
+  }
+}
+
+async function deleteCharacterAbility(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterability WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character ability:', error);
+    throw new Error('Failed to delete character ability: ' + error.message);
+  }
+}
+
+async function deleteCharacterSavingThrow(playercharacterid) {
+  try {
+    await db.none('DELETE FROM charactersavingthrow WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character saving throw:', error);
+    throw new Error('Failed to delete character saving throw: ' + error.message);
+  }
+}
+
+async function deleteCharacterProficiency(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterproficiency WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character proficiency:', error);
+    throw new Error('Failed to delete character proficiency: ' + error.message);
+  }
+}
+
+async function deleteCharacterPassiveAbility(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterpassiveability WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character passive ability:', error);
+    throw new Error('Failed to delete character passive ability: ' + error.message);
+  }
+}
+
+async function deleteCharacterInventory(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterinventory WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character inventory:', error);
+    throw new Error('Failed to delete character inventory: ' + error.message);
+  }
+}
+
+async function deleteCharacterDefense(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterdefense WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character defense:', error);
+    throw new Error('Failed to delete character defense: ' + error.message);
+  }
+}
+
+async function deleteCharacterAttack(playercharacterid) {
+  try {
+    await db.none('DELETE FROM characterattack WHERE playercharacterid = $1', [playercharacterid]);
+  } catch (error) {
+    console.error('Error deleting character attack:', error);
+    throw new Error('Failed to delete character attack: ' + error.message);
+  }
+}
+
+
 const checkforplayerexistencequery = new PQ({
   text: `
     SELECT playercharacterid 
