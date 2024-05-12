@@ -60,6 +60,13 @@ const unpreparequery = new PQ({
   `
 });
 
+const doesclasshavespellsquery = new PQ({
+  text: `
+    SELECT spellid FROM spelllist
+    WHERE classid = (SELECT class FROM playercharacter WHERE playercharacterid = $1);
+  `
+});
+
 export async function getSpellList(playercharacterid) {
   let spelllist = [];
   await db.any(getspelllistquery, [playercharacterid])
@@ -131,4 +138,20 @@ export async function unsetPreparedSpell (playercharacterid, spellname) {
     console.log("Error unpreparing spell");
     return error;
   });
+}
+
+export async function doesClassHaveSpells (playercharacterid) {
+  let doesclasshavespells = false;
+  await db.any(doesclasshavespellsquery, [playercharacterid])
+  .then((result) => {
+    console.log("Epic result: ");
+    console.log(result);
+    if (result.length > 0) {
+      doesclasshavespells = true;
+    }
+  })
+  .catch((error) => {
+    console.error("Error checking if character class has spells: " + error);
+  })
+  return doesclasshavespells;
 }

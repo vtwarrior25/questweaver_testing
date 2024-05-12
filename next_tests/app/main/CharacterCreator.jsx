@@ -1121,7 +1121,7 @@ Warlock: [
       race: characterinfo.race, level: characterinfo.characterlevel,
       subrace: characterinfo.subrace, subclass: characterinfo.subclass});
     }
-  }, [characterinfo],
+  }, [characterinfo]
   );
   
 
@@ -1133,12 +1133,14 @@ Warlock: [
     let newplayercharacterid = 0;
     createCharacter(charactercreatordata, userid)
     .then((result) => {
-      newplayercharacterid = result.playercharacterid;
+      newplayercharacterid = result;
+      console.log("new character id = " + newplayercharacterid);
     })
     .catch((error) => {
       console.error("Error creating character: " + error);
     });
     if (loginsection === true) {
+      console.log('This should redirect brothers');
       router.push({ pathname: '../main', query: { userid: userid, playercharacterid: newplayercharacterid }});
     }
   };

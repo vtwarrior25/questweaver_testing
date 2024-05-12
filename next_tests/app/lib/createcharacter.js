@@ -275,6 +275,9 @@ export async function createCharacter(formdata, playerid) {
       }
     }
   });
+
+  
+
   let abilitymod = 0;
   // Handle spellcasting ability things
   await db.oneOrNone(getspellcastingabilitymodquery, [formdata.class])
@@ -305,7 +308,7 @@ export async function createCharacter(formdata, playerid) {
   // Set character initiative and armor class
   // Armor class: Number(((formdata.abilityscores.INT-10)/2) + 10)
   // Initiative: Number(((formdata.abilityscores.INT-10)/2)
-  await db.none(updateplayercharacterarmorclassinitiativequery, [playercharacterid, Number(playercharactermodifiers.DEX + 10), Number(playercharactermodifiers.Dexterity + 10)])
+  await db.none(updateplayercharacterarmorclassinitiativequery, [playercharacterid, Number(playercharactermodifiers.Dexterity + 10), Number(playercharactermodifiers.Dexterity + 10)])
   .catch((error) => {
     console.error('Error setting armor class and intiative: ' + error);
   });

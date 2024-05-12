@@ -462,7 +462,7 @@ Chat Section
   min-height: 16rem;
   max-height: 24rem;
   min-width: 13rem;
-  max-width: 20rem;
+  max-width: 13rem;
 }
 
 .chatInnerBox {
@@ -479,7 +479,6 @@ Chat Section
   max-width: 19rem;
   overflow-y: scroll;
 }
-
 
 .chatMessage {
   border: var(--thinBorder);

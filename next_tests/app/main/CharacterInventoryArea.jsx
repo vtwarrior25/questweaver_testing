@@ -7,9 +7,11 @@ import NotesMenu from './NotesMenu';
 import FeaturesMenu from './FeaturesMenu';
 import { ActionUpdateContext, PlayerCharacterContext } from './Contexts';
 import { getCharacterAttacks } from '../lib/attackactions';
+import { doesClassHaveSpells } from '../lib/spellactions';
 
 function CharacterInventoryArea({setRollResults}) {
   const playercharacterid = useContext(PlayerCharacterContext);
+  const [doesclasshavespells, setDoesClassHaveSpells] = useState(false);
   const [actions, setActions] = useState([
     {
       name: "Mace",
@@ -65,9 +67,16 @@ function CharacterInventoryArea({setRollResults}) {
     })
   }
 
+
   useEffect(() => {
     updateActions();
-  }, [],
+    doesClassHaveSpells(playercharacterid)
+    .then((result) => {
+      setDoesClassHaveSpells(result);
+    }).catch((error) => {
+      console.error("Error checking if character class has spells: " + error);
+    }) 
+  }, [playercharacterid],
   );
   
 
@@ -78,9 +87,11 @@ function CharacterInventoryArea({setRollResults}) {
         <Tab eventKey='actions' title="Actions">  
           <ActionsMenu actions={actions} bonusactions={bonusactions}></ActionsMenu>
         </Tab>
+        {doesclasshavespells && 
         <Tab eventKey='spells' title="Spells">
           <SpellsMenu></SpellsMenu>
         </Tab>
+        }
         <Tab eventKey='inventory' title="Inventory">
           <InventoryMenu></InventoryMenu>
         </Tab>
