@@ -22,6 +22,8 @@
   import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
   
   function CharacterCreator(loginsection) {
+    const [selectedAbility1, setSelectedAbility1] = useState(null);
+    const [selectedAbility2, setSelectedAbility2] = useState(null);
     const [classInfo, setClassInfo] = useState([]);
     const characterinfo = useContext(CharacterInfoContext);
     const characterabilityscores = useContext(CharacterAbilityScoreContext);
@@ -1738,25 +1740,50 @@ Warlock: [
           <Tab eventKey="confirmAndLevelUp" title="Confirm">
           <div className="confirmCharacterSection">          
             {characterConfirmed ? (
-          <div className="levelUpSection">
-            <label htmlFor="level">Select Level:</label>
-        <select name="level" value={selectedLevel} onChange={(e) => setSelectedLevel(parseInt(e.target.value))}>
-          {[1, 2, 3, 4, 5].map(level => (
-            <option key={level} value={level}>{level}</option>
-          ))}
-        </select>
+    <div className="levelUpSection">
+          <label htmlFor="level">Select Level:</label>
+          <select name="level" value={selectedLevel} onChange={(e) => setSelectedLevel(parseInt(e.target.value))}>
+            {[1, 2, 3, 4, 5].map(level => (
+              <option key={level} value={level}>{level}</option>
+            ))}
+          </select>
+          {selectedLevel === 4 && (
+            <>
+              <h4>Select 2 Abilities to Improve:</h4>
+              <div>
+                <select value={selectedAbility1} onChange={handleAbility1Change}>
+                  <option value="">Select Ability 1</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Dexterity">Dexterity</option>
+                  <option value="Constitution">Constitution</option>
+                  <option value="Intelligence">Intelligence</option>
+                  <option value="Wisdom">Wisdom</option>
+                  <option value="Charisma">Charisma</option>
+                </select>
+                <select value={selectedAbility2} onChange={handleAbility2Change}>
+                  <option value="">Select Ability 2</option>
+                  <option value="Strength" disabled={selectedAbility1 === "Strength"}>Strength</option>
+                  <option value="Dexterity" disabled={selectedAbility1 === "Dexterity"}>Dexterity</option>
+                  <option value="Constitution" disabled={selectedAbility1 === "Constitution"}>Constitution</option>
+                  <option value="Intelligence" disabled={selectedAbility1 === "Intelligence"}>Intelligence</option>
+                  <option value="Wisdom" disabled={selectedAbility1 === "Wisdom"}>Wisdom</option>
+                  <option value="Charisma" disabled={selectedAbility1 === "Charisma"}>Charisma</option>
+                </select>
+              </div>
+            </>
+          )}
           <h4>Class Information for Level {selectedLevel}</h4>
-            <ul>
-              {classInfo.map((classFeature, index) => (
-                <li key={index}>
-                  <strong>{classFeature.name}</strong>: {classFeature.description}
-                </li>
-              ))}
-            </ul>
-            <button>Confirm Level Up</button>
-            <Button onClick={handleSwitchBack}>Change Character</Button>
-          </div>
-          ) : (
+          <ul>
+            {classInfo.map((classFeature, index) => (
+              <li key={index}>
+                <strong>{classFeature.name}</strong>: {classFeature.description}
+              </li>
+            ))}
+          </ul>
+          <button onClick={confirmLevelUp}>Confirm Level Up</button>
+          <Button onClick={handleSwitchBack}>Change Character</Button>
+        </div>
+      ) : (
               // Content to display before confirming character
               <>
                 <div className="characterInfoDisplay">
