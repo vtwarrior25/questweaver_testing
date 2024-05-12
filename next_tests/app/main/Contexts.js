@@ -23,3 +23,5 @@ export const CharacterInfoContext = createContext(null);
 export const ActionUpdateContext = createContext(null);
 
 export const ToggleUpdatesContext = createContext(null);
+
+export const CharacterAbilityScoreContext = createContext(null);

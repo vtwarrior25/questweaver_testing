@@ -1,6 +1,12 @@
+  /*
+  Resources: 
+  - https://stackoverflow.com/questions/19874555/how-do-i-convert-array-of-objects-into-one-object-in-javascript
+  - https://bobbyhadz.com/blog/javascript-convert-object-to-array-of-objects
+  */
+  
   import { useState, useEffect, useContext } from "react";
   import { Nav, Tab, Tabs, Table, Button } from "react-bootstrap";
-  import { CharacterInfoContext, PlayerCharacterContext, UserIDContext } from "./Contexts";
+  import { CharacterInfoContext, PlayerCharacterContext, UserIDContext, CharacterAbilityScoreContext} from "./Contexts";
   import { useRouter} from 'next/navigation'
 
   import AbilityBox from "./AbilityBox";
@@ -18,6 +24,7 @@
   function CharacterCreator(loginsection) {
     const [classInfo, setClassInfo] = useState([]);
     const characterinfo = useContext(CharacterInfoContext);
+    const characterabilityscores = useContext(CharacterAbilityScoreContext);
     const [showConfirmTab, setShowConfirmTab] = useState(true);
     const router = useRouter();
     const [selectedLevel, setSelectedLevel] = useState(1);
@@ -1122,6 +1129,28 @@ Warlock: [
       subrace: characterinfo.subrace, subclass: characterinfo.subclass});
     }
   }, [characterinfo]
+  );
+
+  useEffect(() => {
+    if (characterabilityscores !== null && characterabilityscores !== undefined) {
+      let copyarray = Object.values(structuredClone(characterabilityscores));
+      let abilityscores = {};
+      abilityscores = copyarray.reduce((obj, item) => Object.assign(obj, { [item.abilityabbrev.toUpperCase()]: item.abilityscore}), {})
+      console.log(copyarray);
+      console.log(abilityscores)
+      console.log(characterabilityscores);
+      /*
+      console.log(copyarray);
+      for (let obj in copyarray) {
+        console.log(JSON.stringify(obj));
+        console.log(obj["abilityname"]);
+        console.log(obj["abilityscore"]);
+        abilityscores[obj.abilityname] = obj.abilityscore;
+      }
+      */
+      setCharacterCreatorData({...charactercreatordata, abilityscores});
+    }
+  }, [characterabilityscores]
   );
   
 

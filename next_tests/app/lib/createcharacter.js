@@ -407,6 +407,8 @@ export async function createCharacter(formdata, playerid) {
 
   
 
+  
+
   let abilitymod = 0;
   // Handle spellcasting ability things
   await db.oneOrNone(getspellcastingabilitymodquery, [formdata.class])

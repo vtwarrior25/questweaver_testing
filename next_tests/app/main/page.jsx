@@ -10,14 +10,14 @@ import MonsterSheet from "./MonsterSheet";
 import ItemCreationForm from "./ItemCreationForm";
 import WeaponCreationForm from "./WeaponCreationForm";
 import CharacterCreator from "./CharacterCreator";
-import { getBasicInfo } from "../lib/getcharacterinfo";
+import { getAbilities, getBasicInfo } from "../lib/getcharacterinfo";
 import { addToGameLog } from "../lib/chatandlog";
 
 
 // React-Bootstrap Imports
 import { Accordion, Button, Col, Container, Offcanvas, Row, Tab, Tabs } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, CharacterInfoContext, DMContext, ToggleUpdatesContext, UpdateGameLogContext}  from "./Contexts";
+import { CharacterAbilityScoreContext, RollResultsContext, SetRollResultsContext, ModPosContext, URLContext, UserIDContext, PlayerCharacterContext, CharacterInfoContext, DMContext, ToggleUpdatesContext, UpdateGameLogContext}  from "./Contexts";
 
 
 function App () {
@@ -32,6 +32,44 @@ function App () {
     subclass: '',
     characterlevel: 1
   });
+  const [characterabilityscores, setCharacterAbilityScores] = useState([
+    {
+      abilityname: "Strength",
+      abilityabbrev: "STR",
+      abilityscore: 18,
+      abilitybonus: 3,
+    },
+    {
+      abilityname: "Dexterity",
+      abilityabbrev: "DEX",
+      abilityscore: 12,
+      abilitybonus: 2,
+    },
+    {
+      abilityname: "Constitution",
+      abilityabbrev: "CON",
+      abilityscore: 12,
+      abilitybonus: 2,
+    },
+    {
+      abilityname: "Intelligence",
+      abilityabbrev: "INT",
+      abilityscore: 12,
+      abilitybonus: -1,
+    },
+    {
+      abilityname: "Wisdom",
+      abilityabbrev: "WIS",
+      abilityscore: 12,
+      abilitybonus: +1,
+    },
+    {
+      abilityname: "Charisma",
+      abilityabbrev: "CHA",
+      abilityscore: 12,
+      abilitybonus: 0,
+    }
+  ]);
   const [isDM, setIsDM] = useState(true);
   const [toggleUpdates, setToggleUpdates] = useState(true);
 
@@ -78,6 +116,12 @@ function App () {
       setCharacterInfo({...result});
     }).catch((error) => {
       console.error("Error getting basic character info: " + error);
+    })
+    getAbilities(playercharacterid)
+    .then((result) => {
+      setCharacterAbilityScores({...result});
+    }).catch((error) => {
+      console.error("Error getting character ability info: " + error);
     })
   }, [playercharacterid],
   );
@@ -134,6 +178,7 @@ function App () {
   <AbilitySection setRollResults={setRollResults} rollresults={rollresults}/>
   */
   return (
+    <CharacterAbilityScoreContext.Provider value={characterabilityscores}>
     <UpdateGameLogContext.Provider value={updateGameLog}>
     <ToggleUpdatesContext.Provider value={getToggleUpdates}>
     <DMContext.Provider value={isDM}>
@@ -209,6 +254,7 @@ function App () {
     </DMContext.Provider>
     </ToggleUpdatesContext.Provider>
     </UpdateGameLogContext.Provider>
+    </CharacterAbilityScoreContext.Provider>
   );
 }
 
