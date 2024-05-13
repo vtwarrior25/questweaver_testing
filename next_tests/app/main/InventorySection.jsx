@@ -45,14 +45,14 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     setDropdownsHidden(newdropdowns);
   }
 
-  const setItemQuantity = (section, item, index, quantity) => {
+  const setItemQuantity = (section, itemid, index, quantity) => {
+    console.log(itemid  + " " + section);
     let itemquantities = [...tempitemquantities];
     itemquantities[index] = quantity;
     setTempItemQuantities([...itemquantities]);
     console.log(items);
     console.log(section);
-    console.log(item.name);
-    let matcheditems = items.filter((newitem) => {section === newitem.section && item.itemid === newitem.itemid});
+    let matcheditems = items.filter((newitem) => {section === newitem.section && itemid === newitem.itemid});
     let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.itemid !== item.itemid});
     console.log("matcheditems");
     console.log(matcheditems);
@@ -170,7 +170,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
                       <div>Properties: {item.weaponinfo.properties}</div>
                     </>
                   }
-                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(item.section, item, index, Number(e.target.value))}></input>
+                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(item.section, item.itemid, index, Number(e.target.value))}></input>
                   <Button variant="secondary" size='sm' onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
                 </td>}
               </tr>

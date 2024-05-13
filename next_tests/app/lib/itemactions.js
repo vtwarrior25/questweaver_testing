@@ -11,8 +11,8 @@ const getallitemsquery = new PQ ({
 
 const itemaddquery = new PQ({
   text:`
-    INSERT INTO item (itemid, name, value, weight, description, rarity) VALUES
-    (DEFAULT, $1, $2, $3, $5, $4)
+    INSERT INTO item (itemid, name, value, currency, weight, description, rarity) VALUES
+    (DEFAULT, $1, $2, $3, $4, $6, $5)
     RETURNING itemid;
   `
 });
@@ -91,7 +91,7 @@ export async function getAllItems() {
 export async function createItem(userid, formdata) {
   console.log(formdata.get('name'));
   console.log(formdata);
-  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
+  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('currency'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
   .then ((result)=> {
     console.log("result");
     console.log(result);
@@ -105,7 +105,7 @@ export async function createItem(userid, formdata) {
 export async function createWeapon(userid, formdata) {
   console.log("In weaponcreation");
   console.log(formdata);
-  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
+  db.one(itemaddquery, [formdata.get('name'), formdata.get('value'), formdata.get('currency'), formdata.get('weight'), formdata.get('rarity'), formdata.get('description')])
   .then ((result) => {
     console.log(result);
     db.one(weaponaddquery, [result.itemid, formdata.get('weapontype'), formdata.get('weaponrange')])

@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getCharacterFeatures, getFeatures } from '../lib/getcharacterinfo';
 import SequentialCheckboxes from './SequentialCheckboxes';
+import { PlayerCharacterContext } from './Contexts';
 
 function FeaturesMenu() {
+
+  const playercharacterid = useContext(PlayerCharacterContext);
 
   /*
   const [featuressections, setFeaturesSections] = useState([
@@ -69,9 +72,9 @@ function FeaturesMenu() {
   ]);
   
 
-  /*
+  
   useEffect(() => {
-    getCharacterFeatures()
+    getCharacterFeatures(playercharacterid)
     .then((result) => {
       for (let feature of result) {
         if (feature.source === "Class") {
@@ -85,7 +88,6 @@ function FeaturesMenu() {
     })
   }, [],
   );
-  */
   
 
   const renderFeature = (feature) => {
@@ -100,6 +102,7 @@ function FeaturesMenu() {
       featurewithsubheadings = false;
     }
     */
+    featuretexttoprint = feature.featuretext.split(";;").join('\n');
 
     if (feature.featuretype === 'Action') {
       
@@ -127,7 +130,7 @@ function FeaturesMenu() {
       return (
         <div className="singleFeature">
           <span className="featureTitle">{feature.featuretitle}</span>
-            <p>{feature.featuretext.replace(";;", "")}</p>
+            <p>{featuretexttoprint}</p>
         </div>
       )
     }

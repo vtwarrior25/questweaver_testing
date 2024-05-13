@@ -789,7 +789,7 @@ const featuresdefaultresult = [
 
 const getcharacterfeaturesquery = new PQ({
   text: `
-    SELECT c.featureid, c.name AS featurename, c.description AS featuretext, c.featuretype, p.source
+    SELECT c.featureid, c.name AS featuretitle, c.description AS featuretext, c.featuretype, p.source
     FROM feature c
     JOIN characterfeature p ON c.featureid = p.featureid
     WHERE p.playercharacterid = $1;
@@ -833,14 +833,14 @@ export async function getCharacterFeatures(playercharacterid) {
   let result = featuresdefaultresult;
   let rawresult = [];
   let featurelist = [];
-  await db.any(getcharacterfeaturesquery, [playercharacterid])
+  await db.many(getcharacterfeaturesquery, [playercharacterid])
     .then ((dbinfo) => {
       rawresult = [...dbinfo];
       console.log("got features!!"); 
       console.log(result);
       return result;
     }).catch (error => {
-      console.error("Error retrieving character info " + error);
+      console.error("Error retrieving character features: " + error);
     });
   for (const feature of rawresult) {
     let featuredata = getFeatureData(feature, playercharacterid);
