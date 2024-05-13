@@ -298,19 +298,6 @@ const updateplayercharactersavingthrowquery = new PQ({
   `
 });
 
-const updateplayercharacterfeaturequery = new PQ({
-  text: ``
-});
-
-const updatecharacterspellmodifierquery = new PQ({
-  text: ``
-});
-
-const updatecharacterpassiveabilityquery = new PQ({
-  text: ``
-});
-
-
 export async function checkIfPlayerExists(playerid, name) {
  // let data = {};
   await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
