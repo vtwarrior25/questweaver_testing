@@ -31,7 +31,7 @@ export default function Page() {
           <Form.Control type='password' placeholder='Password' name="password2" required={true}></Form.Control>
         </Form.Group>
         <div>{errorMessage && <p>{errorMessage}</p>}</div>
-        <Button variant='primary' type='submit'>Submit</Button>
+        <Button onClick={() => router.push('../login')} variant='primary' type='submit'>Submit</Button>
         <Button onClick={() => router.push('../login')}>Back to Login</Button>
       </Form>
     </div>
