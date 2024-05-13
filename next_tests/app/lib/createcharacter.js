@@ -316,19 +316,21 @@ const oneabilityscoreimprovementquery = new PQ({
 
 
 export async function checkIfPlayerExists(playerid, name) {
- let data = {};
-  await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
-  .then((result) => {
+  try {
+    const result = await db.oneOrNone(checkforplayerexistencequery, [playerid, name]);
     if (result == null) {
-      console.log("No player currently exists with the name "+name+" for playerid "+playerid);
+      console.log("No player currently exists with the name " + name + " for playerid " + playerid);
+      return null; // Player does not exist
     } else {
-      console.log("");
+      console.log("Player exists: ", result);
+      return result.playercharacterid; // Return only the playercharacterid
     }
-  }).catch((error) => {
-    console.error('Error retrieving thing: ' + error);
-  }); 
-  return data;
+  } catch (error) {
+    console.error('Error retrieving player: ' + error);
+    throw error; // Throw the error to be caught by the caller
+  }
 }
+
 
 export async function createCharacter(formdata, playerid) {
   // Check if they have a character already???
@@ -365,7 +367,7 @@ export async function createCharacter(formdata, playerid) {
   .then((result) => {
     console.log(result);
     if (result !== null) {
-      playercharacterid = result;
+      playercharacterid = result.playercharacterid;
       console.log("Playercharacterid: " + playercharacterid);
       doescharacterexist = true;
     }

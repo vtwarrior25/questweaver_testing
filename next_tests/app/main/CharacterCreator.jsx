@@ -11,7 +11,7 @@
 
   import AbilityBox from "./AbilityBox";
   import AbilitySection from "./AbilitySection";
-  import { createCharacter } from "../lib/createcharacter";
+  import { createCharacter, checkIfPlayerExists} from "../lib/createcharacter";
   import {
     getCharacterClassInfo,
     getCharacterCreatorInfo,
@@ -1162,28 +1162,26 @@ Warlock: [
   }, [characterabilityscores]
   );
   
+const handleConfirmClick = async () => {
+  console.log("We are here gamer");
+  setShowConfirmTab(false);
+  setCharacterConfirmed(true);
+  console.log("userid = " + userid); 
+  try {
+    const result = await createCharacter(charactercreatordata, userid);
 
-  const handleConfirmClick = () => {
-    console.log("We are here gamer");
-    setShowConfirmTab(false);
-    setCharacterConfirmed(true);
-    console.log("userid = " + userid);
-    let newplayercharacterid = 0;
-    createCharacter(charactercreatordata, userid)
-    .then((result) => {
-      newplayercharacterid = result.playercharacterid;
-      console.log("new character id = " + newplayercharacterid);
-    })
-    .catch((error) => {
-      console.error("Error creating character: " + error);
-    });
-    if (loginsection === true) {
-      console.log('This should redirect brothers');
-      router.push({ pathname: '../main', query: { userid: userid, playercharacterid: newplayercharacterid }});
-    }
-  };
-  
-  
+    const newPlayerCharacterId = await checkIfPlayerExists(userid, charactercreatordata.name);
+
+    console.log("new character id = " + newPlayerCharacterId);
+
+    console.log('This should redirect brothers');
+    
+    router.push(`../main?userid=${userid}&playercharacterid=${newPlayerCharacterId}`);
+  } catch (error) {
+    console.error("Error creating character: " + error);
+  }
+};
+
   const handleSwitchBack = () => {
     setShowConfirmTab(true); 
     setCharacterConfirmed(false);
