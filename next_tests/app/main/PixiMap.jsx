@@ -442,7 +442,7 @@ function PixiMap() {
             } else if (shape.shape === "text") {
               return <MapText key={index} shapeinfo={shape}></MapText>
               *
-            } else */ if (shape.shape === "sprite") {
+            } else */ if (shape.shape === "sprite" && shape.visible == true) {
               return <MapSprite key={index} shapeinfo={shape} onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}></MapSprite>
             }
           })}
