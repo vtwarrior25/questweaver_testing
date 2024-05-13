@@ -97,7 +97,7 @@ function PixiMap() {
     retrieveMapData();
     retrieveMapStats();
     retrieveBackgroundList();
-    setInterval(() => {
+    let timerid = setInterval(() => {
       /*
       if (dragging === false) {
         retrieveMapData(); 
@@ -106,13 +106,36 @@ function PixiMap() {
         console.log("Not");
       }
       */
+      retrieveMapStats();
       retrieveMapData(); 
     }, 3000);
-    setInterval(() => {
-      retrieveMapStats();
-    }, 3000);
+    setTimerID(timerid);
     }, []
   );
+
+  const toggleMapUpdates = (toggle) => {
+    console.log("toggle map updates" + toggle);
+    setPauseUpdate(toggle);
+    if (toggle === true) {
+      // Map updates are paused
+      clearInterval(storedtimerid);
+    } else {
+      // Map updates are resumed
+      let timerid = setInterval(() => {
+        /*
+        if (dragging === false) {
+          retrieveMapData(); 
+          console.log("Getting turn order");
+        } else {
+          console.log("Not");
+        }
+        */
+        retrieveMapStats();
+        retrieveMapData(); 
+      }, 3000);
+      setTimerID(timerid);
+    }
+  }
 
 
   const retrieveBackgroundList = () => {
@@ -129,20 +152,22 @@ function PixiMap() {
   }
 
   const retrieveMapData = () => {
-    if (pauseupdate !== true) {
+    //if (pauseupdate !== true) {
       //console.log('Gaming');
       //console.log('Pauseupdate = ' + update);
+      console.log("retrieving map data");
       getMapData()
       .then((result) => {
         setMapShapes([...result]);
       }).catch((error) => {
         console.error("Error retrieving map data: " + error);
       });
-    }
+    //}
   }
 
   const retrieveMapStats = () => {
-    if (pauseupdate !== true) {
+    //if (pauseupdate !== true) {
+      console.log("retrieving map stats");
       getMapStats()
       .then((result) => {
         setMapBackground(result.mapbackground);
@@ -151,10 +176,11 @@ function PixiMap() {
       }).catch((error) => {
         console.error("Error retrieving map data: " + error);
       });
-    }
+    //}
   }
 
 
+  /*
   const pauseMapUpdates = () => {
     console.log("map updates should be pausing, beans");
     clearTimeout(storedtimerid);
@@ -162,8 +188,9 @@ function PixiMap() {
     let timerid = setTimeout(() => {setPauseUpdate(false); console.log("Setting the thing brothers beans")}, 2000);
     setTimerID(timerid);
   }
+  */
 
-  
+
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
     //console.log(scale);
@@ -171,7 +198,7 @@ function PixiMap() {
 
 
   const modifyMapStats = () =>  {
-    pauseMapUpdates();    
+    //pauseMapUpdates();    
     updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
     .catch((error) => {
       console.error("Error updating map stats: " + error);
@@ -285,12 +312,12 @@ function PixiMap() {
     sprite.alpha = 1;
     sprite.dragging = false;
     sprite.data = null;
-    setDragging(false);
+    //setDragging(false);
   };
 
   const onDragMove = (event) => {
     //console.log("dragmove");
-    setDragging(true);
+    //setDragging(true);
     let sprite = event.currentTarget;
     if (sprite.dragging) {
       //console.log(sprite);
@@ -334,7 +361,7 @@ function PixiMap() {
       objecttoupdate.y = y;
       setMapShapes([...statetoupdate, ...statenottoupdate]);
       updateMapData(id, x, y);
-      pauseMapUpdates();
+      //pauseMapUpdates();
     }
   } 
 
@@ -418,7 +445,13 @@ function PixiMap() {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
-      <Button className="mapSettingsButton" size="sm" onClick={() => setShowMapSettings(true)}>Map Settings</Button>
+      <div className="frontElement mapTopBar">
+        <Button className="mapSettingsButton" size="sm" onClick={() => setShowMapSettings(true)}>Map Settings</Button>
+        <div>
+          <label htmlFor="toggleMapUpdates">Pause Map Updates</label>
+          <input type="checkbox" name='toggleMapUpdates' checked={pauseupdate} onChange={e => toggleMapUpdates(e.target.checked)}></input>
+        </div>
+      </div>
       <MapScaleContext.Provider value={mapsize.scale}>
         <Stage
           width={mapsize.width}
