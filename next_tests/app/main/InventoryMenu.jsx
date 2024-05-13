@@ -90,7 +90,7 @@ function InventoryMenu() {
       setSectionWeights([...othersections, newsection]);
       updateTotalWeight();
       console.log("After setting");
-     //console.log(sections); // This will show sections in console
+     console.log('TEMPTETETIET',sections); // This will show sections in console
     } else {
       console.log("Unable to find provided section: " + sectionname);
     }
