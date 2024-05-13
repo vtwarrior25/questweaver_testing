@@ -298,18 +298,6 @@ const updateplayercharactersavingthrowquery = new PQ({
   `
 });
 
-const updateplayercharacterfeaturequery = new PQ({
-  text: ``
-});
-
-const updatecharacterspellmodifierquery = new PQ({
-  text: ``
-});
-
-const updatecharacterpassiveabilityquery = new PQ({
-  text: ``
-});
-
 const addplayeravatartomapdataquery = new PQ({
   text: `
     INSERT INTO mapdata (playercharacterid, shape, image, scale, x, y, visible) VALUES 
