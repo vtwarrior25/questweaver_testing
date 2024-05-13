@@ -1535,8 +1535,27 @@ Warlock: [
       }
     };
     
+    const handleAbility1Change = (e) => {
+      const selectedAbility = e.target.value;
+      setSelectedAbility1(selectedAbility);
+      if (selectedAbility) {
+        const updatedAbilityScores = { ...abilityScores };
+        updatedAbilityScores[selectedAbility] += 1;
+        setAbilityScores(updatedAbilityScores);
+      }
+    };
     
-  
+    const handleAbility2Change = (e) => {
+      const selectedAbility = e.target.value;
+      setSelectedAbility2(selectedAbility);
+      if (selectedAbility) {
+        const updatedAbilityScores = { ...abilityScores };
+        updatedAbilityScores[selectedAbility] += 1; 
+        setAbilityScores(updatedAbilityScores);
+      }
+    };
+    
+
 
     return (
       <div className="characterCreator">
@@ -1780,7 +1799,7 @@ Warlock: [
               </li>
             ))}
           </ul>
-          <button onClick={confirmLevelUp}>Confirm Level Up</button>
+          <Button>Confirm Level Up</Button>
           <Button onClick={handleSwitchBack}>Change Character</Button>
         </div>
       ) : (
