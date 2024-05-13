@@ -472,7 +472,7 @@ export async function createCharacter(formdata, playerid) {
   
 
   // Handle adding initial equipment to character
-  for (item of equipment) {
+  for (item of formdata.equipment) {
     db.none(newcharacteradditemsquery, [playercharacterid, item])
     .catch((error) => {
       console.error("Error adding item to character inventory: " + error);
