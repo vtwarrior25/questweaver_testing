@@ -1,5 +1,5 @@
 import { setConfig } from 'next/config';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { ActionUpdateContext, PlayerCharacterContext } from './Contexts';
 import { enableAttackForItem, disableAttackForItem } from '../lib/attackactions';
@@ -10,6 +10,8 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
   const [sectionweight, setInnerSectionWeight] = useState(0);
   const [dropdownshidden, setDropdownsHidden] = useState([]);
   const [tempitemquantities, setTempItemQuantities] = useState([]);
+const [setWeightCalled, SetWeightCalled] = useState(false);
+const previousWeight = useRef(null);
 
 
   useEffect(() => {
@@ -18,25 +20,26 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     const tempitems = [...items];
     let quantities = [];
     tempitems.forEach((item) => {
-      let itemweight = (Number(item.weight)*Number(item.quantity));
+      let itemweight = (Number(item.weight) * Number(item.quantity));
       quantities = [...quantities, item.quantity];
       weight += itemweight;
     });
     setTempItemQuantities([...quantities]);
     console.log(`This should print ${sectionname} ${weight}`);
     setInnerSectionWeight(weight);
-    console.log(sectionname);
-    //setSectionWeight(sectionname, weight);
-    /*
-    let dropdowns = [];
-    let quantities = [];
-    items.forEach((item, index) => dropdowns[index] = false);
-    items.forEach((item, index) => setTempItemQuantities[index] = item.weight);
-    setDropdownsHidden([...dropdowns]);
-    setTempItemQuantities([...quantities]);
-    */
-  }, [items, sectionname, setSectionWeight],
-  );
+
+    if (!setWeightCalled || weight !== previousWeight.current) {
+      SetWeightCalled(true);
+        setSectionWeight(sectionname, weight);
+        previousWeight.current = weight; 
+    }
+
+}, [items, sectionname]); 
+
+
+
+
+
 
 
   const toggleDropdown = (index) => {
@@ -49,15 +52,10 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
     let itemquantities = [...tempitemquantities];
     itemquantities[index] = quantity;
     setTempItemQuantities([...itemquantities]);
-    console.log(items);
     console.log(section);
     console.log(item.name);
-    let matcheditems = items.filter((newitem) => {section === newitem.section && item.itemid === newitem.itemid});
-    let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.itemid !== item.itemid});
-    console.log("matcheditems");
-    console.log(matcheditems);
-    console.log("nonmatcheditems");
-    console.log(nonmatcheditems);
+    let matcheditems = items.filter((newitem) => {newitem.section === section && newitem.name === item.name});
+    let nonmatcheditems = items.filter((otheritem) => {otheritem.section !== section || otheritem.name !== item.name});
     if (matcheditems.length > 0) {
       matcheditems[0].quantity = quantity;
       console.log("we should be in here");
@@ -170,7 +168,7 @@ function InventorySection({sectionname, name, items, setSectionWeight, removeIte
                       <div>Properties: {item.weaponinfo.properties}</div>
                     </>
                   }
-                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(item.section, item, index, Number(e.target.value))}></input>
+                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(sectionname, item, index, Number(e.target.value))}></input>
                   <Button variant="secondary" size='sm' onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
                 </td>}
               </tr>
