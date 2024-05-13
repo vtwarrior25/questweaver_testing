@@ -24,6 +24,8 @@
   function CharacterCreator(loginsection) {
     const [selectedAbility1, setSelectedAbility1] = useState(null);
     const [selectedAbility2, setSelectedAbility2] = useState(null);
+    const [selectedAbility3, setSelectedAbility3] = useState(null);
+    const [oneortwoabilities, setOneOrTwoAbilities] = useState(1); 
     const [classInfo, setClassInfo] = useState([]);
     const characterinfo = useContext(CharacterInfoContext);
     const characterabilityscores = useContext(CharacterAbilityScoreContext);
@@ -211,6 +213,10 @@
       skillproficiencies: [],
       equipment: ["Greataxe", "Dagger"],
       abilityscores: {},
+      oneortwo: 1,
+      oneabilityscoreimprovement: "",
+      twoabilityscoreimprovements1: "",
+      twoabilityscoreimprovements2: "",
       descriptions: [
         {
           order: 0,
@@ -1539,9 +1545,12 @@ Warlock: [
       const selectedAbility = e.target.value;
       setSelectedAbility1(selectedAbility);
       if (selectedAbility) {
+        setCharacterCreatorData({...charactercreatordata, twoabilityscoreimprovements1: e.target.value});
+        /*
         const updatedAbilityScores = { ...abilityScores };
         updatedAbilityScores[selectedAbility] += 1;
         setAbilityScores(updatedAbilityScores);
+        */
       }
     };
     
@@ -1549,12 +1558,32 @@ Warlock: [
       const selectedAbility = e.target.value;
       setSelectedAbility2(selectedAbility);
       if (selectedAbility) {
+        setCharacterCreatorData({...charactercreatordata, twoabilityscoreimprovements2: e.target.value});
+        /*
         const updatedAbilityScores = { ...abilityScores };
         updatedAbilityScores[selectedAbility] += 1; 
         setAbilityScores(updatedAbilityScores);
+        */
+      }
+    };
+
+    const handleAbility3Change = (e) => {
+      const selectedAbility = e.target.value;
+      setSelectedAbility3(selectedAbility);
+      if (selectedAbility) {
+        setCharacterCreatorData({...charactercreatordata, oneabilityscoreimprovements: e.target.value});
+        /*
+        const updatedAbilityScores = { ...abilityScores };
+        updatedAbilityScores[selectedAbility] += 1; 
+        setAbilityScores(updatedAbilityScores);
+        */
       }
     };
     
+    const handleAbilityImprovementRadio = (value) => {
+      setOneOrTwoAbilities(value);
+      setCharacterCreatorData({...charactercreatordata, oneortwo: value});
+    }
 
 
     return (
@@ -1766,31 +1795,8 @@ Warlock: [
               <option key={level} value={level}>{level}</option>
             ))}
           </select>
-          {selectedLevel === 4 && (
-            <>
-              <h4>Select 2 Abilities to Improve:</h4>
-              <div>
-                <select value={selectedAbility1} onChange={handleAbility1Change}>
-                  <option value="">Select Ability 1</option>
-                  <option value="Strength">Strength</option>
-                  <option value="Dexterity">Dexterity</option>
-                  <option value="Constitution">Constitution</option>
-                  <option value="Intelligence">Intelligence</option>
-                  <option value="Wisdom">Wisdom</option>
-                  <option value="Charisma">Charisma</option>
-                </select>
-                <select value={selectedAbility2} onChange={handleAbility2Change}>
-                  <option value="">Select Ability 2</option>
-                  <option value="Strength" disabled={selectedAbility1 === "Strength"}>Strength</option>
-                  <option value="Dexterity" disabled={selectedAbility1 === "Dexterity"}>Dexterity</option>
-                  <option value="Constitution" disabled={selectedAbility1 === "Constitution"}>Constitution</option>
-                  <option value="Intelligence" disabled={selectedAbility1 === "Intelligence"}>Intelligence</option>
-                  <option value="Wisdom" disabled={selectedAbility1 === "Wisdom"}>Wisdom</option>
-                  <option value="Charisma" disabled={selectedAbility1 === "Charisma"}>Charisma</option>
-                </select>
-              </div>
-            </>
-          )}
+          
+          
           <h4>Class Information for Level {selectedLevel}</h4>
           <ul>
             {classInfo.map((classFeature, index) => (
@@ -1799,6 +1805,54 @@ Warlock: [
               </li>
             ))}
           </ul>
+          {selectedLevel === 4 && (
+            <>
+            <h5>Ability Score Improvement</h5>
+            <fieldset>
+              <label for="oneortwofalse">One Ability By 2 Points</label>
+              <input type="radio" name="oneortwoabilities" value="1" id="oneortwofalse" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))} defaultChecked></input>
+              <label for="oneortwotrue">Two Abilities By 1 Point</label>
+              <input type="radio" name="oneortwoabilities" value="2" id="oneortwotrue" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))}></input>
+            </fieldset>
+            {oneortwoabilities === 1 && (<>
+              <h5>Select 2 Abilities to Improve By 1:</h5>
+              <div>
+                <select value={selectedAbility1} onChange={handleAbility1Change}>
+                  <option value="" disabled>Select Ability 1</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Dexterity">Dexterity</option>
+                  <option value="Constitution">Constitution</option>
+                  <option value="Intelligence">Intelligence</option>
+                  <option value="Wisdom">Wisdom</option>
+                  <option value="Charisma">Charisma</option>
+                </select>
+                <select value={selectedAbility2} onChange={handleAbility2Change}>
+                  <option value="" disabled>Select Ability 2</option>
+                  <option value="Strength" disabled={selectedAbility1 === "Strength"}>Strength</option>
+                  <option value="Dexterity" disabled={selectedAbility1 === "Dexterity"}>Dexterity</option>
+                  <option value="Constitution" disabled={selectedAbility1 === "Constitution"}>Constitution</option>
+                  <option value="Intelligence" disabled={selectedAbility1 === "Intelligence"}>Intelligence</option>
+                  <option value="Wisdom" disabled={selectedAbility1 === "Wisdom"}>Wisdom</option>
+                  <option value="Charisma" disabled={selectedAbility1 === "Charisma"}>Charisma</option>
+                </select>
+              </div>
+            </>)}
+            {oneortwoabilities === 2 && (<>
+              <h5>Select 1 Ability to Improve By 2:</h5>
+              <div>
+                <select value={selectedAbility3} onChange={handleAbility3Change}>
+                  <option value="" disabled>Select Ability</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Dexterity">Dexterity</option>
+                  <option value="Constitution">Constitution</option>
+                  <option value="Intelligence">Intelligence</option>
+                  <option value="Wisdom">Wisdom</option>
+                  <option value="Charisma">Charisma</option>
+                </select>
+              </div>
+            </>)}
+            </>
+          )}
           <Button>Confirm Level Up</Button>
           <Button onClick={handleSwitchBack}>Change Character</Button>
         </div>

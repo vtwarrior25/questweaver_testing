@@ -88,8 +88,8 @@ const toggledisplaymonsteravatarquery = new PQ({
 
 const toggledisplayplayeravatarquery = new PQ({
   text: `
-    INSERT INTO mapdata (mapdataid, playercharacterid, shape, image, scale, x, y, visible) VALUES
-    (DEFAULT, $1, 'sprite', $3, 0.25, 100, 100, true)
+    INSERT INTO mapdata (playercharacterid, shape, image, scale, x, y, visible) VALUES
+    ($1, 'sprite', $3, 0.25, 100, 100, true)
     ON CONFLICT (mapdata.playercharacterid) DO UPDATE 
     SET visible = $2
     WHERE playercharacterid = $1;

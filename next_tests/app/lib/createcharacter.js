@@ -310,6 +310,13 @@ const updatecharacterpassiveabilityquery = new PQ({
   text: ``
 });
 
+const addplayeravatartomapdataquery = new PQ({
+  text: `
+    INSERT INTO mapdata (playercharacterid, shape, image, scale, x, y, visible) VALUES 
+    ($1, 'sprite', '/avatars/bloke.jpg', 0.25, 100, 100, true);
+  `
+});
+
 
 export async function checkIfPlayerExists(playerid, name) {
  // let data = {};
@@ -407,9 +414,9 @@ export async function createCharacter(formdata, playerid) {
       //db.none(playercharacterabilityquery, [playercharacterid, ability, formdata.abilties[(ability.toLowerCase())], (Number(formdata.abilties[(ability.toLowerCase())])-10)/2]);
       await db.none(playercharacterabilityquery, [playercharacterid, ability, 
         playercharacterabilityscores[ability], playercharactermodifiers[ability]])
-        .catch((error) => {
-          console.error("Error setting character abilities: " + error);
-        })
+      .catch((error) => {
+        console.error("Error setting character abilities: " + error);
+      });
     }
   }
   // Add skills for character
@@ -480,6 +487,14 @@ export async function createCharacter(formdata, playerid) {
   .catch((error) => {
     console.error('Error setting armor class and intiative: ' + error);
   });
+
+  // Add avatar to mapdata
+  if (!doescharacterexist) {
+    await db.none(addplayeravatartomapdataquery, [])
+    .catch((error) => {
+      console.error('Error adding player avatar to mapdata: ' + error);
+    });
+  }
 
   // Add features to character
   await addFeaturesToCharacter(playercharacterid, !doescharacterexist)
