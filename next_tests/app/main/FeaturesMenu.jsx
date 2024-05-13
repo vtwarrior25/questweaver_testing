@@ -74,15 +74,19 @@ function FeaturesMenu() {
 
   
   useEffect(() => {
+    let tempclassfeatures = [];
+    let tempracefeatures = [];
     getCharacterFeatures(playercharacterid)
     .then((result) => {
       for (let feature of result) {
         if (feature.source === "Class") {
-          setClassFeatures([...classfeatures, feature]);
+          tempclassfeatures = [...tempclassfeatures, feature];
         } else {
-          setRaceFeatures([...racefeatures, feature]);
+          tempracefeatures = [...tempracefeatures, feature];
         }
       }
+      setClassFeatures([...tempclassfeatures]);
+      setRaceFeatures([...tempracefeatures]);
     }).catch((error) => {
       console.error("Error retrieving character features from server: " + error);
     })
@@ -90,50 +94,58 @@ function FeaturesMenu() {
   );
   
 
-  const renderFeature = (feature) => {
+  const renderFeature = (feature, newlines) => {
     let featuretexttoprint = [];
-    let featurewithsubheadings = false;
-    /*
-    if (feature.featuretext.includes("////")) {
-      featuretexttoprint = feature.featuretext.split(4).split(";;");
-      featurewithsubheadings = true;
-    } else {
+    if (newlines == true) {
       featuretexttoprint = feature.featuretext.split(";;");
-      featurewithsubheadings = false;
+    } else {
+      featuretexttoprint = feature.featuretext.split(";;").join(' ');
     }
-    */
-    featuretexttoprint = feature.featuretext.split(";;").join('\n');
+    
 
     if (feature.featuretype === 'Action') {
       
     } else if (feature.featuretype === 'Class Action' || feature.featuretype === 'Ability Action') {
-      return (
-        <div className="singleFeature">
-          <span className="featureTitle">{feature.featuretitle}</span>
-          {featuretexttoprint.map((featuretextpart, index) => (
-            <p key={index}>{featuretextpart}</p>
-            ))}
-          <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
-        </div>
-      )
+      if (newlines == true) {
+        return (
+          <div className="singleFeature">
+            <span className="featureTitle">{feature.featuretitle}</span>
+            {featuretexttoprint.map((featuretextpart, index) => (
+              <p key={index}>{featuretextpart}</p>
+              ))}
+            <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
+          </div>
+        )
+      } else {
+        return (
+          <div className="singleFeature">
+            <span className="featureTitle">{feature.featuretitle}</span>
+              <p className="singleFeatureParagraph">{featuretexttoprint}</p>
+            <SequentialCheckboxes sequential={false} number={feature.featureinfo.uses}></SequentialCheckboxes>
+          </div>
+        )
+      }
+      
     } else {
-      /*
-      return (
-        <div className="singleFeature">
-          <span className="featureTitle">{feature.featuretitle}</span>
-          {featuretexttoprint.map((featuretextpart, index) => (
-            <p key={index}>{featuretextpart}</p>
-            ))}
-        </div>
-      )
-      */
-      return (
-        <div className="singleFeature">
-          <span className="featureTitle">{feature.featuretitle}</span>
-            <p>{featuretexttoprint}</p>
-        </div>
-      )
+      if (newlines == true) {
+        return (
+          <div className="singleFeature">
+            <span className="featureTitle">{feature.featuretitle}</span>
+            {featuretexttoprint.map((featuretextpart, index) => (
+              <p className="singleFeatureParagraph" key={index}>{featuretextpart}</p>
+              ))}
+          </div>
+        )
+      } else {
+        return (
+          <div className="singleFeature">
+            <span className="featureTitle">{feature.featuretitle}</span>
+              <p className="singleFeatureParagraph">{featuretexttoprint}</p>
+          </div>
+        )
+      }
     }
+    
   }
 
   /*
@@ -157,7 +169,7 @@ function FeaturesMenu() {
           <span className='characterSheetSectionTitle'>Class Features</span>
           {classfeatures && classfeatures.length > 0 && classfeatures.map((sectionfeature, index) => 
             <div key={index} className="featuresSectionFeature">
-              {renderFeature(sectionfeature)}
+              {renderFeature(sectionfeature, true)}
             </div>
           )}
         </div>
@@ -167,7 +179,7 @@ function FeaturesMenu() {
         <span className='characterSheetSectionTitle'>Race Features</span>
         {racefeatures && racefeatures.length > 0 && racefeatures.map((sectionfeature, index) => 
           <div key={index} className="featuresSectionFeature">
-            {renderFeature(sectionfeature)}
+            {renderFeature(sectionfeature, true)}
           </div>
         )}
       </div>

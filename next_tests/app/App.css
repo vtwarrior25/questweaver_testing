@@ -936,6 +936,10 @@ Character Creation
   font-weight: bold;
 }
 
+.levelUpFeatureDisplay {
+  text-align: left;
+}
+
 /*
 ----------------------------------------
 Character Inventory Area 
@@ -1099,6 +1103,9 @@ Character Inventory Area Features Menu
   font-weight: 500;
 }
 
+.singleFeatureParagraph {
+  margin-bottom: 0.5rem;
+}
 
 
 /*

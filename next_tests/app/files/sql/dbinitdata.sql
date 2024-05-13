@@ -129,7 +129,7 @@ INSERT INTO subclass (name, description, classid) VALUES
 ('Hunter', '', (SELECT classid FROM class WHERE name = 'Ranger')),
 ('Thief', '', (SELECT classid FROM class WHERE name = 'Rogue')),
 ('Divine Soul', '', (SELECT classid FROM class WHERE name = 'Sorcerer')),
-('The Undying', '', (SELECT classid FROM class WHERE name = 'Warlock')),
+('The Fiend', '', (SELECT classid FROM class WHERE name = 'Warlock')),
 ('School of Evocation', '', (SELECT classid FROM class WHERE name = 'Wizard'));
 
 

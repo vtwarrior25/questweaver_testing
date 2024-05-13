@@ -316,16 +316,18 @@ const oneabilityscoreimprovementquery = new PQ({
 
 
 export async function checkIfPlayerExists(playerid, name) {
- // let data = {};
+ let data = {};
   await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
   .then((result) => {
     if (result == null) {
       console.log("No player currently exists with the name "+name+" for playerid "+playerid);
+    } else {
+      console.log("");
     }
   }).catch((error) => {
     console.error('Error retrieving thing: ' + error);
   }); 
-  //return data;
+  return data;
 }
 
 export async function createCharacter(formdata, playerid) {
@@ -426,9 +428,15 @@ export async function createCharacter(formdata, playerid) {
         skillproficient = true;
       }
       if (doescharacterexist) {
-        db.none(updateplayercharacterskillquery, [playercharacterid, skill.skillid, skillproficient, skill.modifier]);
+        db.none(updateplayercharacterskillquery, [playercharacterid, skill.skillid, skillproficient, skill.modifier])
+        .catch((error) => {
+          console.error("Error updating character skills: " + error);
+        });
       } else {
-        db.none(playercharacterskillquery, [playercharacterid, skill.skillid, skillproficient, skill.modifier]);
+        db.none(playercharacterskillquery, [playercharacterid, skill.skillid, skillproficient, skill.modifier])
+        .catch((error) => {
+          console.error("Error adding character skills: " + error);
+        });
       }
     }
   });
@@ -440,9 +448,15 @@ export async function createCharacter(formdata, playerid) {
     for (const savingthrow of savingthrowresult) {
       let savingthrowproficient = false;
       if (doescharacterexist) {
-        db.none(updateplayercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier]);
+        db.none(updateplayercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier])
+        .catch((error) => {
+          console.error("Error updating character saving throw: " + error);
+        });
       } else {
-        db.none(playercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier]);
+        db.none(playercharactersavingthrowquery, [playercharacterid, savingthrow.savingthrowid, savingthrowproficient, savingthrow.modifier])
+        .catch((error) => {
+          console.error("Error setting character saving throw: " + error);
+        });
       }
     }
   });
