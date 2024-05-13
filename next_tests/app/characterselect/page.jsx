@@ -19,6 +19,7 @@ export default function Page() {
   const [userid, setUserID] = useState(searchParams.get('userid') ?? 1);
 
   const [playercharacters, setPlayerCharacters] = useState([
+    /*
     {
       charid: 0,
       charname: "Jerome",
@@ -36,9 +37,8 @@ export default function Page() {
       charclass: "Rogue",
       charsubclass: "",
       charlevel: 1,
-    },
+    }, */
   ])
-
   
   useEffect(() => {
     getCharactersForPlayer(userid)
