@@ -314,6 +314,13 @@ const oneabilityscoreimprovementquery = new PQ({
   `
 });
 
+const newcharacteradditemsquery = new PQ({
+  text: `
+    INSERT INTO characterinventory (playercharacterid, characterinventorysection, itemid, quantity) VALUES
+    ($1, 'Backpack', (SELECT itemid FROM item WHERE name = $2), 1)
+  `
+});
+
 
 export async function checkIfPlayerExists(playerid, name) {
   try {
@@ -463,6 +470,14 @@ export async function createCharacter(formdata, playerid) {
     }
   });
   
+
+  // Handle adding initial equipment to character
+  for (item of equipment) {
+    db.none(newcharacteradditemsquery, [playercharacterid, item])
+    .catch((error) => {
+      console.error("Error adding item to character inventory: " + error);
+    })
+  }
 
   // Handle ability score improvement
 
