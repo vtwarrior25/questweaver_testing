@@ -460,7 +460,7 @@ Chat Section
 
 .chatBox {
   min-height: 16rem;
-  max-height: 24rem;
+  max-height: 28rem;
   min-width: 13rem;
   max-width: 13rem;
 }
@@ -936,6 +936,10 @@ Character Creation
   font-weight: bold;
 }
 
+.levelUpFeatureDisplay {
+  text-align: left;
+}
+
 /*
 ----------------------------------------
 Character Inventory Area 
@@ -1099,6 +1103,9 @@ Character Inventory Area Features Menu
   font-weight: 500;
 }
 
+.singleFeatureParagraph {
+  margin-bottom: 0.5rem;
+}
 
 
 /*

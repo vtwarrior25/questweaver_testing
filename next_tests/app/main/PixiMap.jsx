@@ -73,6 +73,7 @@ function PixiMap() {
     backgroundcolor: 0xefd1ef
   });
 
+
   const playercharacterid = useContext(PlayerCharacterContext);
   const [dragging, setDragging] = useState(false);
   const [pauseupdate, setPauseUpdate] = useState(false);
@@ -162,6 +163,7 @@ function PixiMap() {
     setTimerID(timerid);
   }
 
+  
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
     //console.log(scale);

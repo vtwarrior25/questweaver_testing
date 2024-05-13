@@ -54,6 +54,7 @@
       Array(6).fill("-")
     );
     const [selectedskills, setSelectedSkills] = useState([]);
+    const [namereadonly, setNameReadOnly] = useState(true);
 
     const handleSelectionChange = (index, value) => {
       const newSelections = [...selectedAbilities];
@@ -1796,13 +1797,16 @@ const handleConfirmClick = async () => {
           
           
           <h4>Class Information for Level {selectedLevel}</h4>
-          <ul>
+          <div className="levelUpFeatureDisplay">
             {classInfo.map((classFeature, index) => (
-              <li key={index}>
-                <strong>{classFeature.name}</strong>: {classFeature.description}
-              </li>
+              <>
+                <strong>{classFeature.name}</strong>:
+                {classFeature.description.split(';;').map((featuretextpart, index) => (
+                  <p className="singleFeatureParagraph" key={index}>{featuretextpart}</p>
+                ))}
+              </>
             ))}
-          </ul>
+          </div>
           {selectedLevel === 4 && (
             <>
             <h5>Ability Score Improvement</h5>
@@ -1860,8 +1864,16 @@ const handleConfirmClick = async () => {
                 <div className="characterInfoDisplay">
                   <div className="characterInfoDisplayColumn">
                     <h5>Basic Info:</h5>
-                    <label htmlFor="name">Character Name:</label>
-                    <input name="name" type="text" value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
+                    <div>
+                      <div>
+                        <label htmlFor="name">Character Name:</label>
+                        <input name="name" type="text" readOnly={namereadonly} value={charactercreatordata.name} onChange={(e) => setCharacterCreatorData({...charactercreatordata, name: e.target.value})}></input>
+                      </div>
+                      <div>
+                        <label htmlFor="namereadonlytoggle">Lock Name</label>
+                        <input name="namereadonlytoggle" type="checkbox" checked={namereadonly} onChange={(e) => setNameReadOnly(e.target.checked)}></input>
+                      </div>
+                    </div>
                     <label htmlFor="alignment">Alignment:</label>
                     <select name="alignment" onChange={(e) => setCharacterCreatorData({...charactercreatordata, alignment: e.target.value})}>
                       <option value="Lawful Good">Lawful Good</option>
