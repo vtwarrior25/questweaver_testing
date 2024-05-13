@@ -22,6 +22,7 @@ html {
   text-align: center;
   background:url(./files/beautifulforest.jpg);
   /*font-size: 0.95em;*/
+  min-height: 56.25rem;
 }
 
 
@@ -938,6 +939,8 @@ Character Creation
 
 .levelUpFeatureDisplay {
   text-align: left;
+  max-height: 40rem;
+  overflow-y: scroll;
 }
 
 /*

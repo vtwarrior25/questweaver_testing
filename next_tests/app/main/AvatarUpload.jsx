@@ -19,9 +19,11 @@ function AvatarUpload({type, id, upload}) {
 
   const [avatarscale, setAvatarScale] = useState(0);
 
-  const updateAvatarImage = () => {
-    updateAvatar(type, id, `/avatars/${selectedimage}`);
+  /*
+  const updateAvatarImage = (image) => {
+    updateAvatar(type, id, `/avatars/${image}`);
   }
+  */
 
   const retrieveAvatarList = () => {
     getAvatars()
@@ -36,6 +38,9 @@ function AvatarUpload({type, id, upload}) {
     });
     getAvatarInfo(type, id)
     .then((result) => {
+      console.log("Avatar stuff");
+      console.log(result);
+      setSelectedImage(result.image.replace('/avatars/', ''));
       setAvatarScale(result.scale);
       setDisplayAvatar(result.visible);
     }).catch((error) => {
@@ -45,9 +50,28 @@ function AvatarUpload({type, id, upload}) {
 
   const modifyAvatarScale = (scale) => {
     setAvatarScale(scale);
+    /*
     updateAvatarScale(type, id, scale)
     .catch((error) => {
       console.error("Error modifying avatar scale: " + error)
+    });
+    */
+  }
+  
+
+  const updateAvatarData = () => {
+    console.log("Updating avatar data");
+    updateAvatarScale(type, id, avatarscale)
+    .catch((error) => {
+      console.error("Error modifying avatar scale: " + error)
+    });
+    updateAvatar(type, id, `/avatars/${selectedimage}`)
+    .catch((error) => {
+      console.error("Error updating avatar: " + error);
+    })
+    toggleDisplayAvatar(type, id, displayavatar, selectedimage)
+    .catch((error) => {
+      console.error("Error updating avatar visibility: " + error);
     });
   }
 
@@ -56,31 +80,33 @@ function AvatarUpload({type, id, upload}) {
   }, [],
   );
 
+  /*
   useEffect(() => {
     toggleDisplayAvatar(type, id, displayavatar, selectedimage);
   }, [type, id, displayavatar, selectedimage]
   );
+  */
   
 
   return (
     <div className="avatarUploadSection">
       <div className="avatarSelectionArea">
         <span>Select Existing</span>
-        <select className="avatarSelect" onChange={(e) => {setSelectedImage(e.target.value); updateAvatarImage();}}>
+        <select className="avatarSelect" value={selectedimage} onChange={(e) => {setSelectedImage(e.target.value); /*updateAvatarImage(e.target.value);*/}}>
           {avatarlist.map((avatar, index) => 
             <option key={index} value={avatar}>{avatar.split('.')[0]}</option>
           )}
         </select>
         <Image src={`/avatars/${selectedimage}`} height={75} width={75} alt="Currently selected image"></Image>
         <label htmlFor="toggleavatarvisibility">Visible?</label>
-        <input name="toggleavatarvisibility" type='checkbox' checked={displayavatar} onChange={() => setDisplayAvatar(!displayavatar)}></input>
+        <input name="toggleavatarvisibility" type='checkbox' checked={displayavatar} onChange={(e) => setDisplayAvatar(e.target.checked)}></input>
         <label htmlFor="toggleavatarvisibility">Scale</label>
         <div className="avatarScaleControls">
           <Button onClick={() => modifyAvatarScale(avatarscale - 0.05)}>-</Button>
           <input type="number" step="0.05" value={avatarscale} onChange={(e) => modifyAvatarScale(Number(e.target.value))}></input>
           <Button onClick={() => modifyAvatarScale(avatarscale + 0.05)}>+</Button>
         </div>
-        <Button onClick={() => updateAvatarImage()}>Update</Button>
+        <Button onClick={() => updateAvatarData()}>Update</Button>
         
       </div>
       {upload === true && 

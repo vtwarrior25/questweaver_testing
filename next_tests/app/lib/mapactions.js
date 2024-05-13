@@ -90,9 +90,9 @@ const toggledisplayplayeravatarquery = new PQ({
   text: `
     INSERT INTO mapdata (playercharacterid, shape, image, scale, x, y, visible) VALUES
     ($1, 'sprite', $3, 0.25, 100, 100, true)
-    ON CONFLICT (mapdata.playercharacterid) DO UPDATE 
+    ON CONFLICT (playercharacterid) DO UPDATE 
     SET visible = $2
-    WHERE playercharacterid = $1;
+    WHERE mapdata.playercharacterid = $1;
   `
 });
 
@@ -187,7 +187,7 @@ const getmonsteravatarscalequery = new PQ({
 
 const getplayeravatarscalequery = new PQ({
   text: `
-    SELECT scale, visible
+    SELECT scale, visible, image
     FROM mapdata
     WHERE playercharacterid = $1;
   `

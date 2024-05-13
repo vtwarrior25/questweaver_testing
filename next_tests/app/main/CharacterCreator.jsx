@@ -1570,7 +1570,7 @@ const handleConfirmClick = async () => {
       const selectedAbility = e.target.value;
       setSelectedAbility3(selectedAbility);
       if (selectedAbility) {
-        setCharacterCreatorData({...charactercreatordata, oneabilityscoreimprovements: e.target.value});
+        setCharacterCreatorData({...charactercreatordata, oneabilityscoreimprovement: e.target.value});
         /*
         const updatedAbilityScores = { ...abilityScores };
         updatedAbilityScores[selectedAbility] += 1; 
@@ -1789,7 +1789,7 @@ const handleConfirmClick = async () => {
             {characterConfirmed ? (
     <div className="levelUpSection">
           <label htmlFor="level">Select Level:</label>
-          <select name="level" value={selectedLevel} onChange={(e) => setSelectedLevel(parseInt(e.target.value))}>
+          <select name="level" value={selectedLevel} onChange={(e) => {setSelectedLevel(parseInt(e.target.value)); setCharacterCreatorData({...charactercreatordata, level: Number(e.target.value)});}}>
             {[1, 2, 3, 4, 5].map(level => (
               <option key={level} value={level}>{level}</option>
             ))}
@@ -1811,12 +1811,16 @@ const handleConfirmClick = async () => {
             <>
             <h5>Ability Score Improvement</h5>
             <fieldset>
-              <label for="oneortwofalse">One Ability By 2 Points</label>
-              <input type="radio" name="oneortwoabilities" value="1" id="oneortwofalse" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))} defaultChecked></input>
-              <label for="oneortwotrue">Two Abilities By 1 Point</label>
-              <input type="radio" name="oneortwoabilities" value="2" id="oneortwotrue" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))}></input>
+              <div>
+                <label for="oneortwofalse">One Ability By 2 Points</label>
+                <input type="radio" name="oneortwoabilities" value="1" id="oneortwofalse" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))} defaultChecked></input>
+              </div>
+              <div>
+                <label for="oneortwotrue">Two Abilities By 1 Point</label>
+                <input type="radio" name="oneortwoabilities" value="2" id="oneortwotrue" onChange={(e) => handleAbilityImprovementRadio(Number(e.target.value))}></input>
+              </div>
             </fieldset>
-            {oneortwoabilities === 1 && (<>
+            {oneortwoabilities === 2 && (<>
               <h5>Select 2 Abilities to Improve By 1:</h5>
               <div>
                 <select value={selectedAbility1} onChange={handleAbility1Change}>
@@ -1839,7 +1843,7 @@ const handleConfirmClick = async () => {
                 </select>
               </div>
             </>)}
-            {oneortwoabilities === 2 && (<>
+            {oneortwoabilities === 1 && (<>
               <h5>Select 1 Ability to Improve By 2:</h5>
               <div>
                 <select value={selectedAbility3} onChange={handleAbility3Change}>
@@ -1855,7 +1859,7 @@ const handleConfirmClick = async () => {
             </>)}
             </>
           )}
-          <Button>Confirm Level Up</Button>
+          <Button onClick={handleConfirmClick}>Confirm Level Up</Button>
           <Button onClick={handleSwitchBack}>Change Character</Button>
         </div>
       ) : (

@@ -97,19 +97,14 @@ function PixiMap() {
     retrieveMapData();
     retrieveMapStats();
     retrieveBackgroundList();
+    /*
     let timerid = setInterval(() => {
-      /*
-      if (dragging === false) {
-        retrieveMapData(); 
-        console.log("Getting turn order");
-      } else {
-        console.log("Not");
-      }
-      */
       retrieveMapStats();
       retrieveMapData(); 
     }, 3000);
     setTimerID(timerid);
+    */
+    toggleMapUpdates(false);
     }, []
   );
 
@@ -122,15 +117,7 @@ function PixiMap() {
     } else {
       // Map updates are resumed
       let timerid = setInterval(() => {
-        /*
-        if (dragging === false) {
-          retrieveMapData(); 
-          console.log("Getting turn order");
-        } else {
-          console.log("Not");
-        }
-        */
-        retrieveMapStats();
+        //retrieveMapStats();
         retrieveMapData(); 
       }, 3000);
       setTimerID(timerid);
@@ -451,6 +438,7 @@ function PixiMap() {
           <label htmlFor="toggleMapUpdates">Pause Map Updates</label>
           <input type="checkbox" name='toggleMapUpdates' checked={pauseupdate} onChange={e => toggleMapUpdates(e.target.checked)}></input>
         </div>
+        <Button className="mapBackgroundRefreshButton" size="sm" onClick={() => {retrieveMapStats(); retrieveBackgroundList()}}>Refresh Background</Button>
       </div>
       <MapScaleContext.Provider value={mapsize.scale}>
         <Stage
