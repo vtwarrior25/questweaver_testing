@@ -318,6 +318,15 @@ const addplayeravatartomapdataquery = new PQ({
 });
 
 
+const oneabilityscoreimprovementquery = new PQ({
+  text: `
+    UPDATE characterability
+    SET score = $3 AND modifier = $4
+    WHERE playercharacterid = $1 AND abilityid = (SELECT abilityid FROM ability WHERE name = $2);
+  `
+});
+
+
 export async function checkIfPlayerExists(playerid, name) {
  // let data = {};
   await db.oneOrNone(checkforplayerexistencequery, [playerid, name])
@@ -379,8 +388,8 @@ export async function createCharacter(formdata, playerid) {
     console.log("We are in update character part");
     await db.none(updateplayercharacterquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass, formdata.level, playercharacterid, 
-      formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
-      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4]])
+      formdata.alignment, formdata.descriptions[0].sectiontext, formdata.descriptions[1].sectiontext, 
+      formdata.descriptions[2].sectiontext, formdata.descriptions[3].sectiontext, formdata.descriptions[4].sectiontext])
     .catch((error) => {
       console.error("Error updating existing player character: " + error);
       return;
@@ -391,8 +400,8 @@ export async function createCharacter(formdata, playerid) {
     // Create new character
     await db.one(playercharacteraddquery, [formdata.name, formdata.race, 
       formdata.subrace, formdata.class, formdata.subclass,
-      formdata.alignment, formdata.descriptions[0], formdata.descriptions[1], 
-      formdata.descriptions[2], formdata.descriptions[3], formdata.descriptions[4], playerid])
+      formdata.alignment, formdata.descriptions[0].sectiontext, formdata.descriptions[1].sectiontext, 
+      formdata.descriptions[2].sectiontext, formdata.descriptions[3].sectiontext, formdata.descriptions[4].sectiontext, playerid])
       .then((playerresult) => {
         playercharacterid = Number(playerresult.playercharacterid);
         console.log("Playercharacterid: " + playercharacterid);
@@ -451,7 +460,27 @@ export async function createCharacter(formdata, playerid) {
   });
   
 
-  
+  // Handle ability score improvement
+
+  if (formdata.level === 4) {
+    if (oneortwo === 1) {
+      await db.none(oneabilityscoreimprovementquery, [playercharacterid, formdata.oneabilityscoreimprovement, playercharacterabilityscores[formdata.oneabilityscoreimprovement], playercharactermodifiers[formdata.oneabilityscoreimprovement]])
+      .catch((error) => {
+        console.error("Error initiating ability score improvement: " + error);
+      });
+    } else if (oneortwo === 2) {
+      await db.none(oneabilityscoreimprovementquery, [playercharacterid, formdata.twoabilityscoreimprovements1, playercharacterabilityscores[formdata.twoabilityscoreimprovements1], playercharactermodifiers[formdata.twoabilityscoreimprovements1]])
+      .catch((error) => {
+        console.error("Error initiating ability score improvement: " + error);
+      });
+      await db.none(oneabilityscoreimprovementquery, [playercharacterid, formdata.twoabilityscoreimprovements2, playercharacterabilityscores[formdata.twoabilityscoreimprovements2], playercharactermodifiers[formdata.twoabilityscoreimprovements2]])
+      .catch((error) => {
+        console.error("Error initiating ability score improvement: " + error);
+      });
+    } else {
+      console.error("No data for ability score improvement.");
+    }
+  }
 
   let abilitymod = 0;
   // Handle spellcasting ability things
