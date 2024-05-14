@@ -743,6 +743,14 @@ export async function getStaticStats(playercharacterid) {
   return result;
 }
 
+const getcharacterprofsquery = new PQ({
+  text: `
+  SELECT p.name, p.proficiencytype
+  FROM proficiency p
+  JOIN characterproficiency cp ON c.proficiencyid = cp.proficiencyid
+  WHERE cp.playercharacterid = $1;`
+});
+
 export async function getProfBonus(playercharacterid) {
   let result = profbonusdefaultresult;
   await db.one(getcharacterprofbonusquery, [playercharacterid])
