@@ -24,12 +24,20 @@ html {
   
 }
 
-.characterSelectEntry {
-  margin: 0.2rem 0.5rem;
+.characterEntry {
+  margin: 0.5rem 0.5rem;
   text-decoration: none;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .characterCreatorButton {
   margin: 0.2rem 0.5rem;
+}
+
+.characterSelectionList {
+  max-height: 24rem;
+  overflow-y: scroll;
 }

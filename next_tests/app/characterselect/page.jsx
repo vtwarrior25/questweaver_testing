@@ -54,9 +54,11 @@ export default function Page() {
   return (  
     <div className='characterselection'>
       <h4>Character Select</h4>
-      {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
-        <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
-      )}
+      <div className="characterSelectionList">
+        {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
+          <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
+        )}
+      </div>
       <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
         <Button variant='primary' className="characterSelectEntry">  
         Create New Character

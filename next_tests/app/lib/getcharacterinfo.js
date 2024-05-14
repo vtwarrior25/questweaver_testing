@@ -751,14 +751,35 @@ const getcharacterprofsquery = new PQ({
   WHERE cp.playercharacterid = $1;`
 });
 
-export async function getcharacterprofs(playercharacterid) {
+
+// Character proficiencies aren't currently added by our character creator code, 
+// so I'm not going to bother making this work
+/* 
+export async function getCharacterProficiencies(playercharacterid) {
+  let proficiencies = {
+    armor: "",
+    weapons: "",
+    tools: "",
+    languages: ""
+  };
   await db.any(getcharacterprofsquery, [playercharacterid])
   .then ((dbinfo) => {
+    for (const prof of dbinfo)
+    if (prof.proficiencytype === "Armor") {
+      proficiencies.armor = proficiencies.armor + prof.name + ", ";
+    } else if (prof.proficiencytype === "Weapons") {
 
+    } else if (prof.proficiencytype === "Tools") {
+
+    } else if (prof.proficiencytype === "Languages") {
+
+    }
   }).catch((error) => {
     console.error("Error getting character proficiencies: " + error);
   });
+  return proficiencies;
 }
+*/
 
 export async function getProfBonus(playercharacterid) {
   let result = profbonusdefaultresult;
@@ -1276,6 +1297,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
       case 'Proficiency':
         // For each proficiency feature, get the proficiencyid from proficiencyfeature, and then 
         // add the proficiency to characterproficiency
+        console.log("We are in proficiency");
         db.one(getproficiencyfeaturequery, [feature.featureid])
         .then((result) => {
           if (result.proficiencytype === 'Skills') {
