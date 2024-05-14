@@ -1280,9 +1280,9 @@ const handleConfirmClick = async () => {
           {renderOption(optionGroup)}
         </div>
       ))}
-            <Button onClick={printEquipmentArray}>Print Equipment Array</Button>
+            <Button>Confirm Choices</Button>
 
-            <Button onClick={printChosenEquipment}>Print Chosen Equipment</Button>
+        
 
     </div>
       );

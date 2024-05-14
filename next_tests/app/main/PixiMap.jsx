@@ -111,7 +111,7 @@ function PixiMap() {
   );
 
   const toggleMapUpdates = (toggle) => {
-    console.log("toggle map updates" + toggle);
+    //console.log("toggle map updates" + toggle);
     setPauseUpdate(toggle);
     if (toggle === true) {
       // Map updates are paused
@@ -148,7 +148,7 @@ function PixiMap() {
     //if (pauseupdate !== true) {
       //console.log('Gaming');
       //console.log('Pauseupdate = ' + update);
-      console.log("retrieving map data");
+      //console.log("retrieving map data");
       getMapData()
       .then((result) => {
         if (draggingid !== 0) {
@@ -166,7 +166,7 @@ function PixiMap() {
 
   const retrieveMapStats = () => {
     //if (pauseupdate !== true) {
-      console.log("retrieving map stats");
+      //console.log("retrieving map stats");
       getMapStats()
       .then((result) => {
         //setMapBackground(result.mapbackground);
@@ -465,10 +465,10 @@ function PixiMap() {
       </Offcanvas>
       <div className="frontElement mapTopBar">
         <Button className="mapSettingsButton" size="sm" onClick={() => setShowMapSettings(true)}>Map Settings</Button>
-        <div>
+        {/*<div>
           <label htmlFor="toggleMapUpdates">Pause Map Updates</label>
           <input type="checkbox" name='toggleMapUpdates' checked={pauseupdate} onChange={e => toggleMapUpdates(e.target.checked)}></input>
-        </div>
+        </div>*/}
         <Button className="mapBackgroundRefreshButton" size="sm" onClick={() => {retrieveMapStats(); retrieveBackgroundList(); retrieveMapData();}}>Refresh Map</Button>
       </div>
       <MapScaleContext.Provider value={mapsize.scale}>
