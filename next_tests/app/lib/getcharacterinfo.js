@@ -751,6 +751,15 @@ const getcharacterprofsquery = new PQ({
   WHERE cp.playercharacterid = $1;`
 });
 
+export async function getcharacterprofs(playercharacterid) {
+  await db.any(getcharacterprofsquery, [playercharacterid])
+  .then ((dbinfo) => {
+
+  }).catch((error) => {
+    console.error("Error getting character proficiencies: " + error);
+  });
+}
+
 export async function getProfBonus(playercharacterid) {
   let result = profbonusdefaultresult;
   await db.one(getcharacterprofbonusquery, [playercharacterid])
