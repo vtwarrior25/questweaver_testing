@@ -67,7 +67,7 @@ function TurnOrder() {
     setTurnOrder([...turnordercopy]);
     updateTurn(turnordercopy[newturn].name)
     .catch(error => console.error("Error changing current turn: " + error));
-    console.log(newturn);
+    //console.log(newturn);
   }
 
   useEffect(() => {  
@@ -88,7 +88,7 @@ function TurnOrder() {
   const getTurnOrderClient = () => {
     getTurnOrder(playercharacterid)
     .then((result) => {
-      setTurnOrder([...result].sort((a,b) => {console.log(`sortmode a=${a.initiative} b=${b.initiative}`);return b.initiative - a.initiative}))
+      setTurnOrder([...result].sort((a,b) => {return b.initiative - a.initiative}))
     })
     .catch((error) => {
       console.error("Error setting turn order " + error)
