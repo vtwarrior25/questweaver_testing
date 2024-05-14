@@ -215,9 +215,9 @@
       equipment: ["Greataxe", "Dagger"],
       abilityscores: {},
       oneortwo: 1,
-      oneabilityscoreimprovement: "",
-      twoabilityscoreimprovements1: "",
-      twoabilityscoreimprovements2: "",
+      oneabilityscoreimprovement: "Strength",
+      twoabilityscoreimprovements1: "Strength",
+      twoabilityscoreimprovements2: "Strength",
       descriptions: [
         {
           order: 0,

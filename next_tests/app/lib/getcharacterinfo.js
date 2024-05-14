@@ -653,7 +653,8 @@ const charactergetabilityquery = new PQ({
   text: `
     SELECT a.name AS abilityname, a.abbrev AS abilityabbrev, c.score AS abilityscore, c.modifier AS abilitybonus FROM characterability c
       JOIN ability a ON c.abilityid = a.abilityid
-    WHERE c.playercharacterid = $1;
+    WHERE c.playercharacterid = $1
+    ORDER BY c.abilityid ASC;
   `
 });
 
