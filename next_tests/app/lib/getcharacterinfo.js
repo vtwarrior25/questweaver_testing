@@ -606,6 +606,7 @@ const getcharacterstaticstatsquery = new PQ({
     `
 });
 
+
 const getcharacterbasicdataquery = new PQ({
   text: `
     SELECT c.name, r.name AS race, cl.name AS class, sr.name AS subrace, scl.name AS subclass, c.characterlevel
@@ -1065,28 +1066,32 @@ const getcharinfoforfeaturesquery = new PQ({
 
 const getclassfeaturesforcharquery = new PQ({
   text: `
-    SELECT featureid FROM classfeature
+    SELECT DISTINCT cf.featureid, f.featuretype, 'Class' AS source FROM classfeature cf
+      JOIN feature f ON cf.featureid = f.featureid
     WHERE classid = $1 AND characterlevel = $2;
   `
 });
 
 const getracefeaturesforcharquery = new PQ({
   text: `
-    SELECT featureid FROM racefeature
+    SELECT DISTINCT rf.featureid, f.featuretype, 'Race' AS source FROM racefeature rf
+      JOIN feature f ON rf.featureid = f.featureid
     WHERE raceid = $1;
   `
 });
 
 const getsubclassfeaturesquery = new PQ({
   text: `
-    SELECT featureid FROM subclassfeature
+    SELECT DISTINCT scf.featureid, f.featuretype, 'Class' AS source FROM subclassfeature scf
+      JOIN feature f ON scf.featureid = f.featureid
     WHERE subclassid = $1 AND characterlevel = $2;
   `
 });
 
 const getsubracefeaturesquery = new PQ({
   text: `
-    SELECT featureid FROM subracefeature
+    SELECT DISTINCT srf.featureid, f.featuretype, 'Race' AS source FROM subracefeature srf
+      JOIN feature f ON srf.featureid = f.featureid
     WHERE subraceid = $1;
   `
 });
@@ -1201,7 +1206,6 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
   .then((result) => {
     for (let feature of result) {
       console.log("Added feature" + feature.featureid);
-      feature.source = "Class";
       features.push(feature);
     }
     //features = [...features, ...result];
@@ -1213,7 +1217,6 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
   await db.any(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
   .then((result) => {
     for (let feature of result) {
-      feature.source = "Class";
       features.push(feature);
     }
   }).catch((error) => {
@@ -1226,7 +1229,6 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
     await db.many(getracefeaturesforcharquery, [charinfo.race])
     .then((result) => {
       for (let feature of result) {
-        feature.source = "Race";
         features.push(feature);
       }
       //features = [...features, ...result];
@@ -1237,7 +1239,6 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
     await db.many(getsubracefeaturesquery, [charinfo.subrace])
     .then((result) => {
       for (let feature of result) {
-        feature.source = "Race";
         features.push(feature);
       }
     }).catch((error) => {
@@ -1245,12 +1246,13 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
     });
   }
 
-  let topCharSpeed = 0;
+  let topCharSpeed = 25;
 
   // Add features to characterfeatures
   for (const feature of features) {
     // For each feature, check if we need to modify the character in another way
     // Select from featuretype tables for extra info
+    console.log(feature.featuretype);
     switch (feature.featuretype) {
       case 'None':
         break;
