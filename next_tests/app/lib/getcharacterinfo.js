@@ -1093,8 +1093,8 @@ const getsubracefeaturesquery = new PQ({
 
 const addcharacterfeaturequery = new PQ({
   text: `
-    INSERT INTO characterfeature (playercharacterid, featureid) VALUES
-    ($1, $2)
+    INSERT INTO characterfeature (playercharacterid, featureid, source) VALUES
+    ($1, $2, $3)
     ON CONFLICT (playercharacterid, featureid) DO NOTHING;
   `
 });
@@ -1200,6 +1200,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
   await db.many(getclassfeaturesforcharquery, [charinfo.class, charinfo.characterlevel])
   .then((result) => {
     for (let feature of result) {
+      console.log("Added feature" + feature.featureid);
       feature.source = "Class";
       features.push(feature);
     }
@@ -1211,7 +1212,10 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
    // Get subclass features for subclass id and level
   await db.any(getsubclassfeaturesquery, [charinfo.subclass, charinfo.characterlevel])
   .then((result) => {
-    features = [...features, ...result];
+    for (let feature of result) {
+      feature.source = "Class";
+      features.push(feature);
+    }
   }).catch((error) => {
     console.error('Error getting subclass features: ' + error);
   });
@@ -1232,7 +1236,10 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
     // Get subrace features for subrace id and level
     await db.many(getsubracefeaturesquery, [charinfo.subrace])
     .then((result) => {
-      features = [...features, ...result];
+      for (let feature of result) {
+        feature.source = "Race";
+        features.push(feature);
+      }
     }).catch((error) => {
       console.error('Error getting subrace features: ' + error);
     });
@@ -1325,7 +1332,7 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         break;
     }
 
-    db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid])
+    db.none(addcharacterfeaturequery, [playercharacterid, feature.featureid, feature.source])
     .catch((error) => {
       console.error('Error adding feature' + feature.featureid + ' : ' + error);
     });

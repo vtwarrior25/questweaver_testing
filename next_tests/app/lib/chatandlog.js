@@ -22,7 +22,8 @@ const getallchatmessagesquery = new PQ({
   text: `
     SELECT g.gamelogtag, g.content, p.name, g.timeadded FROM gamelog g
       JOIN playercharacter p ON g.playercharacterid = p.playercharacterid
-    WHERE gamelogtag = 'Chat';
+    WHERE gamelogtag = 'Chat'
+    ORDER BY g.timeadded ASC;
   `
 });
 

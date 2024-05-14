@@ -76,11 +76,13 @@ function PixiMap() {
 
   const playercharacterid = useContext(PlayerCharacterContext);
   const [dragging, setDragging] = useState(false);
+  const [draggingid, setDraggingID] = useState(0);
   const [pauseupdate, setPauseUpdate] = useState(false);
   const [storedtimerid, setTimerID] = useState(null);
 
-  const [mapbackground, setMapBackground] = useState("/backgrounds/wide_darkviperau_fucked.jpg");
+  //const [mapbackground, setMapBackground] = useState("/backgrounds/wrfzdfc34u931-2013313820.jpg");
   const [mapbackgroundsize, setMapBackgroundSize] = useState( {
+    background: "/backgrounds/wrfzdfc34u931-2013313820.jpg",
     x: 500,
     y: 500,
     scale: 100,
@@ -113,9 +115,11 @@ function PixiMap() {
     setPauseUpdate(toggle);
     if (toggle === true) {
       // Map updates are paused
+      console.log("This should pause map updates");
       clearInterval(storedtimerid);
     } else {
       // Map updates are resumed
+      console.log("This should resume map updates");
       let timerid = setInterval(() => {
         //retrieveMapStats();
         retrieveMapData(); 
@@ -130,9 +134,11 @@ function PixiMap() {
     .then((results) => {
       console.log(results);
       setMapBackgroundList([...results]);
+      /*
       if (results.length > 0) {
-        setMapBackground(results[0]);
+        setMapBackgroundSize({...mapbackgroundsize, background: `/backgrounds/${results[0]}`});
       }
+      */
     }).catch((error) => {
       console.error('Error retrieving map background list: ' + error);
     })
@@ -145,7 +151,13 @@ function PixiMap() {
       console.log("retrieving map data");
       getMapData()
       .then((result) => {
-        setMapShapes([...result]);
+        if (draggingid !== 0) {
+          let resultexcludingdragging = result.filter((avatar) => avatar.mapdataid !== draggingid);
+          console.log(resultexcludingdragging);
+          setMapShapes([...resultexcludingdragging]);
+        } else {
+          setMapShapes([...result]);
+        }
       }).catch((error) => {
         console.error("Error retrieving map data: " + error);
       });
@@ -157,8 +169,9 @@ function PixiMap() {
       console.log("retrieving map stats");
       getMapStats()
       .then((result) => {
-        setMapBackground(result.mapbackground);
-        setMapBackgroundSize({...result.mapbackgroundsize});
+        //setMapBackground(result.mapbackground);
+        console.log(JSON.stringify(result, null, 4)); 
+        setMapBackgroundSize({...result});
         //setMapSize({...result.mapsize});
       }).catch((error) => {
         console.error("Error retrieving map data: " + error);
@@ -178,18 +191,31 @@ function PixiMap() {
   */
 
 
+  /*
   const scaleMap = (scale) => {
     setMapSize({...mapsize, scale: scale});
     //console.log(scale);
   }
+  */
 
 
-  const modifyMapStats = () =>  {
+  const modifyMapStats = (mapstats) =>  {
     //pauseMapUpdates();    
-    updateMapStats(mapsize.width, mapsize.height, mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackground)
+    console.log("Updating map stats");
+    console.log(mapstats.x);
+    console.log(mapstats.y);
+    console.log(mapstats.scale);
+    console.log(mapstats.background);
+    updateMapStats(mapstats.x, mapstats.y, mapstats.scale, mapstats.background)
     .catch((error) => {
       console.error("Error updating map stats: " + error);
     })
+    /*
+    updateMapStats(mapbackgroundsize.x, mapbackgroundsize.y, mapbackgroundsize.scale, mapbackgroundsize.background)
+    .catch((error) => {
+      console.error("Error updating map stats: " + error);
+    })
+    */
   }
 
 
@@ -299,6 +325,9 @@ function PixiMap() {
     sprite.alpha = 1;
     sprite.dragging = false;
     sprite.data = null;
+    
+    //updateState(sprite.id, sprite.x, sprite.y);
+    //setTimeout(setDraggingID(0));
     //setDragging(false);
   };
 
@@ -313,6 +342,7 @@ function PixiMap() {
       //console.log(newPosition);
       //console.log(sprite);
       //console.log(sprite.data);
+      setDraggingID(sprite.id);
       
       if (sprite.x > mapsize.width) {
         sprite.x = mapsize.width;
@@ -328,11 +358,11 @@ function PixiMap() {
       } else {
         sprite.y = newPosition.y;
       }
-      
-
+      console.log("Updating " + sprite.id);
       //sprite.x = newPosition.x;
       //sprite.y = newPosition.y;
       updateState(sprite.id, sprite.x, sprite.y);
+      
     }
   };
 
@@ -340,9 +370,10 @@ function PixiMap() {
     let statetoupdate = mapshapes.filter((mapshape) => mapshape.mapdataid === id);
     let statenottoupdate = mapshapes.filter((mapshape) => mapshape.mapdataid !== id);
     console.log('statetoupdate');
-    console.log(statetoupdate);
-    console.log(statenottoupdate);
+    console.log(JSON.stringify(statetoupdate, null, 4));
+    console.log(JSON.stringify(statenottoupdate, null, 4));
     if (statetoupdate.length > 0) {
+      console.log("ID = " + statetoupdate[0].mapdataid);
       let objecttoupdate = statetoupdate[0];
       objecttoupdate.x = x;
       objecttoupdate.y = y;
@@ -383,7 +414,7 @@ function PixiMap() {
         </Offcanvas.Header>
         <Offcanvas.Body className='mapSettingsSection'>
           <label for="mapbackgroundselector">Map Background</label>
-          <select name="mapbackgroundselector" onChange={(e) => {setMapBackground(`/backgrounds/${e.target.value}`); modifyMapStats()}}>
+          <select name="mapbackgroundselector" value={mapbackgroundsize.background} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, background:`/backgrounds/${e.target.value}`}); modifyMapStats({...mapbackgroundsize, background:`/backgrounds/${e.target.value}`})}}>
             {mapbackgroundlist.map((background, index) => 
               <option key={index} value={background}>{background}</option>
             )}
@@ -400,32 +431,32 @@ function PixiMap() {
           */}
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background X</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)}); modifyMapStats()}}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.x} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, x: Number(e.target.value)}); modifyMapStats({...mapbackgroundsize, x: Number(e.target.value)})}}></input>
           </div>
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background Y</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.y} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, y: Number(e.target.value)}); modifyMapStats()}}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.y} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, y: Number(e.target.value)}); modifyMapStats({...mapbackgroundsize, y: Number(e.target.value)})}}></input>
           </div>
           <div className='mapSettingsItem'>
             <label for="backgroundsize">Background Scale</label>
-            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)}); modifyMapStats()}}></input>
+            <input name="mapheight" type="number" step="10" value={mapbackgroundsize.scale} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, scale: Number(e.target.value)}); modifyMapStats({...mapbackgroundsize, scale: Number(e.target.value)})}}></input>
           </div>
           <div className='mapSettingsItem'>
             <span>Move Background</span>
             <table>
               <tr>
                 <td></td>
-                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y + 10}); modifyMapStats()}}>↑</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y + 10}); modifyMapStats({...mapbackgroundsize, y: mapbackgroundsize.y + 10})}}>↑</Button></td>
                 <td></td>
               </tr>
               <tr>
-                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x + 10}); modifyMapStats()}}>←</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x + 10}); modifyMapStats({...mapbackgroundsize, x: mapbackgroundsize.x + 10})}}>←</Button></td>
                 <td></td>
-                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x - 10}); modifyMapStats()}}>→</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, x: mapbackgroundsize.x - 10}); modifyMapStats({...mapbackgroundsize, x: mapbackgroundsize.x - 10})}}>→</Button></td>
               </tr>
               <tr>
                 <td></td>
-                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y - 10}); modifyMapStats()}}>↓</Button></td>
+                <td><Button onClick={() => {setMapBackgroundSize({...mapbackgroundsize, y: mapbackgroundsize.y - 10}); modifyMapStats({...mapbackgroundsize, y: mapbackgroundsize.y - 10})}}>↓</Button></td>
                 <td></td>
               </tr>
             </table>
@@ -438,7 +469,7 @@ function PixiMap() {
           <label htmlFor="toggleMapUpdates">Pause Map Updates</label>
           <input type="checkbox" name='toggleMapUpdates' checked={pauseupdate} onChange={e => toggleMapUpdates(e.target.checked)}></input>
         </div>
-        <Button className="mapBackgroundRefreshButton" size="sm" onClick={() => {retrieveMapStats(); retrieveBackgroundList()}}>Refresh Background</Button>
+        <Button className="mapBackgroundRefreshButton" size="sm" onClick={() => {retrieveMapStats(); retrieveBackgroundList(); retrieveMapData();}}>Refresh Map</Button>
       </div>
       <MapScaleContext.Provider value={mapsize.scale}>
         <Stage
@@ -447,7 +478,7 @@ function PixiMap() {
           options={{backgroundColor: mapsize.backgroundcolor}}
         >
           <Sprite
-            image={mapbackground}
+            image={mapbackgroundsize.background}
             scale={{x: mapbackgroundsize.scale/100, y: mapbackgroundsize.scale/100}}
             anchor={0.5}
             x={mapbackgroundsize.x}

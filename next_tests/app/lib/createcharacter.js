@@ -480,14 +480,16 @@ export async function createCharacter(formdata, playerid) {
     }
   });
   
-
-  // Handle adding initial equipment to character
-  for (let item of formdata.equipment) {
-    db.none(newcharacteradditemsquery, [playercharacterid, item])
-    .catch((error) => {
-      console.error("Error adding item to character inventory: " + error);
-    })
+  if (!doescharacterexist) {
+    // Handle adding initial equipment to character
+    for (let item of formdata.equipment) {
+      db.none(newcharacteradditemsquery, [playercharacterid, item])
+      .catch((error) => {
+        console.error("Error adding item to character inventory: " + error);
+      })
+    }
   }
+  
 
   // Handle ability score improvement
   if (formdata.level === 4) {

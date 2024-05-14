@@ -247,10 +247,10 @@ export async function addNewAvatar (file, name) {
 
 const updatemapstatsquery = new PQ({
   text: `
-    INSERT INTO mapstats (mapstatsid, mapwidth, mapheight, backgroundx, backgroundy, backgroundscale, backgroundimage) VALUES
-    (1, $1, $2, $3, $4, $5, $6)
+    INSERT INTO mapstats (mapstatsid, backgroundx, backgroundy, backgroundscale, backgroundimage) VALUES
+    (1, $1, $2, $3, $4)
     ON CONFLICT (mapstatsid) DO UPDATE 
-      SET mapwidth = $1, mapheight = $2, backgroundx = $3, backgroundy = $4, backgroundscale = $5, backgroundimage = $6
+      SET backgroundx = $1, backgroundy = $2, backgroundscale = $3, backgroundimage = $4
     WHERE mapstats.mapstatsid = 1;
   `
 });
@@ -265,40 +265,42 @@ const getmapstatsquery = new PQ({
   `
   */
   text: `
-  SELECT backgroundx, backgroundy, backgroundscale, backgroundimage
+  SELECT backgroundx AS x, backgroundy AS y, backgroundscale AS scale, backgroundimage AS background
   FROM mapstats
   WHERE mapstatsid = 1;
 `
 });
 
-export async function updateMapStats(mapwidth, mapheight, backgroundx, backgroundy, backgroundscale, backgroundimage) {
-  db.none(updatemapstatsquery, [mapwidth, mapheight, backgroundx, backgroundy, backgroundscale, backgroundimage])
+export async function updateMapStats(backgroundx, backgroundy, backgroundscale, backgroundimage) {
+  console.log(backgroundimage);
+  console.log(backgroundx);
+  db.none(updatemapstatsquery, [backgroundx, backgroundy, backgroundscale, backgroundimage])
   .catch((error) => {
     console.error('Error updating map stats: ' + error);
   });
 }
 
 export async function getMapStats() {
-  let mapsize = {};
+  //let mapsize = {};
   let mapbackgroundsize = {};
-  let mapbackground = "";
-  let container = {}; 
   await db.one(getmapstatsquery)
   .then((result) => {
     /*
     mapsize.width = result.mapwidth;
     mapsize.height = result.mapheight;
     */
-    mapbackgroundsize.x = result.backgroundx;
-    mapbackgroundsize.y = result.backgroundy;
-    mapbackgroundsize.scale = result.backgroundscale;
-    mapbackground = result.backgroundimage
+    //mapbackgroundsize.x = result.backgroundx;
+    //mapbackgroundsize.y = result.backgroundy;
+    //mapbackgroundsize.scale = result.backgroundscale;
+    //mapbackground = result.backgroundimage
+    mapbackgroundsize = {...result};
   }).catch((error) => {
     console.error('Error retrieving map stats: ' + error);
   });
   //container = {mapsize, mapbackgroundsize, mapbackground};
-  container = {mapbackgroundsize, mapbackground};
-  return container;
+  //container = {mapbackgroundsize, mapbackground};
+  //return container;
+  return mapbackgroundsize;
 }
 
 
