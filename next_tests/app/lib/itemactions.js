@@ -77,15 +77,30 @@ const weaponattackaddquery = new PQ({
 
 export async function getAllItems() {
   let allitems = [];
+  let returnitems = [];
   await db.any(getallitemsquery)
   .then(dbinfo => {
-      console.log(dbinfo);
       allitems = [...dbinfo];
   }).catch(error => {
       console.log("Error getting all items:" + error);
       //return "Error getting items";
   });
-  return allitems;
+  for (let item of allitems) {
+    await db.oneOrNone(getinventoryweaponinfo, [item.itemid])
+    .then((result) => {
+      if (result !== null) {
+        item = {...item, ...result};
+        returnitems.push(item);
+      } else {
+        returnitems.push(item);
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding weapon info to item: " + error);
+      returnitems.push(item);
+    });
+  }
+  return returnitems;
 }
 
 export async function createItem(userid, formdata) {

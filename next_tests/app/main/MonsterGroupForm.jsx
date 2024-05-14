@@ -282,7 +282,7 @@ function MonsterGroupForm({encounters, addMonsterGroup}) {
                 <tr>
                   <td colSpan="3">
                     <ButtonGroup>
-                      <Button type="button" ref={duplicatetarget} onClick={() => setDuplicateMenuDisplay(!duplicatemenudisplay)}>Duplicate</Button>
+                      {/*<Button type="button" ref={duplicatetarget} onClick={() => setDuplicateMenuDisplay(!duplicatemenudisplay)}>Duplicate</Button>*/}
                       <Button type="reset" id="monsterFormClear">Reset</Button>
                     </ButtonGroup>
                     <Overlay target={duplicatetarget.current} show={duplicatemenudisplay} placement='top'> 

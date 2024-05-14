@@ -751,6 +751,7 @@ const getcharacterprofsquery = new PQ({
   WHERE cp.playercharacterid = $1;`
 });
 
+
 export async function getProfBonus(playercharacterid) {
   let result = profbonusdefaultresult;
   await db.one(getcharacterprofbonusquery, [playercharacterid])
