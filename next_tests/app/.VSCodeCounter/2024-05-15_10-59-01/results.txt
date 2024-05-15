@@ -1,0 +1,138 @@
+Date : 2024-05-15 10:59:01
+Directory : c:\Users\cosmi\.projects\questweaver_testing\next_tests\app
+Total : 99 files,  12910 codes, 3017 comments, 1654 blanks, all 17581 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         51 |      6,107 |      1,333 |        617 |      8,057 |
+| JavaScript     |         33 |      3,442 |        899 |        489 |      4,830 |
+| SQL            |          8 |      1,987 |        604 |        284 |      2,875 |
+| CSS            |          5 |      1,035 |        181 |        264 |      1,480 |
+| JSON           |          1 |        338 |          0 |          0 |        338 |
+| XML            |          1 |          1 |          0 |          0 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                    |         99 |     12,910 |      3,017 |      1,654 |     17,581 |
+| . (Files)                                                                                            |          1 |        880 |        178 |        241 |      1,299 |
+| charactercreator                                                                                     |          3 |         99 |         13 |         19 |        131 |
+| characterselect                                                                                      |          4 |        145 |         20 |         24 |        189 |
+| files                                                                                                |          9 |      2,325 |        604 |        284 |      3,213 |
+| files (Files)                                                                                        |          1 |        338 |          0 |          0 |        338 |
+| files\sql                                                                                            |          8 |      1,987 |        604 |        284 |      2,875 |
+| lib                                                                                                  |         21 |      3,311 |        863 |        447 |      4,621 |
+| login                                                                                                |          3 |        105 |          4 |         16 |        125 |
+| main                                                                                                 |         56 |      5,998 |      1,335 |        618 |      7,951 |
+| signup                                                                                               |          2 |         47 |          0 |          5 |         52 |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                             | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\App.css                                  | CSS            |        880 |        178 |        241 |      1,299 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\charactercreator.css    | CSS            |         43 |          2 |          8 |         53 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\layout.js               | JavaScript     |         11 |          0 |          2 |         13 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\page.jsx                | JavaScript JSX |         45 |         11 |          9 |         65 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\CharacterSelectEntry.jsx | JavaScript JSX |         33 |          0 |          5 |         38 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\characterselect.css      | CSS            |         57 |          1 |          8 |         66 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\layout.js                | JavaScript     |         11 |          0 |          2 |         13 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\page.jsx                 | JavaScript JSX |         44 |         19 |          9 |         72 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\classtables.json                   | JSON           |        338 |          0 |          0 |        338 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\database.sql                   | SQL            |        430 |        192 |        173 |        795 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\dbinitdata.sql                 | SQL            |        342 |        369 |         32 |        743 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\features.sql                   | SQL            |        469 |         27 |         52 |        548 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\spell.sql                      | SQL            |        244 |          7 |          1 |        252 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\spelllist.sql                  | SQL            |        122 |          0 |          9 |        131 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\test.sql                       | SQL            |        323 |          0 |          1 |        324 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\testcharacter.sql              | SQL            |         55 |          7 |         13 |         75 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\testqueries.sql                | SQL            |          2 |          2 |          3 |          7 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\actions.js                           | JavaScript     |         96 |         37 |         24 |        157 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\attackactions.js                     | JavaScript     |         72 |          4 |          9 |         85 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\calcs.js                             | JavaScript     |          3 |          0 |          0 |          3 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\chatandlog.js                        | JavaScript     |        139 |         27 |         16 |        182 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\createcharacter.js                   | JavaScript     |        483 |         99 |         71 |        653 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\createuser.js                        | JavaScript     |          4 |          1 |          1 |          6 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\dbconn.js                            | JavaScript     |         10 |          0 |          2 |         12 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getcharactercreatorinfo.js           | JavaScript     |        152 |         21 |         37 |        210 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getcharacterinfo.js                  | JavaScript     |        951 |        417 |         85 |      1,453 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getinventory.js                      | JavaScript     |         25 |          0 |          2 |         27 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\healthfunctions.js                   | JavaScript     |         38 |          0 |          8 |         46 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\itemactions.js                       | JavaScript     |        288 |         79 |         50 |        417 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\itemcreation.js                      | JavaScript     |         88 |         50 |         14 |        152 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\mapactions.js                        | JavaScript     |        231 |         36 |         42 |        309 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\monster.js                           | JavaScript     |        349 |         69 |         40 |        458 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\resources.js                         | JavaScript     |          2 |          0 |          2 |          4 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\rollcheck.js                         | JavaScript     |        145 |         14 |         18 |        177 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\setcharacterinfo.js                  | JavaScript     |         17 |          6 |          3 |         26 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\spellactions.js                      | JavaScript     |        142 |          2 |         14 |        158 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\tempauth.js                          | JavaScript     |          9 |          0 |          0 |          9 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\turnorder.js                         | JavaScript     |         67 |          1 |          9 |         77 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\layout.js                          | JavaScript     |         11 |          0 |          2 |         13 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\login.css                          | CSS            |         43 |          0 |          5 |         48 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\page.jsx                           | JavaScript JSX |         51 |          4 |          9 |         64 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AbilityBox.jsx                      | JavaScript JSX |         16 |          0 |          4 |         20 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AbilitySection.jsx                  | JavaScript JSX |         59 |          8 |          8 |         75 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ActionsMenu.jsx                     | JavaScript JSX |         62 |         44 |          5 |        111 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\App.test.js                         | JavaScript     |          7 |          0 |          2 |          9 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AvatarUpload.jsx                    | JavaScript JSX |         95 |         18 |         17 |        130 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterCreator.jsx                | JavaScript JSX |      1,755 |         71 |        109 |      1,935 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterInventoryArea.jsx          | JavaScript JSX |         92 |         11 |          7 |        110 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterSheet.jsx                  | JavaScript JSX |         36 |         71 |          7 |        114 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Chat.jsx                            | JavaScript JSX |         84 |         14 |          9 |        107 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ChatMessage.jsx                     | JavaScript JSX |         20 |         17 |          2 |         39 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Chatbox.jsx                         | JavaScript JSX |         19 |          0 |          3 |         22 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Circle.jsx                          | JavaScript JSX |         15 |          0 |          3 |         18 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Contexts.js                         | JavaScript     |         14 |          0 |         13 |         27 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\DefensesConditionsBox.jsx           | JavaScript JSX |         28 |          0 |          2 |         30 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\DiceRollButton.jsx                  | JavaScript JSX |         41 |         34 |         12 |         87 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\FeaturesMenu.jsx                    | JavaScript JSX |        123 |         48 |         21 |        192 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\GameLog.jsx                         | JavaScript JSX |         52 |          0 |          6 |         58 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\GameLogMessage.jsx                  | JavaScript JSX |         17 |          0 |          2 |         19 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\HealthSection.jsx                   | JavaScript JSX |         72 |         18 |         14 |        104 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\InventoryMenu.jsx                   | JavaScript JSX |        139 |        175 |         23 |        337 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\InventorySection.jsx                | JavaScript JSX |        140 |         31 |         18 |        189 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ItemCreationForm.jsx                | JavaScript JSX |         48 |         26 |          3 |         77 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManageInventory.jsx                 | JavaScript JSX |         85 |         35 |         18 |        138 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManageSpells.jsx                    | JavaScript JSX |         87 |         13 |         16 |        116 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManualDiceRollButton.jsx            | JavaScript JSX |         25 |          0 |          3 |         28 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManualDiceRoller.jsx                | JavaScript JSX |        109 |         12 |         11 |        132 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Map.jsx                             | JavaScript JSX |         43 |          4 |          8 |         55 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MapSection.jsx                      | JavaScript JSX |         23 |         36 |          3 |         62 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterGroup.jsx                    | JavaScript JSX |        165 |          6 |         10 |        181 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterGroupForm.jsx                | JavaScript JSX |        407 |         22 |         27 |        456 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterSheet.jsx                    | JavaScript JSX |        332 |         67 |         21 |        420 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\NotesMenu.jsx                       | JavaScript JSX |         72 |         12 |         11 |         95 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\PixiMap.jsx                         | JavaScript JSX |        224 |        258 |         30 |        512 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\RollResultsSection.jsx              | JavaScript JSX |         44 |         33 |         13 |         90 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SavingThrow.jsx                     | JavaScript JSX |         21 |          0 |          5 |         26 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SavingThrowSection.jsx              | JavaScript JSX |         67 |         21 |          5 |         93 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SequentialCheckboxes.jsx            | JavaScript JSX |         37 |          3 |          3 |         43 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Shapes.jsx                          | JavaScript JSX |         63 |          8 |         12 |         83 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SingleRollResult.jsx                | JavaScript JSX |         30 |          0 |          4 |         34 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SkillRow.jsx                        | JavaScript JSX |         24 |          0 |          6 |         30 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SkillSection.jsx                    | JavaScript JSX |        157 |          0 |          8 |        165 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SpellsLevelSection.jsx              | JavaScript JSX |        152 |         19 |         19 |        190 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SpellsMenu.jsx                      | JavaScript JSX |        214 |         28 |         22 |        264 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\StaticStatsBox.jsx                  | JavaScript JSX |         89 |         74 |         11 |        174 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\TurnOrderBox.jsx                    | JavaScript JSX |        109 |         35 |         12 |        156 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\TurnOrderItem.jsx                   | JavaScript JSX |         12 |          0 |          2 |         14 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\WeaponCreationForm.jsx              | JavaScript JSX |        178 |          0 |          3 |        181 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\index.css                           | CSS            |         12 |          0 |          2 |         14 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\index.js                            | JavaScript     |         11 |          5 |          4 |         20 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\layout.js                           | JavaScript     |         11 |          0 |          2 |         13 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\logo.svg                            | XML            |          1 |          0 |          0 |          1 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\mapfunctions.js                     | JavaScript     |          0 |          0 |          1 |          1 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\page.jsx                            | JavaScript JSX |        216 |         27 |         24 |        267 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\reportWebVitals.js                  | JavaScript     |         12 |          0 |          2 |         14 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\setupTests.js                       | JavaScript     |          1 |          4 |          1 |          6 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\useCanvas.js                        | JavaScript     |         31 |         27 |          9 |         67 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\signup\layout.js                         | JavaScript     |         11 |          0 |          2 |         13 |
+| c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\signup\page.jsx                          | JavaScript JSX |         36 |          0 |          3 |         39 |
+| Total                                                                                                |                |     12,910 |      3,017 |      1,654 |     17,581 |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

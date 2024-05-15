@@ -1,0 +1,101 @@
+"filename", "language", "CSS", "JavaScript JSX", "JavaScript", "XML", "JSON", "SQL", "comment", "blank", "total"
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\App.css", "CSS", 880, 0, 0, 0, 0, 0, 178, 241, 1299
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\charactercreator.css", "CSS", 43, 0, 0, 0, 0, 0, 2, 8, 53
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\layout.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 2, 13
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\charactercreator\page.jsx", "JavaScript JSX", 0, 45, 0, 0, 0, 0, 11, 9, 65
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\CharacterSelectEntry.jsx", "JavaScript JSX", 0, 33, 0, 0, 0, 0, 0, 5, 38
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\characterselect.css", "CSS", 57, 0, 0, 0, 0, 0, 1, 8, 66
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\layout.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 2, 13
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\characterselect\page.jsx", "JavaScript JSX", 0, 44, 0, 0, 0, 0, 19, 9, 72
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\classtables.json", "JSON", 0, 0, 0, 0, 338, 0, 0, 0, 338
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\database.sql", "SQL", 0, 0, 0, 0, 0, 430, 192, 173, 795
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\dbinitdata.sql", "SQL", 0, 0, 0, 0, 0, 342, 369, 32, 743
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\features.sql", "SQL", 0, 0, 0, 0, 0, 469, 27, 52, 548
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\spell.sql", "SQL", 0, 0, 0, 0, 0, 244, 7, 1, 252
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\spelllist.sql", "SQL", 0, 0, 0, 0, 0, 122, 0, 9, 131
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\test.sql", "SQL", 0, 0, 0, 0, 0, 323, 0, 1, 324
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\testcharacter.sql", "SQL", 0, 0, 0, 0, 0, 55, 7, 13, 75
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\files\sql\testqueries.sql", "SQL", 0, 0, 0, 0, 0, 2, 2, 3, 7
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\actions.js", "JavaScript", 0, 0, 96, 0, 0, 0, 37, 24, 157
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\attackactions.js", "JavaScript", 0, 0, 72, 0, 0, 0, 4, 9, 85
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\calcs.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 0, 3
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\chatandlog.js", "JavaScript", 0, 0, 139, 0, 0, 0, 27, 16, 182
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\createcharacter.js", "JavaScript", 0, 0, 483, 0, 0, 0, 99, 71, 653
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\createuser.js", "JavaScript", 0, 0, 4, 0, 0, 0, 1, 1, 6
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\dbconn.js", "JavaScript", 0, 0, 10, 0, 0, 0, 0, 2, 12
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getcharactercreatorinfo.js", "JavaScript", 0, 0, 152, 0, 0, 0, 21, 37, 210
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getcharacterinfo.js", "JavaScript", 0, 0, 951, 0, 0, 0, 417, 85, 1453
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\getinventory.js", "JavaScript", 0, 0, 25, 0, 0, 0, 0, 2, 27
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\healthfunctions.js", "JavaScript", 0, 0, 38, 0, 0, 0, 0, 8, 46
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\itemactions.js", "JavaScript", 0, 0, 288, 0, 0, 0, 79, 50, 417
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\itemcreation.js", "JavaScript", 0, 0, 88, 0, 0, 0, 50, 14, 152
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\mapactions.js", "JavaScript", 0, 0, 231, 0, 0, 0, 36, 42, 309
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\monster.js", "JavaScript", 0, 0, 349, 0, 0, 0, 69, 40, 458
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\resources.js", "JavaScript", 0, 0, 2, 0, 0, 0, 0, 2, 4
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\rollcheck.js", "JavaScript", 0, 0, 145, 0, 0, 0, 14, 18, 177
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\setcharacterinfo.js", "JavaScript", 0, 0, 17, 0, 0, 0, 6, 3, 26
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\spellactions.js", "JavaScript", 0, 0, 142, 0, 0, 0, 2, 14, 158
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\tempauth.js", "JavaScript", 0, 0, 9, 0, 0, 0, 0, 0, 9
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\lib\turnorder.js", "JavaScript", 0, 0, 67, 0, 0, 0, 1, 9, 77
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\layout.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 2, 13
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\login.css", "CSS", 43, 0, 0, 0, 0, 0, 0, 5, 48
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\login\page.jsx", "JavaScript JSX", 0, 51, 0, 0, 0, 0, 4, 9, 64
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AbilityBox.jsx", "JavaScript JSX", 0, 16, 0, 0, 0, 0, 0, 4, 20
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AbilitySection.jsx", "JavaScript JSX", 0, 59, 0, 0, 0, 0, 8, 8, 75
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ActionsMenu.jsx", "JavaScript JSX", 0, 62, 0, 0, 0, 0, 44, 5, 111
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\App.test.js", "JavaScript", 0, 0, 7, 0, 0, 0, 0, 2, 9
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\AvatarUpload.jsx", "JavaScript JSX", 0, 95, 0, 0, 0, 0, 18, 17, 130
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterCreator.jsx", "JavaScript JSX", 0, 1755, 0, 0, 0, 0, 71, 109, 1935
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterInventoryArea.jsx", "JavaScript JSX", 0, 92, 0, 0, 0, 0, 11, 7, 110
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\CharacterSheet.jsx", "JavaScript JSX", 0, 36, 0, 0, 0, 0, 71, 7, 114
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Chat.jsx", "JavaScript JSX", 0, 84, 0, 0, 0, 0, 14, 9, 107
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ChatMessage.jsx", "JavaScript JSX", 0, 20, 0, 0, 0, 0, 17, 2, 39
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Chatbox.jsx", "JavaScript JSX", 0, 19, 0, 0, 0, 0, 0, 3, 22
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Circle.jsx", "JavaScript JSX", 0, 15, 0, 0, 0, 0, 0, 3, 18
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Contexts.js", "JavaScript", 0, 0, 14, 0, 0, 0, 0, 13, 27
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\DefensesConditionsBox.jsx", "JavaScript JSX", 0, 28, 0, 0, 0, 0, 0, 2, 30
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\DiceRollButton.jsx", "JavaScript JSX", 0, 41, 0, 0, 0, 0, 34, 12, 87
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\FeaturesMenu.jsx", "JavaScript JSX", 0, 123, 0, 0, 0, 0, 48, 21, 192
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\GameLog.jsx", "JavaScript JSX", 0, 52, 0, 0, 0, 0, 0, 6, 58
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\GameLogMessage.jsx", "JavaScript JSX", 0, 17, 0, 0, 0, 0, 0, 2, 19
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\HealthSection.jsx", "JavaScript JSX", 0, 72, 0, 0, 0, 0, 18, 14, 104
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\InventoryMenu.jsx", "JavaScript JSX", 0, 139, 0, 0, 0, 0, 175, 23, 337
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\InventorySection.jsx", "JavaScript JSX", 0, 140, 0, 0, 0, 0, 31, 18, 189
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ItemCreationForm.jsx", "JavaScript JSX", 0, 48, 0, 0, 0, 0, 26, 3, 77
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManageInventory.jsx", "JavaScript JSX", 0, 85, 0, 0, 0, 0, 35, 18, 138
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManageSpells.jsx", "JavaScript JSX", 0, 87, 0, 0, 0, 0, 13, 16, 116
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManualDiceRollButton.jsx", "JavaScript JSX", 0, 25, 0, 0, 0, 0, 0, 3, 28
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\ManualDiceRoller.jsx", "JavaScript JSX", 0, 109, 0, 0, 0, 0, 12, 11, 132
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Map.jsx", "JavaScript JSX", 0, 43, 0, 0, 0, 0, 4, 8, 55
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MapSection.jsx", "JavaScript JSX", 0, 23, 0, 0, 0, 0, 36, 3, 62
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterGroup.jsx", "JavaScript JSX", 0, 165, 0, 0, 0, 0, 6, 10, 181
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterGroupForm.jsx", "JavaScript JSX", 0, 407, 0, 0, 0, 0, 22, 27, 456
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\MonsterSheet.jsx", "JavaScript JSX", 0, 332, 0, 0, 0, 0, 67, 21, 420
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\NotesMenu.jsx", "JavaScript JSX", 0, 72, 0, 0, 0, 0, 12, 11, 95
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\PixiMap.jsx", "JavaScript JSX", 0, 224, 0, 0, 0, 0, 258, 30, 512
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\RollResultsSection.jsx", "JavaScript JSX", 0, 44, 0, 0, 0, 0, 33, 13, 90
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SavingThrow.jsx", "JavaScript JSX", 0, 21, 0, 0, 0, 0, 0, 5, 26
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SavingThrowSection.jsx", "JavaScript JSX", 0, 67, 0, 0, 0, 0, 21, 5, 93
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SequentialCheckboxes.jsx", "JavaScript JSX", 0, 37, 0, 0, 0, 0, 3, 3, 43
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\Shapes.jsx", "JavaScript JSX", 0, 63, 0, 0, 0, 0, 8, 12, 83
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SingleRollResult.jsx", "JavaScript JSX", 0, 30, 0, 0, 0, 0, 0, 4, 34
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SkillRow.jsx", "JavaScript JSX", 0, 24, 0, 0, 0, 0, 0, 6, 30
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SkillSection.jsx", "JavaScript JSX", 0, 157, 0, 0, 0, 0, 0, 8, 165
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SpellsLevelSection.jsx", "JavaScript JSX", 0, 152, 0, 0, 0, 0, 19, 19, 190
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\SpellsMenu.jsx", "JavaScript JSX", 0, 214, 0, 0, 0, 0, 28, 22, 264
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\StaticStatsBox.jsx", "JavaScript JSX", 0, 89, 0, 0, 0, 0, 74, 11, 174
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\TurnOrderBox.jsx", "JavaScript JSX", 0, 109, 0, 0, 0, 0, 35, 12, 156
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\TurnOrderItem.jsx", "JavaScript JSX", 0, 12, 0, 0, 0, 0, 0, 2, 14
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\WeaponCreationForm.jsx", "JavaScript JSX", 0, 178, 0, 0, 0, 0, 0, 3, 181
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\index.css", "CSS", 12, 0, 0, 0, 0, 0, 0, 2, 14
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\index.js", "JavaScript", 0, 0, 11, 0, 0, 0, 5, 4, 20
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\layout.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 2, 13
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\logo.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\mapfunctions.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\page.jsx", "JavaScript JSX", 0, 216, 0, 0, 0, 0, 27, 24, 267
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\reportWebVitals.js", "JavaScript", 0, 0, 12, 0, 0, 0, 0, 2, 14
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\setupTests.js", "JavaScript", 0, 0, 1, 0, 0, 0, 4, 1, 6
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\main\useCanvas.js", "JavaScript", 0, 0, 31, 0, 0, 0, 27, 9, 67
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\signup\layout.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 2, 13
+"c:\Users\cosmi\.projects\questweaver_testing\next_tests\app\signup\page.jsx", "JavaScript JSX", 0, 36, 0, 0, 0, 0, 0, 3, 39
+"Total", "-", 1035, 6107, 3442, 1, 338, 1987, 3017, 1654, 17581
