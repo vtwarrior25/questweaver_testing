@@ -163,17 +163,19 @@ const previousWeight = useRef(null);
               </tr>
               <tr>
                 {dropdownshidden[index] && <td className='inventorySectionTableExpandingInfo' colSpan="6">
-                  {item.description}
-                  {item.weaponinfo &&
-                    <>
-                      <div>Attack Type: {item.weaponinfo.weapontype} {item.weaponinfo.weaponrange}</div>
-                      <div>Range: {item.weaponinfo.range}</div>
-                      <div>Damage: {item.weaponinfo.numdice}{item.weaponinfo.dietype} {item.weaponinfo.damagetype}</div>
-                      <div>Properties: {item.weaponinfo.properties}</div>
-                    </>
-                  }
-                  <input type="number" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(item.section, item.itemid, index, Number(e.target.value))}></input>
-                  <Button variant="secondary" size='sm' onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
+                  <div className="inventorySectionDropdownDiv">
+                    {item.description}
+                    {item.weaponinfo &&
+                      <>
+                        <div>Attack Type: {item.weaponinfo.weapontype} {item.weaponinfo.weaponrange}</div>
+                        <div>Range: {item.weaponinfo.range}</div>
+                        <div>Damage: {item.weaponinfo.numdice}{item.weaponinfo.dietype} {item.weaponinfo.damagetype}</div>
+                        <div>Properties: {item.weaponinfo.properties}</div>
+                      </>
+                    }
+                    <input type="number" width="5" placeholder='Qty' value={tempitemquantities[index]} onChange={(e) => setItemQuantity(item.section, item.itemid, index, Number(e.target.value))}></input>
+                    <Button variant="secondary" size='sm' className="inventorySectionRemoveButton" onClick={() => {removeItem(sectionname, item)}}>Remove</Button>
+                  </div>
                 </td>}
               </tr>
             </React.Fragment>
