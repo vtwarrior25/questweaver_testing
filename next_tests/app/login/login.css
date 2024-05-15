@@ -1,6 +1,26 @@
-html {
-  background-color: aliceblue;
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(../files/Atkinson-Hyperlegible-Regular-102.ttf);
 }
+
+html {
+  font-family: var(--sansFont);
+  text-align: center;
+  background:url(../files/beautifulforest.jpg);
+  min-height: 56.25rem;
+}
+
+:root {
+--mainBorder: 0.15rem solid #000;
+--thinBorder: 0.1rem solid #000;
+--innerBackgroundColor: lightgrey;
+--nonRollBackground: #D2CDE9;
+--buttonColor: #CBDFE7;
+--buttonHoverColor: #a8b9c0;
+--buttonActive: #acd3e2;
+--sansFont: 'Atkinson Hyperlegible', sans-serif;
+}
+
 
 .loginSection {
   display: flex;

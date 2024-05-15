@@ -8,7 +8,7 @@ import CharacterSelectEntry from './CharacterSelectEntry';
 import { goToCharacterCreator, getCharactersForPlayer } from '../lib/actions';
 import './characterselect.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 
 
 export default function Page() {
@@ -52,18 +52,20 @@ export default function Page() {
   );
 
   return (  
-    <div className='characterselection'>
-      <h4>Character Select</h4>
-      <div className="characterSelectionList">
-        {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
-          <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
-        )}
+    <Container className="Page" fluid>
+      <div className='characterselection'>
+        <h4>Character Select</h4>
+        <div className="characterSelectionList">
+          {playercharacters && playercharacters.length > 0 && playercharacters.map((character, index) => 
+            <CharacterSelectEntry key={index} userid={userid} charid={character.charid} charname={character.charname} charrace={character.charrace} charsubrace={character.charsubrace} charclass={character.charclass} charsubclass={character.charsubclass} charlevel={character.charlevel}></CharacterSelectEntry>
+          )}
+        </div>
+        <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
+          <Button variant='primary' className="characterSelectEntry">  
+          Create New Character
+          </Button>
+        </Link>
       </div>
-      <Link href={{ pathname: '../charactercreator', query: { userid: userid }}} passHref={true}>
-        <Button variant='primary' className="characterSelectEntry">  
-        Create New Character
-        </Button>
-      </Link>
-    </div>
+    </Container>
   )
 }

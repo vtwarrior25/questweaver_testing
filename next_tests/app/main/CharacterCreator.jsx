@@ -20,6 +20,7 @@
   } from "../lib/getcharactercreatorinfo";
   import AvatarUpload from "./AvatarUpload";
   import { addFeaturesToCharacter, levelUpFeatures } from "../lib/getcharacterinfo";
+import { setLazyProp } from "next/dist/server/api-utils";
   
   function CharacterCreator(loginsection) {
     const [selectedAbility1, setSelectedAbility1] = useState(null);
@@ -212,7 +213,7 @@
       class: "",
       subclass: "",
       skillproficiencies: [],
-      equipment: ["Greataxe", "Dagger"],
+      equipment: ["Quarterstaff", "Lute", "Leather Armor", "Dagger"],
       abilityscores: {},
       oneortwo: 1,
       oneabilityscoreimprovement: "Strength",
@@ -1105,6 +1106,9 @@ Warlock: [
       };
 
       fetchData();
+      if (loginsection) {
+        setNameReadOnly(false);
+      } 
     }, []);
 
     // Handle class selection
@@ -1526,15 +1530,18 @@ const handleConfirmClick = async () => {
     useEffect(() => {
       fetchLevelUpInfo(); 
     }, [selectedLevel]); 
+
     const fetchLevelUpInfo = async () => {
       try {
-        const levelUpFeaturesData = await levelUpFeatures(playercharacterid, selectedLevel);
-        console.log("Level up features data:", levelUpFeaturesData); 
-        if (levelUpFeaturesData.length > 0) {
-          setClassInfo(levelUpFeaturesData.flat());
-        } else {
-          console.log("No level up features data found.");
-        }
+        if (playercharacterid !== null) {
+          const levelUpFeaturesData = await levelUpFeatures(playercharacterid, selectedLevel);
+          console.log("Level up features data:", levelUpFeaturesData); 
+          if (levelUpFeaturesData.length > 0) {
+            setClassInfo(levelUpFeaturesData.flat());
+          } else {
+            console.log("No level up features data found.");
+          }
+        }                  
       } catch (error) {
         console.error('Error fetching level up features:', error);
       }
@@ -1591,7 +1598,7 @@ const handleConfirmClick = async () => {
           className="characterCreatorTabs frontElement"
           defaultActiveKey="race"
         >
-          <Tab eventKey="race" title="Race"  disabled={!showConfirmTab}>
+          <Tab eventKey="race" title={`Race: ${charactercreatordata.subrace}`}  disabled={!showConfirmTab}>
             <div className="characterCreatorSection characterCreatorRace frontElement">
               <Tab.Container defaultActiveKey="firstRaceOrSubraceKey">
                 <Nav variant="pills" className="flex-column">
@@ -1645,7 +1652,7 @@ const handleConfirmClick = async () => {
               </Tab.Container>
             </div>
           </Tab>
-          <Tab eventKey="class" title="Class" disabled={!showConfirmTab}>
+          <Tab eventKey="class" title={`Class: ${charactercreatordata.class}`} disabled={!showConfirmTab}>
   <Tab.Container defaultActiveKey="firstClassKey">
     <div className="characterCreatorSection characterCreatorClass frontElement" style={{ display: "flex", flexDirection: "row" }}>
       <Tab.Container defaultActiveKey="firstClassKey">

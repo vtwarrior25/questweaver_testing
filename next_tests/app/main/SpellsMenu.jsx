@@ -136,6 +136,7 @@ function SpellsMenu({setRollResults}) {
     getSpells();
     getLevels();
     retrieveSpellList();
+    //retrieveSpellcastingInfo();
   }, []
   );
 
@@ -146,7 +147,7 @@ function SpellsMenu({setRollResults}) {
     getPreparedSpells(playercharacterid)
     .then((result) => {
       console.log("We are here brothers!!");
-      console.log([...result]);
+      console.log(result);
       setSpells([...result]);
     })
     .catch((error) => {

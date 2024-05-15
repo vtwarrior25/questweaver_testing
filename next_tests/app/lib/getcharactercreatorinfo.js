@@ -164,6 +164,10 @@ export async function getCharacterCreatorInfo() {
 
       // Combine race features and subrace features
       subrace.features = [...features, ...raceFeatures];
+      
+      if (subrace.name == 'Human') {
+        console.log(JSON.stringify(raceFeatures, null, 4));
+      }
     }
   } catch (error) {
     console.error("Error fetching subraces with races and their features:", error);
@@ -171,7 +175,7 @@ export async function getCharacterCreatorInfo() {
 
   // Get list of races that don't have subraces
   try {
-    racesWithoutSubraces = await db.many(`
+    racesWithoutSubraces = await db.any(`
       SELECT r.raceid, r.name AS race_name, r.creaturesize
       FROM race r
       WHERE NOT EXISTS (

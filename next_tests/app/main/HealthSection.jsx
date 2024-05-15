@@ -90,7 +90,8 @@ function HealthSection () {
           </div>
           <div className="healthBox">
             <label htmlFor="maxhealth">Max</label>
-            <input className="healthSectionInput" name="maxhealth" type="number" size="4" readOnly={true} value={healthval.maxhealth}></input>
+            {/*<input className="healthSectionInput" name="maxhealth" type="number" size="4" readOnly={true} value={healthval.maxhealth}></input>*/}
+            <div>{healthval.maxhealth}</div>
           </div>
         </Stack>
       </div>

@@ -49,9 +49,10 @@ export default function Page() {
   */
 
   return (
-    <Container fluid>
+    <Container className="Page" fluid>
       <UserIDContext.Provider value={userid}>
-        <div className='charactercreatorpage'>
+        <div className='charactercreatorpage frontElement'>
+          <h2>Character Creator</h2>
           <div className="characterCreatorOnPage">
             <CharacterCreator loginsection={true}></CharacterCreator>
           </div>

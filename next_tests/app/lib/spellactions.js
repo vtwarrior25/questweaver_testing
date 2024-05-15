@@ -73,7 +73,8 @@ export async function getSpellList(playercharacterid) {
   .then((result) => {
     console.log('returning spell list');
     console.log(result);
-    spelllist = [...result]; 
+    spelllist = [...result];
+    spelllist.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toUpperCase()));
   }).catch((error) => {
     console.log(error);
     console.log("spell list not found");

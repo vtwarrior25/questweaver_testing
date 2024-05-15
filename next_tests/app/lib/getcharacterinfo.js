@@ -636,8 +636,9 @@ const charactergetsavingthrowquery = new PQ({
   text: `
     SELECT a.abbrev AS name, c.proficient AS prof, c.bonus AS val FROM charactersavingthrow c
       JOIN savingthrow s ON c.savingthrowid = s.savingthrowid
-      JOIN ability a ON s.abilityid = a.abilityid 
-    WHERE c.playercharacterid = $1;
+      JOIN ability a ON s.abilityid = a.abilityid
+    WHERE c.playercharacterid = $1
+    ORDER BY s.savingthrowid;
   `
 });
 
@@ -646,7 +647,8 @@ const charactergetskillquery = new PQ({
     SELECT s.name, a.abbrev AS mod, c.proficient AS prof, c.bonus FROM characterskill c
       JOIN skill s ON c.skillid = s.skillid
       JOIN ability a ON s.abilityid = a.abilityid
-    WHERE c.playercharacterid = $1;
+    WHERE c.playercharacterid = $1
+    ORDER BY s.skillid;
   `
 });
 
@@ -745,16 +747,17 @@ export async function getStaticStats(playercharacterid) {
 
 const getcharacterprofsquery = new PQ({
   text: `
-  SELECT p.name, p.proficiencytype
-  FROM proficiency p
-  JOIN characterproficiency cp ON c.proficiencyid = cp.proficiencyid
-  WHERE cp.playercharacterid = $1;`
+    SELECT p.name, p.proficiencytype
+    FROM proficiency p
+    JOIN characterproficiency cp ON p.proficiencyid = cp.proficiencyid
+    WHERE cp.playercharacterid = $1;
+  `
 });
 
 
 // Character proficiencies aren't currently added by our character creator code, 
 // so I'm not going to bother making this work
-/* 
+
 export async function getCharacterProficiencies(playercharacterid) {
   let proficiencies = {
     armor: "",
@@ -764,22 +767,31 @@ export async function getCharacterProficiencies(playercharacterid) {
   };
   await db.any(getcharacterprofsquery, [playercharacterid])
   .then ((dbinfo) => {
-    for (const prof of dbinfo)
+    for (const prof of dbinfo) {
+      if (String(proficiencies[String(prof.proficiencytype).toLowerCase()]).length < 1) {
+        proficiencies[String(prof.proficiencytype).toLowerCase()] = proficiencies[String(prof.proficiencytype).toLowerCase()] + prof.name;
+      } else {
+        proficiencies[String(prof.proficiencytype).toLowerCase()] = proficiencies[String(prof.proficiencytype).toLowerCase()] + ", " + prof.name;
+      }
+    }
+    /*
     if (prof.proficiencytype === "Armor") {
       proficiencies.armor = proficiencies.armor + prof.name + ", ";
     } else if (prof.proficiencytype === "Weapons") {
-
+      proficiencies.weapons = proficiencies.weapons + prof.name + ", ";
     } else if (prof.proficiencytype === "Tools") {
-
+      proficiencies.tools = proficiencies.tools + prof.name + ", ";
     } else if (prof.proficiencytype === "Languages") {
-
+      proficiencies.languages = proficiencies.languages + prof.name + ", ";
     }
+    */
   }).catch((error) => {
     console.error("Error getting character proficiencies: " + error);
   });
+  console.log(JSON.stringify(proficiencies, null, 4));
   return proficiencies;
 }
-*/
+
 
 export async function getProfBonus(playercharacterid) {
   let result = profbonusdefaultresult;
@@ -921,7 +933,7 @@ const speedQuery = new PQ({
 
 const abilityScoreQuery = new PQ({
   text: `
-  SELECT c.name, c.abbrev, c.description, p.scorebonus FROM ability
+  SELECT c.name, c.abbrev, c.description, p.scorebonus FROM ability c
   JOIN abilityscorefeature p ON c.abilityid = p.abilityid
   JOIN feature q ON p.featureid = q.featureid
   WHERE q.name = $1;
@@ -1153,8 +1165,9 @@ const getcharacterspeedquery = new PQ ({
 
 const getproficiencyfeaturequery = new PQ ({
   text: `
-    SELECT proficiencyid, name, proficiencytype
-    FROM proficiencyfeature
+    SELECT pf.proficiencyid, p.name, p.proficiencytype
+    FROM proficiencyfeature pf
+      JOIN proficiency p ON pf.proficiencyid = p.proficiencyid
     WHERE featureid = $1;
   `
 });
@@ -1192,7 +1205,7 @@ const getabilityscorefeaturequery = new PQ({
 const updatecharacterabilityscorequery = new PQ({
   text: `
     UPDATE characterability
-    SET score = score + $1
+    SET score = score + $1, modifier = ((score + $1)-10)/2 
     WHERE playercharacterid = $2 AND abilityid = $3;
   `
 });
@@ -1298,25 +1311,31 @@ export async function addFeaturesToCharacter(playercharacterid, initialcreation)
         // For each proficiency feature, get the proficiencyid from proficiencyfeature, and then 
         // add the proficiency to characterproficiency
         console.log("We are in proficiency");
-        db.one(getproficiencyfeaturequery, [feature.featureid])
+        db.any(getproficiencyfeaturequery, [feature.featureid])
         .then((result) => {
-          if (result.proficiencytype === 'Skills') {
-            // Set the entry in characterskills to proficient
-            db.none(setskillproficientquery, [playercharacterid, result.name])
-            .catch((error) => {
-              console.error('Failed to set the skill to proficient: ' + error);
-            });
-          } else if (result.proficiencytype === 'Saving Throws') {
-            // Set the entry in charactersavingthrow to proficient
-            db.none(setsavingthrowproficientquery, [playercharacterid, result.name])
-            .catch((error) => {
-              console.error('Failed to set the saving throw to proficient: ' + error);
-            });
+          if (result !== null) {
+            for (let proficiency of result) {
+              if (result.proficiencytype === 'Skills') {
+                // Set the entry in characterskills to proficient
+                db.none(setskillproficientquery, [playercharacterid, proficiencytype.name])
+                .catch((error) => {
+                  console.error('Failed to set the skill to proficient: ' + error);
+                });
+              } else if (result.proficiencytype === 'Saving Throws') {
+                // Set the entry in charactersavingthrow to proficient
+                db.none(setsavingthrowproficientquery, [playercharacterid, proficiency.name])
+                .catch((error) => {
+                  console.error('Failed to set the saving throw to proficient: ' + error);
+                });
+              }
+              db.none(addproficiencytocharacterquery, [playercharacterid, proficiency.proficiencyid])
+              .catch((error) => {
+                console.error('Failed to add proficiency to character: ' + error);
+              });
+            }
+          } else {
+            console.error("No proficiencies associated with this proficiency feature. That is odd.");
           }
-          db.none(addproficiencytocharacterquery, [playercharacterid, result.proficiencyid])
-          .catch((error) => {
-            console.error('Failed to add proficiency to character: ' + error);
-          });
         }).catch((error) => {
           console.error('Error getting proficiencyid for proficiency feature: ' + error);
         });

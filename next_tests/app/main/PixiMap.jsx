@@ -413,12 +413,14 @@ function PixiMap() {
           <Offcanvas.Title>Map Settings</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body className='mapSettingsSection'>
+          {/*
           <label for="mapbackgroundselector">Map Background</label>
           <select name="mapbackgroundselector" value={mapbackgroundsize.background} onChange={(e) => {setMapBackgroundSize({...mapbackgroundsize, background:`/backgrounds/${e.target.value}`}); modifyMapStats({...mapbackgroundsize, background:`/backgrounds/${e.target.value}`})}}>
             {mapbackgroundlist.map((background, index) => 
               <option key={index} value={background}>{background}</option>
             )}
           </select>
+          */}
           {/*
           <div className='mapSettingsItem'>
             <label for="mapwidth">Map Width</label>

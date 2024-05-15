@@ -3,11 +3,10 @@ import { Stack, Button, Accordion, Tab, Tabs } from 'react-bootstrap';
 import DiceRollButton from './DiceRollButton';
 import { URLContext, PlayerCharacterContext, CharacterInfoContext } from './Contexts';
 import { useCol } from 'react-bootstrap/esm/Col';
-import { getStaticStats } from '../lib/getcharacterinfo';
+import { getCharacterProficiencies, getStaticStats } from '../lib/getcharacterinfo';
 
 function StaticStatsBox (setRollResults, rollresults, collapse) { 
 
-  const url = useContext(URLContext);
   const playercharacterid = useContext(PlayerCharacterContext);
   const characterinfo = useContext(CharacterInfoContext);
 
@@ -40,8 +39,23 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
     .then(res => res.json())
     .then(res => setStaticStats(res));
     */
+    let tempstaticstats1 = {};
+    let tempstaticstats2 = {};
     getStaticStats(playercharacterid)
-    .then(results => setStaticStats({...staticstats,...results}));
+    .then((results) => {
+      console.log(results);
+      getCharacterProficiencies(playercharacterid)
+      .then((result) => {
+        setStaticStats({...results, armor: result.armor, weapons: result.weapons, tools: result.tools, languages: result.languages});
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error("Error getting character proficiencies" + error);
+      });
+    })
+    .catch((error) => {
+      console.error("Error retrieving static stats: " + error);
+    });
   }
 
 {/*
@@ -109,7 +123,7 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
 
   return (
     <div className="staticStatsBox frontElement">
-      <Tabs defaultActiveKey="0">
+      <Tabs defaultActiveKey="0" fill>
         <Tab eventKey="0" title="Info">
             <div className="statsInnerContainer">
               <div><span className='staticStatsItemName'>Name</span> - {characterinfo.name}</div>
@@ -143,12 +157,14 @@ function StaticStatsBox (setRollResults, rollresults, collapse) {
             <div><span className='staticStatsItemName'>Languages</span> - {staticstats.languages}</div>
           </div>
         </Tab>
+        {/*
         <Tab eventKey="3" title="Defenses">
           <div className='statsInnerContainer'>
             <div><span className='staticStatsItemName'>Defenses</span> - {staticstats.defenses}</div>
             <div><span className='staticStatsItemName'>Conditions</span> - {staticstats.conditions}</div>          
           </div>
         </Tab>
+        */}
       </Tabs>
     </div> 
   );
